@@ -60,7 +60,11 @@ jobs:
         # Add any additional inputs your action supports
 ```
 
-The required parameters to deploy are function name, code artifacts directory, handler, and runtime. The function name and code artifacts directory need to be provided by the user. However, the handler and runtime do not and will default to index.handler and nodejs20.x if not provided.
+The action automatically updates your Lambda function code when the required parameters are provided. If the function doesn't exist, it will be created first and then updated.
+
+Required parameters include function name, code artifacts directory, handler, and runtime. While function name and code artifacts directory must be specified, handler and runtime will default to `index.handler` and `nodejs20.x` respectively if not provided.
+
+The following examples demonstrate additional features available:
 
 ### Update Function Configuration
 
@@ -178,7 +182,8 @@ Here's an example of using OIDC with the aws-actions/configure-aws-credentials a
       - name: Configure AWS credentials with OIDC
         uses: aws-actions/configure-aws-credentials@v2
         with:
-          role-to-assume: arn:aws:iam::123456789012:role/GitHubActionRole
+          role-to-assume: my-role
+          aws-region: my-region
 ```
 
 To use OIDC authentication, you must configure a trust policy in AWS IAM that allows GitHub Actions to assume an IAM role. Here's an example trust policy:
