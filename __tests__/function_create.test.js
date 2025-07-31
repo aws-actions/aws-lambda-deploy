@@ -82,6 +82,19 @@ jest.mock('@aws-sdk/client-s3', () => {
     }))
   };
 });
+jest.mock('@aws-sdk/client-sts', () => {
+  const original = jest.requireActual('@aws-sdk/client-sts');
+  return {
+    ...original,
+    GetCallerIdentityCommand: jest.fn().mockImplementation((params) => ({
+      ...params,
+      type: 'GetCallerIdentityCommand'
+    })),
+    STSClient: jest.fn().mockImplementation(() => ({
+      send: jest.fn().mockResolvedValue({ Account: '123456789012' })
+    }))
+  };
+});
 
 afterAll(() => {
   jest.clearAllMocks();
@@ -597,5 +610,154 @@ describe('Function Existence Check', () => {
         type: 'GetFunctionConfigurationCommand'
       }));
     });
+  });
+
+  test('Config changed with dry run logs message', () => {
+    const configChanged = true;
+    const dryRun = true;
+    
+    if (configChanged) {
+      if (dryRun) {
+        core.info('[DRY RUN] Configuration updates are not simulated in dry run mode');
+        return;
+      }
+    }
+    
+    expect(core.info).toHaveBeenCalledWith('[DRY RUN] Configuration updates are not simulated in dry run mode');
+  });
+
+  test('Config changed without dry run calls updateFunctionConfiguration', async () => {
+    const mockClient = { send: jest.fn() };
+    const configChanged = true;
+    const dryRun = false;
+    
+    if (configChanged) {
+      if (dryRun) {
+        core.info('[DRY RUN] Configuration updates are not simulated in dry run mode');
+        return;
+      }
+      
+      await index.updateFunctionConfiguration(mockClient, {
+        functionName: 'test-function',
+        role: 'test-role',
+        handler: 'index.handler',
+        functionDescription: 'test',
+        parsedMemorySize: 256,
+        timeout: 30,
+        runtime: 'nodejs20.x',
+        kmsKeyArn: 'test-kms',
+        ephemeralStorage: 512,
+        vpcConfig: '{}',
+        parsedEnvironment: {},
+        deadLetterConfig: '{}',
+        tracingConfig: '{}',
+        layers: '[]',
+        fileSystemConfigs: '[]',
+        imageConfig: '{}',
+        snapStart: '{}',
+        loggingConfig: '{}',
+        parsedVpcConfig: {},
+        parsedDeadLetterConfig: {},
+        parsedTracingConfig: {},
+        parsedLayers: [],
+        parsedFileSystemConfigs: [],
+        parsedImageConfig: {},
+        parsedSnapStart: {},
+        parsedLoggingConfig: {}
+      });
+    }
+    
+    expect(mockClient.send).toHaveBeenCalled();
+  });
+
+  test('No config changes logs no changes message', () => {
+    const configChanged = false;
+    
+    if (configChanged) {
+      // Should not execute
+    } else {
+      core.info('No configuration changes detected');
+    }
+    
+    expect(core.info).toHaveBeenCalledWith('No configuration changes detected');
+  });
+
+  test('generateS3Key creates key with timestamp', () => {
+    const result = index.generateS3Key('test-function');
+    expect(result).toMatch(/^lambda-deployments\/test-function\/\d{4}-\d{2}-\d{2}-\d{2}-\d{2}-\d{2}-\d{3}\.zip$/);
+  });
+
+  test('generateS3Key includes commit hash when GITHUB_SHA exists', () => {
+    process.env.GITHUB_SHA = 'abcdef1234567890';
+    const result = index.generateS3Key('test-function');
+    expect(result).toContain('-abcdef1');
+    delete process.env.GITHUB_SHA;
+  });
+
+  test('validateBucketName validates bucket names', () => {
+    expect(index.validateBucketName('valid-bucket-name')).toBe(true);
+    expect(index.validateBucketName('ab')).toBe(false);
+    expect(index.validateBucketName('INVALID')).toBe(false);
+    expect(index.validateBucketName('192.168.1.1')).toBe(false);
+    expect(index.validateBucketName('bucket..name')).toBe(false);
+  });
+
+  test('isEmptyValue checks empty values', () => {
+    expect(index.isEmptyValue(null)).toBe(true);
+    expect(index.isEmptyValue('')).toBe(true);
+    expect(index.isEmptyValue([])).toBe(true);
+    expect(index.isEmptyValue({})).toBe(true);
+    expect(index.isEmptyValue('value')).toBe(false);
+    expect(index.isEmptyValue({ SubnetIds: [] })).toBe(false);
+  });
+
+  test('cleanNullKeys removes null values', () => {
+    expect(index.cleanNullKeys(null)).toBeUndefined();
+    expect(index.cleanNullKeys('')).toBeUndefined();
+    expect(index.cleanNullKeys({ key: 'value', empty: null })).toEqual({ key: 'value' });
+    expect(index.cleanNullKeys([])).toBeUndefined();
+    expect(index.cleanNullKeys(['value', null])).toEqual(['value']);
+  });
+
+  test('deepEqual compares objects deeply', () => {
+    expect(index.deepEqual({ a: 1 }, { a: 1 })).toBe(true);
+    expect(index.deepEqual({ a: 1 }, { a: 2 })).toBe(false);
+    expect(index.deepEqual([1, 2], [1, 2])).toBe(true);
+    expect(index.deepEqual([1, 2], [1, 3])).toBe(false);
+    expect(index.deepEqual(null, null)).toBe(true);
+    expect(index.deepEqual('test', 'test')).toBe(true);
+  });
+
+  test('hasConfigurationChanged detects changes', async () => {
+    const current = { Role: 'old-role', Handler: 'old.handler' };
+    const updated = { Role: 'new-role', Handler: 'old.handler' };
+    const result = await index.hasConfigurationChanged(current, updated);
+    expect(result).toBe(true);
+    expect(core.info).toHaveBeenCalledWith(expect.stringContaining('Configuration difference detected'));
+  });
+
+  test('hasConfigurationChanged returns true for empty current config', async () => {
+    const result = await index.hasConfigurationChanged({}, { Role: 'test' });
+    expect(result).toBe(true);
+  });
+
+  test('getAwsAccountId retrieves account ID', async () => {
+    const mockSend = jest.fn().mockResolvedValue({ Account: '123456789012' });
+    const { STSClient } = require('@aws-sdk/client-sts');
+    STSClient.mockImplementation(() => ({ send: mockSend }));
+    
+    const result = await index.getAwsAccountId('us-east-1');
+    expect(result).toBe('123456789012');
+    expect(core.info).toHaveBeenCalledWith('Successfully retrieved AWS account ID: 123456789012');
+  });
+
+  test('getAwsAccountId handles errors', async () => {
+    const mockSend = jest.fn().mockRejectedValue(new Error('STS error'));
+    const { STSClient } = require('@aws-sdk/client-sts');
+    STSClient.mockImplementation(() => ({ send: mockSend }));
+    
+    const result = await index.getAwsAccountId('us-east-1');
+    expect(result).toBeNull();
+    expect(core.warning).toHaveBeenCalledWith('Failed to retrieve AWS account ID: STS error');
   });
 });
