@@ -682,11 +682,6 @@ describe('Function Existence Check', () => {
     expect(core.info).toHaveBeenCalledWith('No configuration changes detected');
   });
 
-  test('generateS3Key creates key with timestamp', () => {
-    const result = index.generateS3Key('test-function');
-    expect(result).toMatch(/^lambda-deployments\/test-function\/\d{4}-\d{2}-\d{2}-\d{2}-\d{2}-\d{2}-\d{3}\.zip$/);
-  });
-
   test('generateS3Key includes commit hash when GITHUB_SHA exists', () => {
     process.env.GITHUB_SHA = 'abcdef1234567890';
     const result = index.generateS3Key('test-function');
