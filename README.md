@@ -143,7 +143,7 @@ Below are two commonly used Build examples for Node.js and Python:
 | `s3-bucket` | S3 bucket name for Lambda deployment package. Uses S3 deployment method if provided | No | |
 | `s3-key` | S3 key (path) for the Lambda deployment package | No | Auto-generated |
 | `publish` | Publish a new version of the function after updating | No | `true` |
-| `dry-run` | Validate parameters and permissions without modifications | No | `true` |
+| `dry-run` | Validate parameters and permissions without modifications | No | `false` |
 | `revision-id` | Update only if the revision ID matches the specified ID | No | |
 | `architectures` | Function instruction set architecture | No | `x86_64` |
 | `source-kms-key-arn` | ARN of the KMS key for encrypting deployment package | No | |
