@@ -100229,7 +100229,7 @@ module.exports = JSON.parse('{"name":"@aws-sdk/nested-clients","version":"3.826.
 /***/ ((module) => {
 
 "use strict";
-module.exports = JSON.parse('{"name":"@amzn/github-action-lambda-deploy","version":"1.0.0","description":"GitHub Action for AWS Lambda Function Deployment","main":"index.js","scripts":{"build":"ncc build index.js -o dist","test":"jest","lint":"eslint .","lint:fix":"eslint . --fix"},"keywords":["aws","lambda","deployment"],"author":"","license":"MIT","dependencies":{"@actions/core":"^1.10.0","@actions/github":"^6.0.1","@aws-sdk/client-lambda":"^3.826.0","@aws-sdk/client-s3":"^3.864.0","@aws-sdk/util-retry":"^3.370.0","@smithy/node-http-handler":"^4.0.6","@aws-sdk/client-sts":"3.844.0","adm-zip":"^0.5.16","glob":"^11.0.2"},"devDependencies":{"@vercel/ncc":"^0.36.1","eslint":"^8.45.0","eslint-plugin-jest":"^27.2.2","jest":"^29.5.0"}}');
+module.exports = JSON.parse('{"name":"@amzn/github-action-lambda-deploy","version":"1.0.0","description":"GitHub Action for AWS Lambda Function Deployment","main":"index.js","scripts":{"build":"ncc build index.js -o dist","test":"jest","lint":"eslint .","lint:fix":"eslint . --fix"},"keywords":["aws","lambda","deployment"],"author":"","license":"MIT","dependencies":{"@actions/core":"^1.10.0","@actions/github":"^6.0.1","@aws-sdk/client-lambda":"^3.826.0","@aws-sdk/client-s3":"^3.864.0","@aws-sdk/util-retry":"^3.374.0","@smithy/node-http-handler":"^4.0.6","@aws-sdk/client-sts":"3.844.0","adm-zip":"^0.5.16","glob":"^11.0.2"},"devDependencies":{"@vercel/ncc":"^0.36.1","eslint":"^8.45.0","eslint-plugin-jest":"^27.2.2","jest":"^29.5.0"}}');
 
 /***/ })
 
