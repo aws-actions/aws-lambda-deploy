@@ -11313,7 +11313,7 @@ exports.getRuntimeConfig = getRuntimeConfig;
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.resolveHttpAuthSchemeConfig = exports.defaultS3HttpAuthSchemeProvider = exports.defaultS3HttpAuthSchemeParametersProvider = void 0;
-const core_1 = __nccwpck_require__(9963);
+const core_1 = __nccwpck_require__(8078);
 const signature_v4_multi_region_1 = __nccwpck_require__(1856);
 const middleware_endpoint_1 = __nccwpck_require__(2918);
 const util_middleware_1 = __nccwpck_require__(2390);
@@ -11547,6 +11547,7 @@ __export(index_exports, {
   CopyObjectOutputFilterSensitiveLog: () => CopyObjectOutputFilterSensitiveLog,
   CopyObjectRequestFilterSensitiveLog: () => CopyObjectRequestFilterSensitiveLog,
   CreateBucketCommand: () => CreateBucketCommand,
+  CreateBucketMetadataConfigurationCommand: () => CreateBucketMetadataConfigurationCommand,
   CreateBucketMetadataTableConfigurationCommand: () => CreateBucketMetadataTableConfigurationCommand,
   CreateMultipartUploadCommand: () => CreateMultipartUploadCommand,
   CreateMultipartUploadOutputFilterSensitiveLog: () => CreateMultipartUploadOutputFilterSensitiveLog,
@@ -11562,6 +11563,7 @@ __export(index_exports, {
   DeleteBucketIntelligentTieringConfigurationCommand: () => DeleteBucketIntelligentTieringConfigurationCommand,
   DeleteBucketInventoryConfigurationCommand: () => DeleteBucketInventoryConfigurationCommand,
   DeleteBucketLifecycleCommand: () => DeleteBucketLifecycleCommand,
+  DeleteBucketMetadataConfigurationCommand: () => DeleteBucketMetadataConfigurationCommand,
   DeleteBucketMetadataTableConfigurationCommand: () => DeleteBucketMetadataTableConfigurationCommand,
   DeleteBucketMetricsConfigurationCommand: () => DeleteBucketMetricsConfigurationCommand,
   DeleteBucketOwnershipControlsCommand: () => DeleteBucketOwnershipControlsCommand,
@@ -11579,6 +11581,7 @@ __export(index_exports, {
   EncryptionTypeMismatch: () => EncryptionTypeMismatch,
   Event: () => Event,
   ExistingObjectReplicationStatus: () => ExistingObjectReplicationStatus,
+  ExpirationState: () => ExpirationState,
   ExpirationStatus: () => ExpirationStatus,
   ExpressionType: () => ExpressionType,
   FileHeaderInfo: () => FileHeaderInfo,
@@ -11595,6 +11598,7 @@ __export(index_exports, {
   GetBucketLifecycleConfigurationCommand: () => GetBucketLifecycleConfigurationCommand,
   GetBucketLocationCommand: () => GetBucketLocationCommand,
   GetBucketLoggingCommand: () => GetBucketLoggingCommand,
+  GetBucketMetadataConfigurationCommand: () => GetBucketMetadataConfigurationCommand,
   GetBucketMetadataTableConfigurationCommand: () => GetBucketMetadataTableConfigurationCommand,
   GetBucketMetricsConfigurationCommand: () => GetBucketMetricsConfigurationCommand,
   GetBucketNotificationConfigurationCommand: () => GetBucketNotificationConfigurationCommand,
@@ -11623,12 +11627,14 @@ __export(index_exports, {
   HeadObjectCommand: () => HeadObjectCommand,
   HeadObjectOutputFilterSensitiveLog: () => HeadObjectOutputFilterSensitiveLog,
   HeadObjectRequestFilterSensitiveLog: () => HeadObjectRequestFilterSensitiveLog,
+  IdempotencyParameterMismatch: () => IdempotencyParameterMismatch,
   IntelligentTieringAccessTier: () => IntelligentTieringAccessTier,
   IntelligentTieringStatus: () => IntelligentTieringStatus,
   InvalidObjectState: () => InvalidObjectState,
   InvalidRequest: () => InvalidRequest,
   InvalidWriteOffset: () => InvalidWriteOffset,
   InventoryConfigurationFilterSensitiveLog: () => InventoryConfigurationFilterSensitiveLog,
+  InventoryConfigurationState: () => InventoryConfigurationState,
   InventoryDestinationFilterSensitiveLog: () => InventoryDestinationFilterSensitiveLog,
   InventoryEncryptionFilterSensitiveLog: () => InventoryEncryptionFilterSensitiveLog,
   InventoryFormat: () => InventoryFormat,
@@ -11708,6 +11714,7 @@ __export(index_exports, {
   PutObjectTaggingCommand: () => PutObjectTaggingCommand,
   PutPublicAccessBlockCommand: () => PutPublicAccessBlockCommand,
   QuoteFields: () => QuoteFields,
+  RenameObjectCommand: () => RenameObjectCommand,
   ReplicaModificationsStatus: () => ReplicaModificationsStatus,
   ReplicationRuleStatus: () => ReplicationRuleStatus,
   ReplicationStatus: () => ReplicationStatus,
@@ -11722,6 +11729,7 @@ __export(index_exports, {
   S3Client: () => S3Client,
   S3LocationFilterSensitiveLog: () => S3LocationFilterSensitiveLog,
   S3ServiceException: () => S3ServiceException,
+  S3TablesBucketType: () => S3TablesBucketType,
   SSEKMSFilterSensitiveLog: () => SSEKMSFilterSensitiveLog,
   SelectObjectContentCommand: () => SelectObjectContentCommand,
   SelectObjectContentEventStream: () => SelectObjectContentEventStream,
@@ -11737,12 +11745,15 @@ __export(index_exports, {
   SseKmsEncryptedObjectsStatus: () => SseKmsEncryptedObjectsStatus,
   StorageClass: () => StorageClass,
   StorageClassAnalysisSchemaVersion: () => StorageClassAnalysisSchemaVersion,
+  TableSseAlgorithm: () => TableSseAlgorithm,
   TaggingDirective: () => TaggingDirective,
   Tier: () => Tier,
   TooManyParts: () => TooManyParts,
   TransitionDefaultMinimumObjectSize: () => TransitionDefaultMinimumObjectSize,
   TransitionStorageClass: () => TransitionStorageClass,
   Type: () => Type,
+  UpdateBucketMetadataInventoryTableConfigurationCommand: () => UpdateBucketMetadataInventoryTableConfigurationCommand,
+  UpdateBucketMetadataJournalTableConfigurationCommand: () => UpdateBucketMetadataJournalTableConfigurationCommand,
   UploadPartCommand: () => UploadPartCommand,
   UploadPartCopyCommand: () => UploadPartCopyCommand,
   UploadPartCopyOutputFilterSensitiveLog: () => UploadPartCopyOutputFilterSensitiveLog,
@@ -11770,9 +11781,9 @@ module.exports = __toCommonJS(index_exports);
 // src/S3Client.ts
 var import_middleware_expect_continue = __nccwpck_require__(1990);
 var import_middleware_flexible_checksums = __nccwpck_require__(3799);
-var import_middleware_host_header = __nccwpck_require__(2545);
-var import_middleware_logger = __nccwpck_require__(14);
-var import_middleware_recursion_detection = __nccwpck_require__(5525);
+var import_middleware_host_header = __nccwpck_require__(8725);
+var import_middleware_logger = __nccwpck_require__(2568);
+var import_middleware_recursion_detection = __nccwpck_require__(7960);
 var import_middleware_sdk_s32 = __nccwpck_require__(1139);
 var import_middleware_user_agent = __nccwpck_require__(3030);
 var import_config_resolver = __nccwpck_require__(3098);
@@ -11883,6 +11894,7 @@ var ChecksumType = {
 };
 var ServerSideEncryption = {
   AES256: "AES256",
+  aws_fsx: "aws:fsx",
   aws_kms: "aws:kms",
   aws_kms_dsse: "aws:kms:dsse"
 };
@@ -11917,6 +11929,7 @@ var ObjectLockMode = {
 var StorageClass = {
   DEEP_ARCHIVE: "DEEP_ARCHIVE",
   EXPRESS_ONEZONE: "EXPRESS_ONEZONE",
+  FSX_OPENZFS: "FSX_OPENZFS",
   GLACIER: "GLACIER",
   GLACIER_IR: "GLACIER_IR",
   INTELLIGENT_TIERING: "INTELLIGENT_TIERING",
@@ -12042,6 +12055,18 @@ var ObjectOwnership = {
   BucketOwnerPreferred: "BucketOwnerPreferred",
   ObjectWriter: "ObjectWriter"
 };
+var InventoryConfigurationState = {
+  DISABLED: "DISABLED",
+  ENABLED: "ENABLED"
+};
+var TableSseAlgorithm = {
+  AES256: "AES256",
+  aws_kms: "aws:kms"
+};
+var ExpirationState = {
+  DISABLED: "DISABLED",
+  ENABLED: "ENABLED"
+};
 var SessionMode = {
   ReadOnly: "ReadOnly",
   ReadWrite: "ReadWrite"
@@ -12141,6 +12166,10 @@ var BucketLogsPermission = {
 var PartitionDateSource = {
   DeliveryTime: "DeliveryTime",
   EventTime: "EventTime"
+};
+var S3TablesBucketType = {
+  aws: "aws",
+  customer: "customer"
 };
 var MetricsFilter;
 ((MetricsFilter2) => {
@@ -12318,25 +12347,6 @@ var ArchiveStatus = {
 var EncodingType = {
   url: "url"
 };
-var ObjectStorageClass = {
-  DEEP_ARCHIVE: "DEEP_ARCHIVE",
-  EXPRESS_ONEZONE: "EXPRESS_ONEZONE",
-  GLACIER: "GLACIER",
-  GLACIER_IR: "GLACIER_IR",
-  INTELLIGENT_TIERING: "INTELLIGENT_TIERING",
-  ONEZONE_IA: "ONEZONE_IA",
-  OUTPOSTS: "OUTPOSTS",
-  REDUCED_REDUNDANCY: "REDUCED_REDUNDANCY",
-  SNOW: "SNOW",
-  STANDARD: "STANDARD",
-  STANDARD_IA: "STANDARD_IA"
-};
-var OptionalObjectAttributes = {
-  RESTORE_STATUS: "RestoreStatus"
-};
-var ObjectVersionStorageClass = {
-  STANDARD: "STANDARD"
-};
 var CompleteMultipartUploadOutputFilterSensitiveLog = /* @__PURE__ */ __name((obj) => ({
   ...obj,
   ...obj.SSEKMSKeyId && { SSEKMSKeyId: import_smithy_client.SENSITIVE_STRING }
@@ -12467,20 +12477,37 @@ var ListBucketInventoryConfigurationsOutputFilterSensitiveLog = /* @__PURE__ */ 
     )
   }
 }), "ListBucketInventoryConfigurationsOutputFilterSensitiveLog");
-var ListPartsRequestFilterSensitiveLog = /* @__PURE__ */ __name((obj) => ({
-  ...obj,
-  ...obj.SSECustomerKey && { SSECustomerKey: import_smithy_client.SENSITIVE_STRING }
-}), "ListPartsRequestFilterSensitiveLog");
 
 // src/protocols/Aws_restXml.ts
-var import_core = __nccwpck_require__(9963);
-var import_xml_builder = __nccwpck_require__(2329);
+var import_core = __nccwpck_require__(8078);
+var import_xml_builder = __nccwpck_require__(7406);
 var import_core2 = __nccwpck_require__(5829);
 var import_protocol_http = __nccwpck_require__(4418);
 
+var import_uuid = __nccwpck_require__(5840);
 
 // src/models/models_1.ts
 
+var ObjectStorageClass = {
+  DEEP_ARCHIVE: "DEEP_ARCHIVE",
+  EXPRESS_ONEZONE: "EXPRESS_ONEZONE",
+  FSX_OPENZFS: "FSX_OPENZFS",
+  GLACIER: "GLACIER",
+  GLACIER_IR: "GLACIER_IR",
+  INTELLIGENT_TIERING: "INTELLIGENT_TIERING",
+  ONEZONE_IA: "ONEZONE_IA",
+  OUTPOSTS: "OUTPOSTS",
+  REDUCED_REDUNDANCY: "REDUCED_REDUNDANCY",
+  SNOW: "SNOW",
+  STANDARD: "STANDARD",
+  STANDARD_IA: "STANDARD_IA"
+};
+var OptionalObjectAttributes = {
+  RESTORE_STATUS: "RestoreStatus"
+};
+var ObjectVersionStorageClass = {
+  STANDARD: "STANDARD"
+};
 var MFADelete = {
   Disabled: "Disabled",
   Enabled: "Enabled"
@@ -12557,6 +12584,24 @@ var TooManyParts = class _TooManyParts extends S3ServiceException {
     Object.setPrototypeOf(this, _TooManyParts.prototype);
   }
 };
+var IdempotencyParameterMismatch = class _IdempotencyParameterMismatch extends S3ServiceException {
+  static {
+    __name(this, "IdempotencyParameterMismatch");
+  }
+  name = "IdempotencyParameterMismatch";
+  $fault = "client";
+  /**
+   * @internal
+   */
+  constructor(opts) {
+    super({
+      name: "IdempotencyParameterMismatch",
+      $fault: "client",
+      ...opts
+    });
+    Object.setPrototypeOf(this, _IdempotencyParameterMismatch.prototype);
+  }
+};
 var ObjectAlreadyInActiveTierError = class _ObjectAlreadyInActiveTierError extends S3ServiceException {
   static {
     __name(this, "ObjectAlreadyInActiveTierError");
@@ -12615,6 +12660,10 @@ var SelectObjectContentEventStream;
     return visitor._(value.$unknown[0], value.$unknown[1]);
   }, "visit");
 })(SelectObjectContentEventStream || (SelectObjectContentEventStream = {}));
+var ListPartsRequestFilterSensitiveLog = /* @__PURE__ */ __name((obj) => ({
+  ...obj,
+  ...obj.SSECustomerKey && { SSECustomerKey: import_smithy_client.SENSITIVE_STRING }
+}), "ListPartsRequestFilterSensitiveLog");
 var PutBucketEncryptionRequestFilterSensitiveLog = /* @__PURE__ */ __name((obj) => ({
   ...obj,
   ...obj.ServerSideEncryptionConfiguration && {
@@ -12836,6 +12885,30 @@ var se_CreateBucketCommand = /* @__PURE__ */ __name(async (input, context) => {
   b.m("PUT").h(headers).b(body);
   return b.build();
 }, "se_CreateBucketCommand");
+var se_CreateBucketMetadataConfigurationCommand = /* @__PURE__ */ __name(async (input, context) => {
+  const b = (0, import_core2.requestBuilder)(input, context);
+  const headers = (0, import_smithy_client.map)({}, import_smithy_client.isSerializableHeaderValue, {
+    "content-type": "application/xml",
+    [_cm]: input[_CMD],
+    [_xasca]: input[_CA],
+    [_xaebo]: input[_EBO]
+  });
+  b.bp("/");
+  b.p("Bucket", () => input.Bucket, "{Bucket}", false);
+  const query = (0, import_smithy_client.map)({
+    [_mC]: [, ""]
+  });
+  let body;
+  let contents;
+  if (input.MetadataConfiguration !== void 0) {
+    contents = se_MetadataConfiguration(input.MetadataConfiguration, context);
+    body = _ve;
+    contents.a("xmlns", "http://s3.amazonaws.com/doc/2006-03-01/");
+    body += contents.toString();
+  }
+  b.m("POST").h(headers).q(query).b(body);
+  return b.build();
+}, "se_CreateBucketMetadataConfigurationCommand");
 var se_CreateBucketMetadataTableConfigurationCommand = /* @__PURE__ */ __name(async (input, context) => {
   const b = (0, import_core2.requestBuilder)(input, context);
   const headers = (0, import_smithy_client.map)({}, import_smithy_client.isSerializableHeaderValue, {
@@ -12980,7 +13053,9 @@ var se_DeleteBucketEncryptionCommand = /* @__PURE__ */ __name(async (input, cont
 }, "se_DeleteBucketEncryptionCommand");
 var se_DeleteBucketIntelligentTieringConfigurationCommand = /* @__PURE__ */ __name(async (input, context) => {
   const b = (0, import_core2.requestBuilder)(input, context);
-  const headers = {};
+  const headers = (0, import_smithy_client.map)({}, import_smithy_client.isSerializableHeaderValue, {
+    [_xaebo]: input[_EBO]
+  });
   b.bp("/");
   b.p("Bucket", () => input.Bucket, "{Bucket}", false);
   const query = (0, import_smithy_client.map)({
@@ -13020,6 +13095,20 @@ var se_DeleteBucketLifecycleCommand = /* @__PURE__ */ __name(async (input, conte
   b.m("DELETE").h(headers).q(query).b(body);
   return b.build();
 }, "se_DeleteBucketLifecycleCommand");
+var se_DeleteBucketMetadataConfigurationCommand = /* @__PURE__ */ __name(async (input, context) => {
+  const b = (0, import_core2.requestBuilder)(input, context);
+  const headers = (0, import_smithy_client.map)({}, import_smithy_client.isSerializableHeaderValue, {
+    [_xaebo]: input[_EBO]
+  });
+  b.bp("/");
+  b.p("Bucket", () => input.Bucket, "{Bucket}", false);
+  const query = (0, import_smithy_client.map)({
+    [_mC]: [, ""]
+  });
+  let body;
+  b.m("DELETE").h(headers).q(query).b(body);
+  return b.build();
+}, "se_DeleteBucketMetadataConfigurationCommand");
 var se_DeleteBucketMetadataTableConfigurationCommand = /* @__PURE__ */ __name(async (input, context) => {
   const b = (0, import_core2.requestBuilder)(input, context);
   const headers = (0, import_smithy_client.map)({}, import_smithy_client.isSerializableHeaderValue, {
@@ -13272,7 +13361,9 @@ var se_GetBucketEncryptionCommand = /* @__PURE__ */ __name(async (input, context
 }, "se_GetBucketEncryptionCommand");
 var se_GetBucketIntelligentTieringConfigurationCommand = /* @__PURE__ */ __name(async (input, context) => {
   const b = (0, import_core2.requestBuilder)(input, context);
-  const headers = {};
+  const headers = (0, import_smithy_client.map)({}, import_smithy_client.isSerializableHeaderValue, {
+    [_xaebo]: input[_EBO]
+  });
   b.bp("/");
   b.p("Bucket", () => input.Bucket, "{Bucket}", false);
   const query = (0, import_smithy_client.map)({
@@ -13342,6 +13433,20 @@ var se_GetBucketLoggingCommand = /* @__PURE__ */ __name(async (input, context) =
   b.m("GET").h(headers).q(query).b(body);
   return b.build();
 }, "se_GetBucketLoggingCommand");
+var se_GetBucketMetadataConfigurationCommand = /* @__PURE__ */ __name(async (input, context) => {
+  const b = (0, import_core2.requestBuilder)(input, context);
+  const headers = (0, import_smithy_client.map)({}, import_smithy_client.isSerializableHeaderValue, {
+    [_xaebo]: input[_EBO]
+  });
+  b.bp("/");
+  b.p("Bucket", () => input.Bucket, "{Bucket}", false);
+  const query = (0, import_smithy_client.map)({
+    [_mC]: [, ""]
+  });
+  let body;
+  b.m("GET").h(headers).q(query).b(body);
+  return b.build();
+}, "se_GetBucketMetadataConfigurationCommand");
 var se_GetBucketMetadataTableConfigurationCommand = /* @__PURE__ */ __name(async (input, context) => {
   const b = (0, import_core2.requestBuilder)(input, context);
   const headers = (0, import_smithy_client.map)({}, import_smithy_client.isSerializableHeaderValue, {
@@ -13727,7 +13832,9 @@ var se_ListBucketAnalyticsConfigurationsCommand = /* @__PURE__ */ __name(async (
 }, "se_ListBucketAnalyticsConfigurationsCommand");
 var se_ListBucketIntelligentTieringConfigurationsCommand = /* @__PURE__ */ __name(async (input, context) => {
   const b = (0, import_core2.requestBuilder)(input, context);
-  const headers = {};
+  const headers = (0, import_smithy_client.map)({}, import_smithy_client.isSerializableHeaderValue, {
+    [_xaebo]: input[_EBO]
+  });
   b.bp("/");
   b.p("Bucket", () => input.Bucket, "{Bucket}", false);
   const query = (0, import_smithy_client.map)({
@@ -14033,9 +14140,10 @@ var se_PutBucketEncryptionCommand = /* @__PURE__ */ __name(async (input, context
 }, "se_PutBucketEncryptionCommand");
 var se_PutBucketIntelligentTieringConfigurationCommand = /* @__PURE__ */ __name(async (input, context) => {
   const b = (0, import_core2.requestBuilder)(input, context);
-  const headers = {
-    "content-type": "application/xml"
-  };
+  const headers = (0, import_smithy_client.map)({}, import_smithy_client.isSerializableHeaderValue, {
+    "content-type": "application/xml",
+    [_xaebo]: input[_EBO]
+  });
   b.bp("/");
   b.p("Bucket", () => input.Bucket, "{Bucket}", false);
   const query = (0, import_smithy_client.map)({
@@ -14567,6 +14675,30 @@ var se_PutPublicAccessBlockCommand = /* @__PURE__ */ __name(async (input, contex
   b.m("PUT").h(headers).q(query).b(body);
   return b.build();
 }, "se_PutPublicAccessBlockCommand");
+var se_RenameObjectCommand = /* @__PURE__ */ __name(async (input, context) => {
+  const b = (0, import_core2.requestBuilder)(input, context);
+  const headers = (0, import_smithy_client.map)({}, import_smithy_client.isSerializableHeaderValue, {
+    [_xars]: input[_RS],
+    [_im]: input[_DIM],
+    [_inm]: input[_DINM],
+    [_ims]: [() => (0, import_smithy_client.isSerializableHeaderValue)(input[_DIMS]), () => (0, import_smithy_client.dateToUtcString)(input[_DIMS]).toString()],
+    [_ius]: [() => (0, import_smithy_client.isSerializableHeaderValue)(input[_DIUS]), () => (0, import_smithy_client.dateToUtcString)(input[_DIUS]).toString()],
+    [_xarsim]: input[_SIM],
+    [_xarsinm]: input[_SINM],
+    [_xarsims]: [() => (0, import_smithy_client.isSerializableHeaderValue)(input[_SIMS]), () => (0, import_smithy_client.dateToUtcString)(input[_SIMS]).toString()],
+    [_xarsius]: [() => (0, import_smithy_client.isSerializableHeaderValue)(input[_SIUS]), () => (0, import_smithy_client.dateToUtcString)(input[_SIUS]).toString()],
+    [_xact_]: input[_CTl] ?? (0, import_uuid.v4)()
+  });
+  b.bp("/{Key+}");
+  b.p("Bucket", () => input.Bucket, "{Bucket}", false);
+  b.p("Key", () => input.Key, "{Key+}", true);
+  const query = (0, import_smithy_client.map)({
+    [_rO]: [, ""]
+  });
+  let body;
+  b.m("PUT").h(headers).q(query).b(body);
+  return b.build();
+}, "se_RenameObjectCommand");
 var se_RestoreObjectCommand = /* @__PURE__ */ __name(async (input, context) => {
   const b = (0, import_core2.requestBuilder)(input, context);
   const headers = (0, import_smithy_client.map)({}, import_smithy_client.isSerializableHeaderValue, {
@@ -14631,6 +14763,56 @@ var se_SelectObjectContentCommand = /* @__PURE__ */ __name(async (input, context
   b.m("POST").h(headers).q(query).b(body);
   return b.build();
 }, "se_SelectObjectContentCommand");
+var se_UpdateBucketMetadataInventoryTableConfigurationCommand = /* @__PURE__ */ __name(async (input, context) => {
+  const b = (0, import_core2.requestBuilder)(input, context);
+  const headers = (0, import_smithy_client.map)({}, import_smithy_client.isSerializableHeaderValue, {
+    "content-type": "application/xml",
+    [_cm]: input[_CMD],
+    [_xasca]: input[_CA],
+    [_xaebo]: input[_EBO]
+  });
+  b.bp("/");
+  b.p("Bucket", () => input.Bucket, "{Bucket}", false);
+  const query = (0, import_smithy_client.map)({
+    [_mIT]: [, ""]
+  });
+  let body;
+  let contents;
+  if (input.InventoryTableConfiguration !== void 0) {
+    contents = se_InventoryTableConfigurationUpdates(input.InventoryTableConfiguration, context);
+    contents = contents.n("InventoryTableConfiguration");
+    body = _ve;
+    contents.a("xmlns", "http://s3.amazonaws.com/doc/2006-03-01/");
+    body += contents.toString();
+  }
+  b.m("PUT").h(headers).q(query).b(body);
+  return b.build();
+}, "se_UpdateBucketMetadataInventoryTableConfigurationCommand");
+var se_UpdateBucketMetadataJournalTableConfigurationCommand = /* @__PURE__ */ __name(async (input, context) => {
+  const b = (0, import_core2.requestBuilder)(input, context);
+  const headers = (0, import_smithy_client.map)({}, import_smithy_client.isSerializableHeaderValue, {
+    "content-type": "application/xml",
+    [_cm]: input[_CMD],
+    [_xasca]: input[_CA],
+    [_xaebo]: input[_EBO]
+  });
+  b.bp("/");
+  b.p("Bucket", () => input.Bucket, "{Bucket}", false);
+  const query = (0, import_smithy_client.map)({
+    [_mJT]: [, ""]
+  });
+  let body;
+  let contents;
+  if (input.JournalTableConfiguration !== void 0) {
+    contents = se_JournalTableConfigurationUpdates(input.JournalTableConfiguration, context);
+    contents = contents.n("JournalTableConfiguration");
+    body = _ve;
+    contents.a("xmlns", "http://s3.amazonaws.com/doc/2006-03-01/");
+    body += contents.toString();
+  }
+  b.m("PUT").h(headers).q(query).b(body);
+  return b.build();
+}, "se_UpdateBucketMetadataJournalTableConfigurationCommand");
 var se_UploadPartCommand = /* @__PURE__ */ __name(async (input, context) => {
   const b = (0, import_core2.requestBuilder)(input, context);
   const headers = (0, import_smithy_client.map)({}, import_smithy_client.isSerializableHeaderValue, {
@@ -14737,7 +14919,7 @@ var se_WriteGetObjectResponseCommand = /* @__PURE__ */ __name(async (input, cont
       () => (0, import_smithy_client.serializeDateTime)(input[_OLRUD]).toString()
     ],
     [_xafhxampc]: [() => (0, import_smithy_client.isSerializableHeaderValue)(input[_PC]), () => input[_PC].toString()],
-    [_xafhxars]: input[_RS],
+    [_xafhxars]: input[_RSe],
     [_xafhxarc]: input[_RC],
     [_xafhxar]: input[_Re],
     [_xafhxasse]: input[_SSE],
@@ -14855,11 +15037,22 @@ var de_CreateBucketCommand = /* @__PURE__ */ __name(async (output, context) => {
   }
   const contents = (0, import_smithy_client.map)({
     $metadata: deserializeMetadata(output),
-    [_L]: [, output.headers[_lo]]
+    [_L]: [, output.headers[_lo]],
+    [_BA]: [, output.headers[_xaba]]
   });
   await (0, import_smithy_client.collectBody)(output.body, context);
   return contents;
 }, "de_CreateBucketCommand");
+var de_CreateBucketMetadataConfigurationCommand = /* @__PURE__ */ __name(async (output, context) => {
+  if (output.statusCode !== 200 && output.statusCode >= 300) {
+    return de_CommandError(output, context);
+  }
+  const contents = (0, import_smithy_client.map)({
+    $metadata: deserializeMetadata(output)
+  });
+  await (0, import_smithy_client.collectBody)(output.body, context);
+  return contents;
+}, "de_CreateBucketMetadataConfigurationCommand");
 var de_CreateBucketMetadataTableConfigurationCommand = /* @__PURE__ */ __name(async (output, context) => {
   if (output.statusCode !== 200 && output.statusCode >= 300) {
     return de_CommandError(output, context);
@@ -14990,6 +15183,16 @@ var de_DeleteBucketLifecycleCommand = /* @__PURE__ */ __name(async (output, cont
   await (0, import_smithy_client.collectBody)(output.body, context);
   return contents;
 }, "de_DeleteBucketLifecycleCommand");
+var de_DeleteBucketMetadataConfigurationCommand = /* @__PURE__ */ __name(async (output, context) => {
+  if (output.statusCode !== 204 && output.statusCode >= 300) {
+    return de_CommandError(output, context);
+  }
+  const contents = (0, import_smithy_client.map)({
+    $metadata: deserializeMetadata(output)
+  });
+  await (0, import_smithy_client.collectBody)(output.body, context);
+  return contents;
+}, "de_DeleteBucketMetadataConfigurationCommand");
 var de_DeleteBucketMetadataTableConfigurationCommand = /* @__PURE__ */ __name(async (output, context) => {
   if (output.statusCode !== 204 && output.statusCode >= 300) {
     return de_CommandError(output, context);
@@ -15248,6 +15451,17 @@ var de_GetBucketLoggingCommand = /* @__PURE__ */ __name(async (output, context) 
   }
   return contents;
 }, "de_GetBucketLoggingCommand");
+var de_GetBucketMetadataConfigurationCommand = /* @__PURE__ */ __name(async (output, context) => {
+  if (output.statusCode !== 200 && output.statusCode >= 300) {
+    return de_CommandError(output, context);
+  }
+  const contents = (0, import_smithy_client.map)({
+    $metadata: deserializeMetadata(output)
+  });
+  const data = (0, import_smithy_client.expectObject)(await (0, import_core.parseXmlBody)(output.body, context));
+  contents.GetBucketMetadataConfigurationResult = de_GetBucketMetadataConfigurationResult(data, context);
+  return contents;
+}, "de_GetBucketMetadataConfigurationCommand");
 var de_GetBucketMetadataTableConfigurationCommand = /* @__PURE__ */ __name(async (output, context) => {
   if (output.statusCode !== 200 && output.statusCode >= 300) {
     return de_CommandError(output, context);
@@ -15447,7 +15661,7 @@ var de_GetObjectCommand = /* @__PURE__ */ __name(async (output, context) => {
     [_BKE]: [() => void 0 !== output.headers[_xassebke], () => (0, import_smithy_client.parseBoolean)(output.headers[_xassebke])],
     [_SC]: [, output.headers[_xasc]],
     [_RC]: [, output.headers[_xarc]],
-    [_RS]: [, output.headers[_xars]],
+    [_RSe]: [, output.headers[_xars_]],
     [_PC]: [() => void 0 !== output.headers[_xampc], () => (0, import_smithy_client.strictParseInt32)(output.headers[_xampc])],
     [_TC]: [() => void 0 !== output.headers[_xatc], () => (0, import_smithy_client.strictParseInt32)(output.headers[_xatc])],
     [_OLM]: [, output.headers[_xaolm]],
@@ -15596,6 +15810,7 @@ var de_HeadBucketCommand = /* @__PURE__ */ __name(async (output, context) => {
   }
   const contents = (0, import_smithy_client.map)({
     $metadata: deserializeMetadata(output),
+    [_BA]: [, output.headers[_xaba]],
     [_BLT]: [, output.headers[_xablt]],
     [_BLN]: [, output.headers[_xabln]],
     [_BR]: [, output.headers[_xabr]],
@@ -15642,8 +15857,9 @@ var de_HeadObjectCommand = /* @__PURE__ */ __name(async (output, context) => {
     [_BKE]: [() => void 0 !== output.headers[_xassebke], () => (0, import_smithy_client.parseBoolean)(output.headers[_xassebke])],
     [_SC]: [, output.headers[_xasc]],
     [_RC]: [, output.headers[_xarc]],
-    [_RS]: [, output.headers[_xars]],
+    [_RSe]: [, output.headers[_xars_]],
     [_PC]: [() => void 0 !== output.headers[_xampc], () => (0, import_smithy_client.strictParseInt32)(output.headers[_xampc])],
+    [_TC]: [() => void 0 !== output.headers[_xatc], () => (0, import_smithy_client.strictParseInt32)(output.headers[_xatc])],
     [_OLM]: [, output.headers[_xaolm]],
     [_OLRUD]: [
       () => void 0 !== output.headers[_xaolrud],
@@ -16332,6 +16548,16 @@ var de_PutPublicAccessBlockCommand = /* @__PURE__ */ __name(async (output, conte
   await (0, import_smithy_client.collectBody)(output.body, context);
   return contents;
 }, "de_PutPublicAccessBlockCommand");
+var de_RenameObjectCommand = /* @__PURE__ */ __name(async (output, context) => {
+  if (output.statusCode !== 200 && output.statusCode >= 300) {
+    return de_CommandError(output, context);
+  }
+  const contents = (0, import_smithy_client.map)({
+    $metadata: deserializeMetadata(output)
+  });
+  await (0, import_smithy_client.collectBody)(output.body, context);
+  return contents;
+}, "de_RenameObjectCommand");
 var de_RestoreObjectCommand = /* @__PURE__ */ __name(async (output, context) => {
   if (output.statusCode !== 200 && output.statusCode >= 300) {
     return de_CommandError(output, context);
@@ -16355,6 +16581,26 @@ var de_SelectObjectContentCommand = /* @__PURE__ */ __name(async (output, contex
   contents.Payload = de_SelectObjectContentEventStream(data, context);
   return contents;
 }, "de_SelectObjectContentCommand");
+var de_UpdateBucketMetadataInventoryTableConfigurationCommand = /* @__PURE__ */ __name(async (output, context) => {
+  if (output.statusCode !== 200 && output.statusCode >= 300) {
+    return de_CommandError(output, context);
+  }
+  const contents = (0, import_smithy_client.map)({
+    $metadata: deserializeMetadata(output)
+  });
+  await (0, import_smithy_client.collectBody)(output.body, context);
+  return contents;
+}, "de_UpdateBucketMetadataInventoryTableConfigurationCommand");
+var de_UpdateBucketMetadataJournalTableConfigurationCommand = /* @__PURE__ */ __name(async (output, context) => {
+  if (output.statusCode !== 200 && output.statusCode >= 300) {
+    return de_CommandError(output, context);
+  }
+  const contents = (0, import_smithy_client.map)({
+    $metadata: deserializeMetadata(output)
+  });
+  await (0, import_smithy_client.collectBody)(output.body, context);
+  return contents;
+}, "de_UpdateBucketMetadataJournalTableConfigurationCommand");
 var de_UploadPartCommand = /* @__PURE__ */ __name(async (output, context) => {
   if (output.statusCode !== 200 && output.statusCode >= 300) {
     return de_CommandError(output, context);
@@ -16448,6 +16694,9 @@ var de_CommandError = /* @__PURE__ */ __name(async (output, context) => {
     case "TooManyParts":
     case "com.amazonaws.s3#TooManyParts":
       throw await de_TooManyPartsRes(parsedOutput, context);
+    case "IdempotencyParameterMismatch":
+    case "com.amazonaws.s3#IdempotencyParameterMismatch":
+      throw await de_IdempotencyParameterMismatchRes(parsedOutput, context);
     case "ObjectAlreadyInActiveTierError":
     case "com.amazonaws.s3#ObjectAlreadyInActiveTierError":
       throw await de_ObjectAlreadyInActiveTierErrorRes(parsedOutput, context);
@@ -16488,6 +16737,15 @@ var de_EncryptionTypeMismatchRes = /* @__PURE__ */ __name(async (parsedOutput, c
   });
   return (0, import_smithy_client.decorateServiceException)(exception, parsedOutput.body);
 }, "de_EncryptionTypeMismatchRes");
+var de_IdempotencyParameterMismatchRes = /* @__PURE__ */ __name(async (parsedOutput, context) => {
+  const contents = (0, import_smithy_client.map)({});
+  const data = parsedOutput.body;
+  const exception = new IdempotencyParameterMismatch({
+    $metadata: deserializeMetadata(parsedOutput),
+    ...contents
+  });
+  return (0, import_smithy_client.decorateServiceException)(exception, parsedOutput.body);
+}, "de_IdempotencyParameterMismatchRes");
 var de_InvalidObjectStateRes = /* @__PURE__ */ __name(async (parsedOutput, context) => {
   const contents = (0, import_smithy_client.map)({});
   const data = parsedOutput.body;
@@ -16611,7 +16869,7 @@ var de_SelectObjectContentEventStream = /* @__PURE__ */ __name((output, context)
         End: await de_EndEvent_event(event["End"], context)
       };
     }
-    return { $unknown: output };
+    return { $unknown: event };
   });
 }, "de_SelectObjectContentEventStream");
 var de_ContinuationEvent_event = /* @__PURE__ */ __name(async (output, context) => {
@@ -16841,6 +17099,7 @@ var se_CreateBucketConfiguration = /* @__PURE__ */ __name((input, context) => {
   if (input[_B] != null) {
     bn.c(se_BucketInfo(input[_B], context).n(_B));
   }
+  bn.lc(input, "Tags", "Tags", () => se_TagSet(input[_Tag], context));
   return bn;
 }, "se_CreateBucketConfiguration");
 var se_CSVInput = /* @__PURE__ */ __name((input, context) => {
@@ -17131,6 +17390,43 @@ var se_InventorySchedule = /* @__PURE__ */ __name((input, context) => {
   }
   return bn;
 }, "se_InventorySchedule");
+var se_InventoryTableConfiguration = /* @__PURE__ */ __name((input, context) => {
+  const bn = new import_xml_builder.XmlNode(_ITCn);
+  if (input[_CSo] != null) {
+    bn.c(import_xml_builder.XmlNode.of(_ICS, input[_CSo]).n(_CSo));
+  }
+  if (input[_ECn] != null) {
+    bn.c(se_MetadataTableEncryptionConfiguration(input[_ECn], context).n(_ECn));
+  }
+  return bn;
+}, "se_InventoryTableConfiguration");
+var se_InventoryTableConfigurationUpdates = /* @__PURE__ */ __name((input, context) => {
+  const bn = new import_xml_builder.XmlNode(_ITCU);
+  if (input[_CSo] != null) {
+    bn.c(import_xml_builder.XmlNode.of(_ICS, input[_CSo]).n(_CSo));
+  }
+  if (input[_ECn] != null) {
+    bn.c(se_MetadataTableEncryptionConfiguration(input[_ECn], context).n(_ECn));
+  }
+  return bn;
+}, "se_InventoryTableConfigurationUpdates");
+var se_JournalTableConfiguration = /* @__PURE__ */ __name((input, context) => {
+  const bn = new import_xml_builder.XmlNode(_JTC);
+  if (input[_REe] != null) {
+    bn.c(se_RecordExpiration(input[_REe], context).n(_REe));
+  }
+  if (input[_ECn] != null) {
+    bn.c(se_MetadataTableEncryptionConfiguration(input[_ECn], context).n(_ECn));
+  }
+  return bn;
+}, "se_JournalTableConfiguration");
+var se_JournalTableConfigurationUpdates = /* @__PURE__ */ __name((input, context) => {
+  const bn = new import_xml_builder.XmlNode(_JTCU);
+  if (input[_REe] != null) {
+    bn.c(se_RecordExpiration(input[_REe], context).n(_REe));
+  }
+  return bn;
+}, "se_JournalTableConfigurationUpdates");
 var se_JSONInput = /* @__PURE__ */ __name((input, context) => {
   const bn = new import_xml_builder.XmlNode(_JSONI);
   if (input[_Ty] != null) {
@@ -17259,6 +17555,16 @@ var se_LoggingEnabled = /* @__PURE__ */ __name((input, context) => {
   }
   return bn;
 }, "se_LoggingEnabled");
+var se_MetadataConfiguration = /* @__PURE__ */ __name((input, context) => {
+  const bn = new import_xml_builder.XmlNode(_MCe);
+  if (input[_JTC] != null) {
+    bn.c(se_JournalTableConfiguration(input[_JTC], context).n(_JTC));
+  }
+  if (input[_ITCn] != null) {
+    bn.c(se_InventoryTableConfiguration(input[_ITCn], context).n(_ITCn));
+  }
+  return bn;
+}, "se_MetadataConfiguration");
 var se_MetadataEntry = /* @__PURE__ */ __name((input, context) => {
   const bn = new import_xml_builder.XmlNode(_ME);
   if (input[_N] != null) {
@@ -17276,6 +17582,14 @@ var se_MetadataTableConfiguration = /* @__PURE__ */ __name((input, context) => {
   }
   return bn;
 }, "se_MetadataTableConfiguration");
+var se_MetadataTableEncryptionConfiguration = /* @__PURE__ */ __name((input, context) => {
+  const bn = new import_xml_builder.XmlNode(_MTEC);
+  if (input[_SAs] != null) {
+    bn.c(import_xml_builder.XmlNode.of(_TSA, input[_SAs]).n(_SAs));
+  }
+  bn.cc(input, _KKA);
+  return bn;
+}, "se_MetadataTableEncryptionConfiguration");
 var se_Metrics = /* @__PURE__ */ __name((input, context) => {
   const bn = new import_xml_builder.XmlNode(_Me);
   if (input[_S] != null) {
@@ -17525,6 +17839,16 @@ var se_QueueConfigurationList = /* @__PURE__ */ __name((input, context) => {
     return n.n(_me);
   });
 }, "se_QueueConfigurationList");
+var se_RecordExpiration = /* @__PURE__ */ __name((input, context) => {
+  const bn = new import_xml_builder.XmlNode(_REe);
+  if (input[_Exp] != null) {
+    bn.c(import_xml_builder.XmlNode.of(_ESxp, input[_Exp]).n(_Exp));
+  }
+  if (input[_Da] != null) {
+    bn.c(import_xml_builder.XmlNode.of(_RED, String(input[_Da])).n(_Da));
+  }
+  return bn;
+}, "se_RecordExpiration");
 var se_Redirect = /* @__PURE__ */ __name((input, context) => {
   const bn = new import_xml_builder.XmlNode(_Red);
   bn.cc(input, _HN);
@@ -18050,6 +18374,9 @@ var de_Bucket = /* @__PURE__ */ __name((output, context) => {
   if (output[_BR] != null) {
     contents[_BR] = (0, import_smithy_client.expectString)(output[_BR]);
   }
+  if (output[_BA] != null) {
+    contents[_BA] = (0, import_smithy_client.expectString)(output[_BA]);
+  }
   return contents;
 }, "de_Bucket");
 var de_Buckets = /* @__PURE__ */ __name((output, context) => {
@@ -18288,6 +18615,19 @@ var de_Destination = /* @__PURE__ */ __name((output, context) => {
   }
   return contents;
 }, "de_Destination");
+var de_DestinationResult = /* @__PURE__ */ __name((output, context) => {
+  const contents = {};
+  if (output[_TBT] != null) {
+    contents[_TBT] = (0, import_smithy_client.expectString)(output[_TBT]);
+  }
+  if (output[_TBA] != null) {
+    contents[_TBA] = (0, import_smithy_client.expectString)(output[_TBA]);
+  }
+  if (output[_TNa] != null) {
+    contents[_TNa] = (0, import_smithy_client.expectString)(output[_TNa]);
+  }
+  return contents;
+}, "de_DestinationResult");
 var de_EncryptionConfiguration = /* @__PURE__ */ __name((output, context) => {
   const contents = {};
   if (output[_RKKID] != null) {
@@ -18373,6 +18713,13 @@ var de_FilterRuleList = /* @__PURE__ */ __name((output, context) => {
     return de_FilterRule(entry, context);
   });
 }, "de_FilterRuleList");
+var de_GetBucketMetadataConfigurationResult = /* @__PURE__ */ __name((output, context) => {
+  const contents = {};
+  if (output[_MCR] != null) {
+    contents[_MCR] = de_MetadataConfigurationResult(output[_MCR], context);
+  }
+  return contents;
+}, "de_GetBucketMetadataConfigurationResult");
 var de_GetBucketMetadataTableConfigurationResult = /* @__PURE__ */ __name((output, context) => {
   const contents = {};
   if (output[_MTCR] != null) {
@@ -18596,6 +18943,44 @@ var de_InventorySchedule = /* @__PURE__ */ __name((output, context) => {
   }
   return contents;
 }, "de_InventorySchedule");
+var de_InventoryTableConfigurationResult = /* @__PURE__ */ __name((output, context) => {
+  const contents = {};
+  if (output[_CSo] != null) {
+    contents[_CSo] = (0, import_smithy_client.expectString)(output[_CSo]);
+  }
+  if (output[_TSa] != null) {
+    contents[_TSa] = (0, import_smithy_client.expectString)(output[_TSa]);
+  }
+  if (output[_Er] != null) {
+    contents[_Er] = de_ErrorDetails(output[_Er], context);
+  }
+  if (output[_TN] != null) {
+    contents[_TN] = (0, import_smithy_client.expectString)(output[_TN]);
+  }
+  if (output[_TAa] != null) {
+    contents[_TAa] = (0, import_smithy_client.expectString)(output[_TAa]);
+  }
+  return contents;
+}, "de_InventoryTableConfigurationResult");
+var de_JournalTableConfigurationResult = /* @__PURE__ */ __name((output, context) => {
+  const contents = {};
+  if (output[_TSa] != null) {
+    contents[_TSa] = (0, import_smithy_client.expectString)(output[_TSa]);
+  }
+  if (output[_Er] != null) {
+    contents[_Er] = de_ErrorDetails(output[_Er], context);
+  }
+  if (output[_TN] != null) {
+    contents[_TN] = (0, import_smithy_client.expectString)(output[_TN]);
+  }
+  if (output[_TAa] != null) {
+    contents[_TAa] = (0, import_smithy_client.expectString)(output[_TAa]);
+  }
+  if (output[_REe] != null) {
+    contents[_REe] = de_RecordExpiration(output[_REe], context);
+  }
+  return contents;
+}, "de_JournalTableConfigurationResult");
 var de_LambdaFunctionConfiguration = /* @__PURE__ */ __name((output, context) => {
   const contents = {};
   if (output[_I] != null) {
@@ -18727,6 +19112,19 @@ var de_LoggingEnabled = /* @__PURE__ */ __name((output, context) => {
   }
   return contents;
 }, "de_LoggingEnabled");
+var de_MetadataConfigurationResult = /* @__PURE__ */ __name((output, context) => {
+  const contents = {};
+  if (output[_DRes] != null) {
+    contents[_DRes] = de_DestinationResult(output[_DRes], context);
+  }
+  if (output[_JTCR] != null) {
+    contents[_JTCR] = de_JournalTableConfigurationResult(output[_JTCR], context);
+  }
+  if (output[_ITCR] != null) {
+    contents[_ITCR] = de_InventoryTableConfigurationResult(output[_ITCR], context);
+  }
+  return contents;
+}, "de_MetadataConfigurationResult");
 var de_MetadataTableConfigurationResult = /* @__PURE__ */ __name((output, context) => {
   const contents = {};
   if (output[_STDR] != null) {
@@ -18894,8 +19292,8 @@ var de__Object = /* @__PURE__ */ __name((output, context) => {
   if (output[_O] != null) {
     contents[_O] = de_Owner(output[_O], context);
   }
-  if (output[_RSe] != null) {
-    contents[_RSe] = de_RestoreStatus(output[_RSe], context);
+  if (output[_RSes] != null) {
+    contents[_RSes] = de_RestoreStatus(output[_RSes], context);
   }
   return contents;
 }, "de__Object");
@@ -18997,8 +19395,8 @@ var de_ObjectVersion = /* @__PURE__ */ __name((output, context) => {
   if (output[_O] != null) {
     contents[_O] = de_Owner(output[_O], context);
   }
-  if (output[_RSe] != null) {
-    contents[_RSe] = de_RestoreStatus(output[_RSe], context);
+  if (output[_RSes] != null) {
+    contents[_RSes] = de_RestoreStatus(output[_RSes], context);
   }
   return contents;
 }, "de_ObjectVersion");
@@ -19145,6 +19543,16 @@ var de_QueueConfigurationList = /* @__PURE__ */ __name((output, context) => {
     return de_QueueConfiguration(entry, context);
   });
 }, "de_QueueConfigurationList");
+var de_RecordExpiration = /* @__PURE__ */ __name((output, context) => {
+  const contents = {};
+  if (output[_Exp] != null) {
+    contents[_Exp] = (0, import_smithy_client.expectString)(output[_Exp]);
+  }
+  if (output[_Da] != null) {
+    contents[_Da] = (0, import_smithy_client.strictParseInt32)(output[_Da]);
+  }
+  return contents;
+}, "de_RecordExpiration");
 var de_Redirect = /* @__PURE__ */ __name((output, context) => {
   const contents = {};
   if (output[_HN] != null) {
@@ -19276,8 +19684,8 @@ var de_RestoreStatus = /* @__PURE__ */ __name((output, context) => {
   if (output[_IRIP] != null) {
     contents[_IRIP] = (0, import_smithy_client.parseBoolean)(output[_IRIP]);
   }
-  if (output[_RED] != null) {
-    contents[_RED] = (0, import_smithy_client.expectNonNull)((0, import_smithy_client.parseRfc3339DateTimeWithOffset)(output[_RED]));
+  if (output[_REDe] != null) {
+    contents[_REDe] = (0, import_smithy_client.expectNonNull)((0, import_smithy_client.parseRfc3339DateTimeWithOffset)(output[_REDe]));
   }
   return contents;
 }, "de_RestoreStatus");
@@ -19570,6 +19978,7 @@ var _ASSEBD = "ApplyServerSideEncryptionByDefault";
 var _AT = "AccessTier";
 var _Ac = "Account";
 var _B = "Bucket";
+var _BA = "BucketArn";
 var _BAI = "BucketAccountId";
 var _BAS = "BucketAccelerateStatus";
 var _BGR = "BypassGovernanceRetention";
@@ -19631,7 +20040,9 @@ var _CSV = "CSV";
 var _CSVI = "CopySourceVersionId";
 var _CSVIn = "CSVInput";
 var _CSVO = "CSVOutput";
+var _CSo = "ConfigurationState";
 var _CT = "ChecksumType";
+var _CTl = "ClientToken";
 var _CTo = "ContentType";
 var _CTom = "CompressionType";
 var _CTon = "ContinuationToken";
@@ -19643,6 +20054,10 @@ var _Con = "Condition";
 var _D = "Delimiter";
 var _DAI = "DaysAfterInitiation";
 var _DE = "DataExport";
+var _DIM = "DestinationIfMatch";
+var _DIMS = "DestinationIfModifiedSince";
+var _DINM = "DestinationIfNoneMatch";
+var _DIUS = "DestinationIfUnmodifiedSince";
 var _DM = "DeleteMarker";
 var _DMR = "DeleteMarkerReplication";
 var _DMRS = "DeleteMarkerReplicationStatus";
@@ -19651,6 +20066,7 @@ var _DMe = "DeleteMarkers";
 var _DN = "DisplayName";
 var _DR = "DataRedundancy";
 var _DRe = "DefaultRetention";
+var _DRes = "DestinationResult";
 var _Da = "Days";
 var _Dat = "Date";
 var _De = "Deleted";
@@ -19674,6 +20090,7 @@ var _ERP = "EnableRequestProgress";
 var _ES = "ExpiresString";
 var _ESBO = "ExpectedSourceBucketOwner";
 var _ESx = "ExpirationStatus";
+var _ESxp = "ExpirationState";
 var _ET = "EncodingType";
 var _ETa = "ETag";
 var _ETn = "EncryptionType";
@@ -19714,6 +20131,7 @@ var _HRC = "HttpRedirectCode";
 var _I = "Id";
 var _IC = "InventoryConfiguration";
 var _ICL = "InventoryConfigurationList";
+var _ICS = "InventoryConfigurationState";
 var _ID = "IndexDocument";
 var _ID_ = "ID";
 var _IDn = "InventoryDestination";
@@ -19744,6 +20162,9 @@ var _ITAO = "IntelligentTieringAndOperator";
 var _ITAT = "IntelligentTieringAccessTier";
 var _ITC = "IntelligentTieringConfiguration";
 var _ITCL = "IntelligentTieringConfigurationList";
+var _ITCR = "InventoryTableConfigurationResult";
+var _ITCU = "InventoryTableConfigurationUpdates";
+var _ITCn = "InventoryTableConfiguration";
 var _ITD = "IntelligentTieringDays";
 var _ITF = "IntelligentTieringFilter";
 var _ITI = "IntelligentTieringId";
@@ -19755,9 +20176,13 @@ var _JSON = "JSON";
 var _JSONI = "JSONInput";
 var _JSONO = "JSONOutput";
 var _JSONT = "JSONType";
+var _JTC = "JournalTableConfiguration";
+var _JTCR = "JournalTableConfigurationResult";
+var _JTCU = "JournalTableConfigurationUpdates";
 var _K = "Key";
 var _KC = "KeyCount";
 var _KI = "KeyId";
+var _KKA = "KmsKeyArn";
 var _KM = "KeyMarker";
 var _KMSC = "KMSContext";
 var _KMSKI = "KMSKeyId";
@@ -19785,6 +20210,8 @@ var _MAS = "MaxAgeSeconds";
 var _MB = "MaxBuckets";
 var _MC = "MetricsConfiguration";
 var _MCL = "MetricsConfigurationList";
+var _MCR = "MetadataConfigurationResult";
+var _MCe = "MetadataConfiguration";
 var _MD = "MetadataDirective";
 var _MDB = "MaxDirectoryBuckets";
 var _MDf = "MfaDelete";
@@ -19801,6 +20228,7 @@ var _MP = "MaxParts";
 var _MS = "MetricsStatus";
 var _MTC = "MetadataTableConfiguration";
 var _MTCR = "MetadataTableConfigurationResult";
+var _MTEC = "MetadataTableEncryptionConfiguration";
 var _MU = "MaxUploads";
 var _MV = "MetadataValue";
 var _Me = "Metrics";
@@ -19888,7 +20316,9 @@ var _RCT = "ResponseContentType";
 var _RCe = "ReplicationConfiguration";
 var _RD = "RecordDelimiter";
 var _RE = "ResponseExpires";
-var _RED = "RestoreExpiryDate";
+var _RED = "RecordExpirationDays";
+var _REDe = "RestoreExpiryDate";
+var _REe = "RecordExpiration";
 var _RKKID = "ReplicaKmsKeyID";
 var _RKPW = "ReplaceKeyPrefixWith";
 var _RKW = "ReplaceKeyWith";
@@ -19908,8 +20338,9 @@ var _RRe = "ReplicationRule";
 var _RRes = "RestoreRequest";
 var _RRo = "RoutingRules";
 var _RRou = "RoutingRule";
-var _RS = "ReplicationStatus";
-var _RSe = "RestoreStatus";
+var _RS = "RenameSource";
+var _RSe = "ReplicationStatus";
+var _RSes = "RestoreStatus";
 var _RT = "RequestToken";
 var _RTS = "ReplicationTimeStatus";
 var _RTV = "ReplicationTimeValue";
@@ -19923,6 +20354,7 @@ var _Rul = "Rules";
 var _S = "Status";
 var _SA = "StartAfter";
 var _SAK = "SecretAccessKey";
+var _SAs = "SseAlgorithm";
 var _SBD = "S3BucketDestination";
 var _SC = "StorageClass";
 var _SCA = "StorageClassAnalysis";
@@ -19930,6 +20362,10 @@ var _SCADE = "StorageClassAnalysisDataExport";
 var _SCASV = "StorageClassAnalysisSchemaVersion";
 var _SCt = "StatusCode";
 var _SDV = "SkipDestinationValidation";
+var _SIM = "SourceIfMatch";
+var _SIMS = "SourceIfModifiedSince";
+var _SINM = "SourceIfNoneMatch";
+var _SIUS = "SourceIfUnmodifiedSince";
 var _SK = "SSE-KMS";
 var _SKEO = "SseKmsEncryptedObjects";
 var _SKEOS = "SseKmsEncryptedObjectsStatus";
@@ -19971,6 +20407,7 @@ var _TA = "TopicArn";
 var _TAa = "TableArn";
 var _TB = "TargetBucket";
 var _TBA = "TableBucketArn";
+var _TBT = "TableBucketType";
 var _TC = "TagCount";
 var _TCo = "TopicConfiguration";
 var _TCop = "TopicConfigurations";
@@ -19984,7 +20421,9 @@ var _TOKF = "TargetObjectKeyFormat";
 var _TP = "TargetPrefix";
 var _TPC = "TotalPartsCount";
 var _TS = "TagSet";
+var _TSA = "TableSseAlgorithm";
 var _TSC = "TransitionStorageClass";
+var _TSa = "TableStatus";
 var _Ta = "Tag";
 var _Tag = "Tags";
 var _Ti = "Tier";
@@ -20052,6 +20491,9 @@ var _lo = "location";
 var _log = "logging";
 var _lt = "list-type";
 var _m = "metrics";
+var _mC = "metadataConfiguration";
+var _mIT = "metadataInventoryTable";
+var _mJT = "metadataJournalTable";
 var _mT = "metadataTable";
 var _ma = "marker";
 var _mb = "max-buckets";
@@ -20070,6 +20512,7 @@ var _pS = "policyStatus";
 var _pnm = "part-number-marker";
 var _pr = "prefix";
 var _r = "replication";
+var _rO = "renameObject";
 var _rP = "requestPayment";
 var _ra = "range";
 var _rcc = "response-cache-control";
@@ -20101,6 +20544,7 @@ var _xaad = "x-amz-abort-date";
 var _xaapa = "x-amz-access-point-alias";
 var _xaari = "x-amz-abort-rule-id";
 var _xaas = "x-amz-archive-status";
+var _xaba = "x-amz-bucket-arn";
 var _xabgr = "x-amz-bypass-governance-retention";
 var _xabln = "x-amz-bucket-location-name";
 var _xablt = "x-amz-bucket-location-type";
@@ -20127,6 +20571,7 @@ var _xacssseck = "x-amz-copy-source-server-side-encryption-customer-key";
 var _xacssseckm = "x-amz-copy-source-server-side-encryption-customer-key-md5";
 var _xacsvi = "x-amz-copy-source-version-id";
 var _xact = "x-amz-checksum-type";
+var _xact_ = "x-amz-client-token";
 var _xadm = "x-amz-delete-marker";
 var _xae = "x-amz-expiration";
 var _xaebo = "x-amz-expected-bucket-owner";
@@ -20193,7 +20638,12 @@ var _xarc = "x-amz-request-charged";
 var _xarop = "x-amz-restore-output-path";
 var _xarp = "x-amz-request-payer";
 var _xarr = "x-amz-request-route";
-var _xars = "x-amz-replication-status";
+var _xars = "x-amz-rename-source";
+var _xars_ = "x-amz-replication-status";
+var _xarsim = "x-amz-rename-source-if-match";
+var _xarsims = "x-amz-rename-source-if-modified-since";
+var _xarsinm = "x-amz-rename-source-if-none-match";
+var _xarsius = "x-amz-rename-source-if-unmodified-since";
 var _xart = "x-amz-request-token";
 var _xasc = "x-amz-storage-class";
 var _xasca = "x-amz-sdk-checksum-algorithm";
@@ -20236,7 +20686,7 @@ var CreateSessionCommand = class extends import_smithy_client.Command.classBuild
 var import_runtimeConfig = __nccwpck_require__(2714);
 
 // src/runtimeExtensions.ts
-var import_region_config_resolver = __nccwpck_require__(8156);
+var import_region_config_resolver = __nccwpck_require__(8859);
 
 
 
@@ -20450,6 +20900,30 @@ var CreateBucketCommand = class extends import_smithy_client.Command.classBuilde
   }
 };
 
+// src/commands/CreateBucketMetadataConfigurationCommand.ts
+
+
+
+
+var CreateBucketMetadataConfigurationCommand = class extends import_smithy_client.Command.classBuilder().ep({
+  ...commonParams,
+  UseS3ExpressControlEndpoint: { type: "staticContextParams", value: true },
+  Bucket: { type: "contextParams", name: "Bucket" }
+}).m(function(Command, cs, config, o) {
+  return [
+    (0, import_middleware_serde.getSerdePlugin)(config, this.serialize, this.deserialize),
+    (0, import_middleware_endpoint.getEndpointPlugin)(config, Command.getEndpointParameterInstructions()),
+    (0, import_middleware_flexible_checksums.getFlexibleChecksumsPlugin)(config, {
+      requestAlgorithmMember: { httpHeader: "x-amz-sdk-checksum-algorithm", name: "ChecksumAlgorithm" },
+      requestChecksumRequired: true
+    })
+  ];
+}).s("AmazonS3", "CreateBucketMetadataConfiguration", {}).n("S3Client", "CreateBucketMetadataConfigurationCommand").f(void 0, void 0).ser(se_CreateBucketMetadataConfigurationCommand).de(de_CreateBucketMetadataConfigurationCommand).build() {
+  static {
+    __name(this, "CreateBucketMetadataConfigurationCommand");
+  }
+};
+
 // src/commands/CreateBucketMetadataTableConfigurationCommand.ts
 
 
@@ -20627,6 +21101,25 @@ var DeleteBucketLifecycleCommand = class extends import_smithy_client.Command.cl
 }).s("AmazonS3", "DeleteBucketLifecycle", {}).n("S3Client", "DeleteBucketLifecycleCommand").f(void 0, void 0).ser(se_DeleteBucketLifecycleCommand).de(de_DeleteBucketLifecycleCommand).build() {
   static {
     __name(this, "DeleteBucketLifecycleCommand");
+  }
+};
+
+// src/commands/DeleteBucketMetadataConfigurationCommand.ts
+
+
+
+var DeleteBucketMetadataConfigurationCommand = class extends import_smithy_client.Command.classBuilder().ep({
+  ...commonParams,
+  UseS3ExpressControlEndpoint: { type: "staticContextParams", value: true },
+  Bucket: { type: "contextParams", name: "Bucket" }
+}).m(function(Command, cs, config, o) {
+  return [
+    (0, import_middleware_serde.getSerdePlugin)(config, this.serialize, this.deserialize),
+    (0, import_middleware_endpoint.getEndpointPlugin)(config, Command.getEndpointParameterInstructions())
+  ];
+}).s("AmazonS3", "DeleteBucketMetadataConfiguration", {}).n("S3Client", "DeleteBucketMetadataConfigurationCommand").f(void 0, void 0).ser(se_DeleteBucketMetadataConfigurationCommand).de(de_DeleteBucketMetadataConfigurationCommand).build() {
+  static {
+    __name(this, "DeleteBucketMetadataConfigurationCommand");
   }
 };
 
@@ -21058,8 +21551,29 @@ var GetBucketLoggingCommand = class extends import_smithy_client.Command.classBu
   }
 };
 
-// src/commands/GetBucketMetadataTableConfigurationCommand.ts
+// src/commands/GetBucketMetadataConfigurationCommand.ts
 var import_middleware_sdk_s321 = __nccwpck_require__(1139);
+
+
+
+var GetBucketMetadataConfigurationCommand = class extends import_smithy_client.Command.classBuilder().ep({
+  ...commonParams,
+  UseS3ExpressControlEndpoint: { type: "staticContextParams", value: true },
+  Bucket: { type: "contextParams", name: "Bucket" }
+}).m(function(Command, cs, config, o) {
+  return [
+    (0, import_middleware_serde.getSerdePlugin)(config, this.serialize, this.deserialize),
+    (0, import_middleware_endpoint.getEndpointPlugin)(config, Command.getEndpointParameterInstructions()),
+    (0, import_middleware_sdk_s321.getThrow200ExceptionsPlugin)(config)
+  ];
+}).s("AmazonS3", "GetBucketMetadataConfiguration", {}).n("S3Client", "GetBucketMetadataConfigurationCommand").f(void 0, void 0).ser(se_GetBucketMetadataConfigurationCommand).de(de_GetBucketMetadataConfigurationCommand).build() {
+  static {
+    __name(this, "GetBucketMetadataConfigurationCommand");
+  }
+};
+
+// src/commands/GetBucketMetadataTableConfigurationCommand.ts
+var import_middleware_sdk_s322 = __nccwpck_require__(1139);
 
 
 
@@ -21071,7 +21585,7 @@ var GetBucketMetadataTableConfigurationCommand = class extends import_smithy_cli
   return [
     (0, import_middleware_serde.getSerdePlugin)(config, this.serialize, this.deserialize),
     (0, import_middleware_endpoint.getEndpointPlugin)(config, Command.getEndpointParameterInstructions()),
-    (0, import_middleware_sdk_s321.getThrow200ExceptionsPlugin)(config)
+    (0, import_middleware_sdk_s322.getThrow200ExceptionsPlugin)(config)
   ];
 }).s("AmazonS3", "GetBucketMetadataTableConfiguration", {}).n("S3Client", "GetBucketMetadataTableConfigurationCommand").f(void 0, void 0).ser(se_GetBucketMetadataTableConfigurationCommand).de(de_GetBucketMetadataTableConfigurationCommand).build() {
   static {
@@ -21080,7 +21594,7 @@ var GetBucketMetadataTableConfigurationCommand = class extends import_smithy_cli
 };
 
 // src/commands/GetBucketMetricsConfigurationCommand.ts
-var import_middleware_sdk_s322 = __nccwpck_require__(1139);
+var import_middleware_sdk_s323 = __nccwpck_require__(1139);
 
 
 
@@ -21092,7 +21606,7 @@ var GetBucketMetricsConfigurationCommand = class extends import_smithy_client.Co
   return [
     (0, import_middleware_serde.getSerdePlugin)(config, this.serialize, this.deserialize),
     (0, import_middleware_endpoint.getEndpointPlugin)(config, Command.getEndpointParameterInstructions()),
-    (0, import_middleware_sdk_s322.getThrow200ExceptionsPlugin)(config)
+    (0, import_middleware_sdk_s323.getThrow200ExceptionsPlugin)(config)
   ];
 }).s("AmazonS3", "GetBucketMetricsConfiguration", {}).n("S3Client", "GetBucketMetricsConfigurationCommand").f(void 0, void 0).ser(se_GetBucketMetricsConfigurationCommand).de(de_GetBucketMetricsConfigurationCommand).build() {
   static {
@@ -21101,7 +21615,7 @@ var GetBucketMetricsConfigurationCommand = class extends import_smithy_client.Co
 };
 
 // src/commands/GetBucketNotificationConfigurationCommand.ts
-var import_middleware_sdk_s323 = __nccwpck_require__(1139);
+var import_middleware_sdk_s324 = __nccwpck_require__(1139);
 
 
 
@@ -21113,7 +21627,7 @@ var GetBucketNotificationConfigurationCommand = class extends import_smithy_clie
   return [
     (0, import_middleware_serde.getSerdePlugin)(config, this.serialize, this.deserialize),
     (0, import_middleware_endpoint.getEndpointPlugin)(config, Command.getEndpointParameterInstructions()),
-    (0, import_middleware_sdk_s323.getThrow200ExceptionsPlugin)(config)
+    (0, import_middleware_sdk_s324.getThrow200ExceptionsPlugin)(config)
   ];
 }).s("AmazonS3", "GetBucketNotificationConfiguration", {}).n("S3Client", "GetBucketNotificationConfigurationCommand").f(void 0, void 0).ser(se_GetBucketNotificationConfigurationCommand).de(de_GetBucketNotificationConfigurationCommand).build() {
   static {
@@ -21122,7 +21636,7 @@ var GetBucketNotificationConfigurationCommand = class extends import_smithy_clie
 };
 
 // src/commands/GetBucketOwnershipControlsCommand.ts
-var import_middleware_sdk_s324 = __nccwpck_require__(1139);
+var import_middleware_sdk_s325 = __nccwpck_require__(1139);
 
 
 
@@ -21134,7 +21648,7 @@ var GetBucketOwnershipControlsCommand = class extends import_smithy_client.Comma
   return [
     (0, import_middleware_serde.getSerdePlugin)(config, this.serialize, this.deserialize),
     (0, import_middleware_endpoint.getEndpointPlugin)(config, Command.getEndpointParameterInstructions()),
-    (0, import_middleware_sdk_s324.getThrow200ExceptionsPlugin)(config)
+    (0, import_middleware_sdk_s325.getThrow200ExceptionsPlugin)(config)
   ];
 }).s("AmazonS3", "GetBucketOwnershipControls", {}).n("S3Client", "GetBucketOwnershipControlsCommand").f(void 0, void 0).ser(se_GetBucketOwnershipControlsCommand).de(de_GetBucketOwnershipControlsCommand).build() {
   static {
@@ -21143,7 +21657,7 @@ var GetBucketOwnershipControlsCommand = class extends import_smithy_client.Comma
 };
 
 // src/commands/GetBucketPolicyCommand.ts
-var import_middleware_sdk_s325 = __nccwpck_require__(1139);
+var import_middleware_sdk_s326 = __nccwpck_require__(1139);
 
 
 
@@ -21155,7 +21669,7 @@ var GetBucketPolicyCommand = class extends import_smithy_client.Command.classBui
   return [
     (0, import_middleware_serde.getSerdePlugin)(config, this.serialize, this.deserialize),
     (0, import_middleware_endpoint.getEndpointPlugin)(config, Command.getEndpointParameterInstructions()),
-    (0, import_middleware_sdk_s325.getThrow200ExceptionsPlugin)(config)
+    (0, import_middleware_sdk_s326.getThrow200ExceptionsPlugin)(config)
   ];
 }).s("AmazonS3", "GetBucketPolicy", {}).n("S3Client", "GetBucketPolicyCommand").f(void 0, void 0).ser(se_GetBucketPolicyCommand).de(de_GetBucketPolicyCommand).build() {
   static {
@@ -21164,7 +21678,7 @@ var GetBucketPolicyCommand = class extends import_smithy_client.Command.classBui
 };
 
 // src/commands/GetBucketPolicyStatusCommand.ts
-var import_middleware_sdk_s326 = __nccwpck_require__(1139);
+var import_middleware_sdk_s327 = __nccwpck_require__(1139);
 
 
 
@@ -21176,7 +21690,7 @@ var GetBucketPolicyStatusCommand = class extends import_smithy_client.Command.cl
   return [
     (0, import_middleware_serde.getSerdePlugin)(config, this.serialize, this.deserialize),
     (0, import_middleware_endpoint.getEndpointPlugin)(config, Command.getEndpointParameterInstructions()),
-    (0, import_middleware_sdk_s326.getThrow200ExceptionsPlugin)(config)
+    (0, import_middleware_sdk_s327.getThrow200ExceptionsPlugin)(config)
   ];
 }).s("AmazonS3", "GetBucketPolicyStatus", {}).n("S3Client", "GetBucketPolicyStatusCommand").f(void 0, void 0).ser(se_GetBucketPolicyStatusCommand).de(de_GetBucketPolicyStatusCommand).build() {
   static {
@@ -21185,7 +21699,7 @@ var GetBucketPolicyStatusCommand = class extends import_smithy_client.Command.cl
 };
 
 // src/commands/GetBucketReplicationCommand.ts
-var import_middleware_sdk_s327 = __nccwpck_require__(1139);
+var import_middleware_sdk_s328 = __nccwpck_require__(1139);
 
 
 
@@ -21197,7 +21711,7 @@ var GetBucketReplicationCommand = class extends import_smithy_client.Command.cla
   return [
     (0, import_middleware_serde.getSerdePlugin)(config, this.serialize, this.deserialize),
     (0, import_middleware_endpoint.getEndpointPlugin)(config, Command.getEndpointParameterInstructions()),
-    (0, import_middleware_sdk_s327.getThrow200ExceptionsPlugin)(config)
+    (0, import_middleware_sdk_s328.getThrow200ExceptionsPlugin)(config)
   ];
 }).s("AmazonS3", "GetBucketReplication", {}).n("S3Client", "GetBucketReplicationCommand").f(void 0, void 0).ser(se_GetBucketReplicationCommand).de(de_GetBucketReplicationCommand).build() {
   static {
@@ -21206,7 +21720,7 @@ var GetBucketReplicationCommand = class extends import_smithy_client.Command.cla
 };
 
 // src/commands/GetBucketRequestPaymentCommand.ts
-var import_middleware_sdk_s328 = __nccwpck_require__(1139);
+var import_middleware_sdk_s329 = __nccwpck_require__(1139);
 
 
 
@@ -21218,7 +21732,7 @@ var GetBucketRequestPaymentCommand = class extends import_smithy_client.Command.
   return [
     (0, import_middleware_serde.getSerdePlugin)(config, this.serialize, this.deserialize),
     (0, import_middleware_endpoint.getEndpointPlugin)(config, Command.getEndpointParameterInstructions()),
-    (0, import_middleware_sdk_s328.getThrow200ExceptionsPlugin)(config)
+    (0, import_middleware_sdk_s329.getThrow200ExceptionsPlugin)(config)
   ];
 }).s("AmazonS3", "GetBucketRequestPayment", {}).n("S3Client", "GetBucketRequestPaymentCommand").f(void 0, void 0).ser(se_GetBucketRequestPaymentCommand).de(de_GetBucketRequestPaymentCommand).build() {
   static {
@@ -21227,7 +21741,7 @@ var GetBucketRequestPaymentCommand = class extends import_smithy_client.Command.
 };
 
 // src/commands/GetBucketTaggingCommand.ts
-var import_middleware_sdk_s329 = __nccwpck_require__(1139);
+var import_middleware_sdk_s330 = __nccwpck_require__(1139);
 
 
 
@@ -21239,7 +21753,7 @@ var GetBucketTaggingCommand = class extends import_smithy_client.Command.classBu
   return [
     (0, import_middleware_serde.getSerdePlugin)(config, this.serialize, this.deserialize),
     (0, import_middleware_endpoint.getEndpointPlugin)(config, Command.getEndpointParameterInstructions()),
-    (0, import_middleware_sdk_s329.getThrow200ExceptionsPlugin)(config)
+    (0, import_middleware_sdk_s330.getThrow200ExceptionsPlugin)(config)
   ];
 }).s("AmazonS3", "GetBucketTagging", {}).n("S3Client", "GetBucketTaggingCommand").f(void 0, void 0).ser(se_GetBucketTaggingCommand).de(de_GetBucketTaggingCommand).build() {
   static {
@@ -21248,7 +21762,7 @@ var GetBucketTaggingCommand = class extends import_smithy_client.Command.classBu
 };
 
 // src/commands/GetBucketVersioningCommand.ts
-var import_middleware_sdk_s330 = __nccwpck_require__(1139);
+var import_middleware_sdk_s331 = __nccwpck_require__(1139);
 
 
 
@@ -21260,7 +21774,7 @@ var GetBucketVersioningCommand = class extends import_smithy_client.Command.clas
   return [
     (0, import_middleware_serde.getSerdePlugin)(config, this.serialize, this.deserialize),
     (0, import_middleware_endpoint.getEndpointPlugin)(config, Command.getEndpointParameterInstructions()),
-    (0, import_middleware_sdk_s330.getThrow200ExceptionsPlugin)(config)
+    (0, import_middleware_sdk_s331.getThrow200ExceptionsPlugin)(config)
   ];
 }).s("AmazonS3", "GetBucketVersioning", {}).n("S3Client", "GetBucketVersioningCommand").f(void 0, void 0).ser(se_GetBucketVersioningCommand).de(de_GetBucketVersioningCommand).build() {
   static {
@@ -21269,7 +21783,7 @@ var GetBucketVersioningCommand = class extends import_smithy_client.Command.clas
 };
 
 // src/commands/GetBucketWebsiteCommand.ts
-var import_middleware_sdk_s331 = __nccwpck_require__(1139);
+var import_middleware_sdk_s332 = __nccwpck_require__(1139);
 
 
 
@@ -21281,7 +21795,7 @@ var GetBucketWebsiteCommand = class extends import_smithy_client.Command.classBu
   return [
     (0, import_middleware_serde.getSerdePlugin)(config, this.serialize, this.deserialize),
     (0, import_middleware_endpoint.getEndpointPlugin)(config, Command.getEndpointParameterInstructions()),
-    (0, import_middleware_sdk_s331.getThrow200ExceptionsPlugin)(config)
+    (0, import_middleware_sdk_s332.getThrow200ExceptionsPlugin)(config)
   ];
 }).s("AmazonS3", "GetBucketWebsite", {}).n("S3Client", "GetBucketWebsiteCommand").f(void 0, void 0).ser(se_GetBucketWebsiteCommand).de(de_GetBucketWebsiteCommand).build() {
   static {
@@ -21290,7 +21804,7 @@ var GetBucketWebsiteCommand = class extends import_smithy_client.Command.classBu
 };
 
 // src/commands/GetObjectAclCommand.ts
-var import_middleware_sdk_s332 = __nccwpck_require__(1139);
+var import_middleware_sdk_s333 = __nccwpck_require__(1139);
 
 
 
@@ -21302,7 +21816,7 @@ var GetObjectAclCommand = class extends import_smithy_client.Command.classBuilde
   return [
     (0, import_middleware_serde.getSerdePlugin)(config, this.serialize, this.deserialize),
     (0, import_middleware_endpoint.getEndpointPlugin)(config, Command.getEndpointParameterInstructions()),
-    (0, import_middleware_sdk_s332.getThrow200ExceptionsPlugin)(config)
+    (0, import_middleware_sdk_s333.getThrow200ExceptionsPlugin)(config)
   ];
 }).s("AmazonS3", "GetObjectAcl", {}).n("S3Client", "GetObjectAclCommand").f(void 0, void 0).ser(se_GetObjectAclCommand).de(de_GetObjectAclCommand).build() {
   static {
@@ -21311,7 +21825,7 @@ var GetObjectAclCommand = class extends import_smithy_client.Command.classBuilde
 };
 
 // src/commands/GetObjectAttributesCommand.ts
-var import_middleware_sdk_s333 = __nccwpck_require__(1139);
+var import_middleware_sdk_s334 = __nccwpck_require__(1139);
 
 
 
@@ -21323,7 +21837,7 @@ var GetObjectAttributesCommand = class extends import_smithy_client.Command.clas
   return [
     (0, import_middleware_serde.getSerdePlugin)(config, this.serialize, this.deserialize),
     (0, import_middleware_endpoint.getEndpointPlugin)(config, Command.getEndpointParameterInstructions()),
-    (0, import_middleware_sdk_s333.getThrow200ExceptionsPlugin)(config),
+    (0, import_middleware_sdk_s334.getThrow200ExceptionsPlugin)(config),
     (0, import_middleware_ssec.getSsecPlugin)(config)
   ];
 }).s("AmazonS3", "GetObjectAttributes", {}).n("S3Client", "GetObjectAttributesCommand").f(GetObjectAttributesRequestFilterSensitiveLog, void 0).ser(se_GetObjectAttributesCommand).de(de_GetObjectAttributesCommand).build() {
@@ -21334,7 +21848,7 @@ var GetObjectAttributesCommand = class extends import_smithy_client.Command.clas
 
 // src/commands/GetObjectCommand.ts
 
-var import_middleware_sdk_s334 = __nccwpck_require__(1139);
+var import_middleware_sdk_s335 = __nccwpck_require__(1139);
 
 
 
@@ -21353,7 +21867,7 @@ var GetObjectCommand = class extends import_smithy_client.Command.classBuilder()
       responseAlgorithms: ["CRC64NVME", "CRC32", "CRC32C", "SHA256", "SHA1"]
     }),
     (0, import_middleware_ssec.getSsecPlugin)(config),
-    (0, import_middleware_sdk_s334.getS3ExpiresMiddlewarePlugin)(config)
+    (0, import_middleware_sdk_s335.getS3ExpiresMiddlewarePlugin)(config)
   ];
 }).s("AmazonS3", "GetObject", {}).n("S3Client", "GetObjectCommand").f(GetObjectRequestFilterSensitiveLog, GetObjectOutputFilterSensitiveLog).ser(se_GetObjectCommand).de(de_GetObjectCommand).build() {
   static {
@@ -21362,7 +21876,7 @@ var GetObjectCommand = class extends import_smithy_client.Command.classBuilder()
 };
 
 // src/commands/GetObjectLegalHoldCommand.ts
-var import_middleware_sdk_s335 = __nccwpck_require__(1139);
+var import_middleware_sdk_s336 = __nccwpck_require__(1139);
 
 
 
@@ -21373,7 +21887,7 @@ var GetObjectLegalHoldCommand = class extends import_smithy_client.Command.class
   return [
     (0, import_middleware_serde.getSerdePlugin)(config, this.serialize, this.deserialize),
     (0, import_middleware_endpoint.getEndpointPlugin)(config, Command.getEndpointParameterInstructions()),
-    (0, import_middleware_sdk_s335.getThrow200ExceptionsPlugin)(config)
+    (0, import_middleware_sdk_s336.getThrow200ExceptionsPlugin)(config)
   ];
 }).s("AmazonS3", "GetObjectLegalHold", {}).n("S3Client", "GetObjectLegalHoldCommand").f(void 0, void 0).ser(se_GetObjectLegalHoldCommand).de(de_GetObjectLegalHoldCommand).build() {
   static {
@@ -21382,7 +21896,7 @@ var GetObjectLegalHoldCommand = class extends import_smithy_client.Command.class
 };
 
 // src/commands/GetObjectLockConfigurationCommand.ts
-var import_middleware_sdk_s336 = __nccwpck_require__(1139);
+var import_middleware_sdk_s337 = __nccwpck_require__(1139);
 
 
 
@@ -21393,7 +21907,7 @@ var GetObjectLockConfigurationCommand = class extends import_smithy_client.Comma
   return [
     (0, import_middleware_serde.getSerdePlugin)(config, this.serialize, this.deserialize),
     (0, import_middleware_endpoint.getEndpointPlugin)(config, Command.getEndpointParameterInstructions()),
-    (0, import_middleware_sdk_s336.getThrow200ExceptionsPlugin)(config)
+    (0, import_middleware_sdk_s337.getThrow200ExceptionsPlugin)(config)
   ];
 }).s("AmazonS3", "GetObjectLockConfiguration", {}).n("S3Client", "GetObjectLockConfigurationCommand").f(void 0, void 0).ser(se_GetObjectLockConfigurationCommand).de(de_GetObjectLockConfigurationCommand).build() {
   static {
@@ -21402,7 +21916,7 @@ var GetObjectLockConfigurationCommand = class extends import_smithy_client.Comma
 };
 
 // src/commands/GetObjectRetentionCommand.ts
-var import_middleware_sdk_s337 = __nccwpck_require__(1139);
+var import_middleware_sdk_s338 = __nccwpck_require__(1139);
 
 
 
@@ -21413,7 +21927,7 @@ var GetObjectRetentionCommand = class extends import_smithy_client.Command.class
   return [
     (0, import_middleware_serde.getSerdePlugin)(config, this.serialize, this.deserialize),
     (0, import_middleware_endpoint.getEndpointPlugin)(config, Command.getEndpointParameterInstructions()),
-    (0, import_middleware_sdk_s337.getThrow200ExceptionsPlugin)(config)
+    (0, import_middleware_sdk_s338.getThrow200ExceptionsPlugin)(config)
   ];
 }).s("AmazonS3", "GetObjectRetention", {}).n("S3Client", "GetObjectRetentionCommand").f(void 0, void 0).ser(se_GetObjectRetentionCommand).de(de_GetObjectRetentionCommand).build() {
   static {
@@ -21422,7 +21936,7 @@ var GetObjectRetentionCommand = class extends import_smithy_client.Command.class
 };
 
 // src/commands/GetObjectTaggingCommand.ts
-var import_middleware_sdk_s338 = __nccwpck_require__(1139);
+var import_middleware_sdk_s339 = __nccwpck_require__(1139);
 
 
 
@@ -21433,7 +21947,7 @@ var GetObjectTaggingCommand = class extends import_smithy_client.Command.classBu
   return [
     (0, import_middleware_serde.getSerdePlugin)(config, this.serialize, this.deserialize),
     (0, import_middleware_endpoint.getEndpointPlugin)(config, Command.getEndpointParameterInstructions()),
-    (0, import_middleware_sdk_s338.getThrow200ExceptionsPlugin)(config)
+    (0, import_middleware_sdk_s339.getThrow200ExceptionsPlugin)(config)
   ];
 }).s("AmazonS3", "GetObjectTagging", {}).n("S3Client", "GetObjectTaggingCommand").f(void 0, void 0).ser(se_GetObjectTaggingCommand).de(de_GetObjectTaggingCommand).build() {
   static {
@@ -21460,7 +21974,7 @@ var GetObjectTorrentCommand = class extends import_smithy_client.Command.classBu
 };
 
 // src/commands/GetPublicAccessBlockCommand.ts
-var import_middleware_sdk_s339 = __nccwpck_require__(1139);
+var import_middleware_sdk_s340 = __nccwpck_require__(1139);
 
 
 
@@ -21472,7 +21986,7 @@ var GetPublicAccessBlockCommand = class extends import_smithy_client.Command.cla
   return [
     (0, import_middleware_serde.getSerdePlugin)(config, this.serialize, this.deserialize),
     (0, import_middleware_endpoint.getEndpointPlugin)(config, Command.getEndpointParameterInstructions()),
-    (0, import_middleware_sdk_s339.getThrow200ExceptionsPlugin)(config)
+    (0, import_middleware_sdk_s340.getThrow200ExceptionsPlugin)(config)
   ];
 }).s("AmazonS3", "GetPublicAccessBlock", {}).n("S3Client", "GetPublicAccessBlockCommand").f(void 0, void 0).ser(se_GetPublicAccessBlockCommand).de(de_GetPublicAccessBlockCommand).build() {
   static {
@@ -21481,7 +21995,7 @@ var GetPublicAccessBlockCommand = class extends import_smithy_client.Command.cla
 };
 
 // src/commands/HeadBucketCommand.ts
-var import_middleware_sdk_s340 = __nccwpck_require__(1139);
+var import_middleware_sdk_s341 = __nccwpck_require__(1139);
 
 
 
@@ -21492,7 +22006,7 @@ var HeadBucketCommand = class extends import_smithy_client.Command.classBuilder(
   return [
     (0, import_middleware_serde.getSerdePlugin)(config, this.serialize, this.deserialize),
     (0, import_middleware_endpoint.getEndpointPlugin)(config, Command.getEndpointParameterInstructions()),
-    (0, import_middleware_sdk_s340.getThrow200ExceptionsPlugin)(config)
+    (0, import_middleware_sdk_s341.getThrow200ExceptionsPlugin)(config)
   ];
 }).s("AmazonS3", "HeadBucket", {}).n("S3Client", "HeadBucketCommand").f(void 0, void 0).ser(se_HeadBucketCommand).de(de_HeadBucketCommand).build() {
   static {
@@ -21501,7 +22015,7 @@ var HeadBucketCommand = class extends import_smithy_client.Command.classBuilder(
 };
 
 // src/commands/HeadObjectCommand.ts
-var import_middleware_sdk_s341 = __nccwpck_require__(1139);
+var import_middleware_sdk_s342 = __nccwpck_require__(1139);
 
 
 
@@ -21514,9 +22028,9 @@ var HeadObjectCommand = class extends import_smithy_client.Command.classBuilder(
   return [
     (0, import_middleware_serde.getSerdePlugin)(config, this.serialize, this.deserialize),
     (0, import_middleware_endpoint.getEndpointPlugin)(config, Command.getEndpointParameterInstructions()),
-    (0, import_middleware_sdk_s341.getThrow200ExceptionsPlugin)(config),
+    (0, import_middleware_sdk_s342.getThrow200ExceptionsPlugin)(config),
     (0, import_middleware_ssec.getSsecPlugin)(config),
-    (0, import_middleware_sdk_s341.getS3ExpiresMiddlewarePlugin)(config)
+    (0, import_middleware_sdk_s342.getS3ExpiresMiddlewarePlugin)(config)
   ];
 }).s("AmazonS3", "HeadObject", {}).n("S3Client", "HeadObjectCommand").f(HeadObjectRequestFilterSensitiveLog, HeadObjectOutputFilterSensitiveLog).ser(se_HeadObjectCommand).de(de_HeadObjectCommand).build() {
   static {
@@ -21525,7 +22039,7 @@ var HeadObjectCommand = class extends import_smithy_client.Command.classBuilder(
 };
 
 // src/commands/ListBucketAnalyticsConfigurationsCommand.ts
-var import_middleware_sdk_s342 = __nccwpck_require__(1139);
+var import_middleware_sdk_s343 = __nccwpck_require__(1139);
 
 
 
@@ -21537,7 +22051,7 @@ var ListBucketAnalyticsConfigurationsCommand = class extends import_smithy_clien
   return [
     (0, import_middleware_serde.getSerdePlugin)(config, this.serialize, this.deserialize),
     (0, import_middleware_endpoint.getEndpointPlugin)(config, Command.getEndpointParameterInstructions()),
-    (0, import_middleware_sdk_s342.getThrow200ExceptionsPlugin)(config)
+    (0, import_middleware_sdk_s343.getThrow200ExceptionsPlugin)(config)
   ];
 }).s("AmazonS3", "ListBucketAnalyticsConfigurations", {}).n("S3Client", "ListBucketAnalyticsConfigurationsCommand").f(void 0, void 0).ser(se_ListBucketAnalyticsConfigurationsCommand).de(de_ListBucketAnalyticsConfigurationsCommand).build() {
   static {
@@ -21546,7 +22060,7 @@ var ListBucketAnalyticsConfigurationsCommand = class extends import_smithy_clien
 };
 
 // src/commands/ListBucketIntelligentTieringConfigurationsCommand.ts
-var import_middleware_sdk_s343 = __nccwpck_require__(1139);
+var import_middleware_sdk_s344 = __nccwpck_require__(1139);
 
 
 
@@ -21558,7 +22072,7 @@ var ListBucketIntelligentTieringConfigurationsCommand = class extends import_smi
   return [
     (0, import_middleware_serde.getSerdePlugin)(config, this.serialize, this.deserialize),
     (0, import_middleware_endpoint.getEndpointPlugin)(config, Command.getEndpointParameterInstructions()),
-    (0, import_middleware_sdk_s343.getThrow200ExceptionsPlugin)(config)
+    (0, import_middleware_sdk_s344.getThrow200ExceptionsPlugin)(config)
   ];
 }).s("AmazonS3", "ListBucketIntelligentTieringConfigurations", {}).n("S3Client", "ListBucketIntelligentTieringConfigurationsCommand").f(void 0, void 0).ser(se_ListBucketIntelligentTieringConfigurationsCommand).de(de_ListBucketIntelligentTieringConfigurationsCommand).build() {
   static {
@@ -21567,7 +22081,7 @@ var ListBucketIntelligentTieringConfigurationsCommand = class extends import_smi
 };
 
 // src/commands/ListBucketInventoryConfigurationsCommand.ts
-var import_middleware_sdk_s344 = __nccwpck_require__(1139);
+var import_middleware_sdk_s345 = __nccwpck_require__(1139);
 
 
 
@@ -21579,7 +22093,7 @@ var ListBucketInventoryConfigurationsCommand = class extends import_smithy_clien
   return [
     (0, import_middleware_serde.getSerdePlugin)(config, this.serialize, this.deserialize),
     (0, import_middleware_endpoint.getEndpointPlugin)(config, Command.getEndpointParameterInstructions()),
-    (0, import_middleware_sdk_s344.getThrow200ExceptionsPlugin)(config)
+    (0, import_middleware_sdk_s345.getThrow200ExceptionsPlugin)(config)
   ];
 }).s("AmazonS3", "ListBucketInventoryConfigurations", {}).n("S3Client", "ListBucketInventoryConfigurationsCommand").f(void 0, ListBucketInventoryConfigurationsOutputFilterSensitiveLog).ser(se_ListBucketInventoryConfigurationsCommand).de(de_ListBucketInventoryConfigurationsCommand).build() {
   static {
@@ -21588,7 +22102,7 @@ var ListBucketInventoryConfigurationsCommand = class extends import_smithy_clien
 };
 
 // src/commands/ListBucketMetricsConfigurationsCommand.ts
-var import_middleware_sdk_s345 = __nccwpck_require__(1139);
+var import_middleware_sdk_s346 = __nccwpck_require__(1139);
 
 
 
@@ -21599,7 +22113,7 @@ var ListBucketMetricsConfigurationsCommand = class extends import_smithy_client.
   return [
     (0, import_middleware_serde.getSerdePlugin)(config, this.serialize, this.deserialize),
     (0, import_middleware_endpoint.getEndpointPlugin)(config, Command.getEndpointParameterInstructions()),
-    (0, import_middleware_sdk_s345.getThrow200ExceptionsPlugin)(config)
+    (0, import_middleware_sdk_s346.getThrow200ExceptionsPlugin)(config)
   ];
 }).s("AmazonS3", "ListBucketMetricsConfigurations", {}).n("S3Client", "ListBucketMetricsConfigurationsCommand").f(void 0, void 0).ser(se_ListBucketMetricsConfigurationsCommand).de(de_ListBucketMetricsConfigurationsCommand).build() {
   static {
@@ -21608,7 +22122,7 @@ var ListBucketMetricsConfigurationsCommand = class extends import_smithy_client.
 };
 
 // src/commands/ListBucketsCommand.ts
-var import_middleware_sdk_s346 = __nccwpck_require__(1139);
+var import_middleware_sdk_s347 = __nccwpck_require__(1139);
 
 
 
@@ -21616,7 +22130,7 @@ var ListBucketsCommand = class extends import_smithy_client.Command.classBuilder
   return [
     (0, import_middleware_serde.getSerdePlugin)(config, this.serialize, this.deserialize),
     (0, import_middleware_endpoint.getEndpointPlugin)(config, Command.getEndpointParameterInstructions()),
-    (0, import_middleware_sdk_s346.getThrow200ExceptionsPlugin)(config)
+    (0, import_middleware_sdk_s347.getThrow200ExceptionsPlugin)(config)
   ];
 }).s("AmazonS3", "ListBuckets", {}).n("S3Client", "ListBucketsCommand").f(void 0, void 0).ser(se_ListBucketsCommand).de(de_ListBucketsCommand).build() {
   static {
@@ -21625,7 +22139,7 @@ var ListBucketsCommand = class extends import_smithy_client.Command.classBuilder
 };
 
 // src/commands/ListDirectoryBucketsCommand.ts
-var import_middleware_sdk_s347 = __nccwpck_require__(1139);
+var import_middleware_sdk_s348 = __nccwpck_require__(1139);
 
 
 
@@ -21636,7 +22150,7 @@ var ListDirectoryBucketsCommand = class extends import_smithy_client.Command.cla
   return [
     (0, import_middleware_serde.getSerdePlugin)(config, this.serialize, this.deserialize),
     (0, import_middleware_endpoint.getEndpointPlugin)(config, Command.getEndpointParameterInstructions()),
-    (0, import_middleware_sdk_s347.getThrow200ExceptionsPlugin)(config)
+    (0, import_middleware_sdk_s348.getThrow200ExceptionsPlugin)(config)
   ];
 }).s("AmazonS3", "ListDirectoryBuckets", {}).n("S3Client", "ListDirectoryBucketsCommand").f(void 0, void 0).ser(se_ListDirectoryBucketsCommand).de(de_ListDirectoryBucketsCommand).build() {
   static {
@@ -21645,7 +22159,7 @@ var ListDirectoryBucketsCommand = class extends import_smithy_client.Command.cla
 };
 
 // src/commands/ListMultipartUploadsCommand.ts
-var import_middleware_sdk_s348 = __nccwpck_require__(1139);
+var import_middleware_sdk_s349 = __nccwpck_require__(1139);
 
 
 
@@ -21657,7 +22171,7 @@ var ListMultipartUploadsCommand = class extends import_smithy_client.Command.cla
   return [
     (0, import_middleware_serde.getSerdePlugin)(config, this.serialize, this.deserialize),
     (0, import_middleware_endpoint.getEndpointPlugin)(config, Command.getEndpointParameterInstructions()),
-    (0, import_middleware_sdk_s348.getThrow200ExceptionsPlugin)(config)
+    (0, import_middleware_sdk_s349.getThrow200ExceptionsPlugin)(config)
   ];
 }).s("AmazonS3", "ListMultipartUploads", {}).n("S3Client", "ListMultipartUploadsCommand").f(void 0, void 0).ser(se_ListMultipartUploadsCommand).de(de_ListMultipartUploadsCommand).build() {
   static {
@@ -21666,7 +22180,7 @@ var ListMultipartUploadsCommand = class extends import_smithy_client.Command.cla
 };
 
 // src/commands/ListObjectsCommand.ts
-var import_middleware_sdk_s349 = __nccwpck_require__(1139);
+var import_middleware_sdk_s350 = __nccwpck_require__(1139);
 
 
 
@@ -21678,7 +22192,7 @@ var ListObjectsCommand = class extends import_smithy_client.Command.classBuilder
   return [
     (0, import_middleware_serde.getSerdePlugin)(config, this.serialize, this.deserialize),
     (0, import_middleware_endpoint.getEndpointPlugin)(config, Command.getEndpointParameterInstructions()),
-    (0, import_middleware_sdk_s349.getThrow200ExceptionsPlugin)(config)
+    (0, import_middleware_sdk_s350.getThrow200ExceptionsPlugin)(config)
   ];
 }).s("AmazonS3", "ListObjects", {}).n("S3Client", "ListObjectsCommand").f(void 0, void 0).ser(se_ListObjectsCommand).de(de_ListObjectsCommand).build() {
   static {
@@ -21687,7 +22201,7 @@ var ListObjectsCommand = class extends import_smithy_client.Command.classBuilder
 };
 
 // src/commands/ListObjectsV2Command.ts
-var import_middleware_sdk_s350 = __nccwpck_require__(1139);
+var import_middleware_sdk_s351 = __nccwpck_require__(1139);
 
 
 
@@ -21699,7 +22213,7 @@ var ListObjectsV2Command = class extends import_smithy_client.Command.classBuild
   return [
     (0, import_middleware_serde.getSerdePlugin)(config, this.serialize, this.deserialize),
     (0, import_middleware_endpoint.getEndpointPlugin)(config, Command.getEndpointParameterInstructions()),
-    (0, import_middleware_sdk_s350.getThrow200ExceptionsPlugin)(config)
+    (0, import_middleware_sdk_s351.getThrow200ExceptionsPlugin)(config)
   ];
 }).s("AmazonS3", "ListObjectsV2", {}).n("S3Client", "ListObjectsV2Command").f(void 0, void 0).ser(se_ListObjectsV2Command).de(de_ListObjectsV2Command).build() {
   static {
@@ -21708,7 +22222,7 @@ var ListObjectsV2Command = class extends import_smithy_client.Command.classBuild
 };
 
 // src/commands/ListObjectVersionsCommand.ts
-var import_middleware_sdk_s351 = __nccwpck_require__(1139);
+var import_middleware_sdk_s352 = __nccwpck_require__(1139);
 
 
 
@@ -21720,7 +22234,7 @@ var ListObjectVersionsCommand = class extends import_smithy_client.Command.class
   return [
     (0, import_middleware_serde.getSerdePlugin)(config, this.serialize, this.deserialize),
     (0, import_middleware_endpoint.getEndpointPlugin)(config, Command.getEndpointParameterInstructions()),
-    (0, import_middleware_sdk_s351.getThrow200ExceptionsPlugin)(config)
+    (0, import_middleware_sdk_s352.getThrow200ExceptionsPlugin)(config)
   ];
 }).s("AmazonS3", "ListObjectVersions", {}).n("S3Client", "ListObjectVersionsCommand").f(void 0, void 0).ser(se_ListObjectVersionsCommand).de(de_ListObjectVersionsCommand).build() {
   static {
@@ -21729,7 +22243,7 @@ var ListObjectVersionsCommand = class extends import_smithy_client.Command.class
 };
 
 // src/commands/ListPartsCommand.ts
-var import_middleware_sdk_s352 = __nccwpck_require__(1139);
+var import_middleware_sdk_s353 = __nccwpck_require__(1139);
 
 
 
@@ -21742,7 +22256,7 @@ var ListPartsCommand = class extends import_smithy_client.Command.classBuilder()
   return [
     (0, import_middleware_serde.getSerdePlugin)(config, this.serialize, this.deserialize),
     (0, import_middleware_endpoint.getEndpointPlugin)(config, Command.getEndpointParameterInstructions()),
-    (0, import_middleware_sdk_s352.getThrow200ExceptionsPlugin)(config),
+    (0, import_middleware_sdk_s353.getThrow200ExceptionsPlugin)(config),
     (0, import_middleware_ssec.getSsecPlugin)(config)
   ];
 }).s("AmazonS3", "ListParts", {}).n("S3Client", "ListPartsCommand").f(ListPartsRequestFilterSensitiveLog, void 0).ser(se_ListPartsCommand).de(de_ListPartsCommand).build() {
@@ -21906,7 +22420,7 @@ var PutBucketInventoryConfigurationCommand = class extends import_smithy_client.
 
 // src/commands/PutBucketLifecycleConfigurationCommand.ts
 
-var import_middleware_sdk_s353 = __nccwpck_require__(1139);
+var import_middleware_sdk_s354 = __nccwpck_require__(1139);
 
 
 
@@ -21922,7 +22436,7 @@ var PutBucketLifecycleConfigurationCommand = class extends import_smithy_client.
       requestAlgorithmMember: { httpHeader: "x-amz-sdk-checksum-algorithm", name: "ChecksumAlgorithm" },
       requestChecksumRequired: true
     }),
-    (0, import_middleware_sdk_s353.getThrow200ExceptionsPlugin)(config)
+    (0, import_middleware_sdk_s354.getThrow200ExceptionsPlugin)(config)
   ];
 }).s("AmazonS3", "PutBucketLifecycleConfiguration", {}).n("S3Client", "PutBucketLifecycleConfigurationCommand").f(void 0, void 0).ser(se_PutBucketLifecycleConfigurationCommand).de(de_PutBucketLifecycleConfigurationCommand).build() {
   static {
@@ -22162,7 +22676,7 @@ var PutBucketWebsiteCommand = class extends import_smithy_client.Command.classBu
 
 // src/commands/PutObjectAclCommand.ts
 
-var import_middleware_sdk_s354 = __nccwpck_require__(1139);
+var import_middleware_sdk_s355 = __nccwpck_require__(1139);
 
 
 
@@ -22178,7 +22692,7 @@ var PutObjectAclCommand = class extends import_smithy_client.Command.classBuilde
       requestAlgorithmMember: { httpHeader: "x-amz-sdk-checksum-algorithm", name: "ChecksumAlgorithm" },
       requestChecksumRequired: true
     }),
-    (0, import_middleware_sdk_s354.getThrow200ExceptionsPlugin)(config)
+    (0, import_middleware_sdk_s355.getThrow200ExceptionsPlugin)(config)
   ];
 }).s("AmazonS3", "PutObjectAcl", {}).n("S3Client", "PutObjectAclCommand").f(void 0, void 0).ser(se_PutObjectAclCommand).de(de_PutObjectAclCommand).build() {
   static {
@@ -22188,7 +22702,7 @@ var PutObjectAclCommand = class extends import_smithy_client.Command.classBuilde
 
 // src/commands/PutObjectCommand.ts
 
-var import_middleware_sdk_s355 = __nccwpck_require__(1139);
+var import_middleware_sdk_s356 = __nccwpck_require__(1139);
 
 
 
@@ -22205,8 +22719,8 @@ var PutObjectCommand = class extends import_smithy_client.Command.classBuilder()
       requestAlgorithmMember: { httpHeader: "x-amz-sdk-checksum-algorithm", name: "ChecksumAlgorithm" },
       requestChecksumRequired: false
     }),
-    (0, import_middleware_sdk_s355.getCheckContentLengthHeaderPlugin)(config),
-    (0, import_middleware_sdk_s355.getThrow200ExceptionsPlugin)(config),
+    (0, import_middleware_sdk_s356.getCheckContentLengthHeaderPlugin)(config),
+    (0, import_middleware_sdk_s356.getThrow200ExceptionsPlugin)(config),
     (0, import_middleware_ssec.getSsecPlugin)(config)
   ];
 }).s("AmazonS3", "PutObject", {}).n("S3Client", "PutObjectCommand").f(PutObjectRequestFilterSensitiveLog, PutObjectOutputFilterSensitiveLog).ser(se_PutObjectCommand).de(de_PutObjectCommand).build() {
@@ -22217,7 +22731,7 @@ var PutObjectCommand = class extends import_smithy_client.Command.classBuilder()
 
 // src/commands/PutObjectLegalHoldCommand.ts
 
-var import_middleware_sdk_s356 = __nccwpck_require__(1139);
+var import_middleware_sdk_s357 = __nccwpck_require__(1139);
 
 
 
@@ -22232,7 +22746,7 @@ var PutObjectLegalHoldCommand = class extends import_smithy_client.Command.class
       requestAlgorithmMember: { httpHeader: "x-amz-sdk-checksum-algorithm", name: "ChecksumAlgorithm" },
       requestChecksumRequired: true
     }),
-    (0, import_middleware_sdk_s356.getThrow200ExceptionsPlugin)(config)
+    (0, import_middleware_sdk_s357.getThrow200ExceptionsPlugin)(config)
   ];
 }).s("AmazonS3", "PutObjectLegalHold", {}).n("S3Client", "PutObjectLegalHoldCommand").f(void 0, void 0).ser(se_PutObjectLegalHoldCommand).de(de_PutObjectLegalHoldCommand).build() {
   static {
@@ -22242,7 +22756,7 @@ var PutObjectLegalHoldCommand = class extends import_smithy_client.Command.class
 
 // src/commands/PutObjectLockConfigurationCommand.ts
 
-var import_middleware_sdk_s357 = __nccwpck_require__(1139);
+var import_middleware_sdk_s358 = __nccwpck_require__(1139);
 
 
 
@@ -22257,7 +22771,7 @@ var PutObjectLockConfigurationCommand = class extends import_smithy_client.Comma
       requestAlgorithmMember: { httpHeader: "x-amz-sdk-checksum-algorithm", name: "ChecksumAlgorithm" },
       requestChecksumRequired: true
     }),
-    (0, import_middleware_sdk_s357.getThrow200ExceptionsPlugin)(config)
+    (0, import_middleware_sdk_s358.getThrow200ExceptionsPlugin)(config)
   ];
 }).s("AmazonS3", "PutObjectLockConfiguration", {}).n("S3Client", "PutObjectLockConfigurationCommand").f(void 0, void 0).ser(se_PutObjectLockConfigurationCommand).de(de_PutObjectLockConfigurationCommand).build() {
   static {
@@ -22267,7 +22781,7 @@ var PutObjectLockConfigurationCommand = class extends import_smithy_client.Comma
 
 // src/commands/PutObjectRetentionCommand.ts
 
-var import_middleware_sdk_s358 = __nccwpck_require__(1139);
+var import_middleware_sdk_s359 = __nccwpck_require__(1139);
 
 
 
@@ -22282,7 +22796,7 @@ var PutObjectRetentionCommand = class extends import_smithy_client.Command.class
       requestAlgorithmMember: { httpHeader: "x-amz-sdk-checksum-algorithm", name: "ChecksumAlgorithm" },
       requestChecksumRequired: true
     }),
-    (0, import_middleware_sdk_s358.getThrow200ExceptionsPlugin)(config)
+    (0, import_middleware_sdk_s359.getThrow200ExceptionsPlugin)(config)
   ];
 }).s("AmazonS3", "PutObjectRetention", {}).n("S3Client", "PutObjectRetentionCommand").f(void 0, void 0).ser(se_PutObjectRetentionCommand).de(de_PutObjectRetentionCommand).build() {
   static {
@@ -22292,7 +22806,7 @@ var PutObjectRetentionCommand = class extends import_smithy_client.Command.class
 
 // src/commands/PutObjectTaggingCommand.ts
 
-var import_middleware_sdk_s359 = __nccwpck_require__(1139);
+var import_middleware_sdk_s360 = __nccwpck_require__(1139);
 
 
 
@@ -22307,7 +22821,7 @@ var PutObjectTaggingCommand = class extends import_smithy_client.Command.classBu
       requestAlgorithmMember: { httpHeader: "x-amz-sdk-checksum-algorithm", name: "ChecksumAlgorithm" },
       requestChecksumRequired: true
     }),
-    (0, import_middleware_sdk_s359.getThrow200ExceptionsPlugin)(config)
+    (0, import_middleware_sdk_s360.getThrow200ExceptionsPlugin)(config)
   ];
 }).s("AmazonS3", "PutObjectTagging", {}).n("S3Client", "PutObjectTaggingCommand").f(void 0, void 0).ser(se_PutObjectTaggingCommand).de(de_PutObjectTaggingCommand).build() {
   static {
@@ -22339,9 +22853,30 @@ var PutPublicAccessBlockCommand = class extends import_smithy_client.Command.cla
   }
 };
 
+// src/commands/RenameObjectCommand.ts
+var import_middleware_sdk_s361 = __nccwpck_require__(1139);
+
+
+
+var RenameObjectCommand = class extends import_smithy_client.Command.classBuilder().ep({
+  ...commonParams,
+  Bucket: { type: "contextParams", name: "Bucket" },
+  Key: { type: "contextParams", name: "Key" }
+}).m(function(Command, cs, config, o) {
+  return [
+    (0, import_middleware_serde.getSerdePlugin)(config, this.serialize, this.deserialize),
+    (0, import_middleware_endpoint.getEndpointPlugin)(config, Command.getEndpointParameterInstructions()),
+    (0, import_middleware_sdk_s361.getThrow200ExceptionsPlugin)(config)
+  ];
+}).s("AmazonS3", "RenameObject", {}).n("S3Client", "RenameObjectCommand").f(void 0, void 0).ser(se_RenameObjectCommand).de(de_RenameObjectCommand).build() {
+  static {
+    __name(this, "RenameObjectCommand");
+  }
+};
+
 // src/commands/RestoreObjectCommand.ts
 
-var import_middleware_sdk_s360 = __nccwpck_require__(1139);
+var import_middleware_sdk_s362 = __nccwpck_require__(1139);
 
 
 
@@ -22356,7 +22891,7 @@ var RestoreObjectCommand = class extends import_smithy_client.Command.classBuild
       requestAlgorithmMember: { httpHeader: "x-amz-sdk-checksum-algorithm", name: "ChecksumAlgorithm" },
       requestChecksumRequired: false
     }),
-    (0, import_middleware_sdk_s360.getThrow200ExceptionsPlugin)(config)
+    (0, import_middleware_sdk_s362.getThrow200ExceptionsPlugin)(config)
   ];
 }).s("AmazonS3", "RestoreObject", {}).n("S3Client", "RestoreObjectCommand").f(RestoreObjectRequestFilterSensitiveLog, void 0).ser(se_RestoreObjectCommand).de(de_RestoreObjectCommand).build() {
   static {
@@ -22365,7 +22900,7 @@ var RestoreObjectCommand = class extends import_smithy_client.Command.classBuild
 };
 
 // src/commands/SelectObjectContentCommand.ts
-var import_middleware_sdk_s361 = __nccwpck_require__(1139);
+var import_middleware_sdk_s363 = __nccwpck_require__(1139);
 
 
 
@@ -22377,7 +22912,7 @@ var SelectObjectContentCommand = class extends import_smithy_client.Command.clas
   return [
     (0, import_middleware_serde.getSerdePlugin)(config, this.serialize, this.deserialize),
     (0, import_middleware_endpoint.getEndpointPlugin)(config, Command.getEndpointParameterInstructions()),
-    (0, import_middleware_sdk_s361.getThrow200ExceptionsPlugin)(config),
+    (0, import_middleware_sdk_s363.getThrow200ExceptionsPlugin)(config),
     (0, import_middleware_ssec.getSsecPlugin)(config)
   ];
 }).s("AmazonS3", "SelectObjectContent", {
@@ -22393,9 +22928,57 @@ var SelectObjectContentCommand = class extends import_smithy_client.Command.clas
   }
 };
 
+// src/commands/UpdateBucketMetadataInventoryTableConfigurationCommand.ts
+
+
+
+
+var UpdateBucketMetadataInventoryTableConfigurationCommand = class extends import_smithy_client.Command.classBuilder().ep({
+  ...commonParams,
+  UseS3ExpressControlEndpoint: { type: "staticContextParams", value: true },
+  Bucket: { type: "contextParams", name: "Bucket" }
+}).m(function(Command, cs, config, o) {
+  return [
+    (0, import_middleware_serde.getSerdePlugin)(config, this.serialize, this.deserialize),
+    (0, import_middleware_endpoint.getEndpointPlugin)(config, Command.getEndpointParameterInstructions()),
+    (0, import_middleware_flexible_checksums.getFlexibleChecksumsPlugin)(config, {
+      requestAlgorithmMember: { httpHeader: "x-amz-sdk-checksum-algorithm", name: "ChecksumAlgorithm" },
+      requestChecksumRequired: true
+    })
+  ];
+}).s("AmazonS3", "UpdateBucketMetadataInventoryTableConfiguration", {}).n("S3Client", "UpdateBucketMetadataInventoryTableConfigurationCommand").f(void 0, void 0).ser(se_UpdateBucketMetadataInventoryTableConfigurationCommand).de(de_UpdateBucketMetadataInventoryTableConfigurationCommand).build() {
+  static {
+    __name(this, "UpdateBucketMetadataInventoryTableConfigurationCommand");
+  }
+};
+
+// src/commands/UpdateBucketMetadataJournalTableConfigurationCommand.ts
+
+
+
+
+var UpdateBucketMetadataJournalTableConfigurationCommand = class extends import_smithy_client.Command.classBuilder().ep({
+  ...commonParams,
+  UseS3ExpressControlEndpoint: { type: "staticContextParams", value: true },
+  Bucket: { type: "contextParams", name: "Bucket" }
+}).m(function(Command, cs, config, o) {
+  return [
+    (0, import_middleware_serde.getSerdePlugin)(config, this.serialize, this.deserialize),
+    (0, import_middleware_endpoint.getEndpointPlugin)(config, Command.getEndpointParameterInstructions()),
+    (0, import_middleware_flexible_checksums.getFlexibleChecksumsPlugin)(config, {
+      requestAlgorithmMember: { httpHeader: "x-amz-sdk-checksum-algorithm", name: "ChecksumAlgorithm" },
+      requestChecksumRequired: true
+    })
+  ];
+}).s("AmazonS3", "UpdateBucketMetadataJournalTableConfiguration", {}).n("S3Client", "UpdateBucketMetadataJournalTableConfigurationCommand").f(void 0, void 0).ser(se_UpdateBucketMetadataJournalTableConfigurationCommand).de(de_UpdateBucketMetadataJournalTableConfigurationCommand).build() {
+  static {
+    __name(this, "UpdateBucketMetadataJournalTableConfigurationCommand");
+  }
+};
+
 // src/commands/UploadPartCommand.ts
 
-var import_middleware_sdk_s362 = __nccwpck_require__(1139);
+var import_middleware_sdk_s364 = __nccwpck_require__(1139);
 
 
 
@@ -22412,7 +22995,7 @@ var UploadPartCommand = class extends import_smithy_client.Command.classBuilder(
       requestAlgorithmMember: { httpHeader: "x-amz-sdk-checksum-algorithm", name: "ChecksumAlgorithm" },
       requestChecksumRequired: false
     }),
-    (0, import_middleware_sdk_s362.getThrow200ExceptionsPlugin)(config),
+    (0, import_middleware_sdk_s364.getThrow200ExceptionsPlugin)(config),
     (0, import_middleware_ssec.getSsecPlugin)(config)
   ];
 }).s("AmazonS3", "UploadPart", {}).n("S3Client", "UploadPartCommand").f(UploadPartRequestFilterSensitiveLog, UploadPartOutputFilterSensitiveLog).ser(se_UploadPartCommand).de(de_UploadPartCommand).build() {
@@ -22422,7 +23005,7 @@ var UploadPartCommand = class extends import_smithy_client.Command.classBuilder(
 };
 
 // src/commands/UploadPartCopyCommand.ts
-var import_middleware_sdk_s363 = __nccwpck_require__(1139);
+var import_middleware_sdk_s365 = __nccwpck_require__(1139);
 
 
 
@@ -22435,7 +23018,7 @@ var UploadPartCopyCommand = class extends import_smithy_client.Command.classBuil
   return [
     (0, import_middleware_serde.getSerdePlugin)(config, this.serialize, this.deserialize),
     (0, import_middleware_endpoint.getEndpointPlugin)(config, Command.getEndpointParameterInstructions()),
-    (0, import_middleware_sdk_s363.getThrow200ExceptionsPlugin)(config),
+    (0, import_middleware_sdk_s365.getThrow200ExceptionsPlugin)(config),
     (0, import_middleware_ssec.getSsecPlugin)(config)
   ];
 }).s("AmazonS3", "UploadPartCopy", {}).n("S3Client", "UploadPartCopyCommand").f(UploadPartCopyRequestFilterSensitiveLog, UploadPartCopyOutputFilterSensitiveLog).ser(se_UploadPartCopyCommand).de(de_UploadPartCopyCommand).build() {
@@ -22468,6 +23051,7 @@ var commands = {
   CompleteMultipartUploadCommand,
   CopyObjectCommand,
   CreateBucketCommand,
+  CreateBucketMetadataConfigurationCommand,
   CreateBucketMetadataTableConfigurationCommand,
   CreateMultipartUploadCommand,
   CreateSessionCommand,
@@ -22478,6 +23062,7 @@ var commands = {
   DeleteBucketIntelligentTieringConfigurationCommand,
   DeleteBucketInventoryConfigurationCommand,
   DeleteBucketLifecycleCommand,
+  DeleteBucketMetadataConfigurationCommand,
   DeleteBucketMetadataTableConfigurationCommand,
   DeleteBucketMetricsConfigurationCommand,
   DeleteBucketOwnershipControlsCommand,
@@ -22499,6 +23084,7 @@ var commands = {
   GetBucketLifecycleConfigurationCommand,
   GetBucketLocationCommand,
   GetBucketLoggingCommand,
+  GetBucketMetadataConfigurationCommand,
   GetBucketMetadataTableConfigurationCommand,
   GetBucketMetricsConfigurationCommand,
   GetBucketNotificationConfigurationCommand,
@@ -22557,8 +23143,11 @@ var commands = {
   PutObjectRetentionCommand,
   PutObjectTaggingCommand,
   PutPublicAccessBlockCommand,
+  RenameObjectCommand,
   RestoreObjectCommand,
   SelectObjectContentCommand,
+  UpdateBucketMetadataInventoryTableConfigurationCommand,
+  UpdateBucketMetadataJournalTableConfigurationCommand,
   UploadPartCommand,
   UploadPartCopyCommand,
   WriteGetObjectResponseCommand
@@ -22704,7 +23293,7 @@ Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.getRuntimeConfig = void 0;
 const tslib_1 = __nccwpck_require__(4351);
 const package_json_1 = tslib_1.__importDefault(__nccwpck_require__(677));
-const core_1 = __nccwpck_require__(9963);
+const core_1 = __nccwpck_require__(8078);
 const credential_provider_node_1 = __nccwpck_require__(2424);
 const middleware_bucket_endpoint_1 = __nccwpck_require__(6689);
 const middleware_flexible_checksums_1 = __nccwpck_require__(3799);
@@ -22782,7 +23371,7 @@ exports.getRuntimeConfig = getRuntimeConfig;
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.getRuntimeConfig = void 0;
-const core_1 = __nccwpck_require__(9963);
+const core_1 = __nccwpck_require__(8078);
 const signature_v4_multi_region_1 = __nccwpck_require__(1856);
 const smithy_client_1 = __nccwpck_require__(3570);
 const url_parser_1 = __nccwpck_require__(4681);
@@ -22836,7 +23425,7 @@ exports.getRuntimeConfig = getRuntimeConfig;
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.resolveHttpAuthSchemeConfig = exports.defaultSSOHttpAuthSchemeProvider = exports.defaultSSOHttpAuthSchemeParametersProvider = void 0;
-const core_1 = __nccwpck_require__(9963);
+const core_1 = __nccwpck_require__(8078);
 const util_middleware_1 = __nccwpck_require__(2390);
 const defaultSSOHttpAuthSchemeParametersProvider = async (config, context, input) => {
     return {
@@ -22997,9 +23586,9 @@ __export(index_exports, {
 module.exports = __toCommonJS(index_exports);
 
 // src/SSOClient.ts
-var import_middleware_host_header = __nccwpck_require__(2545);
-var import_middleware_logger = __nccwpck_require__(14);
-var import_middleware_recursion_detection = __nccwpck_require__(5525);
+var import_middleware_host_header = __nccwpck_require__(8725);
+var import_middleware_logger = __nccwpck_require__(2568);
+var import_middleware_recursion_detection = __nccwpck_require__(7960);
 var import_middleware_user_agent = __nccwpck_require__(3030);
 var import_config_resolver = __nccwpck_require__(3098);
 var import_core = __nccwpck_require__(5829);
@@ -23028,7 +23617,7 @@ var commonParams = {
 var import_runtimeConfig = __nccwpck_require__(1581);
 
 // src/runtimeExtensions.ts
-var import_region_config_resolver = __nccwpck_require__(8156);
+var import_region_config_resolver = __nccwpck_require__(8859);
 var import_protocol_http = __nccwpck_require__(4418);
 var import_smithy_client = __nccwpck_require__(3570);
 
@@ -23263,7 +23852,7 @@ var LogoutRequestFilterSensitiveLog = /* @__PURE__ */ __name((obj) => ({
 }), "LogoutRequestFilterSensitiveLog");
 
 // src/protocols/Aws_restJson1.ts
-var import_core2 = __nccwpck_require__(9963);
+var import_core2 = __nccwpck_require__(8078);
 
 
 var se_GetRoleCredentialsCommand = /* @__PURE__ */ __name(async (input, context) => {
@@ -23566,7 +24155,7 @@ Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.getRuntimeConfig = void 0;
 const tslib_1 = __nccwpck_require__(4351);
 const package_json_1 = tslib_1.__importDefault(__nccwpck_require__(3859));
-const core_1 = __nccwpck_require__(9963);
+const core_1 = __nccwpck_require__(8078);
 const util_user_agent_node_1 = __nccwpck_require__(5380);
 const config_resolver_1 = __nccwpck_require__(3098);
 const hash_node_1 = __nccwpck_require__(3081);
@@ -23626,7 +24215,7 @@ exports.getRuntimeConfig = getRuntimeConfig;
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.getRuntimeConfig = void 0;
-const core_1 = __nccwpck_require__(9963);
+const core_1 = __nccwpck_require__(8078);
 const core_2 = __nccwpck_require__(5829);
 const smithy_client_1 = __nccwpck_require__(3570);
 const url_parser_1 = __nccwpck_require__(4681);
@@ -23663,6 +24252,2548 @@ const getRuntimeConfig = (config) => {
     };
 };
 exports.getRuntimeConfig = getRuntimeConfig;
+
+
+/***/ }),
+
+/***/ 8078:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+const tslib_1 = __nccwpck_require__(4351);
+tslib_1.__exportStar(__nccwpck_require__(912), exports);
+tslib_1.__exportStar(__nccwpck_require__(5948), exports);
+tslib_1.__exportStar(__nccwpck_require__(8008), exports);
+
+
+/***/ }),
+
+/***/ 912:
+/***/ ((module) => {
+
+"use strict";
+
+var __defProp = Object.defineProperty;
+var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
+var __getOwnPropNames = Object.getOwnPropertyNames;
+var __hasOwnProp = Object.prototype.hasOwnProperty;
+var __name = (target, value) => __defProp(target, "name", { value, configurable: true });
+var __export = (target, all) => {
+  for (var name in all)
+    __defProp(target, name, { get: all[name], enumerable: true });
+};
+var __copyProps = (to, from, except, desc) => {
+  if (from && typeof from === "object" || typeof from === "function") {
+    for (let key of __getOwnPropNames(from))
+      if (!__hasOwnProp.call(to, key) && key !== except)
+        __defProp(to, key, { get: () => from[key], enumerable: !(desc = __getOwnPropDesc(from, key)) || desc.enumerable });
+  }
+  return to;
+};
+var __toCommonJS = (mod) => __copyProps(__defProp({}, "__esModule", { value: true }), mod);
+
+// src/submodules/client/index.ts
+var index_exports = {};
+__export(index_exports, {
+  emitWarningIfUnsupportedVersion: () => emitWarningIfUnsupportedVersion,
+  setCredentialFeature: () => setCredentialFeature,
+  setFeature: () => setFeature,
+  setTokenFeature: () => setTokenFeature,
+  state: () => state
+});
+module.exports = __toCommonJS(index_exports);
+
+// src/submodules/client/emitWarningIfUnsupportedVersion.ts
+var state = {
+  warningEmitted: false
+};
+var emitWarningIfUnsupportedVersion = /* @__PURE__ */ __name((version) => {
+  if (version && !state.warningEmitted && parseInt(version.substring(1, version.indexOf("."))) < 18) {
+    state.warningEmitted = true;
+    process.emitWarning(
+      `NodeDeprecationWarning: The AWS SDK for JavaScript (v3) will
+no longer support Node.js 16.x on January 6, 2025.
+
+To continue receiving updates to AWS services, bug fixes, and security
+updates please upgrade to a supported Node.js LTS version.
+
+More information can be found at: https://a.co/74kJMmI`
+    );
+  }
+}, "emitWarningIfUnsupportedVersion");
+
+// src/submodules/client/setCredentialFeature.ts
+function setCredentialFeature(credentials, feature, value) {
+  if (!credentials.$source) {
+    credentials.$source = {};
+  }
+  credentials.$source[feature] = value;
+  return credentials;
+}
+__name(setCredentialFeature, "setCredentialFeature");
+
+// src/submodules/client/setFeature.ts
+function setFeature(context, feature, value) {
+  if (!context.__aws_sdk_context) {
+    context.__aws_sdk_context = {
+      features: {}
+    };
+  } else if (!context.__aws_sdk_context.features) {
+    context.__aws_sdk_context.features = {};
+  }
+  context.__aws_sdk_context.features[feature] = value;
+}
+__name(setFeature, "setFeature");
+
+// src/submodules/client/setTokenFeature.ts
+function setTokenFeature(token, feature, value) {
+  if (!token.$source) {
+    token.$source = {};
+  }
+  token.$source[feature] = value;
+  return token;
+}
+__name(setTokenFeature, "setTokenFeature");
+// Annotate the CommonJS export names for ESM import in node:
+0 && (0);
+
+
+/***/ }),
+
+/***/ 5948:
+/***/ ((module, __unused_webpack_exports, __nccwpck_require__) => {
+
+"use strict";
+
+var __defProp = Object.defineProperty;
+var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
+var __getOwnPropNames = Object.getOwnPropertyNames;
+var __hasOwnProp = Object.prototype.hasOwnProperty;
+var __name = (target, value) => __defProp(target, "name", { value, configurable: true });
+var __export = (target, all) => {
+  for (var name in all)
+    __defProp(target, name, { get: all[name], enumerable: true });
+};
+var __copyProps = (to, from, except, desc) => {
+  if (from && typeof from === "object" || typeof from === "function") {
+    for (let key of __getOwnPropNames(from))
+      if (!__hasOwnProp.call(to, key) && key !== except)
+        __defProp(to, key, { get: () => from[key], enumerable: !(desc = __getOwnPropDesc(from, key)) || desc.enumerable });
+  }
+  return to;
+};
+var __toCommonJS = (mod) => __copyProps(__defProp({}, "__esModule", { value: true }), mod);
+
+// src/submodules/httpAuthSchemes/index.ts
+var index_exports = {};
+__export(index_exports, {
+  AWSSDKSigV4Signer: () => AWSSDKSigV4Signer,
+  AwsSdkSigV4ASigner: () => AwsSdkSigV4ASigner,
+  AwsSdkSigV4Signer: () => AwsSdkSigV4Signer,
+  NODE_AUTH_SCHEME_PREFERENCE_OPTIONS: () => NODE_AUTH_SCHEME_PREFERENCE_OPTIONS,
+  NODE_SIGV4A_CONFIG_OPTIONS: () => NODE_SIGV4A_CONFIG_OPTIONS,
+  getBearerTokenEnvKey: () => getBearerTokenEnvKey,
+  resolveAWSSDKSigV4Config: () => resolveAWSSDKSigV4Config,
+  resolveAwsSdkSigV4AConfig: () => resolveAwsSdkSigV4AConfig,
+  resolveAwsSdkSigV4Config: () => resolveAwsSdkSigV4Config,
+  validateSigningProperties: () => validateSigningProperties
+});
+module.exports = __toCommonJS(index_exports);
+
+// src/submodules/httpAuthSchemes/aws_sdk/AwsSdkSigV4Signer.ts
+var import_protocol_http2 = __nccwpck_require__(4418);
+
+// src/submodules/httpAuthSchemes/utils/getDateHeader.ts
+var import_protocol_http = __nccwpck_require__(4418);
+var getDateHeader = /* @__PURE__ */ __name((response) => import_protocol_http.HttpResponse.isInstance(response) ? response.headers?.date ?? response.headers?.Date : void 0, "getDateHeader");
+
+// src/submodules/httpAuthSchemes/utils/getSkewCorrectedDate.ts
+var getSkewCorrectedDate = /* @__PURE__ */ __name((systemClockOffset) => new Date(Date.now() + systemClockOffset), "getSkewCorrectedDate");
+
+// src/submodules/httpAuthSchemes/utils/isClockSkewed.ts
+var isClockSkewed = /* @__PURE__ */ __name((clockTime, systemClockOffset) => Math.abs(getSkewCorrectedDate(systemClockOffset).getTime() - clockTime) >= 3e5, "isClockSkewed");
+
+// src/submodules/httpAuthSchemes/utils/getUpdatedSystemClockOffset.ts
+var getUpdatedSystemClockOffset = /* @__PURE__ */ __name((clockTime, currentSystemClockOffset) => {
+  const clockTimeInMs = Date.parse(clockTime);
+  if (isClockSkewed(clockTimeInMs, currentSystemClockOffset)) {
+    return clockTimeInMs - Date.now();
+  }
+  return currentSystemClockOffset;
+}, "getUpdatedSystemClockOffset");
+
+// src/submodules/httpAuthSchemes/aws_sdk/AwsSdkSigV4Signer.ts
+var throwSigningPropertyError = /* @__PURE__ */ __name((name, property) => {
+  if (!property) {
+    throw new Error(`Property \`${name}\` is not resolved for AWS SDK SigV4Auth`);
+  }
+  return property;
+}, "throwSigningPropertyError");
+var validateSigningProperties = /* @__PURE__ */ __name(async (signingProperties) => {
+  const context = throwSigningPropertyError(
+    "context",
+    signingProperties.context
+  );
+  const config = throwSigningPropertyError("config", signingProperties.config);
+  const authScheme = context.endpointV2?.properties?.authSchemes?.[0];
+  const signerFunction = throwSigningPropertyError(
+    "signer",
+    config.signer
+  );
+  const signer = await signerFunction(authScheme);
+  const signingRegion = signingProperties?.signingRegion;
+  const signingRegionSet = signingProperties?.signingRegionSet;
+  const signingName = signingProperties?.signingName;
+  return {
+    config,
+    signer,
+    signingRegion,
+    signingRegionSet,
+    signingName
+  };
+}, "validateSigningProperties");
+var AwsSdkSigV4Signer = class {
+  static {
+    __name(this, "AwsSdkSigV4Signer");
+  }
+  async sign(httpRequest, identity, signingProperties) {
+    if (!import_protocol_http2.HttpRequest.isInstance(httpRequest)) {
+      throw new Error("The request is not an instance of `HttpRequest` and cannot be signed");
+    }
+    const validatedProps = await validateSigningProperties(signingProperties);
+    const { config, signer } = validatedProps;
+    let { signingRegion, signingName } = validatedProps;
+    const handlerExecutionContext = signingProperties.context;
+    if (handlerExecutionContext?.authSchemes?.length ?? 0 > 1) {
+      const [first, second] = handlerExecutionContext.authSchemes;
+      if (first?.name === "sigv4a" && second?.name === "sigv4") {
+        signingRegion = second?.signingRegion ?? signingRegion;
+        signingName = second?.signingName ?? signingName;
+      }
+    }
+    const signedRequest = await signer.sign(httpRequest, {
+      signingDate: getSkewCorrectedDate(config.systemClockOffset),
+      signingRegion,
+      signingService: signingName
+    });
+    return signedRequest;
+  }
+  errorHandler(signingProperties) {
+    return (error) => {
+      const serverTime = error.ServerTime ?? getDateHeader(error.$response);
+      if (serverTime) {
+        const config = throwSigningPropertyError("config", signingProperties.config);
+        const initialSystemClockOffset = config.systemClockOffset;
+        config.systemClockOffset = getUpdatedSystemClockOffset(serverTime, config.systemClockOffset);
+        const clockSkewCorrected = config.systemClockOffset !== initialSystemClockOffset;
+        if (clockSkewCorrected && error.$metadata) {
+          error.$metadata.clockSkewCorrected = true;
+        }
+      }
+      throw error;
+    };
+  }
+  successHandler(httpResponse, signingProperties) {
+    const dateHeader = getDateHeader(httpResponse);
+    if (dateHeader) {
+      const config = throwSigningPropertyError("config", signingProperties.config);
+      config.systemClockOffset = getUpdatedSystemClockOffset(dateHeader, config.systemClockOffset);
+    }
+  }
+};
+var AWSSDKSigV4Signer = AwsSdkSigV4Signer;
+
+// src/submodules/httpAuthSchemes/aws_sdk/AwsSdkSigV4ASigner.ts
+var import_protocol_http3 = __nccwpck_require__(4418);
+var AwsSdkSigV4ASigner = class extends AwsSdkSigV4Signer {
+  static {
+    __name(this, "AwsSdkSigV4ASigner");
+  }
+  async sign(httpRequest, identity, signingProperties) {
+    if (!import_protocol_http3.HttpRequest.isInstance(httpRequest)) {
+      throw new Error("The request is not an instance of `HttpRequest` and cannot be signed");
+    }
+    const { config, signer, signingRegion, signingRegionSet, signingName } = await validateSigningProperties(
+      signingProperties
+    );
+    const configResolvedSigningRegionSet = await config.sigv4aSigningRegionSet?.();
+    const multiRegionOverride = (configResolvedSigningRegionSet ?? signingRegionSet ?? [signingRegion]).join(",");
+    const signedRequest = await signer.sign(httpRequest, {
+      signingDate: getSkewCorrectedDate(config.systemClockOffset),
+      signingRegion: multiRegionOverride,
+      signingService: signingName
+    });
+    return signedRequest;
+  }
+};
+
+// src/submodules/httpAuthSchemes/utils/getArrayForCommaSeparatedString.ts
+var getArrayForCommaSeparatedString = /* @__PURE__ */ __name((str) => typeof str === "string" && str.length > 0 ? str.split(",").map((item) => item.trim()) : [], "getArrayForCommaSeparatedString");
+
+// src/submodules/httpAuthSchemes/utils/getBearerTokenEnvKey.ts
+var getBearerTokenEnvKey = /* @__PURE__ */ __name((signingName) => `AWS_BEARER_TOKEN_${signingName.replace(/[\s-]/g, "_").toUpperCase()}`, "getBearerTokenEnvKey");
+
+// src/submodules/httpAuthSchemes/aws_sdk/NODE_AUTH_SCHEME_PREFERENCE_OPTIONS.ts
+var NODE_AUTH_SCHEME_PREFERENCE_ENV_KEY = "AWS_AUTH_SCHEME_PREFERENCE";
+var NODE_AUTH_SCHEME_PREFERENCE_CONFIG_KEY = "auth_scheme_preference";
+var NODE_AUTH_SCHEME_PREFERENCE_OPTIONS = {
+  /**
+   * Retrieves auth scheme preference from environment variables
+   * @param env - Node process environment object
+   * @returns Array of auth scheme strings if preference is set, undefined otherwise
+   */
+  environmentVariableSelector: /* @__PURE__ */ __name((env, options) => {
+    if (options?.signingName) {
+      const bearerTokenKey = getBearerTokenEnvKey(options.signingName);
+      if (bearerTokenKey in env) return ["httpBearerAuth"];
+    }
+    if (!(NODE_AUTH_SCHEME_PREFERENCE_ENV_KEY in env)) return void 0;
+    return getArrayForCommaSeparatedString(env[NODE_AUTH_SCHEME_PREFERENCE_ENV_KEY]);
+  }, "environmentVariableSelector"),
+  /**
+   * Retrieves auth scheme preference from config file
+   * @param profile - Config profile object
+   * @returns Array of auth scheme strings if preference is set, undefined otherwise
+   */
+  configFileSelector: /* @__PURE__ */ __name((profile) => {
+    if (!(NODE_AUTH_SCHEME_PREFERENCE_CONFIG_KEY in profile)) return void 0;
+    return getArrayForCommaSeparatedString(profile[NODE_AUTH_SCHEME_PREFERENCE_CONFIG_KEY]);
+  }, "configFileSelector"),
+  /**
+   * Default auth scheme preference if not specified in environment or config
+   */
+  default: []
+};
+
+// src/submodules/httpAuthSchemes/aws_sdk/resolveAwsSdkSigV4AConfig.ts
+var import_core = __nccwpck_require__(5829);
+var import_property_provider = __nccwpck_require__(9721);
+var resolveAwsSdkSigV4AConfig = /* @__PURE__ */ __name((config) => {
+  config.sigv4aSigningRegionSet = (0, import_core.normalizeProvider)(config.sigv4aSigningRegionSet);
+  return config;
+}, "resolveAwsSdkSigV4AConfig");
+var NODE_SIGV4A_CONFIG_OPTIONS = {
+  environmentVariableSelector(env) {
+    if (env.AWS_SIGV4A_SIGNING_REGION_SET) {
+      return env.AWS_SIGV4A_SIGNING_REGION_SET.split(",").map((_) => _.trim());
+    }
+    throw new import_property_provider.ProviderError("AWS_SIGV4A_SIGNING_REGION_SET not set in env.", {
+      tryNextLink: true
+    });
+  },
+  configFileSelector(profile) {
+    if (profile.sigv4a_signing_region_set) {
+      return (profile.sigv4a_signing_region_set ?? "").split(",").map((_) => _.trim());
+    }
+    throw new import_property_provider.ProviderError("sigv4a_signing_region_set not set in profile.", {
+      tryNextLink: true
+    });
+  },
+  default: void 0
+};
+
+// src/submodules/httpAuthSchemes/aws_sdk/resolveAwsSdkSigV4Config.ts
+var import_client = __nccwpck_require__(912);
+var import_core2 = __nccwpck_require__(5829);
+var import_signature_v4 = __nccwpck_require__(1528);
+var resolveAwsSdkSigV4Config = /* @__PURE__ */ __name((config) => {
+  let inputCredentials = config.credentials;
+  let isUserSupplied = !!config.credentials;
+  let resolvedCredentials = void 0;
+  Object.defineProperty(config, "credentials", {
+    set(credentials) {
+      if (credentials && credentials !== inputCredentials && credentials !== resolvedCredentials) {
+        isUserSupplied = true;
+      }
+      inputCredentials = credentials;
+      const memoizedProvider = normalizeCredentialProvider(config, {
+        credentials: inputCredentials,
+        credentialDefaultProvider: config.credentialDefaultProvider
+      });
+      const boundProvider = bindCallerConfig(config, memoizedProvider);
+      if (isUserSupplied && !boundProvider.attributed) {
+        resolvedCredentials = /* @__PURE__ */ __name(async (options) => boundProvider(options).then(
+          (creds) => (0, import_client.setCredentialFeature)(creds, "CREDENTIALS_CODE", "e")
+        ), "resolvedCredentials");
+        resolvedCredentials.memoized = boundProvider.memoized;
+        resolvedCredentials.configBound = boundProvider.configBound;
+        resolvedCredentials.attributed = true;
+      } else {
+        resolvedCredentials = boundProvider;
+      }
+    },
+    get() {
+      return resolvedCredentials;
+    },
+    enumerable: true,
+    configurable: true
+  });
+  config.credentials = inputCredentials;
+  const {
+    // Default for signingEscapePath
+    signingEscapePath = true,
+    // Default for systemClockOffset
+    systemClockOffset = config.systemClockOffset || 0,
+    // No default for sha256 since it is platform dependent
+    sha256
+  } = config;
+  let signer;
+  if (config.signer) {
+    signer = (0, import_core2.normalizeProvider)(config.signer);
+  } else if (config.regionInfoProvider) {
+    signer = /* @__PURE__ */ __name(() => (0, import_core2.normalizeProvider)(config.region)().then(
+      async (region) => [
+        await config.regionInfoProvider(region, {
+          useFipsEndpoint: await config.useFipsEndpoint(),
+          useDualstackEndpoint: await config.useDualstackEndpoint()
+        }) || {},
+        region
+      ]
+    ).then(([regionInfo, region]) => {
+      const { signingRegion, signingService } = regionInfo;
+      config.signingRegion = config.signingRegion || signingRegion || region;
+      config.signingName = config.signingName || signingService || config.serviceId;
+      const params = {
+        ...config,
+        credentials: config.credentials,
+        region: config.signingRegion,
+        service: config.signingName,
+        sha256,
+        uriEscapePath: signingEscapePath
+      };
+      const SignerCtor = config.signerConstructor || import_signature_v4.SignatureV4;
+      return new SignerCtor(params);
+    }), "signer");
+  } else {
+    signer = /* @__PURE__ */ __name(async (authScheme) => {
+      authScheme = Object.assign(
+        {},
+        {
+          name: "sigv4",
+          signingName: config.signingName || config.defaultSigningName,
+          signingRegion: await (0, import_core2.normalizeProvider)(config.region)(),
+          properties: {}
+        },
+        authScheme
+      );
+      const signingRegion = authScheme.signingRegion;
+      const signingService = authScheme.signingName;
+      config.signingRegion = config.signingRegion || signingRegion;
+      config.signingName = config.signingName || signingService || config.serviceId;
+      const params = {
+        ...config,
+        credentials: config.credentials,
+        region: config.signingRegion,
+        service: config.signingName,
+        sha256,
+        uriEscapePath: signingEscapePath
+      };
+      const SignerCtor = config.signerConstructor || import_signature_v4.SignatureV4;
+      return new SignerCtor(params);
+    }, "signer");
+  }
+  const resolvedConfig = Object.assign(config, {
+    systemClockOffset,
+    signingEscapePath,
+    signer
+  });
+  return resolvedConfig;
+}, "resolveAwsSdkSigV4Config");
+var resolveAWSSDKSigV4Config = resolveAwsSdkSigV4Config;
+function normalizeCredentialProvider(config, {
+  credentials,
+  credentialDefaultProvider
+}) {
+  let credentialsProvider;
+  if (credentials) {
+    if (!credentials?.memoized) {
+      credentialsProvider = (0, import_core2.memoizeIdentityProvider)(credentials, import_core2.isIdentityExpired, import_core2.doesIdentityRequireRefresh);
+    } else {
+      credentialsProvider = credentials;
+    }
+  } else {
+    if (credentialDefaultProvider) {
+      credentialsProvider = (0, import_core2.normalizeProvider)(
+        credentialDefaultProvider(
+          Object.assign({}, config, {
+            parentClientConfig: config
+          })
+        )
+      );
+    } else {
+      credentialsProvider = /* @__PURE__ */ __name(async () => {
+        throw new Error(
+          "@aws-sdk/core::resolveAwsSdkSigV4Config - `credentials` not provided and no credentialDefaultProvider was configured."
+        );
+      }, "credentialsProvider");
+    }
+  }
+  credentialsProvider.memoized = true;
+  return credentialsProvider;
+}
+__name(normalizeCredentialProvider, "normalizeCredentialProvider");
+function bindCallerConfig(config, credentialsProvider) {
+  if (credentialsProvider.configBound) {
+    return credentialsProvider;
+  }
+  const fn = /* @__PURE__ */ __name(async (options) => credentialsProvider({ ...options, callerClientConfig: config }), "fn");
+  fn.memoized = credentialsProvider.memoized;
+  fn.configBound = true;
+  return fn;
+}
+__name(bindCallerConfig, "bindCallerConfig");
+// Annotate the CommonJS export names for ESM import in node:
+0 && (0);
+
+
+/***/ }),
+
+/***/ 8008:
+/***/ ((module, __unused_webpack_exports, __nccwpck_require__) => {
+
+"use strict";
+
+var __defProp = Object.defineProperty;
+var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
+var __getOwnPropNames = Object.getOwnPropertyNames;
+var __hasOwnProp = Object.prototype.hasOwnProperty;
+var __name = (target, value) => __defProp(target, "name", { value, configurable: true });
+var __export = (target, all) => {
+  for (var name in all)
+    __defProp(target, name, { get: all[name], enumerable: true });
+};
+var __copyProps = (to, from, except, desc) => {
+  if (from && typeof from === "object" || typeof from === "function") {
+    for (let key of __getOwnPropNames(from))
+      if (!__hasOwnProp.call(to, key) && key !== except)
+        __defProp(to, key, { get: () => from[key], enumerable: !(desc = __getOwnPropDesc(from, key)) || desc.enumerable });
+  }
+  return to;
+};
+var __toCommonJS = (mod) => __copyProps(__defProp({}, "__esModule", { value: true }), mod);
+
+// src/submodules/protocols/index.ts
+var index_exports = {};
+__export(index_exports, {
+  AwsEc2QueryProtocol: () => AwsEc2QueryProtocol,
+  AwsJson1_0Protocol: () => AwsJson1_0Protocol,
+  AwsJson1_1Protocol: () => AwsJson1_1Protocol,
+  AwsJsonRpcProtocol: () => AwsJsonRpcProtocol,
+  AwsQueryProtocol: () => AwsQueryProtocol,
+  AwsRestJsonProtocol: () => AwsRestJsonProtocol,
+  AwsRestXmlProtocol: () => AwsRestXmlProtocol,
+  JsonCodec: () => JsonCodec,
+  JsonShapeDeserializer: () => JsonShapeDeserializer,
+  JsonShapeSerializer: () => JsonShapeSerializer,
+  XmlCodec: () => XmlCodec,
+  XmlShapeDeserializer: () => XmlShapeDeserializer,
+  XmlShapeSerializer: () => XmlShapeSerializer,
+  _toBool: () => _toBool,
+  _toNum: () => _toNum,
+  _toStr: () => _toStr,
+  awsExpectUnion: () => awsExpectUnion,
+  loadRestJsonErrorCode: () => loadRestJsonErrorCode,
+  loadRestXmlErrorCode: () => loadRestXmlErrorCode,
+  parseJsonBody: () => parseJsonBody,
+  parseJsonErrorBody: () => parseJsonErrorBody,
+  parseXmlBody: () => parseXmlBody,
+  parseXmlErrorBody: () => parseXmlErrorBody
+});
+module.exports = __toCommonJS(index_exports);
+
+// src/submodules/protocols/coercing-serializers.ts
+var _toStr = /* @__PURE__ */ __name((val) => {
+  if (val == null) {
+    return val;
+  }
+  if (typeof val === "number" || typeof val === "bigint") {
+    const warning = new Error(`Received number ${val} where a string was expected.`);
+    warning.name = "Warning";
+    console.warn(warning);
+    return String(val);
+  }
+  if (typeof val === "boolean") {
+    const warning = new Error(`Received boolean ${val} where a string was expected.`);
+    warning.name = "Warning";
+    console.warn(warning);
+    return String(val);
+  }
+  return val;
+}, "_toStr");
+var _toBool = /* @__PURE__ */ __name((val) => {
+  if (val == null) {
+    return val;
+  }
+  if (typeof val === "number") {
+  }
+  if (typeof val === "string") {
+    const lowercase = val.toLowerCase();
+    if (val !== "" && lowercase !== "false" && lowercase !== "true") {
+      const warning = new Error(`Received string "${val}" where a boolean was expected.`);
+      warning.name = "Warning";
+      console.warn(warning);
+    }
+    return val !== "" && lowercase !== "false";
+  }
+  return val;
+}, "_toBool");
+var _toNum = /* @__PURE__ */ __name((val) => {
+  if (val == null) {
+    return val;
+  }
+  if (typeof val === "boolean") {
+  }
+  if (typeof val === "string") {
+    const num = Number(val);
+    if (num.toString() !== val) {
+      const warning = new Error(`Received string "${val}" where a number was expected.`);
+      warning.name = "Warning";
+      console.warn(warning);
+      return val;
+    }
+    return num;
+  }
+  return val;
+}, "_toNum");
+
+// src/submodules/protocols/json/AwsJsonRpcProtocol.ts
+var import_protocols = __nccwpck_require__(2241);
+var import_schema3 = __nccwpck_require__(9826);
+var import_util_body_length_browser = __nccwpck_require__(713);
+
+// src/submodules/protocols/ConfigurableSerdeContext.ts
+var SerdeContextConfig = class {
+  static {
+    __name(this, "SerdeContextConfig");
+  }
+  serdeContext;
+  setSerdeContext(serdeContext) {
+    this.serdeContext = serdeContext;
+  }
+};
+
+// src/submodules/protocols/json/JsonShapeDeserializer.ts
+var import_schema = __nccwpck_require__(9826);
+var import_serde2 = __nccwpck_require__(7669);
+var import_util_base64 = __nccwpck_require__(5600);
+
+// src/submodules/protocols/json/jsonReviver.ts
+var import_serde = __nccwpck_require__(7669);
+function jsonReviver(key, value, context) {
+  if (context?.source) {
+    const numericString = context.source;
+    if (typeof value === "number") {
+      if (value > Number.MAX_SAFE_INTEGER || value < Number.MIN_SAFE_INTEGER || numericString !== String(value)) {
+        const isFractional = numericString.includes(".");
+        if (isFractional) {
+          return new import_serde.NumericValue(numericString, "bigDecimal");
+        } else {
+          return BigInt(numericString);
+        }
+      }
+    }
+  }
+  return value;
+}
+__name(jsonReviver, "jsonReviver");
+
+// src/submodules/protocols/common.ts
+var import_smithy_client = __nccwpck_require__(3570);
+var collectBodyString = /* @__PURE__ */ __name((streamBody, context) => (0, import_smithy_client.collectBody)(streamBody, context).then((body) => context.utf8Encoder(body)), "collectBodyString");
+
+// src/submodules/protocols/json/parseJsonBody.ts
+var parseJsonBody = /* @__PURE__ */ __name((streamBody, context) => collectBodyString(streamBody, context).then((encoded) => {
+  if (encoded.length) {
+    try {
+      return JSON.parse(encoded);
+    } catch (e) {
+      if (e?.name === "SyntaxError") {
+        Object.defineProperty(e, "$responseBodyText", {
+          value: encoded
+        });
+      }
+      throw e;
+    }
+  }
+  return {};
+}), "parseJsonBody");
+var parseJsonErrorBody = /* @__PURE__ */ __name(async (errorBody, context) => {
+  const value = await parseJsonBody(errorBody, context);
+  value.message = value.message ?? value.Message;
+  return value;
+}, "parseJsonErrorBody");
+var loadRestJsonErrorCode = /* @__PURE__ */ __name((output, data) => {
+  const findKey = /* @__PURE__ */ __name((object, key) => Object.keys(object).find((k) => k.toLowerCase() === key.toLowerCase()), "findKey");
+  const sanitizeErrorCode = /* @__PURE__ */ __name((rawValue) => {
+    let cleanValue = rawValue;
+    if (typeof cleanValue === "number") {
+      cleanValue = cleanValue.toString();
+    }
+    if (cleanValue.indexOf(",") >= 0) {
+      cleanValue = cleanValue.split(",")[0];
+    }
+    if (cleanValue.indexOf(":") >= 0) {
+      cleanValue = cleanValue.split(":")[0];
+    }
+    if (cleanValue.indexOf("#") >= 0) {
+      cleanValue = cleanValue.split("#")[1];
+    }
+    return cleanValue;
+  }, "sanitizeErrorCode");
+  const headerKey = findKey(output.headers, "x-amzn-errortype");
+  if (headerKey !== void 0) {
+    return sanitizeErrorCode(output.headers[headerKey]);
+  }
+  if (data && typeof data === "object") {
+    const codeKey = findKey(data, "code");
+    if (codeKey && data[codeKey] !== void 0) {
+      return sanitizeErrorCode(data[codeKey]);
+    }
+    if (data["__type"] !== void 0) {
+      return sanitizeErrorCode(data["__type"]);
+    }
+  }
+}, "loadRestJsonErrorCode");
+
+// src/submodules/protocols/json/JsonShapeDeserializer.ts
+var JsonShapeDeserializer = class extends SerdeContextConfig {
+  constructor(settings) {
+    super();
+    this.settings = settings;
+  }
+  static {
+    __name(this, "JsonShapeDeserializer");
+  }
+  async read(schema, data) {
+    return this._read(
+      schema,
+      typeof data === "string" ? JSON.parse(data, jsonReviver) : await parseJsonBody(data, this.serdeContext)
+    );
+  }
+  readObject(schema, data) {
+    return this._read(schema, data);
+  }
+  _read(schema, value) {
+    const isObject = value !== null && typeof value === "object";
+    const ns = import_schema.NormalizedSchema.of(schema);
+    if (ns.isListSchema() && Array.isArray(value)) {
+      const listMember = ns.getValueSchema();
+      const out = [];
+      const sparse = !!ns.getMergedTraits().sparse;
+      for (const item of value) {
+        if (sparse || item != null) {
+          out.push(this._read(listMember, item));
+        }
+      }
+      return out;
+    } else if (ns.isMapSchema() && isObject) {
+      const mapMember = ns.getValueSchema();
+      const out = {};
+      const sparse = !!ns.getMergedTraits().sparse;
+      for (const [_k, _v] of Object.entries(value)) {
+        if (sparse || _v != null) {
+          out[_k] = this._read(mapMember, _v);
+        }
+      }
+      return out;
+    } else if (ns.isStructSchema() && isObject) {
+      const out = {};
+      for (const [memberName, memberSchema] of ns.structIterator()) {
+        const fromKey = this.settings.jsonName ? memberSchema.getMergedTraits().jsonName ?? memberName : memberName;
+        const deserializedValue = this._read(memberSchema, value[fromKey]);
+        if (deserializedValue != null) {
+          out[memberName] = deserializedValue;
+        }
+      }
+      return out;
+    }
+    if (ns.isBlobSchema() && typeof value === "string") {
+      return (0, import_util_base64.fromBase64)(value);
+    }
+    const mediaType = ns.getMergedTraits().mediaType;
+    if (ns.isStringSchema() && typeof value === "string" && mediaType) {
+      const isJson = mediaType === "application/json" || mediaType.endsWith("+json");
+      if (isJson) {
+        return import_serde2.LazyJsonString.from(value);
+      }
+    }
+    if (ns.isTimestampSchema()) {
+      const options = this.settings.timestampFormat;
+      const format = options.useTrait ? ns.getSchema() === import_schema.SCHEMA.TIMESTAMP_DEFAULT ? options.default : ns.getSchema() ?? options.default : options.default;
+      switch (format) {
+        case import_schema.SCHEMA.TIMESTAMP_DATE_TIME:
+          return (0, import_serde2.parseRfc3339DateTimeWithOffset)(value);
+        case import_schema.SCHEMA.TIMESTAMP_HTTP_DATE:
+          return (0, import_serde2.parseRfc7231DateTime)(value);
+        case import_schema.SCHEMA.TIMESTAMP_EPOCH_SECONDS:
+          return (0, import_serde2.parseEpochTimestamp)(value);
+        default:
+          console.warn("Missing timestamp format, parsing value with Date constructor:", value);
+          return new Date(value);
+      }
+    }
+    if (ns.isBigIntegerSchema() && (typeof value === "number" || typeof value === "string")) {
+      return BigInt(value);
+    }
+    if (ns.isBigDecimalSchema() && value != void 0) {
+      if (value instanceof import_serde2.NumericValue) {
+        return value;
+      }
+      return new import_serde2.NumericValue(String(value), "bigDecimal");
+    }
+    if (ns.isNumericSchema() && typeof value === "string") {
+      switch (value) {
+        case "Infinity":
+          return Infinity;
+        case "-Infinity":
+          return -Infinity;
+        case "NaN":
+          return NaN;
+      }
+    }
+    return value;
+  }
+};
+
+// src/submodules/protocols/json/JsonShapeSerializer.ts
+var import_schema2 = __nccwpck_require__(9826);
+var import_serde4 = __nccwpck_require__(7669);
+
+// src/submodules/protocols/json/jsonReplacer.ts
+var import_serde3 = __nccwpck_require__(7669);
+var NUMERIC_CONTROL_CHAR = String.fromCharCode(925);
+var JsonReplacer = class {
+  static {
+    __name(this, "JsonReplacer");
+  }
+  /**
+   * Stores placeholder key to true serialized value lookup.
+   */
+  values = /* @__PURE__ */ new Map();
+  counter = 0;
+  stage = 0;
+  /**
+   * Creates a jsonReplacer function that reserves big integer and big decimal values
+   * for later replacement.
+   */
+  createReplacer() {
+    if (this.stage === 1) {
+      throw new Error("@aws-sdk/core/protocols - JsonReplacer already created.");
+    }
+    if (this.stage === 2) {
+      throw new Error("@aws-sdk/core/protocols - JsonReplacer exhausted.");
+    }
+    this.stage = 1;
+    return (key, value) => {
+      if (value instanceof import_serde3.NumericValue) {
+        const v = `${NUMERIC_CONTROL_CHAR + "nv" + this.counter++}_` + value.string;
+        this.values.set(`"${v}"`, value.string);
+        return v;
+      }
+      if (typeof value === "bigint") {
+        const s = value.toString();
+        const v = `${NUMERIC_CONTROL_CHAR + "b" + this.counter++}_` + s;
+        this.values.set(`"${v}"`, s);
+        return v;
+      }
+      return value;
+    };
+  }
+  /**
+   * Replaces placeholder keys with their true values.
+   */
+  replaceInJson(json) {
+    if (this.stage === 0) {
+      throw new Error("@aws-sdk/core/protocols - JsonReplacer not created yet.");
+    }
+    if (this.stage === 2) {
+      throw new Error("@aws-sdk/core/protocols - JsonReplacer exhausted.");
+    }
+    this.stage = 2;
+    if (this.counter === 0) {
+      return json;
+    }
+    for (const [key, value] of this.values) {
+      json = json.replace(key, value);
+    }
+    return json;
+  }
+};
+
+// src/submodules/protocols/json/JsonShapeSerializer.ts
+var JsonShapeSerializer = class extends SerdeContextConfig {
+  constructor(settings) {
+    super();
+    this.settings = settings;
+  }
+  static {
+    __name(this, "JsonShapeSerializer");
+  }
+  buffer;
+  rootSchema;
+  write(schema, value) {
+    this.rootSchema = import_schema2.NormalizedSchema.of(schema);
+    this.buffer = this._write(this.rootSchema, value);
+  }
+  flush() {
+    if (this.rootSchema?.isStructSchema() || this.rootSchema?.isDocumentSchema()) {
+      const replacer = new JsonReplacer();
+      return replacer.replaceInJson(JSON.stringify(this.buffer, replacer.createReplacer(), 0));
+    }
+    return this.buffer;
+  }
+  _write(schema, value, container) {
+    const isObject = value !== null && typeof value === "object";
+    const ns = import_schema2.NormalizedSchema.of(schema);
+    if (ns.isListSchema() && Array.isArray(value)) {
+      const listMember = ns.getValueSchema();
+      const out = [];
+      const sparse = !!ns.getMergedTraits().sparse;
+      for (const item of value) {
+        if (sparse || item != null) {
+          out.push(this._write(listMember, item));
+        }
+      }
+      return out;
+    } else if (ns.isMapSchema() && isObject) {
+      const mapMember = ns.getValueSchema();
+      const out = {};
+      const sparse = !!ns.getMergedTraits().sparse;
+      for (const [_k, _v] of Object.entries(value)) {
+        if (sparse || _v != null) {
+          out[_k] = this._write(mapMember, _v);
+        }
+      }
+      return out;
+    } else if (ns.isStructSchema() && isObject) {
+      const out = {};
+      for (const [memberName, memberSchema] of ns.structIterator()) {
+        const targetKey = this.settings.jsonName ? memberSchema.getMergedTraits().jsonName ?? memberName : memberName;
+        const serializableValue = this._write(memberSchema, value[memberName], ns);
+        if (serializableValue !== void 0) {
+          out[targetKey] = serializableValue;
+        }
+      }
+      return out;
+    }
+    if (value === null && container?.isStructSchema()) {
+      return void 0;
+    }
+    if (ns.isBlobSchema() && (value instanceof Uint8Array || typeof value === "string")) {
+      if (ns === this.rootSchema) {
+        return value;
+      }
+      if (!this.serdeContext?.base64Encoder) {
+        throw new Error("Missing base64Encoder in serdeContext");
+      }
+      return this.serdeContext?.base64Encoder(value);
+    }
+    if (ns.isTimestampSchema() && value instanceof Date) {
+      const options = this.settings.timestampFormat;
+      const format = options.useTrait ? ns.getSchema() === import_schema2.SCHEMA.TIMESTAMP_DEFAULT ? options.default : ns.getSchema() ?? options.default : options.default;
+      switch (format) {
+        case import_schema2.SCHEMA.TIMESTAMP_DATE_TIME:
+          return value.toISOString().replace(".000Z", "Z");
+        case import_schema2.SCHEMA.TIMESTAMP_HTTP_DATE:
+          return (0, import_serde4.dateToUtcString)(value);
+        case import_schema2.SCHEMA.TIMESTAMP_EPOCH_SECONDS:
+          return value.getTime() / 1e3;
+        default:
+          console.warn("Missing timestamp format, using epoch seconds", value);
+          return value.getTime() / 1e3;
+      }
+    }
+    if (ns.isNumericSchema() && typeof value === "number") {
+      if (Math.abs(value) === Infinity || isNaN(value)) {
+        return String(value);
+      }
+    }
+    if (ns.isStringSchema()) {
+      if (typeof value === "undefined" && ns.isIdempotencyToken()) {
+        return (0, import_serde4.generateIdempotencyToken)();
+      }
+      const mediaType = ns.getMergedTraits().mediaType;
+      if (typeof value === "string" && mediaType) {
+        const isJson = mediaType === "application/json" || mediaType.endsWith("+json");
+        if (isJson) {
+          return import_serde4.LazyJsonString.from(value);
+        }
+      }
+    }
+    return value;
+  }
+};
+
+// src/submodules/protocols/json/JsonCodec.ts
+var JsonCodec = class extends SerdeContextConfig {
+  constructor(settings) {
+    super();
+    this.settings = settings;
+  }
+  static {
+    __name(this, "JsonCodec");
+  }
+  createSerializer() {
+    const serializer = new JsonShapeSerializer(this.settings);
+    serializer.setSerdeContext(this.serdeContext);
+    return serializer;
+  }
+  createDeserializer() {
+    const deserializer = new JsonShapeDeserializer(this.settings);
+    deserializer.setSerdeContext(this.serdeContext);
+    return deserializer;
+  }
+};
+
+// src/submodules/protocols/json/AwsJsonRpcProtocol.ts
+var AwsJsonRpcProtocol = class extends import_protocols.RpcProtocol {
+  static {
+    __name(this, "AwsJsonRpcProtocol");
+  }
+  serializer;
+  deserializer;
+  serviceTarget;
+  codec;
+  constructor({ defaultNamespace, serviceTarget }) {
+    super({
+      defaultNamespace
+    });
+    this.serviceTarget = serviceTarget;
+    this.codec = new JsonCodec({
+      timestampFormat: {
+        useTrait: true,
+        default: import_schema3.SCHEMA.TIMESTAMP_EPOCH_SECONDS
+      },
+      jsonName: false
+    });
+    this.serializer = this.codec.createSerializer();
+    this.deserializer = this.codec.createDeserializer();
+  }
+  async serializeRequest(operationSchema, input, context) {
+    const request = await super.serializeRequest(operationSchema, input, context);
+    if (!request.path.endsWith("/")) {
+      request.path += "/";
+    }
+    Object.assign(request.headers, {
+      "content-type": `application/x-amz-json-${this.getJsonRpcVersion()}`,
+      "x-amz-target": `${this.serviceTarget}.${import_schema3.NormalizedSchema.of(operationSchema).getName()}`
+    });
+    if ((0, import_schema3.deref)(operationSchema.input) === "unit" || !request.body) {
+      request.body = "{}";
+    }
+    try {
+      request.headers["content-length"] = String((0, import_util_body_length_browser.calculateBodyLength)(request.body));
+    } catch (e) {
+    }
+    return request;
+  }
+  getPayloadCodec() {
+    return this.codec;
+  }
+  async handleError(operationSchema, context, response, dataObject, metadata) {
+    const errorIdentifier = loadRestJsonErrorCode(response, dataObject) ?? "Unknown";
+    let namespace = this.options.defaultNamespace;
+    let errorName = errorIdentifier;
+    if (errorIdentifier.includes("#")) {
+      [namespace, errorName] = errorIdentifier.split("#");
+    }
+    const registry = import_schema3.TypeRegistry.for(namespace);
+    let errorSchema;
+    try {
+      errorSchema = registry.getSchema(errorIdentifier);
+    } catch (e) {
+      const baseExceptionSchema = import_schema3.TypeRegistry.for("smithy.ts.sdk.synthetic." + namespace).getBaseException();
+      if (baseExceptionSchema) {
+        const ErrorCtor = baseExceptionSchema.ctor;
+        throw Object.assign(new ErrorCtor(errorName), dataObject);
+      }
+      throw new Error(errorName);
+    }
+    const ns = import_schema3.NormalizedSchema.of(errorSchema);
+    const message = dataObject.message ?? dataObject.Message ?? "Unknown";
+    const exception = new errorSchema.ctor(message);
+    await this.deserializeHttpMessage(errorSchema, context, response, dataObject);
+    const output = {};
+    for (const [name, member] of ns.structIterator()) {
+      const target = member.getMergedTraits().jsonName ?? name;
+      output[name] = this.codec.createDeserializer().readObject(member, dataObject[target]);
+    }
+    Object.assign(exception, {
+      $metadata: metadata,
+      $response: response,
+      $fault: ns.getMergedTraits().error,
+      message,
+      ...output
+    });
+    throw exception;
+  }
+};
+
+// src/submodules/protocols/json/AwsJson1_0Protocol.ts
+var AwsJson1_0Protocol = class extends AwsJsonRpcProtocol {
+  static {
+    __name(this, "AwsJson1_0Protocol");
+  }
+  constructor({ defaultNamespace, serviceTarget }) {
+    super({
+      defaultNamespace,
+      serviceTarget
+    });
+  }
+  getShapeId() {
+    return "aws.protocols#awsJson1_0";
+  }
+  getJsonRpcVersion() {
+    return "1.0";
+  }
+  /**
+   * @override
+   */
+  getDefaultContentType() {
+    return "application/x-amz-json-1.0";
+  }
+};
+
+// src/submodules/protocols/json/AwsJson1_1Protocol.ts
+var AwsJson1_1Protocol = class extends AwsJsonRpcProtocol {
+  static {
+    __name(this, "AwsJson1_1Protocol");
+  }
+  constructor({ defaultNamespace, serviceTarget }) {
+    super({
+      defaultNamespace,
+      serviceTarget
+    });
+  }
+  getShapeId() {
+    return "aws.protocols#awsJson1_1";
+  }
+  getJsonRpcVersion() {
+    return "1.1";
+  }
+  /**
+   * @override
+   */
+  getDefaultContentType() {
+    return "application/x-amz-json-1.1";
+  }
+};
+
+// src/submodules/protocols/json/AwsRestJsonProtocol.ts
+var import_protocols2 = __nccwpck_require__(2241);
+var import_schema4 = __nccwpck_require__(9826);
+var import_util_body_length_browser2 = __nccwpck_require__(713);
+var AwsRestJsonProtocol = class extends import_protocols2.HttpBindingProtocol {
+  static {
+    __name(this, "AwsRestJsonProtocol");
+  }
+  serializer;
+  deserializer;
+  codec;
+  constructor({ defaultNamespace }) {
+    super({
+      defaultNamespace
+    });
+    const settings = {
+      timestampFormat: {
+        useTrait: true,
+        default: import_schema4.SCHEMA.TIMESTAMP_EPOCH_SECONDS
+      },
+      httpBindings: true,
+      jsonName: true
+    };
+    this.codec = new JsonCodec(settings);
+    this.serializer = new import_protocols2.HttpInterceptingShapeSerializer(this.codec.createSerializer(), settings);
+    this.deserializer = new import_protocols2.HttpInterceptingShapeDeserializer(this.codec.createDeserializer(), settings);
+  }
+  getShapeId() {
+    return "aws.protocols#restJson1";
+  }
+  getPayloadCodec() {
+    return this.codec;
+  }
+  setSerdeContext(serdeContext) {
+    this.codec.setSerdeContext(serdeContext);
+    super.setSerdeContext(serdeContext);
+  }
+  async serializeRequest(operationSchema, input, context) {
+    const request = await super.serializeRequest(operationSchema, input, context);
+    const inputSchema = import_schema4.NormalizedSchema.of(operationSchema.input);
+    const members = inputSchema.getMemberSchemas();
+    if (!request.headers["content-type"]) {
+      const httpPayloadMember = Object.values(members).find((m) => {
+        return !!m.getMergedTraits().httpPayload;
+      });
+      if (httpPayloadMember) {
+        const mediaType = httpPayloadMember.getMergedTraits().mediaType;
+        if (mediaType) {
+          request.headers["content-type"] = mediaType;
+        } else if (httpPayloadMember.isStringSchema()) {
+          request.headers["content-type"] = "text/plain";
+        } else if (httpPayloadMember.isBlobSchema()) {
+          request.headers["content-type"] = "application/octet-stream";
+        } else {
+          request.headers["content-type"] = this.getDefaultContentType();
+        }
+      } else if (!inputSchema.isUnitSchema()) {
+        const hasBody = Object.values(members).find((m) => {
+          const { httpQuery, httpQueryParams, httpHeader, httpLabel, httpPrefixHeaders } = m.getMergedTraits();
+          return !httpQuery && !httpQueryParams && !httpHeader && !httpLabel && httpPrefixHeaders === void 0;
+        });
+        if (hasBody) {
+          request.headers["content-type"] = this.getDefaultContentType();
+        }
+      }
+    }
+    if (request.headers["content-type"] && !request.body) {
+      request.body = "{}";
+    }
+    if (request.body) {
+      try {
+        request.headers["content-length"] = String((0, import_util_body_length_browser2.calculateBodyLength)(request.body));
+      } catch (e) {
+      }
+    }
+    return request;
+  }
+  async handleError(operationSchema, context, response, dataObject, metadata) {
+    const errorIdentifier = loadRestJsonErrorCode(response, dataObject) ?? "Unknown";
+    let namespace = this.options.defaultNamespace;
+    let errorName = errorIdentifier;
+    if (errorIdentifier.includes("#")) {
+      [namespace, errorName] = errorIdentifier.split("#");
+    }
+    const registry = import_schema4.TypeRegistry.for(namespace);
+    let errorSchema;
+    try {
+      errorSchema = registry.getSchema(errorIdentifier);
+    } catch (e) {
+      const baseExceptionSchema = import_schema4.TypeRegistry.for("smithy.ts.sdk.synthetic." + namespace).getBaseException();
+      if (baseExceptionSchema) {
+        const ErrorCtor = baseExceptionSchema.ctor;
+        throw Object.assign(new ErrorCtor(errorName), dataObject);
+      }
+      throw new Error(errorName);
+    }
+    const ns = import_schema4.NormalizedSchema.of(errorSchema);
+    const message = dataObject.message ?? dataObject.Message ?? "Unknown";
+    const exception = new errorSchema.ctor(message);
+    await this.deserializeHttpMessage(errorSchema, context, response, dataObject);
+    const output = {};
+    for (const [name, member] of ns.structIterator()) {
+      const target = member.getMergedTraits().jsonName ?? name;
+      output[name] = this.codec.createDeserializer().readObject(member, dataObject[target]);
+    }
+    Object.assign(exception, {
+      $metadata: metadata,
+      $response: response,
+      $fault: ns.getMergedTraits().error,
+      message,
+      ...output
+    });
+    throw exception;
+  }
+  /**
+   * @override
+   */
+  getDefaultContentType() {
+    return "application/json";
+  }
+};
+
+// src/submodules/protocols/json/awsExpectUnion.ts
+var import_smithy_client2 = __nccwpck_require__(3570);
+var awsExpectUnion = /* @__PURE__ */ __name((value) => {
+  if (value == null) {
+    return void 0;
+  }
+  if (typeof value === "object" && "__type" in value) {
+    delete value.__type;
+  }
+  return (0, import_smithy_client2.expectUnion)(value);
+}, "awsExpectUnion");
+
+// src/submodules/protocols/query/AwsQueryProtocol.ts
+var import_protocols5 = __nccwpck_require__(2241);
+var import_schema7 = __nccwpck_require__(9826);
+var import_util_body_length_browser3 = __nccwpck_require__(713);
+
+// src/submodules/protocols/xml/XmlShapeDeserializer.ts
+var import_protocols3 = __nccwpck_require__(2241);
+var import_schema5 = __nccwpck_require__(9826);
+var import_smithy_client3 = __nccwpck_require__(3570);
+var import_util_utf8 = __nccwpck_require__(1895);
+var import_fast_xml_parser = __nccwpck_require__(2689);
+var XmlShapeDeserializer = class extends SerdeContextConfig {
+  constructor(settings) {
+    super();
+    this.settings = settings;
+    this.stringDeserializer = new import_protocols3.FromStringShapeDeserializer(settings);
+  }
+  static {
+    __name(this, "XmlShapeDeserializer");
+  }
+  stringDeserializer;
+  setSerdeContext(serdeContext) {
+    this.serdeContext = serdeContext;
+    this.stringDeserializer.setSerdeContext(serdeContext);
+  }
+  /**
+   * @param schema - describing the data.
+   * @param bytes - serialized data.
+   * @param key - used by AwsQuery to step one additional depth into the object before reading it.
+   */
+  read(schema, bytes, key) {
+    const ns = import_schema5.NormalizedSchema.of(schema);
+    const memberSchemas = ns.getMemberSchemas();
+    const isEventPayload = ns.isStructSchema() && ns.isMemberSchema() && !!Object.values(memberSchemas).find((memberNs) => {
+      return !!memberNs.getMemberTraits().eventPayload;
+    });
+    if (isEventPayload) {
+      const output = {};
+      const memberName = Object.keys(memberSchemas)[0];
+      const eventMemberSchema = memberSchemas[memberName];
+      if (eventMemberSchema.isBlobSchema()) {
+        output[memberName] = bytes;
+      } else {
+        output[memberName] = this.read(memberSchemas[memberName], bytes);
+      }
+      return output;
+    }
+    const xmlString = (this.serdeContext?.utf8Encoder ?? import_util_utf8.toUtf8)(bytes);
+    const parsedObject = this.parseXml(xmlString);
+    return this.readSchema(schema, key ? parsedObject[key] : parsedObject);
+  }
+  readSchema(_schema, value) {
+    const ns = import_schema5.NormalizedSchema.of(_schema);
+    const traits = ns.getMergedTraits();
+    if (ns.isListSchema() && !Array.isArray(value)) {
+      return this.readSchema(ns, [value]);
+    }
+    if (value == null) {
+      return value;
+    }
+    if (typeof value === "object") {
+      const sparse = !!traits.sparse;
+      const flat = !!traits.xmlFlattened;
+      if (ns.isListSchema()) {
+        const listValue = ns.getValueSchema();
+        const buffer2 = [];
+        const sourceKey = listValue.getMergedTraits().xmlName ?? "member";
+        const source = flat ? value : (value[0] ?? value)[sourceKey];
+        const sourceArray = Array.isArray(source) ? source : [source];
+        for (const v of sourceArray) {
+          if (v != null || sparse) {
+            buffer2.push(this.readSchema(listValue, v));
+          }
+        }
+        return buffer2;
+      }
+      const buffer = {};
+      if (ns.isMapSchema()) {
+        const keyNs = ns.getKeySchema();
+        const memberNs = ns.getValueSchema();
+        let entries;
+        if (flat) {
+          entries = Array.isArray(value) ? value : [value];
+        } else {
+          entries = Array.isArray(value.entry) ? value.entry : [value.entry];
+        }
+        const keyProperty = keyNs.getMergedTraits().xmlName ?? "key";
+        const valueProperty = memberNs.getMergedTraits().xmlName ?? "value";
+        for (const entry of entries) {
+          const key = entry[keyProperty];
+          const value2 = entry[valueProperty];
+          if (value2 != null || sparse) {
+            buffer[key] = this.readSchema(memberNs, value2);
+          }
+        }
+        return buffer;
+      }
+      if (ns.isStructSchema()) {
+        for (const [memberName, memberSchema] of ns.structIterator()) {
+          const memberTraits = memberSchema.getMergedTraits();
+          const xmlObjectKey = !memberTraits.httpPayload ? memberSchema.getMemberTraits().xmlName ?? memberName : memberTraits.xmlName ?? memberSchema.getName();
+          if (value[xmlObjectKey] != null) {
+            buffer[memberName] = this.readSchema(memberSchema, value[xmlObjectKey]);
+          }
+        }
+        return buffer;
+      }
+      if (ns.isDocumentSchema()) {
+        return value;
+      }
+      throw new Error(`@aws-sdk/core/protocols - xml deserializer unhandled schema type for ${ns.getName(true)}`);
+    }
+    if (ns.isListSchema()) {
+      return [];
+    }
+    if (ns.isMapSchema() || ns.isStructSchema()) {
+      return {};
+    }
+    return this.stringDeserializer.read(ns, value);
+  }
+  parseXml(xml) {
+    if (xml.length) {
+      const parser = new import_fast_xml_parser.XMLParser({
+        attributeNamePrefix: "",
+        htmlEntities: true,
+        ignoreAttributes: false,
+        ignoreDeclaration: true,
+        parseTagValue: false,
+        trimValues: false,
+        tagValueProcessor: /* @__PURE__ */ __name((_, val) => val.trim() === "" && val.includes("\n") ? "" : void 0, "tagValueProcessor")
+      });
+      parser.addEntity("#xD", "\r");
+      parser.addEntity("#10", "\n");
+      let parsedObj;
+      try {
+        parsedObj = parser.parse(xml, true);
+      } catch (e) {
+        if (e && typeof e === "object") {
+          Object.defineProperty(e, "$responseBodyText", {
+            value: xml
+          });
+        }
+        throw e;
+      }
+      const textNodeName = "#text";
+      const key = Object.keys(parsedObj)[0];
+      const parsedObjToReturn = parsedObj[key];
+      if (parsedObjToReturn[textNodeName]) {
+        parsedObjToReturn[key] = parsedObjToReturn[textNodeName];
+        delete parsedObjToReturn[textNodeName];
+      }
+      return (0, import_smithy_client3.getValueFromTextNode)(parsedObjToReturn);
+    }
+    return {};
+  }
+};
+
+// src/submodules/protocols/query/QueryShapeSerializer.ts
+var import_protocols4 = __nccwpck_require__(2241);
+var import_schema6 = __nccwpck_require__(9826);
+var import_serde5 = __nccwpck_require__(7669);
+var import_smithy_client4 = __nccwpck_require__(3570);
+var import_util_base642 = __nccwpck_require__(5600);
+var QueryShapeSerializer = class extends SerdeContextConfig {
+  constructor(settings) {
+    super();
+    this.settings = settings;
+  }
+  static {
+    __name(this, "QueryShapeSerializer");
+  }
+  buffer;
+  write(schema, value, prefix = "") {
+    if (this.buffer === void 0) {
+      this.buffer = "";
+    }
+    const ns = import_schema6.NormalizedSchema.of(schema);
+    if (prefix && !prefix.endsWith(".")) {
+      prefix += ".";
+    }
+    if (ns.isBlobSchema()) {
+      if (typeof value === "string" || value instanceof Uint8Array) {
+        this.writeKey(prefix);
+        this.writeValue((this.serdeContext?.base64Encoder ?? import_util_base642.toBase64)(value));
+      }
+    } else if (ns.isBooleanSchema() || ns.isNumericSchema() || ns.isStringSchema()) {
+      if (value != null) {
+        this.writeKey(prefix);
+        this.writeValue(String(value));
+      } else if (ns.isIdempotencyToken()) {
+        this.writeKey(prefix);
+        this.writeValue((0, import_serde5.generateIdempotencyToken)());
+      }
+    } else if (ns.isBigIntegerSchema()) {
+      if (value != null) {
+        this.writeKey(prefix);
+        this.writeValue(String(value));
+      }
+    } else if (ns.isBigDecimalSchema()) {
+      if (value != null) {
+        this.writeKey(prefix);
+        this.writeValue(value instanceof import_serde5.NumericValue ? value.string : String(value));
+      }
+    } else if (ns.isTimestampSchema()) {
+      if (value instanceof Date) {
+        this.writeKey(prefix);
+        const format = (0, import_protocols4.determineTimestampFormat)(ns, this.settings);
+        switch (format) {
+          case import_schema6.SCHEMA.TIMESTAMP_DATE_TIME:
+            this.writeValue(value.toISOString().replace(".000Z", "Z"));
+            break;
+          case import_schema6.SCHEMA.TIMESTAMP_HTTP_DATE:
+            this.writeValue((0, import_smithy_client4.dateToUtcString)(value));
+            break;
+          case import_schema6.SCHEMA.TIMESTAMP_EPOCH_SECONDS:
+            this.writeValue(String(value.getTime() / 1e3));
+            break;
+        }
+      }
+    } else if (ns.isDocumentSchema()) {
+      throw new Error(`@aws-sdk/core/protocols - QuerySerializer unsupported document type ${ns.getName(true)}`);
+    } else if (ns.isListSchema()) {
+      if (Array.isArray(value)) {
+        if (value.length === 0) {
+          if (this.settings.serializeEmptyLists) {
+            this.writeKey(prefix);
+            this.writeValue("");
+          }
+        } else {
+          const member = ns.getValueSchema();
+          const flat = this.settings.flattenLists || ns.getMergedTraits().xmlFlattened;
+          let i = 1;
+          for (const item of value) {
+            if (item == null) {
+              continue;
+            }
+            const suffix = this.getKey("member", member.getMergedTraits().xmlName);
+            const key = flat ? `${prefix}${i}` : `${prefix}${suffix}.${i}`;
+            this.write(member, item, key);
+            ++i;
+          }
+        }
+      }
+    } else if (ns.isMapSchema()) {
+      if (value && typeof value === "object") {
+        const keySchema = ns.getKeySchema();
+        const memberSchema = ns.getValueSchema();
+        const flat = ns.getMergedTraits().xmlFlattened;
+        let i = 1;
+        for (const [k, v] of Object.entries(value)) {
+          if (v == null) {
+            continue;
+          }
+          const keySuffix = this.getKey("key", keySchema.getMergedTraits().xmlName);
+          const key = flat ? `${prefix}${i}.${keySuffix}` : `${prefix}entry.${i}.${keySuffix}`;
+          const valueSuffix = this.getKey("value", memberSchema.getMergedTraits().xmlName);
+          const valueKey = flat ? `${prefix}${i}.${valueSuffix}` : `${prefix}entry.${i}.${valueSuffix}`;
+          this.write(keySchema, k, key);
+          this.write(memberSchema, v, valueKey);
+          ++i;
+        }
+      }
+    } else if (ns.isStructSchema()) {
+      if (value && typeof value === "object") {
+        for (const [memberName, member] of ns.structIterator()) {
+          if (value[memberName] == null && !member.isIdempotencyToken()) {
+            continue;
+          }
+          const suffix = this.getKey(memberName, member.getMergedTraits().xmlName);
+          const key = `${prefix}${suffix}`;
+          this.write(member, value[memberName], key);
+        }
+      }
+    } else if (ns.isUnitSchema()) {
+    } else {
+      throw new Error(`@aws-sdk/core/protocols - QuerySerializer unrecognized schema type ${ns.getName(true)}`);
+    }
+  }
+  flush() {
+    if (this.buffer === void 0) {
+      throw new Error("@aws-sdk/core/protocols - QuerySerializer cannot flush with nothing written to buffer.");
+    }
+    const str = this.buffer;
+    delete this.buffer;
+    return str;
+  }
+  getKey(memberName, xmlName) {
+    const key = xmlName ?? memberName;
+    if (this.settings.capitalizeKeys) {
+      return key[0].toUpperCase() + key.slice(1);
+    }
+    return key;
+  }
+  writeKey(key) {
+    if (key.endsWith(".")) {
+      key = key.slice(0, key.length - 1);
+    }
+    this.buffer += `&${(0, import_protocols4.extendedEncodeURIComponent)(key)}=`;
+  }
+  writeValue(value) {
+    this.buffer += (0, import_protocols4.extendedEncodeURIComponent)(value);
+  }
+};
+
+// src/submodules/protocols/query/AwsQueryProtocol.ts
+var AwsQueryProtocol = class extends import_protocols5.RpcProtocol {
+  constructor(options) {
+    super({
+      defaultNamespace: options.defaultNamespace
+    });
+    this.options = options;
+    const settings = {
+      timestampFormat: {
+        useTrait: true,
+        default: import_schema7.SCHEMA.TIMESTAMP_DATE_TIME
+      },
+      httpBindings: false,
+      xmlNamespace: options.xmlNamespace,
+      serviceNamespace: options.defaultNamespace,
+      serializeEmptyLists: true
+    };
+    this.serializer = new QueryShapeSerializer(settings);
+    this.deserializer = new XmlShapeDeserializer(settings);
+  }
+  static {
+    __name(this, "AwsQueryProtocol");
+  }
+  serializer;
+  deserializer;
+  getShapeId() {
+    return "aws.protocols#awsQuery";
+  }
+  setSerdeContext(serdeContext) {
+    this.serializer.setSerdeContext(serdeContext);
+    this.deserializer.setSerdeContext(serdeContext);
+  }
+  getPayloadCodec() {
+    throw new Error("AWSQuery protocol has no payload codec.");
+  }
+  async serializeRequest(operationSchema, input, context) {
+    const request = await super.serializeRequest(operationSchema, input, context);
+    if (!request.path.endsWith("/")) {
+      request.path += "/";
+    }
+    Object.assign(request.headers, {
+      "content-type": `application/x-www-form-urlencoded`
+    });
+    if ((0, import_schema7.deref)(operationSchema.input) === "unit" || !request.body) {
+      request.body = "";
+    }
+    request.body = `Action=${operationSchema.name.split("#")[1]}&Version=${this.options.version}` + request.body;
+    if (request.body.endsWith("&")) {
+      request.body = request.body.slice(-1);
+    }
+    try {
+      request.headers["content-length"] = String((0, import_util_body_length_browser3.calculateBodyLength)(request.body));
+    } catch (e) {
+    }
+    return request;
+  }
+  async deserializeResponse(operationSchema, context, response) {
+    const deserializer = this.deserializer;
+    const ns = import_schema7.NormalizedSchema.of(operationSchema.output);
+    const dataObject = {};
+    if (response.statusCode >= 300) {
+      const bytes2 = await (0, import_protocols5.collectBody)(response.body, context);
+      if (bytes2.byteLength > 0) {
+        Object.assign(dataObject, await deserializer.read(import_schema7.SCHEMA.DOCUMENT, bytes2));
+      }
+      await this.handleError(operationSchema, context, response, dataObject, this.deserializeMetadata(response));
+    }
+    for (const header in response.headers) {
+      const value = response.headers[header];
+      delete response.headers[header];
+      response.headers[header.toLowerCase()] = value;
+    }
+    const awsQueryResultKey = ns.isStructSchema() && this.useNestedResult() ? operationSchema.name.split("#")[1] + "Result" : void 0;
+    const bytes = await (0, import_protocols5.collectBody)(response.body, context);
+    if (bytes.byteLength > 0) {
+      Object.assign(dataObject, await deserializer.read(ns, bytes, awsQueryResultKey));
+    }
+    const output = {
+      $metadata: this.deserializeMetadata(response),
+      ...dataObject
+    };
+    return output;
+  }
+  /**
+   * EC2 Query overrides this.
+   */
+  useNestedResult() {
+    return true;
+  }
+  async handleError(operationSchema, context, response, dataObject, metadata) {
+    const errorIdentifier = this.loadQueryErrorCode(response, dataObject) ?? "Unknown";
+    let namespace = this.options.defaultNamespace;
+    let errorName = errorIdentifier;
+    if (errorIdentifier.includes("#")) {
+      [namespace, errorName] = errorIdentifier.split("#");
+    }
+    const errorDataSource = this.loadQueryError(dataObject);
+    const registry = import_schema7.TypeRegistry.for(namespace);
+    let errorSchema;
+    try {
+      errorSchema = registry.find(
+        (schema) => import_schema7.NormalizedSchema.of(schema).getMergedTraits().awsQueryError?.[0] === errorName
+      );
+      if (!errorSchema) {
+        errorSchema = registry.getSchema(errorIdentifier);
+      }
+    } catch (e) {
+      const baseExceptionSchema = import_schema7.TypeRegistry.for("smithy.ts.sdk.synthetic." + namespace).getBaseException();
+      if (baseExceptionSchema) {
+        const ErrorCtor = baseExceptionSchema.ctor;
+        throw Object.assign(new ErrorCtor(errorName), errorDataSource);
+      }
+      throw new Error(errorName);
+    }
+    const ns = import_schema7.NormalizedSchema.of(errorSchema);
+    const message = this.loadQueryErrorMessage(dataObject);
+    const exception = new errorSchema.ctor(message);
+    const output = {};
+    for (const [name, member] of ns.structIterator()) {
+      const target = member.getMergedTraits().xmlName ?? name;
+      const value = errorDataSource[target] ?? dataObject[target];
+      output[name] = this.deserializer.readSchema(member, value);
+    }
+    Object.assign(exception, {
+      $metadata: metadata,
+      $response: response,
+      $fault: ns.getMergedTraits().error,
+      message,
+      ...output
+    });
+    throw exception;
+  }
+  /**
+   * The variations in the error and error message locations are attributed to
+   * divergence between AWS Query and EC2 Query behavior.
+   */
+  loadQueryErrorCode(output, data) {
+    const code = (data.Errors?.[0]?.Error ?? data.Errors?.Error ?? data.Error)?.Code;
+    if (code !== void 0) {
+      return code;
+    }
+    if (output.statusCode == 404) {
+      return "NotFound";
+    }
+  }
+  loadQueryError(data) {
+    return data.Errors?.[0]?.Error ?? data.Errors?.Error ?? data.Error;
+  }
+  loadQueryErrorMessage(data) {
+    const errorData = this.loadQueryError(data);
+    return errorData?.message ?? errorData?.Message ?? data.message ?? data.Message ?? "Unknown";
+  }
+  /**
+   * @override
+   */
+  getDefaultContentType() {
+    return "application/x-www-form-urlencoded";
+  }
+};
+
+// src/submodules/protocols/query/AwsEc2QueryProtocol.ts
+var AwsEc2QueryProtocol = class extends AwsQueryProtocol {
+  constructor(options) {
+    super(options);
+    this.options = options;
+    const ec2Settings = {
+      capitalizeKeys: true,
+      flattenLists: true,
+      serializeEmptyLists: false
+    };
+    Object.assign(this.serializer.settings, ec2Settings);
+  }
+  static {
+    __name(this, "AwsEc2QueryProtocol");
+  }
+  /**
+   * EC2 Query reads XResponse.XResult instead of XResponse directly.
+   */
+  useNestedResult() {
+    return false;
+  }
+};
+
+// src/submodules/protocols/xml/AwsRestXmlProtocol.ts
+var import_protocols6 = __nccwpck_require__(2241);
+var import_schema9 = __nccwpck_require__(9826);
+var import_util_body_length_browser4 = __nccwpck_require__(713);
+
+// src/submodules/protocols/xml/parseXmlBody.ts
+var import_smithy_client5 = __nccwpck_require__(3570);
+var import_fast_xml_parser2 = __nccwpck_require__(2689);
+var parseXmlBody = /* @__PURE__ */ __name((streamBody, context) => collectBodyString(streamBody, context).then((encoded) => {
+  if (encoded.length) {
+    const parser = new import_fast_xml_parser2.XMLParser({
+      attributeNamePrefix: "",
+      htmlEntities: true,
+      ignoreAttributes: false,
+      ignoreDeclaration: true,
+      parseTagValue: false,
+      trimValues: false,
+      tagValueProcessor: /* @__PURE__ */ __name((_, val) => val.trim() === "" && val.includes("\n") ? "" : void 0, "tagValueProcessor")
+    });
+    parser.addEntity("#xD", "\r");
+    parser.addEntity("#10", "\n");
+    let parsedObj;
+    try {
+      parsedObj = parser.parse(encoded, true);
+    } catch (e) {
+      if (e && typeof e === "object") {
+        Object.defineProperty(e, "$responseBodyText", {
+          value: encoded
+        });
+      }
+      throw e;
+    }
+    const textNodeName = "#text";
+    const key = Object.keys(parsedObj)[0];
+    const parsedObjToReturn = parsedObj[key];
+    if (parsedObjToReturn[textNodeName]) {
+      parsedObjToReturn[key] = parsedObjToReturn[textNodeName];
+      delete parsedObjToReturn[textNodeName];
+    }
+    return (0, import_smithy_client5.getValueFromTextNode)(parsedObjToReturn);
+  }
+  return {};
+}), "parseXmlBody");
+var parseXmlErrorBody = /* @__PURE__ */ __name(async (errorBody, context) => {
+  const value = await parseXmlBody(errorBody, context);
+  if (value.Error) {
+    value.Error.message = value.Error.message ?? value.Error.Message;
+  }
+  return value;
+}, "parseXmlErrorBody");
+var loadRestXmlErrorCode = /* @__PURE__ */ __name((output, data) => {
+  if (data?.Error?.Code !== void 0) {
+    return data.Error.Code;
+  }
+  if (data?.Code !== void 0) {
+    return data.Code;
+  }
+  if (output.statusCode == 404) {
+    return "NotFound";
+  }
+}, "loadRestXmlErrorCode");
+
+// src/submodules/protocols/xml/XmlShapeSerializer.ts
+var import_xml_builder = __nccwpck_require__(7406);
+var import_schema8 = __nccwpck_require__(9826);
+var import_serde6 = __nccwpck_require__(7669);
+var import_smithy_client6 = __nccwpck_require__(3570);
+var import_util_base643 = __nccwpck_require__(5600);
+var XmlShapeSerializer = class extends SerdeContextConfig {
+  constructor(settings) {
+    super();
+    this.settings = settings;
+  }
+  static {
+    __name(this, "XmlShapeSerializer");
+  }
+  stringBuffer;
+  byteBuffer;
+  buffer;
+  write(schema, value) {
+    const ns = import_schema8.NormalizedSchema.of(schema);
+    if (ns.isStringSchema() && typeof value === "string") {
+      this.stringBuffer = value;
+    } else if (ns.isBlobSchema()) {
+      this.byteBuffer = "byteLength" in value ? value : (this.serdeContext?.base64Decoder ?? import_util_base643.fromBase64)(value);
+    } else {
+      this.buffer = this.writeStruct(ns, value, void 0);
+      const traits = ns.getMergedTraits();
+      if (traits.httpPayload && !traits.xmlName) {
+        this.buffer.withName(ns.getName());
+      }
+    }
+  }
+  flush() {
+    if (this.byteBuffer !== void 0) {
+      const bytes = this.byteBuffer;
+      delete this.byteBuffer;
+      return bytes;
+    }
+    if (this.stringBuffer !== void 0) {
+      const str = this.stringBuffer;
+      delete this.stringBuffer;
+      return str;
+    }
+    const buffer = this.buffer;
+    if (this.settings.xmlNamespace) {
+      if (!buffer?.attributes?.["xmlns"]) {
+        buffer.addAttribute("xmlns", this.settings.xmlNamespace);
+      }
+    }
+    delete this.buffer;
+    return buffer.toString();
+  }
+  writeStruct(ns, value, parentXmlns) {
+    const traits = ns.getMergedTraits();
+    const name = ns.isMemberSchema() && !traits.httpPayload ? ns.getMemberTraits().xmlName ?? ns.getMemberName() : traits.xmlName ?? ns.getName();
+    if (!name || !ns.isStructSchema()) {
+      throw new Error(
+        `@aws-sdk/core/protocols - xml serializer, cannot write struct with empty name or non-struct, schema=${ns.getName(
+          true
+        )}.`
+      );
+    }
+    const structXmlNode = import_xml_builder.XmlNode.of(name);
+    const [xmlnsAttr, xmlns] = this.getXmlnsAttribute(ns, parentXmlns);
+    if (xmlns) {
+      structXmlNode.addAttribute(xmlnsAttr, xmlns);
+    }
+    for (const [memberName, memberSchema] of ns.structIterator()) {
+      const val = value[memberName];
+      if (val != null || memberSchema.isIdempotencyToken()) {
+        if (memberSchema.getMergedTraits().xmlAttribute) {
+          structXmlNode.addAttribute(
+            memberSchema.getMergedTraits().xmlName ?? memberName,
+            this.writeSimple(memberSchema, val)
+          );
+          continue;
+        }
+        if (memberSchema.isListSchema()) {
+          this.writeList(memberSchema, val, structXmlNode, xmlns);
+        } else if (memberSchema.isMapSchema()) {
+          this.writeMap(memberSchema, val, structXmlNode, xmlns);
+        } else if (memberSchema.isStructSchema()) {
+          structXmlNode.addChildNode(this.writeStruct(memberSchema, val, xmlns));
+        } else {
+          const memberNode = import_xml_builder.XmlNode.of(memberSchema.getMergedTraits().xmlName ?? memberSchema.getMemberName());
+          this.writeSimpleInto(memberSchema, val, memberNode, xmlns);
+          structXmlNode.addChildNode(memberNode);
+        }
+      }
+    }
+    return structXmlNode;
+  }
+  writeList(listMember, array, container, parentXmlns) {
+    if (!listMember.isMemberSchema()) {
+      throw new Error(
+        `@aws-sdk/core/protocols - xml serializer, cannot write non-member list: ${listMember.getName(true)}`
+      );
+    }
+    const listTraits = listMember.getMergedTraits();
+    const listValueSchema = listMember.getValueSchema();
+    const listValueTraits = listValueSchema.getMergedTraits();
+    const sparse = !!listValueTraits.sparse;
+    const flat = !!listTraits.xmlFlattened;
+    const [xmlnsAttr, xmlns] = this.getXmlnsAttribute(listMember, parentXmlns);
+    const writeItem = /* @__PURE__ */ __name((container2, value) => {
+      if (listValueSchema.isListSchema()) {
+        this.writeList(listValueSchema, Array.isArray(value) ? value : [value], container2, xmlns);
+      } else if (listValueSchema.isMapSchema()) {
+        this.writeMap(listValueSchema, value, container2, xmlns);
+      } else if (listValueSchema.isStructSchema()) {
+        const struct = this.writeStruct(listValueSchema, value, xmlns);
+        container2.addChildNode(
+          struct.withName(flat ? listTraits.xmlName ?? listMember.getMemberName() : listValueTraits.xmlName ?? "member")
+        );
+      } else {
+        const listItemNode = import_xml_builder.XmlNode.of(
+          flat ? listTraits.xmlName ?? listMember.getMemberName() : listValueTraits.xmlName ?? "member"
+        );
+        this.writeSimpleInto(listValueSchema, value, listItemNode, xmlns);
+        container2.addChildNode(listItemNode);
+      }
+    }, "writeItem");
+    if (flat) {
+      for (const value of array) {
+        if (sparse || value != null) {
+          writeItem(container, value);
+        }
+      }
+    } else {
+      const listNode = import_xml_builder.XmlNode.of(listTraits.xmlName ?? listMember.getMemberName());
+      if (xmlns) {
+        listNode.addAttribute(xmlnsAttr, xmlns);
+      }
+      for (const value of array) {
+        if (sparse || value != null) {
+          writeItem(listNode, value);
+        }
+      }
+      container.addChildNode(listNode);
+    }
+  }
+  writeMap(mapMember, map, container, parentXmlns, containerIsMap = false) {
+    if (!mapMember.isMemberSchema()) {
+      throw new Error(
+        `@aws-sdk/core/protocols - xml serializer, cannot write non-member map: ${mapMember.getName(true)}`
+      );
+    }
+    const mapTraits = mapMember.getMergedTraits();
+    const mapKeySchema = mapMember.getKeySchema();
+    const mapKeyTraits = mapKeySchema.getMergedTraits();
+    const keyTag = mapKeyTraits.xmlName ?? "key";
+    const mapValueSchema = mapMember.getValueSchema();
+    const mapValueTraits = mapValueSchema.getMergedTraits();
+    const valueTag = mapValueTraits.xmlName ?? "value";
+    const sparse = !!mapValueTraits.sparse;
+    const flat = !!mapTraits.xmlFlattened;
+    const [xmlnsAttr, xmlns] = this.getXmlnsAttribute(mapMember, parentXmlns);
+    const addKeyValue = /* @__PURE__ */ __name((entry, key, val) => {
+      const keyNode = import_xml_builder.XmlNode.of(keyTag, key);
+      const [keyXmlnsAttr, keyXmlns] = this.getXmlnsAttribute(mapKeySchema, xmlns);
+      if (keyXmlns) {
+        keyNode.addAttribute(keyXmlnsAttr, keyXmlns);
+      }
+      entry.addChildNode(keyNode);
+      let valueNode = import_xml_builder.XmlNode.of(valueTag);
+      if (mapValueSchema.isListSchema()) {
+        this.writeList(mapValueSchema, val, valueNode, xmlns);
+      } else if (mapValueSchema.isMapSchema()) {
+        this.writeMap(mapValueSchema, val, valueNode, xmlns, true);
+      } else if (mapValueSchema.isStructSchema()) {
+        valueNode = this.writeStruct(mapValueSchema, val, xmlns);
+      } else {
+        this.writeSimpleInto(mapValueSchema, val, valueNode, xmlns);
+      }
+      entry.addChildNode(valueNode);
+    }, "addKeyValue");
+    if (flat) {
+      for (const [key, val] of Object.entries(map)) {
+        if (sparse || val != null) {
+          const entry = import_xml_builder.XmlNode.of(mapTraits.xmlName ?? mapMember.getMemberName());
+          addKeyValue(entry, key, val);
+          container.addChildNode(entry);
+        }
+      }
+    } else {
+      let mapNode;
+      if (!containerIsMap) {
+        mapNode = import_xml_builder.XmlNode.of(mapTraits.xmlName ?? mapMember.getMemberName());
+        if (xmlns) {
+          mapNode.addAttribute(xmlnsAttr, xmlns);
+        }
+        container.addChildNode(mapNode);
+      }
+      for (const [key, val] of Object.entries(map)) {
+        if (sparse || val != null) {
+          const entry = import_xml_builder.XmlNode.of("entry");
+          addKeyValue(entry, key, val);
+          (containerIsMap ? container : mapNode).addChildNode(entry);
+        }
+      }
+    }
+  }
+  writeSimple(_schema, value) {
+    if (null === value) {
+      throw new Error("@aws-sdk/core/protocols - (XML serializer) cannot write null value.");
+    }
+    const ns = import_schema8.NormalizedSchema.of(_schema);
+    let nodeContents = null;
+    if (value && typeof value === "object") {
+      if (ns.isBlobSchema()) {
+        nodeContents = (this.serdeContext?.base64Encoder ?? import_util_base643.toBase64)(value);
+      } else if (ns.isTimestampSchema() && value instanceof Date) {
+        const options = this.settings.timestampFormat;
+        const format = options.useTrait ? ns.getSchema() === import_schema8.SCHEMA.TIMESTAMP_DEFAULT ? options.default : ns.getSchema() ?? options.default : options.default;
+        switch (format) {
+          case import_schema8.SCHEMA.TIMESTAMP_DATE_TIME:
+            nodeContents = value.toISOString().replace(".000Z", "Z");
+            break;
+          case import_schema8.SCHEMA.TIMESTAMP_HTTP_DATE:
+            nodeContents = (0, import_smithy_client6.dateToUtcString)(value);
+            break;
+          case import_schema8.SCHEMA.TIMESTAMP_EPOCH_SECONDS:
+            nodeContents = String(value.getTime() / 1e3);
+            break;
+          default:
+            console.warn("Missing timestamp format, using http date", value);
+            nodeContents = (0, import_smithy_client6.dateToUtcString)(value);
+            break;
+        }
+      } else if (ns.isBigDecimalSchema() && value) {
+        if (value instanceof import_serde6.NumericValue) {
+          return value.string;
+        }
+        return String(value);
+      } else if (ns.isMapSchema() || ns.isListSchema()) {
+        throw new Error(
+          "@aws-sdk/core/protocols - xml serializer, cannot call _write() on List/Map schema, call writeList or writeMap() instead."
+        );
+      } else {
+        throw new Error(
+          `@aws-sdk/core/protocols - xml serializer, unhandled schema type for object value and schema: ${ns.getName(
+            true
+          )}`
+        );
+      }
+    }
+    if (ns.isBooleanSchema() || ns.isNumericSchema() || ns.isBigIntegerSchema() || ns.isBigDecimalSchema()) {
+      nodeContents = String(value);
+    }
+    if (ns.isStringSchema()) {
+      if (value === void 0 && ns.isIdempotencyToken()) {
+        nodeContents = (0, import_serde6.generateIdempotencyToken)();
+      } else {
+        nodeContents = String(value);
+      }
+    }
+    if (nodeContents === null) {
+      throw new Error(`Unhandled schema-value pair ${ns.getName(true)}=${value}`);
+    }
+    return nodeContents;
+  }
+  writeSimpleInto(_schema, value, into, parentXmlns) {
+    const nodeContents = this.writeSimple(_schema, value);
+    const ns = import_schema8.NormalizedSchema.of(_schema);
+    const content = new import_xml_builder.XmlText(nodeContents);
+    const [xmlnsAttr, xmlns] = this.getXmlnsAttribute(ns, parentXmlns);
+    if (xmlns) {
+      into.addAttribute(xmlnsAttr, xmlns);
+    }
+    into.addChildNode(content);
+  }
+  getXmlnsAttribute(ns, parentXmlns) {
+    const traits = ns.getMergedTraits();
+    const [prefix, xmlns] = traits.xmlNamespace ?? [];
+    if (xmlns && xmlns !== parentXmlns) {
+      return [prefix ? `xmlns:${prefix}` : "xmlns", xmlns];
+    }
+    return [void 0, void 0];
+  }
+};
+
+// src/submodules/protocols/xml/XmlCodec.ts
+var XmlCodec = class extends SerdeContextConfig {
+  constructor(settings) {
+    super();
+    this.settings = settings;
+  }
+  static {
+    __name(this, "XmlCodec");
+  }
+  createSerializer() {
+    const serializer = new XmlShapeSerializer(this.settings);
+    serializer.setSerdeContext(this.serdeContext);
+    return serializer;
+  }
+  createDeserializer() {
+    const deserializer = new XmlShapeDeserializer(this.settings);
+    deserializer.setSerdeContext(this.serdeContext);
+    return deserializer;
+  }
+};
+
+// src/submodules/protocols/xml/AwsRestXmlProtocol.ts
+var AwsRestXmlProtocol = class extends import_protocols6.HttpBindingProtocol {
+  static {
+    __name(this, "AwsRestXmlProtocol");
+  }
+  codec;
+  serializer;
+  deserializer;
+  constructor(options) {
+    super(options);
+    const settings = {
+      timestampFormat: {
+        useTrait: true,
+        default: import_schema9.SCHEMA.TIMESTAMP_DATE_TIME
+      },
+      httpBindings: true,
+      xmlNamespace: options.xmlNamespace,
+      serviceNamespace: options.defaultNamespace
+    };
+    this.codec = new XmlCodec(settings);
+    this.serializer = new import_protocols6.HttpInterceptingShapeSerializer(this.codec.createSerializer(), settings);
+    this.deserializer = new import_protocols6.HttpInterceptingShapeDeserializer(this.codec.createDeserializer(), settings);
+  }
+  getPayloadCodec() {
+    return this.codec;
+  }
+  getShapeId() {
+    return "aws.protocols#restXml";
+  }
+  async serializeRequest(operationSchema, input, context) {
+    const request = await super.serializeRequest(operationSchema, input, context);
+    const ns = import_schema9.NormalizedSchema.of(operationSchema.input);
+    const members = ns.getMemberSchemas();
+    request.path = String(request.path).split("/").filter((segment) => {
+      return segment !== "{Bucket}";
+    }).join("/") || "/";
+    if (!request.headers["content-type"]) {
+      const httpPayloadMember = Object.values(members).find((m) => {
+        return !!m.getMergedTraits().httpPayload;
+      });
+      if (httpPayloadMember) {
+        const mediaType = httpPayloadMember.getMergedTraits().mediaType;
+        if (mediaType) {
+          request.headers["content-type"] = mediaType;
+        } else if (httpPayloadMember.isStringSchema()) {
+          request.headers["content-type"] = "text/plain";
+        } else if (httpPayloadMember.isBlobSchema()) {
+          request.headers["content-type"] = "application/octet-stream";
+        } else {
+          request.headers["content-type"] = this.getDefaultContentType();
+        }
+      } else if (!ns.isUnitSchema()) {
+        const hasBody = Object.values(members).find((m) => {
+          const { httpQuery, httpQueryParams, httpHeader, httpLabel, httpPrefixHeaders } = m.getMergedTraits();
+          return !httpQuery && !httpQueryParams && !httpHeader && !httpLabel && httpPrefixHeaders === void 0;
+        });
+        if (hasBody) {
+          request.headers["content-type"] = this.getDefaultContentType();
+        }
+      }
+    }
+    if (request.headers["content-type"] === this.getDefaultContentType()) {
+      if (typeof request.body === "string") {
+        request.body = '<?xml version="1.0" encoding="UTF-8"?>' + request.body;
+      }
+    }
+    if (request.body) {
+      try {
+        request.headers["content-length"] = String((0, import_util_body_length_browser4.calculateBodyLength)(request.body));
+      } catch (e) {
+      }
+    }
+    return request;
+  }
+  async deserializeResponse(operationSchema, context, response) {
+    return super.deserializeResponse(operationSchema, context, response);
+  }
+  async handleError(operationSchema, context, response, dataObject, metadata) {
+    const errorIdentifier = loadRestXmlErrorCode(response, dataObject) ?? "Unknown";
+    let namespace = this.options.defaultNamespace;
+    let errorName = errorIdentifier;
+    if (errorIdentifier.includes("#")) {
+      [namespace, errorName] = errorIdentifier.split("#");
+    }
+    const registry = import_schema9.TypeRegistry.for(namespace);
+    let errorSchema;
+    try {
+      errorSchema = registry.getSchema(errorIdentifier);
+    } catch (e) {
+      const baseExceptionSchema = import_schema9.TypeRegistry.for("smithy.ts.sdk.synthetic." + namespace).getBaseException();
+      if (baseExceptionSchema) {
+        const ErrorCtor = baseExceptionSchema.ctor;
+        throw Object.assign(new ErrorCtor(errorName), dataObject);
+      }
+      throw new Error(errorName);
+    }
+    const ns = import_schema9.NormalizedSchema.of(errorSchema);
+    const message = dataObject.Error?.message ?? dataObject.Error?.Message ?? dataObject.message ?? dataObject.Message ?? "Unknown";
+    const exception = new errorSchema.ctor(message);
+    await this.deserializeHttpMessage(errorSchema, context, response, dataObject);
+    const output = {};
+    for (const [name, member] of ns.structIterator()) {
+      const target = member.getMergedTraits().xmlName ?? name;
+      const value = dataObject.Error?.[target] ?? dataObject[target];
+      output[name] = this.codec.createDeserializer().readSchema(member, value);
+    }
+    Object.assign(exception, {
+      $metadata: metadata,
+      $response: response,
+      $fault: ns.getMergedTraits().error,
+      message,
+      ...output
+    });
+    throw exception;
+  }
+  /**
+   * @override
+   */
+  getDefaultContentType() {
+    return "application/xml";
+  }
+};
+// Annotate the CommonJS export names for ESM import in node:
+0 && (0);
+
+
+/***/ }),
+
+/***/ 8519:
+/***/ ((module, __unused_webpack_exports, __nccwpck_require__) => {
+
+"use strict";
+
+var __defProp = Object.defineProperty;
+var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
+var __getOwnPropNames = Object.getOwnPropertyNames;
+var __hasOwnProp = Object.prototype.hasOwnProperty;
+var __name = (target, value) => __defProp(target, "name", { value, configurable: true });
+var __export = (target, all) => {
+  for (var name in all)
+    __defProp(target, name, { get: all[name], enumerable: true });
+};
+var __copyProps = (to, from, except, desc) => {
+  if (from && typeof from === "object" || typeof from === "function") {
+    for (let key of __getOwnPropNames(from))
+      if (!__hasOwnProp.call(to, key) && key !== except)
+        __defProp(to, key, { get: () => from[key], enumerable: !(desc = __getOwnPropDesc(from, key)) || desc.enumerable });
+  }
+  return to;
+};
+var __toCommonJS = (mod) => __copyProps(__defProp({}, "__esModule", { value: true }), mod);
+
+// src/index.ts
+var index_exports = {};
+__export(index_exports, {
+  ENV_ACCOUNT_ID: () => ENV_ACCOUNT_ID,
+  ENV_CREDENTIAL_SCOPE: () => ENV_CREDENTIAL_SCOPE,
+  ENV_EXPIRATION: () => ENV_EXPIRATION,
+  ENV_KEY: () => ENV_KEY,
+  ENV_SECRET: () => ENV_SECRET,
+  ENV_SESSION: () => ENV_SESSION,
+  fromEnv: () => fromEnv
+});
+module.exports = __toCommonJS(index_exports);
+
+// src/fromEnv.ts
+var import_client = __nccwpck_require__(912);
+var import_property_provider = __nccwpck_require__(9721);
+var ENV_KEY = "AWS_ACCESS_KEY_ID";
+var ENV_SECRET = "AWS_SECRET_ACCESS_KEY";
+var ENV_SESSION = "AWS_SESSION_TOKEN";
+var ENV_EXPIRATION = "AWS_CREDENTIAL_EXPIRATION";
+var ENV_CREDENTIAL_SCOPE = "AWS_CREDENTIAL_SCOPE";
+var ENV_ACCOUNT_ID = "AWS_ACCOUNT_ID";
+var fromEnv = /* @__PURE__ */ __name((init) => async () => {
+  init?.logger?.debug("@aws-sdk/credential-provider-env - fromEnv");
+  const accessKeyId = process.env[ENV_KEY];
+  const secretAccessKey = process.env[ENV_SECRET];
+  const sessionToken = process.env[ENV_SESSION];
+  const expiry = process.env[ENV_EXPIRATION];
+  const credentialScope = process.env[ENV_CREDENTIAL_SCOPE];
+  const accountId = process.env[ENV_ACCOUNT_ID];
+  if (accessKeyId && secretAccessKey) {
+    const credentials = {
+      accessKeyId,
+      secretAccessKey,
+      ...sessionToken && { sessionToken },
+      ...expiry && { expiration: new Date(expiry) },
+      ...credentialScope && { credentialScope },
+      ...accountId && { accountId }
+    };
+    (0, import_client.setCredentialFeature)(credentials, "CREDENTIALS_ENV_VARS", "g");
+    return credentials;
+  }
+  throw new import_property_provider.CredentialsProviderError("Unable to find environment variable credentials.", { logger: init?.logger });
+}, "fromEnv");
+// Annotate the CommonJS export names for ESM import in node:
+
+0 && (0);
+
+
+
+/***/ }),
+
+/***/ 7606:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.checkUrl = void 0;
+const property_provider_1 = __nccwpck_require__(9721);
+const LOOPBACK_CIDR_IPv4 = "127.0.0.0/8";
+const LOOPBACK_CIDR_IPv6 = "::1/128";
+const ECS_CONTAINER_HOST = "169.254.170.2";
+const EKS_CONTAINER_HOST_IPv4 = "169.254.170.23";
+const EKS_CONTAINER_HOST_IPv6 = "[fd00:ec2::23]";
+const checkUrl = (url, logger) => {
+    if (url.protocol === "https:") {
+        return;
+    }
+    if (url.hostname === ECS_CONTAINER_HOST ||
+        url.hostname === EKS_CONTAINER_HOST_IPv4 ||
+        url.hostname === EKS_CONTAINER_HOST_IPv6) {
+        return;
+    }
+    if (url.hostname.includes("[")) {
+        if (url.hostname === "[::1]" || url.hostname === "[0000:0000:0000:0000:0000:0000:0000:0001]") {
+            return;
+        }
+    }
+    else {
+        if (url.hostname === "localhost") {
+            return;
+        }
+        const ipComponents = url.hostname.split(".");
+        const inRange = (component) => {
+            const num = parseInt(component, 10);
+            return 0 <= num && num <= 255;
+        };
+        if (ipComponents[0] === "127" &&
+            inRange(ipComponents[1]) &&
+            inRange(ipComponents[2]) &&
+            inRange(ipComponents[3]) &&
+            ipComponents.length === 4) {
+            return;
+        }
+    }
+    throw new property_provider_1.CredentialsProviderError(`URL not accepted. It must either be HTTPS or match one of the following:
+  - loopback CIDR 127.0.0.0/8 or [::1/128]
+  - ECS container host 169.254.170.2
+  - EKS container host 169.254.170.23 or [fd00:ec2::23]`, { logger });
+};
+exports.checkUrl = checkUrl;
+
+
+/***/ }),
+
+/***/ 2120:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.fromHttp = void 0;
+const tslib_1 = __nccwpck_require__(4351);
+const client_1 = __nccwpck_require__(912);
+const node_http_handler_1 = __nccwpck_require__(258);
+const property_provider_1 = __nccwpck_require__(9721);
+const promises_1 = tslib_1.__importDefault(__nccwpck_require__(3292));
+const checkUrl_1 = __nccwpck_require__(7606);
+const requestHelpers_1 = __nccwpck_require__(8082);
+const retry_wrapper_1 = __nccwpck_require__(9359);
+const AWS_CONTAINER_CREDENTIALS_RELATIVE_URI = "AWS_CONTAINER_CREDENTIALS_RELATIVE_URI";
+const DEFAULT_LINK_LOCAL_HOST = "http://169.254.170.2";
+const AWS_CONTAINER_CREDENTIALS_FULL_URI = "AWS_CONTAINER_CREDENTIALS_FULL_URI";
+const AWS_CONTAINER_AUTHORIZATION_TOKEN_FILE = "AWS_CONTAINER_AUTHORIZATION_TOKEN_FILE";
+const AWS_CONTAINER_AUTHORIZATION_TOKEN = "AWS_CONTAINER_AUTHORIZATION_TOKEN";
+const fromHttp = (options = {}) => {
+    options.logger?.debug("@aws-sdk/credential-provider-http - fromHttp");
+    let host;
+    const relative = options.awsContainerCredentialsRelativeUri ?? process.env[AWS_CONTAINER_CREDENTIALS_RELATIVE_URI];
+    const full = options.awsContainerCredentialsFullUri ?? process.env[AWS_CONTAINER_CREDENTIALS_FULL_URI];
+    const token = options.awsContainerAuthorizationToken ?? process.env[AWS_CONTAINER_AUTHORIZATION_TOKEN];
+    const tokenFile = options.awsContainerAuthorizationTokenFile ?? process.env[AWS_CONTAINER_AUTHORIZATION_TOKEN_FILE];
+    const warn = options.logger?.constructor?.name === "NoOpLogger" || !options.logger ? console.warn : options.logger.warn;
+    if (relative && full) {
+        warn("@aws-sdk/credential-provider-http: " +
+            "you have set both awsContainerCredentialsRelativeUri and awsContainerCredentialsFullUri.");
+        warn("awsContainerCredentialsFullUri will take precedence.");
+    }
+    if (token && tokenFile) {
+        warn("@aws-sdk/credential-provider-http: " +
+            "you have set both awsContainerAuthorizationToken and awsContainerAuthorizationTokenFile.");
+        warn("awsContainerAuthorizationToken will take precedence.");
+    }
+    if (full) {
+        host = full;
+    }
+    else if (relative) {
+        host = `${DEFAULT_LINK_LOCAL_HOST}${relative}`;
+    }
+    else {
+        throw new property_provider_1.CredentialsProviderError(`No HTTP credential provider host provided.
+Set AWS_CONTAINER_CREDENTIALS_FULL_URI or AWS_CONTAINER_CREDENTIALS_RELATIVE_URI.`, { logger: options.logger });
+    }
+    const url = new URL(host);
+    (0, checkUrl_1.checkUrl)(url, options.logger);
+    const requestHandler = new node_http_handler_1.NodeHttpHandler({
+        requestTimeout: options.timeout ?? 1000,
+        connectionTimeout: options.timeout ?? 1000,
+    });
+    return (0, retry_wrapper_1.retryWrapper)(async () => {
+        const request = (0, requestHelpers_1.createGetRequest)(url);
+        if (token) {
+            request.headers.Authorization = token;
+        }
+        else if (tokenFile) {
+            request.headers.Authorization = (await promises_1.default.readFile(tokenFile)).toString();
+        }
+        try {
+            const result = await requestHandler.handle(request);
+            return (0, requestHelpers_1.getCredentials)(result.response).then((creds) => (0, client_1.setCredentialFeature)(creds, "CREDENTIALS_HTTP", "z"));
+        }
+        catch (e) {
+            throw new property_provider_1.CredentialsProviderError(String(e), { logger: options.logger });
+        }
+    }, options.maxRetries ?? 3, options.timeout ?? 1000);
+};
+exports.fromHttp = fromHttp;
+
+
+/***/ }),
+
+/***/ 8082:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.createGetRequest = createGetRequest;
+exports.getCredentials = getCredentials;
+const property_provider_1 = __nccwpck_require__(9721);
+const protocol_http_1 = __nccwpck_require__(4418);
+const smithy_client_1 = __nccwpck_require__(3570);
+const util_stream_1 = __nccwpck_require__(6607);
+function createGetRequest(url) {
+    return new protocol_http_1.HttpRequest({
+        protocol: url.protocol,
+        hostname: url.hostname,
+        port: Number(url.port),
+        path: url.pathname,
+        query: Array.from(url.searchParams.entries()).reduce((acc, [k, v]) => {
+            acc[k] = v;
+            return acc;
+        }, {}),
+        fragment: url.hash,
+    });
+}
+async function getCredentials(response, logger) {
+    const stream = (0, util_stream_1.sdkStreamMixin)(response.body);
+    const str = await stream.transformToString();
+    if (response.statusCode === 200) {
+        const parsed = JSON.parse(str);
+        if (typeof parsed.AccessKeyId !== "string" ||
+            typeof parsed.SecretAccessKey !== "string" ||
+            typeof parsed.Token !== "string" ||
+            typeof parsed.Expiration !== "string") {
+            throw new property_provider_1.CredentialsProviderError("HTTP credential provider response not of the required format, an object matching: " +
+                "{ AccessKeyId: string, SecretAccessKey: string, Token: string, Expiration: string(rfc3339) }", { logger });
+        }
+        return {
+            accessKeyId: parsed.AccessKeyId,
+            secretAccessKey: parsed.SecretAccessKey,
+            sessionToken: parsed.Token,
+            expiration: (0, smithy_client_1.parseRfc3339DateTime)(parsed.Expiration),
+        };
+    }
+    if (response.statusCode >= 400 && response.statusCode < 500) {
+        let parsedBody = {};
+        try {
+            parsedBody = JSON.parse(str);
+        }
+        catch (e) { }
+        throw Object.assign(new property_provider_1.CredentialsProviderError(`Server responded with status: ${response.statusCode}`, { logger }), {
+            Code: parsedBody.Code,
+            Message: parsedBody.Message,
+        });
+    }
+    throw new property_provider_1.CredentialsProviderError(`Server responded with status: ${response.statusCode}`, { logger });
+}
+
+
+/***/ }),
+
+/***/ 9359:
+/***/ ((__unused_webpack_module, exports) => {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.retryWrapper = void 0;
+const retryWrapper = (toRetry, maxRetries, delayMs) => {
+    return async () => {
+        for (let i = 0; i < maxRetries; ++i) {
+            try {
+                return await toRetry();
+            }
+            catch (e) {
+                await new Promise((resolve) => setTimeout(resolve, delayMs));
+            }
+        }
+        return await toRetry();
+    };
+};
+exports.retryWrapper = retryWrapper;
+
+
+/***/ }),
+
+/***/ 2618:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.fromHttp = void 0;
+var fromHttp_1 = __nccwpck_require__(2120);
+Object.defineProperty(exports, "fromHttp", ({ enumerable: true, get: function () { return fromHttp_1.fromHttp; } }));
 
 
 /***/ }),
@@ -23720,12 +26851,12 @@ module.exports = __toCommonJS(index_exports);
 var import_shared_ini_file_loader = __nccwpck_require__(3507);
 
 // src/resolveCredentialSource.ts
-var import_client = __nccwpck_require__(2825);
+var import_client = __nccwpck_require__(912);
 var import_property_provider = __nccwpck_require__(9721);
 var resolveCredentialSource = /* @__PURE__ */ __name((credentialSource, profileName, logger) => {
   const sourceProvidersMap = {
     EcsContainer: /* @__PURE__ */ __name(async (options) => {
-      const { fromHttp } = await Promise.resolve().then(() => __toESM(__nccwpck_require__(7290)));
+      const { fromHttp } = await Promise.resolve().then(() => __toESM(__nccwpck_require__(2618)));
       const { fromContainerMetadata } = await Promise.resolve().then(() => __toESM(__nccwpck_require__(7477)));
       logger?.debug("@aws-sdk/credential-provider-ini - credential_source is EcsContainer");
       return async () => (0, import_property_provider.chain)(fromHttp(options ?? {}), fromContainerMetadata(options))().then(setNamedProvider);
@@ -23737,7 +26868,7 @@ var resolveCredentialSource = /* @__PURE__ */ __name((credentialSource, profileN
     }, "Ec2InstanceMetadata"),
     Environment: /* @__PURE__ */ __name(async (options) => {
       logger?.debug("@aws-sdk/credential-provider-ini - credential_source is Environment");
-      const { fromEnv } = await Promise.resolve().then(() => __toESM(__nccwpck_require__(5972)));
+      const { fromEnv } = await Promise.resolve().then(() => __toESM(__nccwpck_require__(8519)));
       return async () => fromEnv(options)().then(setNamedProvider);
     }, "Environment")
   };
@@ -23840,7 +26971,7 @@ var isCredentialSourceWithoutRoleArn = /* @__PURE__ */ __name((section) => {
 // src/resolveProcessCredentials.ts
 
 var isProcessProfile = /* @__PURE__ */ __name((arg) => Boolean(arg) && typeof arg === "object" && typeof arg.credential_process === "string", "isProcessProfile");
-var resolveProcessCredentials = /* @__PURE__ */ __name(async (options, profile) => Promise.resolve().then(() => __toESM(__nccwpck_require__(9969))).then(
+var resolveProcessCredentials = /* @__PURE__ */ __name(async (options, profile) => Promise.resolve().then(() => __toESM(__nccwpck_require__(9197))).then(
   ({ fromProcess }) => fromProcess({
     ...options,
     profile
@@ -23993,7 +27124,7 @@ __export(index_exports, {
 module.exports = __toCommonJS(index_exports);
 
 // src/defaultProvider.ts
-var import_credential_provider_env = __nccwpck_require__(5972);
+var import_credential_provider_env = __nccwpck_require__(8519);
 
 var import_shared_ini_file_loader = __nccwpck_require__(3507);
 
@@ -24004,7 +27135,7 @@ var remoteProvider = /* @__PURE__ */ __name(async (init) => {
   const { ENV_CMDS_FULL_URI, ENV_CMDS_RELATIVE_URI, fromContainerMetadata, fromInstanceMetadata } = await Promise.resolve().then(() => __toESM(__nccwpck_require__(7477)));
   if (process.env[ENV_CMDS_RELATIVE_URI] || process.env[ENV_CMDS_FULL_URI]) {
     init.logger?.debug("@aws-sdk/credential-provider-node - remoteProvider::fromHttp/fromContainerMetadata");
-    const { fromHttp } = await Promise.resolve().then(() => __toESM(__nccwpck_require__(7290)));
+    const { fromHttp } = await Promise.resolve().then(() => __toESM(__nccwpck_require__(2618)));
     return (0, import_property_provider.chain)(fromHttp(init), fromContainerMetadata(init));
   }
   if (process.env[ENV_IMDS_DISABLED] && process.env[ENV_IMDS_DISABLED] !== "false") {
@@ -24068,7 +27199,7 @@ var defaultProvider = /* @__PURE__ */ __name((init = {}) => (0, import_property_
     },
     async () => {
       init.logger?.debug("@aws-sdk/credential-provider-node - defaultProvider::fromProcess");
-      const { fromProcess } = await Promise.resolve().then(() => __toESM(__nccwpck_require__(9969)));
+      const { fromProcess } = await Promise.resolve().then(() => __toESM(__nccwpck_require__(9197)));
       return fromProcess(init)();
     },
     async () => {
@@ -24092,6 +27223,126 @@ var defaultProvider = /* @__PURE__ */ __name((init = {}) => (0, import_property_
 ), "defaultProvider");
 var credentialsWillNeedRefresh = /* @__PURE__ */ __name((credentials) => credentials?.expiration !== void 0, "credentialsWillNeedRefresh");
 var credentialsTreatedAsExpired = /* @__PURE__ */ __name((credentials) => credentials?.expiration !== void 0 && credentials.expiration.getTime() - Date.now() < 3e5, "credentialsTreatedAsExpired");
+// Annotate the CommonJS export names for ESM import in node:
+
+0 && (0);
+
+
+
+/***/ }),
+
+/***/ 9197:
+/***/ ((module, __unused_webpack_exports, __nccwpck_require__) => {
+
+"use strict";
+
+var __defProp = Object.defineProperty;
+var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
+var __getOwnPropNames = Object.getOwnPropertyNames;
+var __hasOwnProp = Object.prototype.hasOwnProperty;
+var __name = (target, value) => __defProp(target, "name", { value, configurable: true });
+var __export = (target, all) => {
+  for (var name in all)
+    __defProp(target, name, { get: all[name], enumerable: true });
+};
+var __copyProps = (to, from, except, desc) => {
+  if (from && typeof from === "object" || typeof from === "function") {
+    for (let key of __getOwnPropNames(from))
+      if (!__hasOwnProp.call(to, key) && key !== except)
+        __defProp(to, key, { get: () => from[key], enumerable: !(desc = __getOwnPropDesc(from, key)) || desc.enumerable });
+  }
+  return to;
+};
+var __toCommonJS = (mod) => __copyProps(__defProp({}, "__esModule", { value: true }), mod);
+
+// src/index.ts
+var index_exports = {};
+__export(index_exports, {
+  fromProcess: () => fromProcess
+});
+module.exports = __toCommonJS(index_exports);
+
+// src/fromProcess.ts
+var import_shared_ini_file_loader = __nccwpck_require__(3507);
+
+// src/resolveProcessCredentials.ts
+var import_property_provider = __nccwpck_require__(9721);
+var import_child_process = __nccwpck_require__(2081);
+var import_util = __nccwpck_require__(3837);
+
+// src/getValidatedProcessCredentials.ts
+var import_client = __nccwpck_require__(912);
+var getValidatedProcessCredentials = /* @__PURE__ */ __name((profileName, data, profiles) => {
+  if (data.Version !== 1) {
+    throw Error(`Profile ${profileName} credential_process did not return Version 1.`);
+  }
+  if (data.AccessKeyId === void 0 || data.SecretAccessKey === void 0) {
+    throw Error(`Profile ${profileName} credential_process returned invalid credentials.`);
+  }
+  if (data.Expiration) {
+    const currentTime = /* @__PURE__ */ new Date();
+    const expireTime = new Date(data.Expiration);
+    if (expireTime < currentTime) {
+      throw Error(`Profile ${profileName} credential_process returned expired credentials.`);
+    }
+  }
+  let accountId = data.AccountId;
+  if (!accountId && profiles?.[profileName]?.aws_account_id) {
+    accountId = profiles[profileName].aws_account_id;
+  }
+  const credentials = {
+    accessKeyId: data.AccessKeyId,
+    secretAccessKey: data.SecretAccessKey,
+    ...data.SessionToken && { sessionToken: data.SessionToken },
+    ...data.Expiration && { expiration: new Date(data.Expiration) },
+    ...data.CredentialScope && { credentialScope: data.CredentialScope },
+    ...accountId && { accountId }
+  };
+  (0, import_client.setCredentialFeature)(credentials, "CREDENTIALS_PROCESS", "w");
+  return credentials;
+}, "getValidatedProcessCredentials");
+
+// src/resolveProcessCredentials.ts
+var resolveProcessCredentials = /* @__PURE__ */ __name(async (profileName, profiles, logger) => {
+  const profile = profiles[profileName];
+  if (profiles[profileName]) {
+    const credentialProcess = profile["credential_process"];
+    if (credentialProcess !== void 0) {
+      const execPromise = (0, import_util.promisify)(import_child_process.exec);
+      try {
+        const { stdout } = await execPromise(credentialProcess);
+        let data;
+        try {
+          data = JSON.parse(stdout.trim());
+        } catch {
+          throw Error(`Profile ${profileName} credential_process returned invalid JSON.`);
+        }
+        return getValidatedProcessCredentials(profileName, data, profiles);
+      } catch (error) {
+        throw new import_property_provider.CredentialsProviderError(error.message, { logger });
+      }
+    } else {
+      throw new import_property_provider.CredentialsProviderError(`Profile ${profileName} did not contain credential_process.`, { logger });
+    }
+  } else {
+    throw new import_property_provider.CredentialsProviderError(`Profile ${profileName} could not be found in shared credentials file.`, {
+      logger
+    });
+  }
+}, "resolveProcessCredentials");
+
+// src/fromProcess.ts
+var fromProcess = /* @__PURE__ */ __name((init = {}) => async ({ callerClientConfig } = {}) => {
+  init.logger?.debug("@aws-sdk/credential-provider-process - fromProcess");
+  const profiles = await (0, import_shared_ini_file_loader.parseKnownFiles)(init);
+  return resolveProcessCredentials(
+    (0, import_shared_ini_file_loader.getProfileName)({
+      profile: init.profile ?? callerClientConfig?.profile
+    }),
+    profiles,
+    init.logger
+  );
+}, "fromProcess");
 // Annotate the CommonJS export names for ESM import in node:
 
 0 && (0);
@@ -24158,7 +27409,7 @@ module.exports = __toCommonJS(index_exports);
 var isSsoProfile = /* @__PURE__ */ __name((arg) => arg && (typeof arg.sso_start_url === "string" || typeof arg.sso_account_id === "string" || typeof arg.sso_session === "string" || typeof arg.sso_region === "string" || typeof arg.sso_role_name === "string"), "isSsoProfile");
 
 // src/resolveSSOCredentials.ts
-var import_client = __nccwpck_require__(2825);
+var import_client = __nccwpck_require__(912);
 var import_token_providers = __nccwpck_require__(3822);
 var import_property_provider = __nccwpck_require__(9721);
 var import_shared_ini_file_loader = __nccwpck_require__(3507);
@@ -24357,7 +27608,7 @@ var fromSSO = /* @__PURE__ */ __name((init = {}) => async ({ callerClientConfig 
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.fromTokenFile = void 0;
-const client_1 = __nccwpck_require__(2825);
+const client_1 = __nccwpck_require__(912);
 const property_provider_1 = __nccwpck_require__(9721);
 const fs_1 = __nccwpck_require__(7147);
 const fromWebToken_1 = __nccwpck_require__(2978);
@@ -24493,6 +27744,237 @@ __reExport(index_exports, __nccwpck_require__(2978), module.exports);
 
 /***/ }),
 
+/***/ 8725:
+/***/ ((module, __unused_webpack_exports, __nccwpck_require__) => {
+
+"use strict";
+
+var __defProp = Object.defineProperty;
+var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
+var __getOwnPropNames = Object.getOwnPropertyNames;
+var __hasOwnProp = Object.prototype.hasOwnProperty;
+var __name = (target, value) => __defProp(target, "name", { value, configurable: true });
+var __export = (target, all) => {
+  for (var name in all)
+    __defProp(target, name, { get: all[name], enumerable: true });
+};
+var __copyProps = (to, from, except, desc) => {
+  if (from && typeof from === "object" || typeof from === "function") {
+    for (let key of __getOwnPropNames(from))
+      if (!__hasOwnProp.call(to, key) && key !== except)
+        __defProp(to, key, { get: () => from[key], enumerable: !(desc = __getOwnPropDesc(from, key)) || desc.enumerable });
+  }
+  return to;
+};
+var __toCommonJS = (mod) => __copyProps(__defProp({}, "__esModule", { value: true }), mod);
+
+// src/index.ts
+var index_exports = {};
+__export(index_exports, {
+  getHostHeaderPlugin: () => getHostHeaderPlugin,
+  hostHeaderMiddleware: () => hostHeaderMiddleware,
+  hostHeaderMiddlewareOptions: () => hostHeaderMiddlewareOptions,
+  resolveHostHeaderConfig: () => resolveHostHeaderConfig
+});
+module.exports = __toCommonJS(index_exports);
+var import_protocol_http = __nccwpck_require__(4418);
+function resolveHostHeaderConfig(input) {
+  return input;
+}
+__name(resolveHostHeaderConfig, "resolveHostHeaderConfig");
+var hostHeaderMiddleware = /* @__PURE__ */ __name((options) => (next) => async (args) => {
+  if (!import_protocol_http.HttpRequest.isInstance(args.request)) return next(args);
+  const { request } = args;
+  const { handlerProtocol = "" } = options.requestHandler.metadata || {};
+  if (handlerProtocol.indexOf("h2") >= 0 && !request.headers[":authority"]) {
+    delete request.headers["host"];
+    request.headers[":authority"] = request.hostname + (request.port ? ":" + request.port : "");
+  } else if (!request.headers["host"]) {
+    let host = request.hostname;
+    if (request.port != null) host += `:${request.port}`;
+    request.headers["host"] = host;
+  }
+  return next(args);
+}, "hostHeaderMiddleware");
+var hostHeaderMiddlewareOptions = {
+  name: "hostHeaderMiddleware",
+  step: "build",
+  priority: "low",
+  tags: ["HOST"],
+  override: true
+};
+var getHostHeaderPlugin = /* @__PURE__ */ __name((options) => ({
+  applyToStack: /* @__PURE__ */ __name((clientStack) => {
+    clientStack.add(hostHeaderMiddleware(options), hostHeaderMiddlewareOptions);
+  }, "applyToStack")
+}), "getHostHeaderPlugin");
+// Annotate the CommonJS export names for ESM import in node:
+
+0 && (0);
+
+
+
+/***/ }),
+
+/***/ 2568:
+/***/ ((module) => {
+
+"use strict";
+
+var __defProp = Object.defineProperty;
+var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
+var __getOwnPropNames = Object.getOwnPropertyNames;
+var __hasOwnProp = Object.prototype.hasOwnProperty;
+var __name = (target, value) => __defProp(target, "name", { value, configurable: true });
+var __export = (target, all) => {
+  for (var name in all)
+    __defProp(target, name, { get: all[name], enumerable: true });
+};
+var __copyProps = (to, from, except, desc) => {
+  if (from && typeof from === "object" || typeof from === "function") {
+    for (let key of __getOwnPropNames(from))
+      if (!__hasOwnProp.call(to, key) && key !== except)
+        __defProp(to, key, { get: () => from[key], enumerable: !(desc = __getOwnPropDesc(from, key)) || desc.enumerable });
+  }
+  return to;
+};
+var __toCommonJS = (mod) => __copyProps(__defProp({}, "__esModule", { value: true }), mod);
+
+// src/index.ts
+var index_exports = {};
+__export(index_exports, {
+  getLoggerPlugin: () => getLoggerPlugin,
+  loggerMiddleware: () => loggerMiddleware,
+  loggerMiddlewareOptions: () => loggerMiddlewareOptions
+});
+module.exports = __toCommonJS(index_exports);
+
+// src/loggerMiddleware.ts
+var loggerMiddleware = /* @__PURE__ */ __name(() => (next, context) => async (args) => {
+  try {
+    const response = await next(args);
+    const { clientName, commandName, logger, dynamoDbDocumentClientOptions = {} } = context;
+    const { overrideInputFilterSensitiveLog, overrideOutputFilterSensitiveLog } = dynamoDbDocumentClientOptions;
+    const inputFilterSensitiveLog = overrideInputFilterSensitiveLog ?? context.inputFilterSensitiveLog;
+    const outputFilterSensitiveLog = overrideOutputFilterSensitiveLog ?? context.outputFilterSensitiveLog;
+    const { $metadata, ...outputWithoutMetadata } = response.output;
+    logger?.info?.({
+      clientName,
+      commandName,
+      input: inputFilterSensitiveLog(args.input),
+      output: outputFilterSensitiveLog(outputWithoutMetadata),
+      metadata: $metadata
+    });
+    return response;
+  } catch (error) {
+    const { clientName, commandName, logger, dynamoDbDocumentClientOptions = {} } = context;
+    const { overrideInputFilterSensitiveLog } = dynamoDbDocumentClientOptions;
+    const inputFilterSensitiveLog = overrideInputFilterSensitiveLog ?? context.inputFilterSensitiveLog;
+    logger?.error?.({
+      clientName,
+      commandName,
+      input: inputFilterSensitiveLog(args.input),
+      error,
+      metadata: error.$metadata
+    });
+    throw error;
+  }
+}, "loggerMiddleware");
+var loggerMiddlewareOptions = {
+  name: "loggerMiddleware",
+  tags: ["LOGGER"],
+  step: "initialize",
+  override: true
+};
+var getLoggerPlugin = /* @__PURE__ */ __name((options) => ({
+  applyToStack: /* @__PURE__ */ __name((clientStack) => {
+    clientStack.add(loggerMiddleware(), loggerMiddlewareOptions);
+  }, "applyToStack")
+}), "getLoggerPlugin");
+// Annotate the CommonJS export names for ESM import in node:
+
+0 && (0);
+
+
+
+/***/ }),
+
+/***/ 7960:
+/***/ ((module, __unused_webpack_exports, __nccwpck_require__) => {
+
+"use strict";
+
+var __defProp = Object.defineProperty;
+var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
+var __getOwnPropNames = Object.getOwnPropertyNames;
+var __hasOwnProp = Object.prototype.hasOwnProperty;
+var __name = (target, value) => __defProp(target, "name", { value, configurable: true });
+var __export = (target, all) => {
+  for (var name in all)
+    __defProp(target, name, { get: all[name], enumerable: true });
+};
+var __copyProps = (to, from, except, desc) => {
+  if (from && typeof from === "object" || typeof from === "function") {
+    for (let key of __getOwnPropNames(from))
+      if (!__hasOwnProp.call(to, key) && key !== except)
+        __defProp(to, key, { get: () => from[key], enumerable: !(desc = __getOwnPropDesc(from, key)) || desc.enumerable });
+  }
+  return to;
+};
+var __toCommonJS = (mod) => __copyProps(__defProp({}, "__esModule", { value: true }), mod);
+
+// src/index.ts
+var index_exports = {};
+__export(index_exports, {
+  addRecursionDetectionMiddlewareOptions: () => addRecursionDetectionMiddlewareOptions,
+  getRecursionDetectionPlugin: () => getRecursionDetectionPlugin,
+  recursionDetectionMiddleware: () => recursionDetectionMiddleware
+});
+module.exports = __toCommonJS(index_exports);
+var import_protocol_http = __nccwpck_require__(4418);
+var TRACE_ID_HEADER_NAME = "X-Amzn-Trace-Id";
+var ENV_LAMBDA_FUNCTION_NAME = "AWS_LAMBDA_FUNCTION_NAME";
+var ENV_TRACE_ID = "_X_AMZN_TRACE_ID";
+var recursionDetectionMiddleware = /* @__PURE__ */ __name((options) => (next) => async (args) => {
+  const { request } = args;
+  if (!import_protocol_http.HttpRequest.isInstance(request) || options.runtime !== "node") {
+    return next(args);
+  }
+  const traceIdHeader = Object.keys(request.headers ?? {}).find((h) => h.toLowerCase() === TRACE_ID_HEADER_NAME.toLowerCase()) ?? TRACE_ID_HEADER_NAME;
+  if (request.headers.hasOwnProperty(traceIdHeader)) {
+    return next(args);
+  }
+  const functionName = process.env[ENV_LAMBDA_FUNCTION_NAME];
+  const traceId = process.env[ENV_TRACE_ID];
+  const nonEmptyString = /* @__PURE__ */ __name((str) => typeof str === "string" && str.length > 0, "nonEmptyString");
+  if (nonEmptyString(functionName) && nonEmptyString(traceId)) {
+    request.headers[TRACE_ID_HEADER_NAME] = traceId;
+  }
+  return next({
+    ...args,
+    request
+  });
+}, "recursionDetectionMiddleware");
+var addRecursionDetectionMiddlewareOptions = {
+  step: "build",
+  tags: ["RECURSION_DETECTION"],
+  name: "recursionDetectionMiddleware",
+  override: true,
+  priority: "low"
+};
+var getRecursionDetectionPlugin = /* @__PURE__ */ __name((options) => ({
+  applyToStack: /* @__PURE__ */ __name((clientStack) => {
+    clientStack.add(recursionDetectionMiddleware(options), addRecursionDetectionMiddlewareOptions);
+  }, "applyToStack")
+}), "getRecursionDetectionPlugin");
+// Annotate the CommonJS export names for ESM import in node:
+
+0 && (0);
+
+
+
+/***/ }),
+
 /***/ 3030:
 /***/ ((module, __unused_webpack_exports, __nccwpck_require__) => {
 
@@ -24564,7 +28046,7 @@ var import_util_endpoints = __nccwpck_require__(1256);
 var import_protocol_http = __nccwpck_require__(4418);
 
 // src/check-features.ts
-var import_core2 = __nccwpck_require__(9963);
+var import_core2 = __nccwpck_require__(8078);
 var ACCOUNT_ID_ENDPOINT_REGEX = /\d{12}\.ddb/;
 async function checkFeatures(context, config, args) {
   const request = args.request;
@@ -24729,7 +28211,7 @@ var getUserAgentPlugin = /* @__PURE__ */ __name((config) => ({
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.resolveHttpAuthSchemeConfig = exports.defaultSSOOIDCHttpAuthSchemeProvider = exports.defaultSSOOIDCHttpAuthSchemeParametersProvider = void 0;
-const core_1 = __nccwpck_require__(9963);
+const core_1 = __nccwpck_require__(8078);
 const util_middleware_1 = __nccwpck_require__(2390);
 const defaultSSOOIDCHttpAuthSchemeParametersProvider = async (config, context, input) => {
     return {
@@ -24877,9 +28359,9 @@ __export(index_exports, {
 module.exports = __toCommonJS(index_exports);
 
 // src/submodules/sso-oidc/SSOOIDCClient.ts
-var import_middleware_host_header = __nccwpck_require__(2545);
-var import_middleware_logger = __nccwpck_require__(14);
-var import_middleware_recursion_detection = __nccwpck_require__(5525);
+var import_middleware_host_header = __nccwpck_require__(8725);
+var import_middleware_logger = __nccwpck_require__(2568);
+var import_middleware_recursion_detection = __nccwpck_require__(7960);
 var import_middleware_user_agent = __nccwpck_require__(3030);
 var import_config_resolver = __nccwpck_require__(3098);
 var import_core = __nccwpck_require__(5829);
@@ -24908,7 +28390,7 @@ var commonParams = {
 var import_runtimeConfig = __nccwpck_require__(9750);
 
 // src/submodules/sso-oidc/runtimeExtensions.ts
-var import_region_config_resolver = __nccwpck_require__(8156);
+var import_region_config_resolver = __nccwpck_require__(8859);
 var import_protocol_http = __nccwpck_require__(4418);
 var import_smithy_client = __nccwpck_require__(3570);
 
@@ -25404,7 +28886,7 @@ var UnsupportedGrantTypeException = class _UnsupportedGrantTypeException extends
 };
 
 // src/submodules/sso-oidc/protocols/Aws_restJson1.ts
-var import_core2 = __nccwpck_require__(9963);
+var import_core2 = __nccwpck_require__(8078);
 var import_core3 = __nccwpck_require__(5829);
 var import_smithy_client5 = __nccwpck_require__(3570);
 var se_CreateTokenCommand = /* @__PURE__ */ __name(async (input, context) => {
@@ -25696,7 +29178,7 @@ Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.getRuntimeConfig = void 0;
 const tslib_1 = __nccwpck_require__(4351);
 const package_json_1 = tslib_1.__importDefault(__nccwpck_require__(3942));
-const core_1 = __nccwpck_require__(9963);
+const core_1 = __nccwpck_require__(8078);
 const util_user_agent_node_1 = __nccwpck_require__(5380);
 const config_resolver_1 = __nccwpck_require__(3098);
 const hash_node_1 = __nccwpck_require__(3081);
@@ -25756,7 +29238,7 @@ exports.getRuntimeConfig = getRuntimeConfig;
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.getRuntimeConfig = void 0;
-const core_1 = __nccwpck_require__(9963);
+const core_1 = __nccwpck_require__(8078);
 const core_2 = __nccwpck_require__(5829);
 const smithy_client_1 = __nccwpck_require__(3570);
 const url_parser_1 = __nccwpck_require__(4681);
@@ -25804,9 +29286,9 @@ exports.getRuntimeConfig = getRuntimeConfig;
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.STSClient = exports.__Client = void 0;
-const middleware_host_header_1 = __nccwpck_require__(2545);
-const middleware_logger_1 = __nccwpck_require__(14);
-const middleware_recursion_detection_1 = __nccwpck_require__(5525);
+const middleware_host_header_1 = __nccwpck_require__(8725);
+const middleware_logger_1 = __nccwpck_require__(2568);
+const middleware_recursion_detection_1 = __nccwpck_require__(7960);
 const middleware_user_agent_1 = __nccwpck_require__(3030);
 const config_resolver_1 = __nccwpck_require__(3098);
 const core_1 = __nccwpck_require__(5829);
@@ -25915,7 +29397,7 @@ exports.resolveHttpAuthRuntimeConfig = resolveHttpAuthRuntimeConfig;
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.resolveHttpAuthSchemeConfig = exports.resolveStsAuthConfig = exports.defaultSTSHttpAuthSchemeProvider = exports.defaultSTSHttpAuthSchemeParametersProvider = void 0;
-const core_1 = __nccwpck_require__(9963);
+const core_1 = __nccwpck_require__(8078);
 const util_middleware_1 = __nccwpck_require__(2390);
 const STSClient_1 = __nccwpck_require__(4113);
 const defaultSTSHttpAuthSchemeParametersProvider = async (config, context, input) => {
@@ -26269,7 +29751,7 @@ var IDPCommunicationErrorException = class _IDPCommunicationErrorException exten
 };
 
 // src/submodules/sts/protocols/Aws_query.ts
-var import_core = __nccwpck_require__(9963);
+var import_core = __nccwpck_require__(8078);
 var import_protocol_http = __nccwpck_require__(4418);
 var import_smithy_client3 = __nccwpck_require__(3570);
 var se_AssumeRoleCommand = /* @__PURE__ */ __name(async (input, context) => {
@@ -26838,7 +30320,7 @@ var STS = class extends import_STSClient.STSClient {
 var import_EndpointParameters3 = __nccwpck_require__(3207);
 
 // src/submodules/sts/defaultStsRoleAssumers.ts
-var import_client = __nccwpck_require__(2825);
+var import_client = __nccwpck_require__(912);
 var ASSUME_ROLE_DEFAULT_REGION = "us-east-1";
 var getAccountIdFromAssumedRoleUser = /* @__PURE__ */ __name((assumedRoleUser) => {
   if (typeof assumedRoleUser?.Arn === "string") {
@@ -26993,7 +30475,7 @@ Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.getRuntimeConfig = void 0;
 const tslib_1 = __nccwpck_require__(4351);
 const package_json_1 = tslib_1.__importDefault(__nccwpck_require__(3942));
-const core_1 = __nccwpck_require__(9963);
+const core_1 = __nccwpck_require__(8078);
 const util_user_agent_node_1 = __nccwpck_require__(5380);
 const config_resolver_1 = __nccwpck_require__(3098);
 const core_2 = __nccwpck_require__(5829);
@@ -27067,7 +30549,7 @@ exports.getRuntimeConfig = getRuntimeConfig;
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.getRuntimeConfig = void 0;
-const core_1 = __nccwpck_require__(9963);
+const core_1 = __nccwpck_require__(8078);
 const core_2 = __nccwpck_require__(5829);
 const smithy_client_1 = __nccwpck_require__(3570);
 const url_parser_1 = __nccwpck_require__(4681);
@@ -27115,7 +30597,7 @@ exports.getRuntimeConfig = getRuntimeConfig;
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.resolveRuntimeExtensions = void 0;
-const region_config_resolver_1 = __nccwpck_require__(8156);
+const region_config_resolver_1 = __nccwpck_require__(8859);
 const protocol_http_1 = __nccwpck_require__(4418);
 const smithy_client_1 = __nccwpck_require__(3570);
 const httpAuthExtensionConfiguration_1 = __nccwpck_require__(2995);
@@ -27125,6 +30607,111 @@ const resolveRuntimeExtensions = (runtimeConfig, extensions) => {
     return Object.assign(runtimeConfig, (0, region_config_resolver_1.resolveAwsRegionExtensionConfiguration)(extensionConfiguration), (0, smithy_client_1.resolveDefaultRuntimeConfig)(extensionConfiguration), (0, protocol_http_1.resolveHttpHandlerRuntimeConfig)(extensionConfiguration), (0, httpAuthExtensionConfiguration_1.resolveHttpAuthRuntimeConfig)(extensionConfiguration));
 };
 exports.resolveRuntimeExtensions = resolveRuntimeExtensions;
+
+
+/***/ }),
+
+/***/ 8859:
+/***/ ((module) => {
+
+"use strict";
+
+var __defProp = Object.defineProperty;
+var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
+var __getOwnPropNames = Object.getOwnPropertyNames;
+var __hasOwnProp = Object.prototype.hasOwnProperty;
+var __name = (target, value) => __defProp(target, "name", { value, configurable: true });
+var __export = (target, all) => {
+  for (var name in all)
+    __defProp(target, name, { get: all[name], enumerable: true });
+};
+var __copyProps = (to, from, except, desc) => {
+  if (from && typeof from === "object" || typeof from === "function") {
+    for (let key of __getOwnPropNames(from))
+      if (!__hasOwnProp.call(to, key) && key !== except)
+        __defProp(to, key, { get: () => from[key], enumerable: !(desc = __getOwnPropDesc(from, key)) || desc.enumerable });
+  }
+  return to;
+};
+var __toCommonJS = (mod) => __copyProps(__defProp({}, "__esModule", { value: true }), mod);
+
+// src/index.ts
+var index_exports = {};
+__export(index_exports, {
+  NODE_REGION_CONFIG_FILE_OPTIONS: () => NODE_REGION_CONFIG_FILE_OPTIONS,
+  NODE_REGION_CONFIG_OPTIONS: () => NODE_REGION_CONFIG_OPTIONS,
+  REGION_ENV_NAME: () => REGION_ENV_NAME,
+  REGION_INI_NAME: () => REGION_INI_NAME,
+  getAwsRegionExtensionConfiguration: () => getAwsRegionExtensionConfiguration,
+  resolveAwsRegionExtensionConfiguration: () => resolveAwsRegionExtensionConfiguration,
+  resolveRegionConfig: () => resolveRegionConfig
+});
+module.exports = __toCommonJS(index_exports);
+
+// src/extensions/index.ts
+var getAwsRegionExtensionConfiguration = /* @__PURE__ */ __name((runtimeConfig) => {
+  return {
+    setRegion(region) {
+      runtimeConfig.region = region;
+    },
+    region() {
+      return runtimeConfig.region;
+    }
+  };
+}, "getAwsRegionExtensionConfiguration");
+var resolveAwsRegionExtensionConfiguration = /* @__PURE__ */ __name((awsRegionExtensionConfiguration) => {
+  return {
+    region: awsRegionExtensionConfiguration.region()
+  };
+}, "resolveAwsRegionExtensionConfiguration");
+
+// src/regionConfig/config.ts
+var REGION_ENV_NAME = "AWS_REGION";
+var REGION_INI_NAME = "region";
+var NODE_REGION_CONFIG_OPTIONS = {
+  environmentVariableSelector: /* @__PURE__ */ __name((env) => env[REGION_ENV_NAME], "environmentVariableSelector"),
+  configFileSelector: /* @__PURE__ */ __name((profile) => profile[REGION_INI_NAME], "configFileSelector"),
+  default: /* @__PURE__ */ __name(() => {
+    throw new Error("Region is missing");
+  }, "default")
+};
+var NODE_REGION_CONFIG_FILE_OPTIONS = {
+  preferredFile: "credentials"
+};
+
+// src/regionConfig/isFipsRegion.ts
+var isFipsRegion = /* @__PURE__ */ __name((region) => typeof region === "string" && (region.startsWith("fips-") || region.endsWith("-fips")), "isFipsRegion");
+
+// src/regionConfig/getRealRegion.ts
+var getRealRegion = /* @__PURE__ */ __name((region) => isFipsRegion(region) ? ["fips-aws-global", "aws-fips"].includes(region) ? "us-east-1" : region.replace(/fips-(dkr-|prod-)?|-fips/, "") : region, "getRealRegion");
+
+// src/regionConfig/resolveRegionConfig.ts
+var resolveRegionConfig = /* @__PURE__ */ __name((input) => {
+  const { region, useFipsEndpoint } = input;
+  if (!region) {
+    throw new Error("Region is missing");
+  }
+  return Object.assign(input, {
+    region: /* @__PURE__ */ __name(async () => {
+      if (typeof region === "string") {
+        return getRealRegion(region);
+      }
+      const providedRegion = await region();
+      return getRealRegion(providedRegion);
+    }, "region"),
+    useFipsEndpoint: /* @__PURE__ */ __name(async () => {
+      const providedRegion = typeof region === "string" ? region : await region();
+      if (isFipsRegion(providedRegion)) {
+        return true;
+      }
+      return typeof useFipsEndpoint !== "function" ? Promise.resolve(!!useFipsEndpoint) : useFipsEndpoint();
+    }, "useFipsEndpoint")
+  });
+}, "resolveRegionConfig");
+// Annotate the CommonJS export names for ESM import in node:
+
+0 && (0);
+
 
 
 /***/ }),
@@ -27174,18 +30761,21 @@ __export(index_exports, {
 module.exports = __toCommonJS(index_exports);
 
 // src/fromEnvSigningName.ts
-var import_core = __nccwpck_require__(9963);
+var import_client = __nccwpck_require__(912);
+var import_httpAuthSchemes = __nccwpck_require__(5948);
 var import_property_provider = __nccwpck_require__(9721);
 var fromEnvSigningName = /* @__PURE__ */ __name(({ logger, signingName } = {}) => async () => {
   logger?.debug?.("@aws-sdk/token-providers - fromEnvSigningName");
   if (!signingName) {
     throw new import_property_provider.TokenProviderError("Please pass 'signingName' to compute environment variable key", { logger });
   }
-  const bearerTokenKey = (0, import_core.getBearerTokenEnvKey)(signingName);
+  const bearerTokenKey = (0, import_httpAuthSchemes.getBearerTokenEnvKey)(signingName);
   if (!(bearerTokenKey in process.env)) {
     throw new import_property_provider.TokenProviderError(`Token not present in '${bearerTokenKey}' environment variable`, { logger });
   }
-  return { token: process.env[bearerTokenKey] };
+  const token = { token: process.env[bearerTokenKey] };
+  (0, import_client.setTokenFeature)(token, "BEARER_SERVICE_ENV_VARS", "3");
+  return token;
 }, "fromEnvSigningName");
 
 // src/fromSso.ts
@@ -27418,8 +31008,10 @@ __export(index_exports, {
   getUserAgentPrefix: () => getUserAgentPrefix,
   isIpAddress: () => import_util_endpoints.isIpAddress,
   partition: () => partition,
+  resolveDefaultAwsRegionalEndpointsConfig: () => resolveDefaultAwsRegionalEndpointsConfig,
   resolveEndpoint: () => import_util_endpoints.resolveEndpoint,
   setPartitionInfo: () => setPartitionInfo,
+  toEndpointV1: () => toEndpointV1,
   useDefaultPartitionInfo: () => useDefaultPartitionInfo
 });
 module.exports = __toCommonJS(index_exports);
@@ -27790,6 +31382,32 @@ var awsEndpointFunctions = {
 };
 import_util_endpoints.customEndpointFunctions.aws = awsEndpointFunctions;
 
+// src/resolveDefaultAwsRegionalEndpointsConfig.ts
+var import_url_parser = __nccwpck_require__(4681);
+var resolveDefaultAwsRegionalEndpointsConfig = /* @__PURE__ */ __name((input) => {
+  if (typeof input.endpointProvider !== "function") {
+    throw new Error("@aws-sdk/util-endpoint - endpointProvider and endpoint missing in config for this client.");
+  }
+  const { endpoint } = input;
+  if (endpoint === void 0) {
+    input.endpoint = async () => {
+      return toEndpointV1(
+        input.endpointProvider(
+          {
+            Region: typeof input.region === "function" ? await input.region() : input.region,
+            UseDualStack: typeof input.useDualstackEndpoint === "function" ? await input.useDualstackEndpoint() : input.useDualstackEndpoint,
+            UseFIPS: typeof input.useFipsEndpoint === "function" ? await input.useFipsEndpoint() : input.useFipsEndpoint,
+            Endpoint: void 0
+          },
+          { logger: input.logger }
+        )
+      );
+    };
+  }
+  return input;
+}, "resolveDefaultAwsRegionalEndpointsConfig");
+var toEndpointV1 = /* @__PURE__ */ __name((endpoint) => (0, import_url_parser.parseUrl)(endpoint.url), "toEndpointV1");
+
 // src/resolveEndpoint.ts
 
 
@@ -27912,6 +31530,184 @@ var NODE_APP_ID_CONFIG_OPTIONS = {
   environmentVariableSelector: /* @__PURE__ */ __name((env2) => env2[UA_APP_ID_ENV_NAME], "environmentVariableSelector"),
   configFileSelector: /* @__PURE__ */ __name((profile) => profile[UA_APP_ID_INI_NAME] ?? profile[UA_APP_ID_INI_NAME_DEPRECATED], "configFileSelector"),
   default: import_middleware_user_agent.DEFAULT_UA_APP_ID
+};
+// Annotate the CommonJS export names for ESM import in node:
+
+0 && (0);
+
+
+
+/***/ }),
+
+/***/ 7406:
+/***/ ((module) => {
+
+"use strict";
+
+var __defProp = Object.defineProperty;
+var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
+var __getOwnPropNames = Object.getOwnPropertyNames;
+var __hasOwnProp = Object.prototype.hasOwnProperty;
+var __name = (target, value) => __defProp(target, "name", { value, configurable: true });
+var __export = (target, all) => {
+  for (var name in all)
+    __defProp(target, name, { get: all[name], enumerable: true });
+};
+var __copyProps = (to, from, except, desc) => {
+  if (from && typeof from === "object" || typeof from === "function") {
+    for (let key of __getOwnPropNames(from))
+      if (!__hasOwnProp.call(to, key) && key !== except)
+        __defProp(to, key, { get: () => from[key], enumerable: !(desc = __getOwnPropDesc(from, key)) || desc.enumerable });
+  }
+  return to;
+};
+var __toCommonJS = (mod) => __copyProps(__defProp({}, "__esModule", { value: true }), mod);
+
+// src/index.ts
+var index_exports = {};
+__export(index_exports, {
+  XmlNode: () => XmlNode,
+  XmlText: () => XmlText
+});
+module.exports = __toCommonJS(index_exports);
+
+// src/escape-attribute.ts
+function escapeAttribute(value) {
+  return value.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
+}
+__name(escapeAttribute, "escapeAttribute");
+
+// src/escape-element.ts
+function escapeElement(value) {
+  return value.replace(/&/g, "&amp;").replace(/"/g, "&quot;").replace(/'/g, "&apos;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/\r/g, "&#x0D;").replace(/\n/g, "&#x0A;").replace(/\u0085/g, "&#x85;").replace(/\u2028/, "&#x2028;");
+}
+__name(escapeElement, "escapeElement");
+
+// src/XmlText.ts
+var XmlText = class {
+  constructor(value) {
+    this.value = value;
+  }
+  static {
+    __name(this, "XmlText");
+  }
+  toString() {
+    return escapeElement("" + this.value);
+  }
+};
+
+// src/XmlNode.ts
+var XmlNode = class _XmlNode {
+  constructor(name, children = []) {
+    this.name = name;
+    this.children = children;
+  }
+  static {
+    __name(this, "XmlNode");
+  }
+  attributes = {};
+  static of(name, childText, withName) {
+    const node = new _XmlNode(name);
+    if (childText !== void 0) {
+      node.addChildNode(new XmlText(childText));
+    }
+    if (withName !== void 0) {
+      node.withName(withName);
+    }
+    return node;
+  }
+  withName(name) {
+    this.name = name;
+    return this;
+  }
+  addAttribute(name, value) {
+    this.attributes[name] = value;
+    return this;
+  }
+  addChildNode(child) {
+    this.children.push(child);
+    return this;
+  }
+  removeAttribute(name) {
+    delete this.attributes[name];
+    return this;
+  }
+  /**
+   * @internal
+   * Alias of {@link XmlNode#withName(string)} for codegen brevity.
+   */
+  n(name) {
+    this.name = name;
+    return this;
+  }
+  /**
+   * @internal
+   * Alias of {@link XmlNode#addChildNode(string)} for codegen brevity.
+   */
+  c(child) {
+    this.children.push(child);
+    return this;
+  }
+  /**
+   * @internal
+   * Checked version of {@link XmlNode#addAttribute(string)} for codegen brevity.
+   */
+  a(name, value) {
+    if (value != null) {
+      this.attributes[name] = value;
+    }
+    return this;
+  }
+  /**
+   * Create a child node.
+   * Used in serialization of string fields.
+   * @internal
+   */
+  cc(input, field, withName = field) {
+    if (input[field] != null) {
+      const node = _XmlNode.of(field, input[field]).withName(withName);
+      this.c(node);
+    }
+  }
+  /**
+   * Creates list child nodes.
+   * @internal
+   */
+  l(input, listName, memberName, valueProvider) {
+    if (input[listName] != null) {
+      const nodes = valueProvider();
+      nodes.map((node) => {
+        node.withName(memberName);
+        this.c(node);
+      });
+    }
+  }
+  /**
+   * Creates list child nodes with container.
+   * @internal
+   */
+  lc(input, listName, memberName, valueProvider) {
+    if (input[listName] != null) {
+      const nodes = valueProvider();
+      const containerNode = new _XmlNode(memberName);
+      nodes.map((node) => {
+        containerNode.c(node);
+      });
+      this.c(containerNode);
+    }
+  }
+  toString() {
+    const hasChildren = Boolean(this.children.length);
+    let xmlText = `<${this.name}`;
+    const attributes = this.attributes;
+    for (const attributeName of Object.keys(attributes)) {
+      const attribute = attributes[attributeName];
+      if (attribute != null) {
+        xmlText += ` ${attributeName}="${escapeAttribute("" + attribute)}"`;
+      }
+    }
+    return xmlText += !hasChildren ? "/>" : `>${this.children.map((c) => c.toString()).join("")}</${this.name}>`;
+  }
 };
 // Annotate the CommonJS export names for ESM import in node:
 
@@ -42875,7 +46671,7 @@ var crc64NvmeCrtContainer = {
 };
 
 // src/flexibleChecksumsMiddleware.ts
-var import_core = __nccwpck_require__(9963);
+var import_core = __nccwpck_require__(8171);
 var import_protocol_http = __nccwpck_require__(4418);
 var import_util_stream = __nccwpck_require__(6607);
 
@@ -43248,6 +47044,2421 @@ var resolveFlexibleChecksumsConfig = /* @__PURE__ */ __name((input) => {
     requestStreamBufferSize: Number(requestStreamBufferSize ?? 0)
   });
 }, "resolveFlexibleChecksumsConfig");
+// Annotate the CommonJS export names for ESM import in node:
+
+0 && (0);
+
+
+
+/***/ }),
+
+/***/ 8171:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+const tslib_1 = __nccwpck_require__(4351);
+tslib_1.__exportStar(__nccwpck_require__(8574), exports);
+tslib_1.__exportStar(__nccwpck_require__(1523), exports);
+tslib_1.__exportStar(__nccwpck_require__(5986), exports);
+
+
+/***/ }),
+
+/***/ 8574:
+/***/ ((module) => {
+
+"use strict";
+
+var __defProp = Object.defineProperty;
+var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
+var __getOwnPropNames = Object.getOwnPropertyNames;
+var __hasOwnProp = Object.prototype.hasOwnProperty;
+var __name = (target, value) => __defProp(target, "name", { value, configurable: true });
+var __export = (target, all) => {
+  for (var name in all)
+    __defProp(target, name, { get: all[name], enumerable: true });
+};
+var __copyProps = (to, from, except, desc) => {
+  if (from && typeof from === "object" || typeof from === "function") {
+    for (let key of __getOwnPropNames(from))
+      if (!__hasOwnProp.call(to, key) && key !== except)
+        __defProp(to, key, { get: () => from[key], enumerable: !(desc = __getOwnPropDesc(from, key)) || desc.enumerable });
+  }
+  return to;
+};
+var __toCommonJS = (mod) => __copyProps(__defProp({}, "__esModule", { value: true }), mod);
+
+// src/submodules/client/index.ts
+var index_exports = {};
+__export(index_exports, {
+  emitWarningIfUnsupportedVersion: () => emitWarningIfUnsupportedVersion,
+  setCredentialFeature: () => setCredentialFeature,
+  setFeature: () => setFeature,
+  setTokenFeature: () => setTokenFeature,
+  state: () => state
+});
+module.exports = __toCommonJS(index_exports);
+
+// src/submodules/client/emitWarningIfUnsupportedVersion.ts
+var state = {
+  warningEmitted: false
+};
+var emitWarningIfUnsupportedVersion = /* @__PURE__ */ __name((version) => {
+  if (version && !state.warningEmitted && parseInt(version.substring(1, version.indexOf("."))) < 18) {
+    state.warningEmitted = true;
+    process.emitWarning(
+      `NodeDeprecationWarning: The AWS SDK for JavaScript (v3) will
+no longer support Node.js 16.x on January 6, 2025.
+
+To continue receiving updates to AWS services, bug fixes, and security
+updates please upgrade to a supported Node.js LTS version.
+
+More information can be found at: https://a.co/74kJMmI`
+    );
+  }
+}, "emitWarningIfUnsupportedVersion");
+
+// src/submodules/client/setCredentialFeature.ts
+function setCredentialFeature(credentials, feature, value) {
+  if (!credentials.$source) {
+    credentials.$source = {};
+  }
+  credentials.$source[feature] = value;
+  return credentials;
+}
+__name(setCredentialFeature, "setCredentialFeature");
+
+// src/submodules/client/setFeature.ts
+function setFeature(context, feature, value) {
+  if (!context.__aws_sdk_context) {
+    context.__aws_sdk_context = {
+      features: {}
+    };
+  } else if (!context.__aws_sdk_context.features) {
+    context.__aws_sdk_context.features = {};
+  }
+  context.__aws_sdk_context.features[feature] = value;
+}
+__name(setFeature, "setFeature");
+
+// src/submodules/client/setTokenFeature.ts
+function setTokenFeature(token, feature, value) {
+  if (!token.$source) {
+    token.$source = {};
+  }
+  token.$source[feature] = value;
+  return token;
+}
+__name(setTokenFeature, "setTokenFeature");
+// Annotate the CommonJS export names for ESM import in node:
+0 && (0);
+
+
+/***/ }),
+
+/***/ 1523:
+/***/ ((module, __unused_webpack_exports, __nccwpck_require__) => {
+
+"use strict";
+
+var __defProp = Object.defineProperty;
+var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
+var __getOwnPropNames = Object.getOwnPropertyNames;
+var __hasOwnProp = Object.prototype.hasOwnProperty;
+var __name = (target, value) => __defProp(target, "name", { value, configurable: true });
+var __export = (target, all) => {
+  for (var name in all)
+    __defProp(target, name, { get: all[name], enumerable: true });
+};
+var __copyProps = (to, from, except, desc) => {
+  if (from && typeof from === "object" || typeof from === "function") {
+    for (let key of __getOwnPropNames(from))
+      if (!__hasOwnProp.call(to, key) && key !== except)
+        __defProp(to, key, { get: () => from[key], enumerable: !(desc = __getOwnPropDesc(from, key)) || desc.enumerable });
+  }
+  return to;
+};
+var __toCommonJS = (mod) => __copyProps(__defProp({}, "__esModule", { value: true }), mod);
+
+// src/submodules/httpAuthSchemes/index.ts
+var index_exports = {};
+__export(index_exports, {
+  AWSSDKSigV4Signer: () => AWSSDKSigV4Signer,
+  AwsSdkSigV4ASigner: () => AwsSdkSigV4ASigner,
+  AwsSdkSigV4Signer: () => AwsSdkSigV4Signer,
+  NODE_AUTH_SCHEME_PREFERENCE_OPTIONS: () => NODE_AUTH_SCHEME_PREFERENCE_OPTIONS,
+  NODE_SIGV4A_CONFIG_OPTIONS: () => NODE_SIGV4A_CONFIG_OPTIONS,
+  getBearerTokenEnvKey: () => getBearerTokenEnvKey,
+  resolveAWSSDKSigV4Config: () => resolveAWSSDKSigV4Config,
+  resolveAwsSdkSigV4AConfig: () => resolveAwsSdkSigV4AConfig,
+  resolveAwsSdkSigV4Config: () => resolveAwsSdkSigV4Config,
+  validateSigningProperties: () => validateSigningProperties
+});
+module.exports = __toCommonJS(index_exports);
+
+// src/submodules/httpAuthSchemes/aws_sdk/AwsSdkSigV4Signer.ts
+var import_protocol_http2 = __nccwpck_require__(4418);
+
+// src/submodules/httpAuthSchemes/utils/getDateHeader.ts
+var import_protocol_http = __nccwpck_require__(4418);
+var getDateHeader = /* @__PURE__ */ __name((response) => import_protocol_http.HttpResponse.isInstance(response) ? response.headers?.date ?? response.headers?.Date : void 0, "getDateHeader");
+
+// src/submodules/httpAuthSchemes/utils/getSkewCorrectedDate.ts
+var getSkewCorrectedDate = /* @__PURE__ */ __name((systemClockOffset) => new Date(Date.now() + systemClockOffset), "getSkewCorrectedDate");
+
+// src/submodules/httpAuthSchemes/utils/isClockSkewed.ts
+var isClockSkewed = /* @__PURE__ */ __name((clockTime, systemClockOffset) => Math.abs(getSkewCorrectedDate(systemClockOffset).getTime() - clockTime) >= 3e5, "isClockSkewed");
+
+// src/submodules/httpAuthSchemes/utils/getUpdatedSystemClockOffset.ts
+var getUpdatedSystemClockOffset = /* @__PURE__ */ __name((clockTime, currentSystemClockOffset) => {
+  const clockTimeInMs = Date.parse(clockTime);
+  if (isClockSkewed(clockTimeInMs, currentSystemClockOffset)) {
+    return clockTimeInMs - Date.now();
+  }
+  return currentSystemClockOffset;
+}, "getUpdatedSystemClockOffset");
+
+// src/submodules/httpAuthSchemes/aws_sdk/AwsSdkSigV4Signer.ts
+var throwSigningPropertyError = /* @__PURE__ */ __name((name, property) => {
+  if (!property) {
+    throw new Error(`Property \`${name}\` is not resolved for AWS SDK SigV4Auth`);
+  }
+  return property;
+}, "throwSigningPropertyError");
+var validateSigningProperties = /* @__PURE__ */ __name(async (signingProperties) => {
+  const context = throwSigningPropertyError(
+    "context",
+    signingProperties.context
+  );
+  const config = throwSigningPropertyError("config", signingProperties.config);
+  const authScheme = context.endpointV2?.properties?.authSchemes?.[0];
+  const signerFunction = throwSigningPropertyError(
+    "signer",
+    config.signer
+  );
+  const signer = await signerFunction(authScheme);
+  const signingRegion = signingProperties?.signingRegion;
+  const signingRegionSet = signingProperties?.signingRegionSet;
+  const signingName = signingProperties?.signingName;
+  return {
+    config,
+    signer,
+    signingRegion,
+    signingRegionSet,
+    signingName
+  };
+}, "validateSigningProperties");
+var AwsSdkSigV4Signer = class {
+  static {
+    __name(this, "AwsSdkSigV4Signer");
+  }
+  async sign(httpRequest, identity, signingProperties) {
+    if (!import_protocol_http2.HttpRequest.isInstance(httpRequest)) {
+      throw new Error("The request is not an instance of `HttpRequest` and cannot be signed");
+    }
+    const validatedProps = await validateSigningProperties(signingProperties);
+    const { config, signer } = validatedProps;
+    let { signingRegion, signingName } = validatedProps;
+    const handlerExecutionContext = signingProperties.context;
+    if (handlerExecutionContext?.authSchemes?.length ?? 0 > 1) {
+      const [first, second] = handlerExecutionContext.authSchemes;
+      if (first?.name === "sigv4a" && second?.name === "sigv4") {
+        signingRegion = second?.signingRegion ?? signingRegion;
+        signingName = second?.signingName ?? signingName;
+      }
+    }
+    const signedRequest = await signer.sign(httpRequest, {
+      signingDate: getSkewCorrectedDate(config.systemClockOffset),
+      signingRegion,
+      signingService: signingName
+    });
+    return signedRequest;
+  }
+  errorHandler(signingProperties) {
+    return (error) => {
+      const serverTime = error.ServerTime ?? getDateHeader(error.$response);
+      if (serverTime) {
+        const config = throwSigningPropertyError("config", signingProperties.config);
+        const initialSystemClockOffset = config.systemClockOffset;
+        config.systemClockOffset = getUpdatedSystemClockOffset(serverTime, config.systemClockOffset);
+        const clockSkewCorrected = config.systemClockOffset !== initialSystemClockOffset;
+        if (clockSkewCorrected && error.$metadata) {
+          error.$metadata.clockSkewCorrected = true;
+        }
+      }
+      throw error;
+    };
+  }
+  successHandler(httpResponse, signingProperties) {
+    const dateHeader = getDateHeader(httpResponse);
+    if (dateHeader) {
+      const config = throwSigningPropertyError("config", signingProperties.config);
+      config.systemClockOffset = getUpdatedSystemClockOffset(dateHeader, config.systemClockOffset);
+    }
+  }
+};
+var AWSSDKSigV4Signer = AwsSdkSigV4Signer;
+
+// src/submodules/httpAuthSchemes/aws_sdk/AwsSdkSigV4ASigner.ts
+var import_protocol_http3 = __nccwpck_require__(4418);
+var AwsSdkSigV4ASigner = class extends AwsSdkSigV4Signer {
+  static {
+    __name(this, "AwsSdkSigV4ASigner");
+  }
+  async sign(httpRequest, identity, signingProperties) {
+    if (!import_protocol_http3.HttpRequest.isInstance(httpRequest)) {
+      throw new Error("The request is not an instance of `HttpRequest` and cannot be signed");
+    }
+    const { config, signer, signingRegion, signingRegionSet, signingName } = await validateSigningProperties(
+      signingProperties
+    );
+    const configResolvedSigningRegionSet = await config.sigv4aSigningRegionSet?.();
+    const multiRegionOverride = (configResolvedSigningRegionSet ?? signingRegionSet ?? [signingRegion]).join(",");
+    const signedRequest = await signer.sign(httpRequest, {
+      signingDate: getSkewCorrectedDate(config.systemClockOffset),
+      signingRegion: multiRegionOverride,
+      signingService: signingName
+    });
+    return signedRequest;
+  }
+};
+
+// src/submodules/httpAuthSchemes/utils/getArrayForCommaSeparatedString.ts
+var getArrayForCommaSeparatedString = /* @__PURE__ */ __name((str) => typeof str === "string" && str.length > 0 ? str.split(",").map((item) => item.trim()) : [], "getArrayForCommaSeparatedString");
+
+// src/submodules/httpAuthSchemes/utils/getBearerTokenEnvKey.ts
+var getBearerTokenEnvKey = /* @__PURE__ */ __name((signingName) => `AWS_BEARER_TOKEN_${signingName.replace(/[\s-]/g, "_").toUpperCase()}`, "getBearerTokenEnvKey");
+
+// src/submodules/httpAuthSchemes/aws_sdk/NODE_AUTH_SCHEME_PREFERENCE_OPTIONS.ts
+var NODE_AUTH_SCHEME_PREFERENCE_ENV_KEY = "AWS_AUTH_SCHEME_PREFERENCE";
+var NODE_AUTH_SCHEME_PREFERENCE_CONFIG_KEY = "auth_scheme_preference";
+var NODE_AUTH_SCHEME_PREFERENCE_OPTIONS = {
+  /**
+   * Retrieves auth scheme preference from environment variables
+   * @param env - Node process environment object
+   * @returns Array of auth scheme strings if preference is set, undefined otherwise
+   */
+  environmentVariableSelector: /* @__PURE__ */ __name((env, options) => {
+    if (options?.signingName) {
+      const bearerTokenKey = getBearerTokenEnvKey(options.signingName);
+      if (bearerTokenKey in env) return ["httpBearerAuth"];
+    }
+    if (!(NODE_AUTH_SCHEME_PREFERENCE_ENV_KEY in env)) return void 0;
+    return getArrayForCommaSeparatedString(env[NODE_AUTH_SCHEME_PREFERENCE_ENV_KEY]);
+  }, "environmentVariableSelector"),
+  /**
+   * Retrieves auth scheme preference from config file
+   * @param profile - Config profile object
+   * @returns Array of auth scheme strings if preference is set, undefined otherwise
+   */
+  configFileSelector: /* @__PURE__ */ __name((profile) => {
+    if (!(NODE_AUTH_SCHEME_PREFERENCE_CONFIG_KEY in profile)) return void 0;
+    return getArrayForCommaSeparatedString(profile[NODE_AUTH_SCHEME_PREFERENCE_CONFIG_KEY]);
+  }, "configFileSelector"),
+  /**
+   * Default auth scheme preference if not specified in environment or config
+   */
+  default: []
+};
+
+// src/submodules/httpAuthSchemes/aws_sdk/resolveAwsSdkSigV4AConfig.ts
+var import_core = __nccwpck_require__(5829);
+var import_property_provider = __nccwpck_require__(9721);
+var resolveAwsSdkSigV4AConfig = /* @__PURE__ */ __name((config) => {
+  config.sigv4aSigningRegionSet = (0, import_core.normalizeProvider)(config.sigv4aSigningRegionSet);
+  return config;
+}, "resolveAwsSdkSigV4AConfig");
+var NODE_SIGV4A_CONFIG_OPTIONS = {
+  environmentVariableSelector(env) {
+    if (env.AWS_SIGV4A_SIGNING_REGION_SET) {
+      return env.AWS_SIGV4A_SIGNING_REGION_SET.split(",").map((_) => _.trim());
+    }
+    throw new import_property_provider.ProviderError("AWS_SIGV4A_SIGNING_REGION_SET not set in env.", {
+      tryNextLink: true
+    });
+  },
+  configFileSelector(profile) {
+    if (profile.sigv4a_signing_region_set) {
+      return (profile.sigv4a_signing_region_set ?? "").split(",").map((_) => _.trim());
+    }
+    throw new import_property_provider.ProviderError("sigv4a_signing_region_set not set in profile.", {
+      tryNextLink: true
+    });
+  },
+  default: void 0
+};
+
+// src/submodules/httpAuthSchemes/aws_sdk/resolveAwsSdkSigV4Config.ts
+var import_client = __nccwpck_require__(8574);
+var import_core2 = __nccwpck_require__(5829);
+var import_signature_v4 = __nccwpck_require__(1528);
+var resolveAwsSdkSigV4Config = /* @__PURE__ */ __name((config) => {
+  let inputCredentials = config.credentials;
+  let isUserSupplied = !!config.credentials;
+  let resolvedCredentials = void 0;
+  Object.defineProperty(config, "credentials", {
+    set(credentials) {
+      if (credentials && credentials !== inputCredentials && credentials !== resolvedCredentials) {
+        isUserSupplied = true;
+      }
+      inputCredentials = credentials;
+      const memoizedProvider = normalizeCredentialProvider(config, {
+        credentials: inputCredentials,
+        credentialDefaultProvider: config.credentialDefaultProvider
+      });
+      const boundProvider = bindCallerConfig(config, memoizedProvider);
+      if (isUserSupplied && !boundProvider.attributed) {
+        resolvedCredentials = /* @__PURE__ */ __name(async (options) => boundProvider(options).then(
+          (creds) => (0, import_client.setCredentialFeature)(creds, "CREDENTIALS_CODE", "e")
+        ), "resolvedCredentials");
+        resolvedCredentials.memoized = boundProvider.memoized;
+        resolvedCredentials.configBound = boundProvider.configBound;
+        resolvedCredentials.attributed = true;
+      } else {
+        resolvedCredentials = boundProvider;
+      }
+    },
+    get() {
+      return resolvedCredentials;
+    },
+    enumerable: true,
+    configurable: true
+  });
+  config.credentials = inputCredentials;
+  const {
+    // Default for signingEscapePath
+    signingEscapePath = true,
+    // Default for systemClockOffset
+    systemClockOffset = config.systemClockOffset || 0,
+    // No default for sha256 since it is platform dependent
+    sha256
+  } = config;
+  let signer;
+  if (config.signer) {
+    signer = (0, import_core2.normalizeProvider)(config.signer);
+  } else if (config.regionInfoProvider) {
+    signer = /* @__PURE__ */ __name(() => (0, import_core2.normalizeProvider)(config.region)().then(
+      async (region) => [
+        await config.regionInfoProvider(region, {
+          useFipsEndpoint: await config.useFipsEndpoint(),
+          useDualstackEndpoint: await config.useDualstackEndpoint()
+        }) || {},
+        region
+      ]
+    ).then(([regionInfo, region]) => {
+      const { signingRegion, signingService } = regionInfo;
+      config.signingRegion = config.signingRegion || signingRegion || region;
+      config.signingName = config.signingName || signingService || config.serviceId;
+      const params = {
+        ...config,
+        credentials: config.credentials,
+        region: config.signingRegion,
+        service: config.signingName,
+        sha256,
+        uriEscapePath: signingEscapePath
+      };
+      const SignerCtor = config.signerConstructor || import_signature_v4.SignatureV4;
+      return new SignerCtor(params);
+    }), "signer");
+  } else {
+    signer = /* @__PURE__ */ __name(async (authScheme) => {
+      authScheme = Object.assign(
+        {},
+        {
+          name: "sigv4",
+          signingName: config.signingName || config.defaultSigningName,
+          signingRegion: await (0, import_core2.normalizeProvider)(config.region)(),
+          properties: {}
+        },
+        authScheme
+      );
+      const signingRegion = authScheme.signingRegion;
+      const signingService = authScheme.signingName;
+      config.signingRegion = config.signingRegion || signingRegion;
+      config.signingName = config.signingName || signingService || config.serviceId;
+      const params = {
+        ...config,
+        credentials: config.credentials,
+        region: config.signingRegion,
+        service: config.signingName,
+        sha256,
+        uriEscapePath: signingEscapePath
+      };
+      const SignerCtor = config.signerConstructor || import_signature_v4.SignatureV4;
+      return new SignerCtor(params);
+    }, "signer");
+  }
+  const resolvedConfig = Object.assign(config, {
+    systemClockOffset,
+    signingEscapePath,
+    signer
+  });
+  return resolvedConfig;
+}, "resolveAwsSdkSigV4Config");
+var resolveAWSSDKSigV4Config = resolveAwsSdkSigV4Config;
+function normalizeCredentialProvider(config, {
+  credentials,
+  credentialDefaultProvider
+}) {
+  let credentialsProvider;
+  if (credentials) {
+    if (!credentials?.memoized) {
+      credentialsProvider = (0, import_core2.memoizeIdentityProvider)(credentials, import_core2.isIdentityExpired, import_core2.doesIdentityRequireRefresh);
+    } else {
+      credentialsProvider = credentials;
+    }
+  } else {
+    if (credentialDefaultProvider) {
+      credentialsProvider = (0, import_core2.normalizeProvider)(
+        credentialDefaultProvider(
+          Object.assign({}, config, {
+            parentClientConfig: config
+          })
+        )
+      );
+    } else {
+      credentialsProvider = /* @__PURE__ */ __name(async () => {
+        throw new Error(
+          "@aws-sdk/core::resolveAwsSdkSigV4Config - `credentials` not provided and no credentialDefaultProvider was configured."
+        );
+      }, "credentialsProvider");
+    }
+  }
+  credentialsProvider.memoized = true;
+  return credentialsProvider;
+}
+__name(normalizeCredentialProvider, "normalizeCredentialProvider");
+function bindCallerConfig(config, credentialsProvider) {
+  if (credentialsProvider.configBound) {
+    return credentialsProvider;
+  }
+  const fn = /* @__PURE__ */ __name(async (options) => credentialsProvider({ ...options, callerClientConfig: config }), "fn");
+  fn.memoized = credentialsProvider.memoized;
+  fn.configBound = true;
+  return fn;
+}
+__name(bindCallerConfig, "bindCallerConfig");
+// Annotate the CommonJS export names for ESM import in node:
+0 && (0);
+
+
+/***/ }),
+
+/***/ 5986:
+/***/ ((module, __unused_webpack_exports, __nccwpck_require__) => {
+
+"use strict";
+
+var __defProp = Object.defineProperty;
+var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
+var __getOwnPropNames = Object.getOwnPropertyNames;
+var __hasOwnProp = Object.prototype.hasOwnProperty;
+var __name = (target, value) => __defProp(target, "name", { value, configurable: true });
+var __export = (target, all) => {
+  for (var name in all)
+    __defProp(target, name, { get: all[name], enumerable: true });
+};
+var __copyProps = (to, from, except, desc) => {
+  if (from && typeof from === "object" || typeof from === "function") {
+    for (let key of __getOwnPropNames(from))
+      if (!__hasOwnProp.call(to, key) && key !== except)
+        __defProp(to, key, { get: () => from[key], enumerable: !(desc = __getOwnPropDesc(from, key)) || desc.enumerable });
+  }
+  return to;
+};
+var __toCommonJS = (mod) => __copyProps(__defProp({}, "__esModule", { value: true }), mod);
+
+// src/submodules/protocols/index.ts
+var index_exports = {};
+__export(index_exports, {
+  AwsEc2QueryProtocol: () => AwsEc2QueryProtocol,
+  AwsJson1_0Protocol: () => AwsJson1_0Protocol,
+  AwsJson1_1Protocol: () => AwsJson1_1Protocol,
+  AwsJsonRpcProtocol: () => AwsJsonRpcProtocol,
+  AwsQueryProtocol: () => AwsQueryProtocol,
+  AwsRestJsonProtocol: () => AwsRestJsonProtocol,
+  AwsRestXmlProtocol: () => AwsRestXmlProtocol,
+  JsonCodec: () => JsonCodec,
+  JsonShapeDeserializer: () => JsonShapeDeserializer,
+  JsonShapeSerializer: () => JsonShapeSerializer,
+  XmlCodec: () => XmlCodec,
+  XmlShapeDeserializer: () => XmlShapeDeserializer,
+  XmlShapeSerializer: () => XmlShapeSerializer,
+  _toBool: () => _toBool,
+  _toNum: () => _toNum,
+  _toStr: () => _toStr,
+  awsExpectUnion: () => awsExpectUnion,
+  loadRestJsonErrorCode: () => loadRestJsonErrorCode,
+  loadRestXmlErrorCode: () => loadRestXmlErrorCode,
+  parseJsonBody: () => parseJsonBody,
+  parseJsonErrorBody: () => parseJsonErrorBody,
+  parseXmlBody: () => parseXmlBody,
+  parseXmlErrorBody: () => parseXmlErrorBody
+});
+module.exports = __toCommonJS(index_exports);
+
+// src/submodules/protocols/coercing-serializers.ts
+var _toStr = /* @__PURE__ */ __name((val) => {
+  if (val == null) {
+    return val;
+  }
+  if (typeof val === "number" || typeof val === "bigint") {
+    const warning = new Error(`Received number ${val} where a string was expected.`);
+    warning.name = "Warning";
+    console.warn(warning);
+    return String(val);
+  }
+  if (typeof val === "boolean") {
+    const warning = new Error(`Received boolean ${val} where a string was expected.`);
+    warning.name = "Warning";
+    console.warn(warning);
+    return String(val);
+  }
+  return val;
+}, "_toStr");
+var _toBool = /* @__PURE__ */ __name((val) => {
+  if (val == null) {
+    return val;
+  }
+  if (typeof val === "number") {
+  }
+  if (typeof val === "string") {
+    const lowercase = val.toLowerCase();
+    if (val !== "" && lowercase !== "false" && lowercase !== "true") {
+      const warning = new Error(`Received string "${val}" where a boolean was expected.`);
+      warning.name = "Warning";
+      console.warn(warning);
+    }
+    return val !== "" && lowercase !== "false";
+  }
+  return val;
+}, "_toBool");
+var _toNum = /* @__PURE__ */ __name((val) => {
+  if (val == null) {
+    return val;
+  }
+  if (typeof val === "boolean") {
+  }
+  if (typeof val === "string") {
+    const num = Number(val);
+    if (num.toString() !== val) {
+      const warning = new Error(`Received string "${val}" where a number was expected.`);
+      warning.name = "Warning";
+      console.warn(warning);
+      return val;
+    }
+    return num;
+  }
+  return val;
+}, "_toNum");
+
+// src/submodules/protocols/json/AwsJsonRpcProtocol.ts
+var import_protocols = __nccwpck_require__(2241);
+var import_schema3 = __nccwpck_require__(9826);
+var import_util_body_length_browser = __nccwpck_require__(713);
+
+// src/submodules/protocols/ConfigurableSerdeContext.ts
+var SerdeContextConfig = class {
+  static {
+    __name(this, "SerdeContextConfig");
+  }
+  serdeContext;
+  setSerdeContext(serdeContext) {
+    this.serdeContext = serdeContext;
+  }
+};
+
+// src/submodules/protocols/json/JsonShapeDeserializer.ts
+var import_schema = __nccwpck_require__(9826);
+var import_serde2 = __nccwpck_require__(7669);
+var import_util_base64 = __nccwpck_require__(5600);
+
+// src/submodules/protocols/json/jsonReviver.ts
+var import_serde = __nccwpck_require__(7669);
+function jsonReviver(key, value, context) {
+  if (context?.source) {
+    const numericString = context.source;
+    if (typeof value === "number") {
+      if (value > Number.MAX_SAFE_INTEGER || value < Number.MIN_SAFE_INTEGER || numericString !== String(value)) {
+        const isFractional = numericString.includes(".");
+        if (isFractional) {
+          return new import_serde.NumericValue(numericString, "bigDecimal");
+        } else {
+          return BigInt(numericString);
+        }
+      }
+    }
+  }
+  return value;
+}
+__name(jsonReviver, "jsonReviver");
+
+// src/submodules/protocols/common.ts
+var import_smithy_client = __nccwpck_require__(3570);
+var collectBodyString = /* @__PURE__ */ __name((streamBody, context) => (0, import_smithy_client.collectBody)(streamBody, context).then((body) => context.utf8Encoder(body)), "collectBodyString");
+
+// src/submodules/protocols/json/parseJsonBody.ts
+var parseJsonBody = /* @__PURE__ */ __name((streamBody, context) => collectBodyString(streamBody, context).then((encoded) => {
+  if (encoded.length) {
+    try {
+      return JSON.parse(encoded);
+    } catch (e) {
+      if (e?.name === "SyntaxError") {
+        Object.defineProperty(e, "$responseBodyText", {
+          value: encoded
+        });
+      }
+      throw e;
+    }
+  }
+  return {};
+}), "parseJsonBody");
+var parseJsonErrorBody = /* @__PURE__ */ __name(async (errorBody, context) => {
+  const value = await parseJsonBody(errorBody, context);
+  value.message = value.message ?? value.Message;
+  return value;
+}, "parseJsonErrorBody");
+var loadRestJsonErrorCode = /* @__PURE__ */ __name((output, data) => {
+  const findKey = /* @__PURE__ */ __name((object, key) => Object.keys(object).find((k) => k.toLowerCase() === key.toLowerCase()), "findKey");
+  const sanitizeErrorCode = /* @__PURE__ */ __name((rawValue) => {
+    let cleanValue = rawValue;
+    if (typeof cleanValue === "number") {
+      cleanValue = cleanValue.toString();
+    }
+    if (cleanValue.indexOf(",") >= 0) {
+      cleanValue = cleanValue.split(",")[0];
+    }
+    if (cleanValue.indexOf(":") >= 0) {
+      cleanValue = cleanValue.split(":")[0];
+    }
+    if (cleanValue.indexOf("#") >= 0) {
+      cleanValue = cleanValue.split("#")[1];
+    }
+    return cleanValue;
+  }, "sanitizeErrorCode");
+  const headerKey = findKey(output.headers, "x-amzn-errortype");
+  if (headerKey !== void 0) {
+    return sanitizeErrorCode(output.headers[headerKey]);
+  }
+  if (data && typeof data === "object") {
+    const codeKey = findKey(data, "code");
+    if (codeKey && data[codeKey] !== void 0) {
+      return sanitizeErrorCode(data[codeKey]);
+    }
+    if (data["__type"] !== void 0) {
+      return sanitizeErrorCode(data["__type"]);
+    }
+  }
+}, "loadRestJsonErrorCode");
+
+// src/submodules/protocols/json/JsonShapeDeserializer.ts
+var JsonShapeDeserializer = class extends SerdeContextConfig {
+  constructor(settings) {
+    super();
+    this.settings = settings;
+  }
+  static {
+    __name(this, "JsonShapeDeserializer");
+  }
+  async read(schema, data) {
+    return this._read(
+      schema,
+      typeof data === "string" ? JSON.parse(data, jsonReviver) : await parseJsonBody(data, this.serdeContext)
+    );
+  }
+  readObject(schema, data) {
+    return this._read(schema, data);
+  }
+  _read(schema, value) {
+    const isObject = value !== null && typeof value === "object";
+    const ns = import_schema.NormalizedSchema.of(schema);
+    if (ns.isListSchema() && Array.isArray(value)) {
+      const listMember = ns.getValueSchema();
+      const out = [];
+      const sparse = !!ns.getMergedTraits().sparse;
+      for (const item of value) {
+        if (sparse || item != null) {
+          out.push(this._read(listMember, item));
+        }
+      }
+      return out;
+    } else if (ns.isMapSchema() && isObject) {
+      const mapMember = ns.getValueSchema();
+      const out = {};
+      const sparse = !!ns.getMergedTraits().sparse;
+      for (const [_k, _v] of Object.entries(value)) {
+        if (sparse || _v != null) {
+          out[_k] = this._read(mapMember, _v);
+        }
+      }
+      return out;
+    } else if (ns.isStructSchema() && isObject) {
+      const out = {};
+      for (const [memberName, memberSchema] of ns.structIterator()) {
+        const fromKey = this.settings.jsonName ? memberSchema.getMergedTraits().jsonName ?? memberName : memberName;
+        const deserializedValue = this._read(memberSchema, value[fromKey]);
+        if (deserializedValue != null) {
+          out[memberName] = deserializedValue;
+        }
+      }
+      return out;
+    }
+    if (ns.isBlobSchema() && typeof value === "string") {
+      return (0, import_util_base64.fromBase64)(value);
+    }
+    const mediaType = ns.getMergedTraits().mediaType;
+    if (ns.isStringSchema() && typeof value === "string" && mediaType) {
+      const isJson = mediaType === "application/json" || mediaType.endsWith("+json");
+      if (isJson) {
+        return import_serde2.LazyJsonString.from(value);
+      }
+    }
+    if (ns.isTimestampSchema()) {
+      const options = this.settings.timestampFormat;
+      const format = options.useTrait ? ns.getSchema() === import_schema.SCHEMA.TIMESTAMP_DEFAULT ? options.default : ns.getSchema() ?? options.default : options.default;
+      switch (format) {
+        case import_schema.SCHEMA.TIMESTAMP_DATE_TIME:
+          return (0, import_serde2.parseRfc3339DateTimeWithOffset)(value);
+        case import_schema.SCHEMA.TIMESTAMP_HTTP_DATE:
+          return (0, import_serde2.parseRfc7231DateTime)(value);
+        case import_schema.SCHEMA.TIMESTAMP_EPOCH_SECONDS:
+          return (0, import_serde2.parseEpochTimestamp)(value);
+        default:
+          console.warn("Missing timestamp format, parsing value with Date constructor:", value);
+          return new Date(value);
+      }
+    }
+    if (ns.isBigIntegerSchema() && (typeof value === "number" || typeof value === "string")) {
+      return BigInt(value);
+    }
+    if (ns.isBigDecimalSchema() && value != void 0) {
+      if (value instanceof import_serde2.NumericValue) {
+        return value;
+      }
+      return new import_serde2.NumericValue(String(value), "bigDecimal");
+    }
+    if (ns.isNumericSchema() && typeof value === "string") {
+      switch (value) {
+        case "Infinity":
+          return Infinity;
+        case "-Infinity":
+          return -Infinity;
+        case "NaN":
+          return NaN;
+      }
+    }
+    return value;
+  }
+};
+
+// src/submodules/protocols/json/JsonShapeSerializer.ts
+var import_schema2 = __nccwpck_require__(9826);
+var import_serde4 = __nccwpck_require__(7669);
+
+// src/submodules/protocols/json/jsonReplacer.ts
+var import_serde3 = __nccwpck_require__(7669);
+var NUMERIC_CONTROL_CHAR = String.fromCharCode(925);
+var JsonReplacer = class {
+  static {
+    __name(this, "JsonReplacer");
+  }
+  /**
+   * Stores placeholder key to true serialized value lookup.
+   */
+  values = /* @__PURE__ */ new Map();
+  counter = 0;
+  stage = 0;
+  /**
+   * Creates a jsonReplacer function that reserves big integer and big decimal values
+   * for later replacement.
+   */
+  createReplacer() {
+    if (this.stage === 1) {
+      throw new Error("@aws-sdk/core/protocols - JsonReplacer already created.");
+    }
+    if (this.stage === 2) {
+      throw new Error("@aws-sdk/core/protocols - JsonReplacer exhausted.");
+    }
+    this.stage = 1;
+    return (key, value) => {
+      if (value instanceof import_serde3.NumericValue) {
+        const v = `${NUMERIC_CONTROL_CHAR + "nv" + this.counter++}_` + value.string;
+        this.values.set(`"${v}"`, value.string);
+        return v;
+      }
+      if (typeof value === "bigint") {
+        const s = value.toString();
+        const v = `${NUMERIC_CONTROL_CHAR + "b" + this.counter++}_` + s;
+        this.values.set(`"${v}"`, s);
+        return v;
+      }
+      return value;
+    };
+  }
+  /**
+   * Replaces placeholder keys with their true values.
+   */
+  replaceInJson(json) {
+    if (this.stage === 0) {
+      throw new Error("@aws-sdk/core/protocols - JsonReplacer not created yet.");
+    }
+    if (this.stage === 2) {
+      throw new Error("@aws-sdk/core/protocols - JsonReplacer exhausted.");
+    }
+    this.stage = 2;
+    if (this.counter === 0) {
+      return json;
+    }
+    for (const [key, value] of this.values) {
+      json = json.replace(key, value);
+    }
+    return json;
+  }
+};
+
+// src/submodules/protocols/json/JsonShapeSerializer.ts
+var JsonShapeSerializer = class extends SerdeContextConfig {
+  constructor(settings) {
+    super();
+    this.settings = settings;
+  }
+  static {
+    __name(this, "JsonShapeSerializer");
+  }
+  buffer;
+  rootSchema;
+  write(schema, value) {
+    this.rootSchema = import_schema2.NormalizedSchema.of(schema);
+    this.buffer = this._write(this.rootSchema, value);
+  }
+  flush() {
+    if (this.rootSchema?.isStructSchema() || this.rootSchema?.isDocumentSchema()) {
+      const replacer = new JsonReplacer();
+      return replacer.replaceInJson(JSON.stringify(this.buffer, replacer.createReplacer(), 0));
+    }
+    return this.buffer;
+  }
+  _write(schema, value, container) {
+    const isObject = value !== null && typeof value === "object";
+    const ns = import_schema2.NormalizedSchema.of(schema);
+    if (ns.isListSchema() && Array.isArray(value)) {
+      const listMember = ns.getValueSchema();
+      const out = [];
+      const sparse = !!ns.getMergedTraits().sparse;
+      for (const item of value) {
+        if (sparse || item != null) {
+          out.push(this._write(listMember, item));
+        }
+      }
+      return out;
+    } else if (ns.isMapSchema() && isObject) {
+      const mapMember = ns.getValueSchema();
+      const out = {};
+      const sparse = !!ns.getMergedTraits().sparse;
+      for (const [_k, _v] of Object.entries(value)) {
+        if (sparse || _v != null) {
+          out[_k] = this._write(mapMember, _v);
+        }
+      }
+      return out;
+    } else if (ns.isStructSchema() && isObject) {
+      const out = {};
+      for (const [memberName, memberSchema] of ns.structIterator()) {
+        const targetKey = this.settings.jsonName ? memberSchema.getMergedTraits().jsonName ?? memberName : memberName;
+        const serializableValue = this._write(memberSchema, value[memberName], ns);
+        if (serializableValue !== void 0) {
+          out[targetKey] = serializableValue;
+        }
+      }
+      return out;
+    }
+    if (value === null && container?.isStructSchema()) {
+      return void 0;
+    }
+    if (ns.isBlobSchema() && (value instanceof Uint8Array || typeof value === "string")) {
+      if (ns === this.rootSchema) {
+        return value;
+      }
+      if (!this.serdeContext?.base64Encoder) {
+        throw new Error("Missing base64Encoder in serdeContext");
+      }
+      return this.serdeContext?.base64Encoder(value);
+    }
+    if (ns.isTimestampSchema() && value instanceof Date) {
+      const options = this.settings.timestampFormat;
+      const format = options.useTrait ? ns.getSchema() === import_schema2.SCHEMA.TIMESTAMP_DEFAULT ? options.default : ns.getSchema() ?? options.default : options.default;
+      switch (format) {
+        case import_schema2.SCHEMA.TIMESTAMP_DATE_TIME:
+          return value.toISOString().replace(".000Z", "Z");
+        case import_schema2.SCHEMA.TIMESTAMP_HTTP_DATE:
+          return (0, import_serde4.dateToUtcString)(value);
+        case import_schema2.SCHEMA.TIMESTAMP_EPOCH_SECONDS:
+          return value.getTime() / 1e3;
+        default:
+          console.warn("Missing timestamp format, using epoch seconds", value);
+          return value.getTime() / 1e3;
+      }
+    }
+    if (ns.isNumericSchema() && typeof value === "number") {
+      if (Math.abs(value) === Infinity || isNaN(value)) {
+        return String(value);
+      }
+    }
+    if (ns.isStringSchema()) {
+      if (typeof value === "undefined" && ns.isIdempotencyToken()) {
+        return (0, import_serde4.generateIdempotencyToken)();
+      }
+      const mediaType = ns.getMergedTraits().mediaType;
+      if (typeof value === "string" && mediaType) {
+        const isJson = mediaType === "application/json" || mediaType.endsWith("+json");
+        if (isJson) {
+          return import_serde4.LazyJsonString.from(value);
+        }
+      }
+    }
+    return value;
+  }
+};
+
+// src/submodules/protocols/json/JsonCodec.ts
+var JsonCodec = class extends SerdeContextConfig {
+  constructor(settings) {
+    super();
+    this.settings = settings;
+  }
+  static {
+    __name(this, "JsonCodec");
+  }
+  createSerializer() {
+    const serializer = new JsonShapeSerializer(this.settings);
+    serializer.setSerdeContext(this.serdeContext);
+    return serializer;
+  }
+  createDeserializer() {
+    const deserializer = new JsonShapeDeserializer(this.settings);
+    deserializer.setSerdeContext(this.serdeContext);
+    return deserializer;
+  }
+};
+
+// src/submodules/protocols/json/AwsJsonRpcProtocol.ts
+var AwsJsonRpcProtocol = class extends import_protocols.RpcProtocol {
+  static {
+    __name(this, "AwsJsonRpcProtocol");
+  }
+  serializer;
+  deserializer;
+  serviceTarget;
+  codec;
+  constructor({ defaultNamespace, serviceTarget }) {
+    super({
+      defaultNamespace
+    });
+    this.serviceTarget = serviceTarget;
+    this.codec = new JsonCodec({
+      timestampFormat: {
+        useTrait: true,
+        default: import_schema3.SCHEMA.TIMESTAMP_EPOCH_SECONDS
+      },
+      jsonName: false
+    });
+    this.serializer = this.codec.createSerializer();
+    this.deserializer = this.codec.createDeserializer();
+  }
+  async serializeRequest(operationSchema, input, context) {
+    const request = await super.serializeRequest(operationSchema, input, context);
+    if (!request.path.endsWith("/")) {
+      request.path += "/";
+    }
+    Object.assign(request.headers, {
+      "content-type": `application/x-amz-json-${this.getJsonRpcVersion()}`,
+      "x-amz-target": `${this.serviceTarget}.${import_schema3.NormalizedSchema.of(operationSchema).getName()}`
+    });
+    if ((0, import_schema3.deref)(operationSchema.input) === "unit" || !request.body) {
+      request.body = "{}";
+    }
+    try {
+      request.headers["content-length"] = String((0, import_util_body_length_browser.calculateBodyLength)(request.body));
+    } catch (e) {
+    }
+    return request;
+  }
+  getPayloadCodec() {
+    return this.codec;
+  }
+  async handleError(operationSchema, context, response, dataObject, metadata) {
+    const errorIdentifier = loadRestJsonErrorCode(response, dataObject) ?? "Unknown";
+    let namespace = this.options.defaultNamespace;
+    let errorName = errorIdentifier;
+    if (errorIdentifier.includes("#")) {
+      [namespace, errorName] = errorIdentifier.split("#");
+    }
+    const registry = import_schema3.TypeRegistry.for(namespace);
+    let errorSchema;
+    try {
+      errorSchema = registry.getSchema(errorIdentifier);
+    } catch (e) {
+      const baseExceptionSchema = import_schema3.TypeRegistry.for("smithy.ts.sdk.synthetic." + namespace).getBaseException();
+      if (baseExceptionSchema) {
+        const ErrorCtor = baseExceptionSchema.ctor;
+        throw Object.assign(new ErrorCtor(errorName), dataObject);
+      }
+      throw new Error(errorName);
+    }
+    const ns = import_schema3.NormalizedSchema.of(errorSchema);
+    const message = dataObject.message ?? dataObject.Message ?? "Unknown";
+    const exception = new errorSchema.ctor(message);
+    await this.deserializeHttpMessage(errorSchema, context, response, dataObject);
+    const output = {};
+    for (const [name, member] of ns.structIterator()) {
+      const target = member.getMergedTraits().jsonName ?? name;
+      output[name] = this.codec.createDeserializer().readObject(member, dataObject[target]);
+    }
+    Object.assign(exception, {
+      $metadata: metadata,
+      $response: response,
+      $fault: ns.getMergedTraits().error,
+      message,
+      ...output
+    });
+    throw exception;
+  }
+};
+
+// src/submodules/protocols/json/AwsJson1_0Protocol.ts
+var AwsJson1_0Protocol = class extends AwsJsonRpcProtocol {
+  static {
+    __name(this, "AwsJson1_0Protocol");
+  }
+  constructor({ defaultNamespace, serviceTarget }) {
+    super({
+      defaultNamespace,
+      serviceTarget
+    });
+  }
+  getShapeId() {
+    return "aws.protocols#awsJson1_0";
+  }
+  getJsonRpcVersion() {
+    return "1.0";
+  }
+  /**
+   * @override
+   */
+  getDefaultContentType() {
+    return "application/x-amz-json-1.0";
+  }
+};
+
+// src/submodules/protocols/json/AwsJson1_1Protocol.ts
+var AwsJson1_1Protocol = class extends AwsJsonRpcProtocol {
+  static {
+    __name(this, "AwsJson1_1Protocol");
+  }
+  constructor({ defaultNamespace, serviceTarget }) {
+    super({
+      defaultNamespace,
+      serviceTarget
+    });
+  }
+  getShapeId() {
+    return "aws.protocols#awsJson1_1";
+  }
+  getJsonRpcVersion() {
+    return "1.1";
+  }
+  /**
+   * @override
+   */
+  getDefaultContentType() {
+    return "application/x-amz-json-1.1";
+  }
+};
+
+// src/submodules/protocols/json/AwsRestJsonProtocol.ts
+var import_protocols2 = __nccwpck_require__(2241);
+var import_schema4 = __nccwpck_require__(9826);
+var import_util_body_length_browser2 = __nccwpck_require__(713);
+var AwsRestJsonProtocol = class extends import_protocols2.HttpBindingProtocol {
+  static {
+    __name(this, "AwsRestJsonProtocol");
+  }
+  serializer;
+  deserializer;
+  codec;
+  constructor({ defaultNamespace }) {
+    super({
+      defaultNamespace
+    });
+    const settings = {
+      timestampFormat: {
+        useTrait: true,
+        default: import_schema4.SCHEMA.TIMESTAMP_EPOCH_SECONDS
+      },
+      httpBindings: true,
+      jsonName: true
+    };
+    this.codec = new JsonCodec(settings);
+    this.serializer = new import_protocols2.HttpInterceptingShapeSerializer(this.codec.createSerializer(), settings);
+    this.deserializer = new import_protocols2.HttpInterceptingShapeDeserializer(this.codec.createDeserializer(), settings);
+  }
+  getShapeId() {
+    return "aws.protocols#restJson1";
+  }
+  getPayloadCodec() {
+    return this.codec;
+  }
+  setSerdeContext(serdeContext) {
+    this.codec.setSerdeContext(serdeContext);
+    super.setSerdeContext(serdeContext);
+  }
+  async serializeRequest(operationSchema, input, context) {
+    const request = await super.serializeRequest(operationSchema, input, context);
+    const inputSchema = import_schema4.NormalizedSchema.of(operationSchema.input);
+    const members = inputSchema.getMemberSchemas();
+    if (!request.headers["content-type"]) {
+      const httpPayloadMember = Object.values(members).find((m) => {
+        return !!m.getMergedTraits().httpPayload;
+      });
+      if (httpPayloadMember) {
+        const mediaType = httpPayloadMember.getMergedTraits().mediaType;
+        if (mediaType) {
+          request.headers["content-type"] = mediaType;
+        } else if (httpPayloadMember.isStringSchema()) {
+          request.headers["content-type"] = "text/plain";
+        } else if (httpPayloadMember.isBlobSchema()) {
+          request.headers["content-type"] = "application/octet-stream";
+        } else {
+          request.headers["content-type"] = this.getDefaultContentType();
+        }
+      } else if (!inputSchema.isUnitSchema()) {
+        const hasBody = Object.values(members).find((m) => {
+          const { httpQuery, httpQueryParams, httpHeader, httpLabel, httpPrefixHeaders } = m.getMergedTraits();
+          return !httpQuery && !httpQueryParams && !httpHeader && !httpLabel && httpPrefixHeaders === void 0;
+        });
+        if (hasBody) {
+          request.headers["content-type"] = this.getDefaultContentType();
+        }
+      }
+    }
+    if (request.headers["content-type"] && !request.body) {
+      request.body = "{}";
+    }
+    if (request.body) {
+      try {
+        request.headers["content-length"] = String((0, import_util_body_length_browser2.calculateBodyLength)(request.body));
+      } catch (e) {
+      }
+    }
+    return request;
+  }
+  async handleError(operationSchema, context, response, dataObject, metadata) {
+    const errorIdentifier = loadRestJsonErrorCode(response, dataObject) ?? "Unknown";
+    let namespace = this.options.defaultNamespace;
+    let errorName = errorIdentifier;
+    if (errorIdentifier.includes("#")) {
+      [namespace, errorName] = errorIdentifier.split("#");
+    }
+    const registry = import_schema4.TypeRegistry.for(namespace);
+    let errorSchema;
+    try {
+      errorSchema = registry.getSchema(errorIdentifier);
+    } catch (e) {
+      const baseExceptionSchema = import_schema4.TypeRegistry.for("smithy.ts.sdk.synthetic." + namespace).getBaseException();
+      if (baseExceptionSchema) {
+        const ErrorCtor = baseExceptionSchema.ctor;
+        throw Object.assign(new ErrorCtor(errorName), dataObject);
+      }
+      throw new Error(errorName);
+    }
+    const ns = import_schema4.NormalizedSchema.of(errorSchema);
+    const message = dataObject.message ?? dataObject.Message ?? "Unknown";
+    const exception = new errorSchema.ctor(message);
+    await this.deserializeHttpMessage(errorSchema, context, response, dataObject);
+    const output = {};
+    for (const [name, member] of ns.structIterator()) {
+      const target = member.getMergedTraits().jsonName ?? name;
+      output[name] = this.codec.createDeserializer().readObject(member, dataObject[target]);
+    }
+    Object.assign(exception, {
+      $metadata: metadata,
+      $response: response,
+      $fault: ns.getMergedTraits().error,
+      message,
+      ...output
+    });
+    throw exception;
+  }
+  /**
+   * @override
+   */
+  getDefaultContentType() {
+    return "application/json";
+  }
+};
+
+// src/submodules/protocols/json/awsExpectUnion.ts
+var import_smithy_client2 = __nccwpck_require__(3570);
+var awsExpectUnion = /* @__PURE__ */ __name((value) => {
+  if (value == null) {
+    return void 0;
+  }
+  if (typeof value === "object" && "__type" in value) {
+    delete value.__type;
+  }
+  return (0, import_smithy_client2.expectUnion)(value);
+}, "awsExpectUnion");
+
+// src/submodules/protocols/query/AwsQueryProtocol.ts
+var import_protocols5 = __nccwpck_require__(2241);
+var import_schema7 = __nccwpck_require__(9826);
+var import_util_body_length_browser3 = __nccwpck_require__(713);
+
+// src/submodules/protocols/xml/XmlShapeDeserializer.ts
+var import_protocols3 = __nccwpck_require__(2241);
+var import_schema5 = __nccwpck_require__(9826);
+var import_smithy_client3 = __nccwpck_require__(3570);
+var import_util_utf8 = __nccwpck_require__(1895);
+var import_fast_xml_parser = __nccwpck_require__(4678);
+var XmlShapeDeserializer = class extends SerdeContextConfig {
+  constructor(settings) {
+    super();
+    this.settings = settings;
+    this.stringDeserializer = new import_protocols3.FromStringShapeDeserializer(settings);
+  }
+  static {
+    __name(this, "XmlShapeDeserializer");
+  }
+  stringDeserializer;
+  setSerdeContext(serdeContext) {
+    this.serdeContext = serdeContext;
+    this.stringDeserializer.setSerdeContext(serdeContext);
+  }
+  /**
+   * @param schema - describing the data.
+   * @param bytes - serialized data.
+   * @param key - used by AwsQuery to step one additional depth into the object before reading it.
+   */
+  read(schema, bytes, key) {
+    const ns = import_schema5.NormalizedSchema.of(schema);
+    const memberSchemas = ns.getMemberSchemas();
+    const isEventPayload = ns.isStructSchema() && ns.isMemberSchema() && !!Object.values(memberSchemas).find((memberNs) => {
+      return !!memberNs.getMemberTraits().eventPayload;
+    });
+    if (isEventPayload) {
+      const output = {};
+      const memberName = Object.keys(memberSchemas)[0];
+      const eventMemberSchema = memberSchemas[memberName];
+      if (eventMemberSchema.isBlobSchema()) {
+        output[memberName] = bytes;
+      } else {
+        output[memberName] = this.read(memberSchemas[memberName], bytes);
+      }
+      return output;
+    }
+    const xmlString = (this.serdeContext?.utf8Encoder ?? import_util_utf8.toUtf8)(bytes);
+    const parsedObject = this.parseXml(xmlString);
+    return this.readSchema(schema, key ? parsedObject[key] : parsedObject);
+  }
+  readSchema(_schema, value) {
+    const ns = import_schema5.NormalizedSchema.of(_schema);
+    const traits = ns.getMergedTraits();
+    if (ns.isListSchema() && !Array.isArray(value)) {
+      return this.readSchema(ns, [value]);
+    }
+    if (value == null) {
+      return value;
+    }
+    if (typeof value === "object") {
+      const sparse = !!traits.sparse;
+      const flat = !!traits.xmlFlattened;
+      if (ns.isListSchema()) {
+        const listValue = ns.getValueSchema();
+        const buffer2 = [];
+        const sourceKey = listValue.getMergedTraits().xmlName ?? "member";
+        const source = flat ? value : (value[0] ?? value)[sourceKey];
+        const sourceArray = Array.isArray(source) ? source : [source];
+        for (const v of sourceArray) {
+          if (v != null || sparse) {
+            buffer2.push(this.readSchema(listValue, v));
+          }
+        }
+        return buffer2;
+      }
+      const buffer = {};
+      if (ns.isMapSchema()) {
+        const keyNs = ns.getKeySchema();
+        const memberNs = ns.getValueSchema();
+        let entries;
+        if (flat) {
+          entries = Array.isArray(value) ? value : [value];
+        } else {
+          entries = Array.isArray(value.entry) ? value.entry : [value.entry];
+        }
+        const keyProperty = keyNs.getMergedTraits().xmlName ?? "key";
+        const valueProperty = memberNs.getMergedTraits().xmlName ?? "value";
+        for (const entry of entries) {
+          const key = entry[keyProperty];
+          const value2 = entry[valueProperty];
+          if (value2 != null || sparse) {
+            buffer[key] = this.readSchema(memberNs, value2);
+          }
+        }
+        return buffer;
+      }
+      if (ns.isStructSchema()) {
+        for (const [memberName, memberSchema] of ns.structIterator()) {
+          const memberTraits = memberSchema.getMergedTraits();
+          const xmlObjectKey = !memberTraits.httpPayload ? memberSchema.getMemberTraits().xmlName ?? memberName : memberTraits.xmlName ?? memberSchema.getName();
+          if (value[xmlObjectKey] != null) {
+            buffer[memberName] = this.readSchema(memberSchema, value[xmlObjectKey]);
+          }
+        }
+        return buffer;
+      }
+      if (ns.isDocumentSchema()) {
+        return value;
+      }
+      throw new Error(`@aws-sdk/core/protocols - xml deserializer unhandled schema type for ${ns.getName(true)}`);
+    }
+    if (ns.isListSchema()) {
+      return [];
+    }
+    if (ns.isMapSchema() || ns.isStructSchema()) {
+      return {};
+    }
+    return this.stringDeserializer.read(ns, value);
+  }
+  parseXml(xml) {
+    if (xml.length) {
+      const parser = new import_fast_xml_parser.XMLParser({
+        attributeNamePrefix: "",
+        htmlEntities: true,
+        ignoreAttributes: false,
+        ignoreDeclaration: true,
+        parseTagValue: false,
+        trimValues: false,
+        tagValueProcessor: /* @__PURE__ */ __name((_, val) => val.trim() === "" && val.includes("\n") ? "" : void 0, "tagValueProcessor")
+      });
+      parser.addEntity("#xD", "\r");
+      parser.addEntity("#10", "\n");
+      let parsedObj;
+      try {
+        parsedObj = parser.parse(xml, true);
+      } catch (e) {
+        if (e && typeof e === "object") {
+          Object.defineProperty(e, "$responseBodyText", {
+            value: xml
+          });
+        }
+        throw e;
+      }
+      const textNodeName = "#text";
+      const key = Object.keys(parsedObj)[0];
+      const parsedObjToReturn = parsedObj[key];
+      if (parsedObjToReturn[textNodeName]) {
+        parsedObjToReturn[key] = parsedObjToReturn[textNodeName];
+        delete parsedObjToReturn[textNodeName];
+      }
+      return (0, import_smithy_client3.getValueFromTextNode)(parsedObjToReturn);
+    }
+    return {};
+  }
+};
+
+// src/submodules/protocols/query/QueryShapeSerializer.ts
+var import_protocols4 = __nccwpck_require__(2241);
+var import_schema6 = __nccwpck_require__(9826);
+var import_serde5 = __nccwpck_require__(7669);
+var import_smithy_client4 = __nccwpck_require__(3570);
+var import_util_base642 = __nccwpck_require__(5600);
+var QueryShapeSerializer = class extends SerdeContextConfig {
+  constructor(settings) {
+    super();
+    this.settings = settings;
+  }
+  static {
+    __name(this, "QueryShapeSerializer");
+  }
+  buffer;
+  write(schema, value, prefix = "") {
+    if (this.buffer === void 0) {
+      this.buffer = "";
+    }
+    const ns = import_schema6.NormalizedSchema.of(schema);
+    if (prefix && !prefix.endsWith(".")) {
+      prefix += ".";
+    }
+    if (ns.isBlobSchema()) {
+      if (typeof value === "string" || value instanceof Uint8Array) {
+        this.writeKey(prefix);
+        this.writeValue((this.serdeContext?.base64Encoder ?? import_util_base642.toBase64)(value));
+      }
+    } else if (ns.isBooleanSchema() || ns.isNumericSchema() || ns.isStringSchema()) {
+      if (value != null) {
+        this.writeKey(prefix);
+        this.writeValue(String(value));
+      } else if (ns.isIdempotencyToken()) {
+        this.writeKey(prefix);
+        this.writeValue((0, import_serde5.generateIdempotencyToken)());
+      }
+    } else if (ns.isBigIntegerSchema()) {
+      if (value != null) {
+        this.writeKey(prefix);
+        this.writeValue(String(value));
+      }
+    } else if (ns.isBigDecimalSchema()) {
+      if (value != null) {
+        this.writeKey(prefix);
+        this.writeValue(value instanceof import_serde5.NumericValue ? value.string : String(value));
+      }
+    } else if (ns.isTimestampSchema()) {
+      if (value instanceof Date) {
+        this.writeKey(prefix);
+        const format = (0, import_protocols4.determineTimestampFormat)(ns, this.settings);
+        switch (format) {
+          case import_schema6.SCHEMA.TIMESTAMP_DATE_TIME:
+            this.writeValue(value.toISOString().replace(".000Z", "Z"));
+            break;
+          case import_schema6.SCHEMA.TIMESTAMP_HTTP_DATE:
+            this.writeValue((0, import_smithy_client4.dateToUtcString)(value));
+            break;
+          case import_schema6.SCHEMA.TIMESTAMP_EPOCH_SECONDS:
+            this.writeValue(String(value.getTime() / 1e3));
+            break;
+        }
+      }
+    } else if (ns.isDocumentSchema()) {
+      throw new Error(`@aws-sdk/core/protocols - QuerySerializer unsupported document type ${ns.getName(true)}`);
+    } else if (ns.isListSchema()) {
+      if (Array.isArray(value)) {
+        if (value.length === 0) {
+          if (this.settings.serializeEmptyLists) {
+            this.writeKey(prefix);
+            this.writeValue("");
+          }
+        } else {
+          const member = ns.getValueSchema();
+          const flat = this.settings.flattenLists || ns.getMergedTraits().xmlFlattened;
+          let i = 1;
+          for (const item of value) {
+            if (item == null) {
+              continue;
+            }
+            const suffix = this.getKey("member", member.getMergedTraits().xmlName);
+            const key = flat ? `${prefix}${i}` : `${prefix}${suffix}.${i}`;
+            this.write(member, item, key);
+            ++i;
+          }
+        }
+      }
+    } else if (ns.isMapSchema()) {
+      if (value && typeof value === "object") {
+        const keySchema = ns.getKeySchema();
+        const memberSchema = ns.getValueSchema();
+        const flat = ns.getMergedTraits().xmlFlattened;
+        let i = 1;
+        for (const [k, v] of Object.entries(value)) {
+          if (v == null) {
+            continue;
+          }
+          const keySuffix = this.getKey("key", keySchema.getMergedTraits().xmlName);
+          const key = flat ? `${prefix}${i}.${keySuffix}` : `${prefix}entry.${i}.${keySuffix}`;
+          const valueSuffix = this.getKey("value", memberSchema.getMergedTraits().xmlName);
+          const valueKey = flat ? `${prefix}${i}.${valueSuffix}` : `${prefix}entry.${i}.${valueSuffix}`;
+          this.write(keySchema, k, key);
+          this.write(memberSchema, v, valueKey);
+          ++i;
+        }
+      }
+    } else if (ns.isStructSchema()) {
+      if (value && typeof value === "object") {
+        for (const [memberName, member] of ns.structIterator()) {
+          if (value[memberName] == null && !member.isIdempotencyToken()) {
+            continue;
+          }
+          const suffix = this.getKey(memberName, member.getMergedTraits().xmlName);
+          const key = `${prefix}${suffix}`;
+          this.write(member, value[memberName], key);
+        }
+      }
+    } else if (ns.isUnitSchema()) {
+    } else {
+      throw new Error(`@aws-sdk/core/protocols - QuerySerializer unrecognized schema type ${ns.getName(true)}`);
+    }
+  }
+  flush() {
+    if (this.buffer === void 0) {
+      throw new Error("@aws-sdk/core/protocols - QuerySerializer cannot flush with nothing written to buffer.");
+    }
+    const str = this.buffer;
+    delete this.buffer;
+    return str;
+  }
+  getKey(memberName, xmlName) {
+    const key = xmlName ?? memberName;
+    if (this.settings.capitalizeKeys) {
+      return key[0].toUpperCase() + key.slice(1);
+    }
+    return key;
+  }
+  writeKey(key) {
+    if (key.endsWith(".")) {
+      key = key.slice(0, key.length - 1);
+    }
+    this.buffer += `&${(0, import_protocols4.extendedEncodeURIComponent)(key)}=`;
+  }
+  writeValue(value) {
+    this.buffer += (0, import_protocols4.extendedEncodeURIComponent)(value);
+  }
+};
+
+// src/submodules/protocols/query/AwsQueryProtocol.ts
+var AwsQueryProtocol = class extends import_protocols5.RpcProtocol {
+  constructor(options) {
+    super({
+      defaultNamespace: options.defaultNamespace
+    });
+    this.options = options;
+    const settings = {
+      timestampFormat: {
+        useTrait: true,
+        default: import_schema7.SCHEMA.TIMESTAMP_DATE_TIME
+      },
+      httpBindings: false,
+      xmlNamespace: options.xmlNamespace,
+      serviceNamespace: options.defaultNamespace,
+      serializeEmptyLists: true
+    };
+    this.serializer = new QueryShapeSerializer(settings);
+    this.deserializer = new XmlShapeDeserializer(settings);
+  }
+  static {
+    __name(this, "AwsQueryProtocol");
+  }
+  serializer;
+  deserializer;
+  getShapeId() {
+    return "aws.protocols#awsQuery";
+  }
+  setSerdeContext(serdeContext) {
+    this.serializer.setSerdeContext(serdeContext);
+    this.deserializer.setSerdeContext(serdeContext);
+  }
+  getPayloadCodec() {
+    throw new Error("AWSQuery protocol has no payload codec.");
+  }
+  async serializeRequest(operationSchema, input, context) {
+    const request = await super.serializeRequest(operationSchema, input, context);
+    if (!request.path.endsWith("/")) {
+      request.path += "/";
+    }
+    Object.assign(request.headers, {
+      "content-type": `application/x-www-form-urlencoded`
+    });
+    if ((0, import_schema7.deref)(operationSchema.input) === "unit" || !request.body) {
+      request.body = "";
+    }
+    request.body = `Action=${operationSchema.name.split("#")[1]}&Version=${this.options.version}` + request.body;
+    if (request.body.endsWith("&")) {
+      request.body = request.body.slice(-1);
+    }
+    try {
+      request.headers["content-length"] = String((0, import_util_body_length_browser3.calculateBodyLength)(request.body));
+    } catch (e) {
+    }
+    return request;
+  }
+  async deserializeResponse(operationSchema, context, response) {
+    const deserializer = this.deserializer;
+    const ns = import_schema7.NormalizedSchema.of(operationSchema.output);
+    const dataObject = {};
+    if (response.statusCode >= 300) {
+      const bytes2 = await (0, import_protocols5.collectBody)(response.body, context);
+      if (bytes2.byteLength > 0) {
+        Object.assign(dataObject, await deserializer.read(import_schema7.SCHEMA.DOCUMENT, bytes2));
+      }
+      await this.handleError(operationSchema, context, response, dataObject, this.deserializeMetadata(response));
+    }
+    for (const header in response.headers) {
+      const value = response.headers[header];
+      delete response.headers[header];
+      response.headers[header.toLowerCase()] = value;
+    }
+    const awsQueryResultKey = ns.isStructSchema() && this.useNestedResult() ? operationSchema.name.split("#")[1] + "Result" : void 0;
+    const bytes = await (0, import_protocols5.collectBody)(response.body, context);
+    if (bytes.byteLength > 0) {
+      Object.assign(dataObject, await deserializer.read(ns, bytes, awsQueryResultKey));
+    }
+    const output = {
+      $metadata: this.deserializeMetadata(response),
+      ...dataObject
+    };
+    return output;
+  }
+  /**
+   * EC2 Query overrides this.
+   */
+  useNestedResult() {
+    return true;
+  }
+  async handleError(operationSchema, context, response, dataObject, metadata) {
+    const errorIdentifier = this.loadQueryErrorCode(response, dataObject) ?? "Unknown";
+    let namespace = this.options.defaultNamespace;
+    let errorName = errorIdentifier;
+    if (errorIdentifier.includes("#")) {
+      [namespace, errorName] = errorIdentifier.split("#");
+    }
+    const errorDataSource = this.loadQueryError(dataObject);
+    const registry = import_schema7.TypeRegistry.for(namespace);
+    let errorSchema;
+    try {
+      errorSchema = registry.find(
+        (schema) => import_schema7.NormalizedSchema.of(schema).getMergedTraits().awsQueryError?.[0] === errorName
+      );
+      if (!errorSchema) {
+        errorSchema = registry.getSchema(errorIdentifier);
+      }
+    } catch (e) {
+      const baseExceptionSchema = import_schema7.TypeRegistry.for("smithy.ts.sdk.synthetic." + namespace).getBaseException();
+      if (baseExceptionSchema) {
+        const ErrorCtor = baseExceptionSchema.ctor;
+        throw Object.assign(new ErrorCtor(errorName), errorDataSource);
+      }
+      throw new Error(errorName);
+    }
+    const ns = import_schema7.NormalizedSchema.of(errorSchema);
+    const message = this.loadQueryErrorMessage(dataObject);
+    const exception = new errorSchema.ctor(message);
+    const output = {};
+    for (const [name, member] of ns.structIterator()) {
+      const target = member.getMergedTraits().xmlName ?? name;
+      const value = errorDataSource[target] ?? dataObject[target];
+      output[name] = this.deserializer.readSchema(member, value);
+    }
+    Object.assign(exception, {
+      $metadata: metadata,
+      $response: response,
+      $fault: ns.getMergedTraits().error,
+      message,
+      ...output
+    });
+    throw exception;
+  }
+  /**
+   * The variations in the error and error message locations are attributed to
+   * divergence between AWS Query and EC2 Query behavior.
+   */
+  loadQueryErrorCode(output, data) {
+    const code = (data.Errors?.[0]?.Error ?? data.Errors?.Error ?? data.Error)?.Code;
+    if (code !== void 0) {
+      return code;
+    }
+    if (output.statusCode == 404) {
+      return "NotFound";
+    }
+  }
+  loadQueryError(data) {
+    return data.Errors?.[0]?.Error ?? data.Errors?.Error ?? data.Error;
+  }
+  loadQueryErrorMessage(data) {
+    const errorData = this.loadQueryError(data);
+    return errorData?.message ?? errorData?.Message ?? data.message ?? data.Message ?? "Unknown";
+  }
+  /**
+   * @override
+   */
+  getDefaultContentType() {
+    return "application/x-www-form-urlencoded";
+  }
+};
+
+// src/submodules/protocols/query/AwsEc2QueryProtocol.ts
+var AwsEc2QueryProtocol = class extends AwsQueryProtocol {
+  constructor(options) {
+    super(options);
+    this.options = options;
+    const ec2Settings = {
+      capitalizeKeys: true,
+      flattenLists: true,
+      serializeEmptyLists: false
+    };
+    Object.assign(this.serializer.settings, ec2Settings);
+  }
+  static {
+    __name(this, "AwsEc2QueryProtocol");
+  }
+  /**
+   * EC2 Query reads XResponse.XResult instead of XResponse directly.
+   */
+  useNestedResult() {
+    return false;
+  }
+};
+
+// src/submodules/protocols/xml/AwsRestXmlProtocol.ts
+var import_protocols6 = __nccwpck_require__(2241);
+var import_schema9 = __nccwpck_require__(9826);
+var import_util_body_length_browser4 = __nccwpck_require__(713);
+
+// src/submodules/protocols/xml/parseXmlBody.ts
+var import_smithy_client5 = __nccwpck_require__(3570);
+var import_fast_xml_parser2 = __nccwpck_require__(4678);
+var parseXmlBody = /* @__PURE__ */ __name((streamBody, context) => collectBodyString(streamBody, context).then((encoded) => {
+  if (encoded.length) {
+    const parser = new import_fast_xml_parser2.XMLParser({
+      attributeNamePrefix: "",
+      htmlEntities: true,
+      ignoreAttributes: false,
+      ignoreDeclaration: true,
+      parseTagValue: false,
+      trimValues: false,
+      tagValueProcessor: /* @__PURE__ */ __name((_, val) => val.trim() === "" && val.includes("\n") ? "" : void 0, "tagValueProcessor")
+    });
+    parser.addEntity("#xD", "\r");
+    parser.addEntity("#10", "\n");
+    let parsedObj;
+    try {
+      parsedObj = parser.parse(encoded, true);
+    } catch (e) {
+      if (e && typeof e === "object") {
+        Object.defineProperty(e, "$responseBodyText", {
+          value: encoded
+        });
+      }
+      throw e;
+    }
+    const textNodeName = "#text";
+    const key = Object.keys(parsedObj)[0];
+    const parsedObjToReturn = parsedObj[key];
+    if (parsedObjToReturn[textNodeName]) {
+      parsedObjToReturn[key] = parsedObjToReturn[textNodeName];
+      delete parsedObjToReturn[textNodeName];
+    }
+    return (0, import_smithy_client5.getValueFromTextNode)(parsedObjToReturn);
+  }
+  return {};
+}), "parseXmlBody");
+var parseXmlErrorBody = /* @__PURE__ */ __name(async (errorBody, context) => {
+  const value = await parseXmlBody(errorBody, context);
+  if (value.Error) {
+    value.Error.message = value.Error.message ?? value.Error.Message;
+  }
+  return value;
+}, "parseXmlErrorBody");
+var loadRestXmlErrorCode = /* @__PURE__ */ __name((output, data) => {
+  if (data?.Error?.Code !== void 0) {
+    return data.Error.Code;
+  }
+  if (data?.Code !== void 0) {
+    return data.Code;
+  }
+  if (output.statusCode == 404) {
+    return "NotFound";
+  }
+}, "loadRestXmlErrorCode");
+
+// src/submodules/protocols/xml/XmlShapeSerializer.ts
+var import_xml_builder = __nccwpck_require__(1003);
+var import_schema8 = __nccwpck_require__(9826);
+var import_serde6 = __nccwpck_require__(7669);
+var import_smithy_client6 = __nccwpck_require__(3570);
+var import_util_base643 = __nccwpck_require__(5600);
+var XmlShapeSerializer = class extends SerdeContextConfig {
+  constructor(settings) {
+    super();
+    this.settings = settings;
+  }
+  static {
+    __name(this, "XmlShapeSerializer");
+  }
+  stringBuffer;
+  byteBuffer;
+  buffer;
+  write(schema, value) {
+    const ns = import_schema8.NormalizedSchema.of(schema);
+    if (ns.isStringSchema() && typeof value === "string") {
+      this.stringBuffer = value;
+    } else if (ns.isBlobSchema()) {
+      this.byteBuffer = "byteLength" in value ? value : (this.serdeContext?.base64Decoder ?? import_util_base643.fromBase64)(value);
+    } else {
+      this.buffer = this.writeStruct(ns, value, void 0);
+      const traits = ns.getMergedTraits();
+      if (traits.httpPayload && !traits.xmlName) {
+        this.buffer.withName(ns.getName());
+      }
+    }
+  }
+  flush() {
+    if (this.byteBuffer !== void 0) {
+      const bytes = this.byteBuffer;
+      delete this.byteBuffer;
+      return bytes;
+    }
+    if (this.stringBuffer !== void 0) {
+      const str = this.stringBuffer;
+      delete this.stringBuffer;
+      return str;
+    }
+    const buffer = this.buffer;
+    if (this.settings.xmlNamespace) {
+      if (!buffer?.attributes?.["xmlns"]) {
+        buffer.addAttribute("xmlns", this.settings.xmlNamespace);
+      }
+    }
+    delete this.buffer;
+    return buffer.toString();
+  }
+  writeStruct(ns, value, parentXmlns) {
+    const traits = ns.getMergedTraits();
+    const name = ns.isMemberSchema() && !traits.httpPayload ? ns.getMemberTraits().xmlName ?? ns.getMemberName() : traits.xmlName ?? ns.getName();
+    if (!name || !ns.isStructSchema()) {
+      throw new Error(
+        `@aws-sdk/core/protocols - xml serializer, cannot write struct with empty name or non-struct, schema=${ns.getName(
+          true
+        )}.`
+      );
+    }
+    const structXmlNode = import_xml_builder.XmlNode.of(name);
+    const [xmlnsAttr, xmlns] = this.getXmlnsAttribute(ns, parentXmlns);
+    if (xmlns) {
+      structXmlNode.addAttribute(xmlnsAttr, xmlns);
+    }
+    for (const [memberName, memberSchema] of ns.structIterator()) {
+      const val = value[memberName];
+      if (val != null || memberSchema.isIdempotencyToken()) {
+        if (memberSchema.getMergedTraits().xmlAttribute) {
+          structXmlNode.addAttribute(
+            memberSchema.getMergedTraits().xmlName ?? memberName,
+            this.writeSimple(memberSchema, val)
+          );
+          continue;
+        }
+        if (memberSchema.isListSchema()) {
+          this.writeList(memberSchema, val, structXmlNode, xmlns);
+        } else if (memberSchema.isMapSchema()) {
+          this.writeMap(memberSchema, val, structXmlNode, xmlns);
+        } else if (memberSchema.isStructSchema()) {
+          structXmlNode.addChildNode(this.writeStruct(memberSchema, val, xmlns));
+        } else {
+          const memberNode = import_xml_builder.XmlNode.of(memberSchema.getMergedTraits().xmlName ?? memberSchema.getMemberName());
+          this.writeSimpleInto(memberSchema, val, memberNode, xmlns);
+          structXmlNode.addChildNode(memberNode);
+        }
+      }
+    }
+    return structXmlNode;
+  }
+  writeList(listMember, array, container, parentXmlns) {
+    if (!listMember.isMemberSchema()) {
+      throw new Error(
+        `@aws-sdk/core/protocols - xml serializer, cannot write non-member list: ${listMember.getName(true)}`
+      );
+    }
+    const listTraits = listMember.getMergedTraits();
+    const listValueSchema = listMember.getValueSchema();
+    const listValueTraits = listValueSchema.getMergedTraits();
+    const sparse = !!listValueTraits.sparse;
+    const flat = !!listTraits.xmlFlattened;
+    const [xmlnsAttr, xmlns] = this.getXmlnsAttribute(listMember, parentXmlns);
+    const writeItem = /* @__PURE__ */ __name((container2, value) => {
+      if (listValueSchema.isListSchema()) {
+        this.writeList(listValueSchema, Array.isArray(value) ? value : [value], container2, xmlns);
+      } else if (listValueSchema.isMapSchema()) {
+        this.writeMap(listValueSchema, value, container2, xmlns);
+      } else if (listValueSchema.isStructSchema()) {
+        const struct = this.writeStruct(listValueSchema, value, xmlns);
+        container2.addChildNode(
+          struct.withName(flat ? listTraits.xmlName ?? listMember.getMemberName() : listValueTraits.xmlName ?? "member")
+        );
+      } else {
+        const listItemNode = import_xml_builder.XmlNode.of(
+          flat ? listTraits.xmlName ?? listMember.getMemberName() : listValueTraits.xmlName ?? "member"
+        );
+        this.writeSimpleInto(listValueSchema, value, listItemNode, xmlns);
+        container2.addChildNode(listItemNode);
+      }
+    }, "writeItem");
+    if (flat) {
+      for (const value of array) {
+        if (sparse || value != null) {
+          writeItem(container, value);
+        }
+      }
+    } else {
+      const listNode = import_xml_builder.XmlNode.of(listTraits.xmlName ?? listMember.getMemberName());
+      if (xmlns) {
+        listNode.addAttribute(xmlnsAttr, xmlns);
+      }
+      for (const value of array) {
+        if (sparse || value != null) {
+          writeItem(listNode, value);
+        }
+      }
+      container.addChildNode(listNode);
+    }
+  }
+  writeMap(mapMember, map, container, parentXmlns, containerIsMap = false) {
+    if (!mapMember.isMemberSchema()) {
+      throw new Error(
+        `@aws-sdk/core/protocols - xml serializer, cannot write non-member map: ${mapMember.getName(true)}`
+      );
+    }
+    const mapTraits = mapMember.getMergedTraits();
+    const mapKeySchema = mapMember.getKeySchema();
+    const mapKeyTraits = mapKeySchema.getMergedTraits();
+    const keyTag = mapKeyTraits.xmlName ?? "key";
+    const mapValueSchema = mapMember.getValueSchema();
+    const mapValueTraits = mapValueSchema.getMergedTraits();
+    const valueTag = mapValueTraits.xmlName ?? "value";
+    const sparse = !!mapValueTraits.sparse;
+    const flat = !!mapTraits.xmlFlattened;
+    const [xmlnsAttr, xmlns] = this.getXmlnsAttribute(mapMember, parentXmlns);
+    const addKeyValue = /* @__PURE__ */ __name((entry, key, val) => {
+      const keyNode = import_xml_builder.XmlNode.of(keyTag, key);
+      const [keyXmlnsAttr, keyXmlns] = this.getXmlnsAttribute(mapKeySchema, xmlns);
+      if (keyXmlns) {
+        keyNode.addAttribute(keyXmlnsAttr, keyXmlns);
+      }
+      entry.addChildNode(keyNode);
+      let valueNode = import_xml_builder.XmlNode.of(valueTag);
+      if (mapValueSchema.isListSchema()) {
+        this.writeList(mapValueSchema, val, valueNode, xmlns);
+      } else if (mapValueSchema.isMapSchema()) {
+        this.writeMap(mapValueSchema, val, valueNode, xmlns, true);
+      } else if (mapValueSchema.isStructSchema()) {
+        valueNode = this.writeStruct(mapValueSchema, val, xmlns);
+      } else {
+        this.writeSimpleInto(mapValueSchema, val, valueNode, xmlns);
+      }
+      entry.addChildNode(valueNode);
+    }, "addKeyValue");
+    if (flat) {
+      for (const [key, val] of Object.entries(map)) {
+        if (sparse || val != null) {
+          const entry = import_xml_builder.XmlNode.of(mapTraits.xmlName ?? mapMember.getMemberName());
+          addKeyValue(entry, key, val);
+          container.addChildNode(entry);
+        }
+      }
+    } else {
+      let mapNode;
+      if (!containerIsMap) {
+        mapNode = import_xml_builder.XmlNode.of(mapTraits.xmlName ?? mapMember.getMemberName());
+        if (xmlns) {
+          mapNode.addAttribute(xmlnsAttr, xmlns);
+        }
+        container.addChildNode(mapNode);
+      }
+      for (const [key, val] of Object.entries(map)) {
+        if (sparse || val != null) {
+          const entry = import_xml_builder.XmlNode.of("entry");
+          addKeyValue(entry, key, val);
+          (containerIsMap ? container : mapNode).addChildNode(entry);
+        }
+      }
+    }
+  }
+  writeSimple(_schema, value) {
+    if (null === value) {
+      throw new Error("@aws-sdk/core/protocols - (XML serializer) cannot write null value.");
+    }
+    const ns = import_schema8.NormalizedSchema.of(_schema);
+    let nodeContents = null;
+    if (value && typeof value === "object") {
+      if (ns.isBlobSchema()) {
+        nodeContents = (this.serdeContext?.base64Encoder ?? import_util_base643.toBase64)(value);
+      } else if (ns.isTimestampSchema() && value instanceof Date) {
+        const options = this.settings.timestampFormat;
+        const format = options.useTrait ? ns.getSchema() === import_schema8.SCHEMA.TIMESTAMP_DEFAULT ? options.default : ns.getSchema() ?? options.default : options.default;
+        switch (format) {
+          case import_schema8.SCHEMA.TIMESTAMP_DATE_TIME:
+            nodeContents = value.toISOString().replace(".000Z", "Z");
+            break;
+          case import_schema8.SCHEMA.TIMESTAMP_HTTP_DATE:
+            nodeContents = (0, import_smithy_client6.dateToUtcString)(value);
+            break;
+          case import_schema8.SCHEMA.TIMESTAMP_EPOCH_SECONDS:
+            nodeContents = String(value.getTime() / 1e3);
+            break;
+          default:
+            console.warn("Missing timestamp format, using http date", value);
+            nodeContents = (0, import_smithy_client6.dateToUtcString)(value);
+            break;
+        }
+      } else if (ns.isBigDecimalSchema() && value) {
+        if (value instanceof import_serde6.NumericValue) {
+          return value.string;
+        }
+        return String(value);
+      } else if (ns.isMapSchema() || ns.isListSchema()) {
+        throw new Error(
+          "@aws-sdk/core/protocols - xml serializer, cannot call _write() on List/Map schema, call writeList or writeMap() instead."
+        );
+      } else {
+        throw new Error(
+          `@aws-sdk/core/protocols - xml serializer, unhandled schema type for object value and schema: ${ns.getName(
+            true
+          )}`
+        );
+      }
+    }
+    if (ns.isBooleanSchema() || ns.isNumericSchema() || ns.isBigIntegerSchema() || ns.isBigDecimalSchema()) {
+      nodeContents = String(value);
+    }
+    if (ns.isStringSchema()) {
+      if (value === void 0 && ns.isIdempotencyToken()) {
+        nodeContents = (0, import_serde6.generateIdempotencyToken)();
+      } else {
+        nodeContents = String(value);
+      }
+    }
+    if (nodeContents === null) {
+      throw new Error(`Unhandled schema-value pair ${ns.getName(true)}=${value}`);
+    }
+    return nodeContents;
+  }
+  writeSimpleInto(_schema, value, into, parentXmlns) {
+    const nodeContents = this.writeSimple(_schema, value);
+    const ns = import_schema8.NormalizedSchema.of(_schema);
+    const content = new import_xml_builder.XmlText(nodeContents);
+    const [xmlnsAttr, xmlns] = this.getXmlnsAttribute(ns, parentXmlns);
+    if (xmlns) {
+      into.addAttribute(xmlnsAttr, xmlns);
+    }
+    into.addChildNode(content);
+  }
+  getXmlnsAttribute(ns, parentXmlns) {
+    const traits = ns.getMergedTraits();
+    const [prefix, xmlns] = traits.xmlNamespace ?? [];
+    if (xmlns && xmlns !== parentXmlns) {
+      return [prefix ? `xmlns:${prefix}` : "xmlns", xmlns];
+    }
+    return [void 0, void 0];
+  }
+};
+
+// src/submodules/protocols/xml/XmlCodec.ts
+var XmlCodec = class extends SerdeContextConfig {
+  constructor(settings) {
+    super();
+    this.settings = settings;
+  }
+  static {
+    __name(this, "XmlCodec");
+  }
+  createSerializer() {
+    const serializer = new XmlShapeSerializer(this.settings);
+    serializer.setSerdeContext(this.serdeContext);
+    return serializer;
+  }
+  createDeserializer() {
+    const deserializer = new XmlShapeDeserializer(this.settings);
+    deserializer.setSerdeContext(this.serdeContext);
+    return deserializer;
+  }
+};
+
+// src/submodules/protocols/xml/AwsRestXmlProtocol.ts
+var AwsRestXmlProtocol = class extends import_protocols6.HttpBindingProtocol {
+  static {
+    __name(this, "AwsRestXmlProtocol");
+  }
+  codec;
+  serializer;
+  deserializer;
+  constructor(options) {
+    super(options);
+    const settings = {
+      timestampFormat: {
+        useTrait: true,
+        default: import_schema9.SCHEMA.TIMESTAMP_DATE_TIME
+      },
+      httpBindings: true,
+      xmlNamespace: options.xmlNamespace,
+      serviceNamespace: options.defaultNamespace
+    };
+    this.codec = new XmlCodec(settings);
+    this.serializer = new import_protocols6.HttpInterceptingShapeSerializer(this.codec.createSerializer(), settings);
+    this.deserializer = new import_protocols6.HttpInterceptingShapeDeserializer(this.codec.createDeserializer(), settings);
+  }
+  getPayloadCodec() {
+    return this.codec;
+  }
+  getShapeId() {
+    return "aws.protocols#restXml";
+  }
+  async serializeRequest(operationSchema, input, context) {
+    const request = await super.serializeRequest(operationSchema, input, context);
+    const ns = import_schema9.NormalizedSchema.of(operationSchema.input);
+    const members = ns.getMemberSchemas();
+    request.path = String(request.path).split("/").filter((segment) => {
+      return segment !== "{Bucket}";
+    }).join("/") || "/";
+    if (!request.headers["content-type"]) {
+      const httpPayloadMember = Object.values(members).find((m) => {
+        return !!m.getMergedTraits().httpPayload;
+      });
+      if (httpPayloadMember) {
+        const mediaType = httpPayloadMember.getMergedTraits().mediaType;
+        if (mediaType) {
+          request.headers["content-type"] = mediaType;
+        } else if (httpPayloadMember.isStringSchema()) {
+          request.headers["content-type"] = "text/plain";
+        } else if (httpPayloadMember.isBlobSchema()) {
+          request.headers["content-type"] = "application/octet-stream";
+        } else {
+          request.headers["content-type"] = this.getDefaultContentType();
+        }
+      } else if (!ns.isUnitSchema()) {
+        const hasBody = Object.values(members).find((m) => {
+          const { httpQuery, httpQueryParams, httpHeader, httpLabel, httpPrefixHeaders } = m.getMergedTraits();
+          return !httpQuery && !httpQueryParams && !httpHeader && !httpLabel && httpPrefixHeaders === void 0;
+        });
+        if (hasBody) {
+          request.headers["content-type"] = this.getDefaultContentType();
+        }
+      }
+    }
+    if (request.headers["content-type"] === this.getDefaultContentType()) {
+      if (typeof request.body === "string") {
+        request.body = '<?xml version="1.0" encoding="UTF-8"?>' + request.body;
+      }
+    }
+    if (request.body) {
+      try {
+        request.headers["content-length"] = String((0, import_util_body_length_browser4.calculateBodyLength)(request.body));
+      } catch (e) {
+      }
+    }
+    return request;
+  }
+  async deserializeResponse(operationSchema, context, response) {
+    return super.deserializeResponse(operationSchema, context, response);
+  }
+  async handleError(operationSchema, context, response, dataObject, metadata) {
+    const errorIdentifier = loadRestXmlErrorCode(response, dataObject) ?? "Unknown";
+    let namespace = this.options.defaultNamespace;
+    let errorName = errorIdentifier;
+    if (errorIdentifier.includes("#")) {
+      [namespace, errorName] = errorIdentifier.split("#");
+    }
+    const registry = import_schema9.TypeRegistry.for(namespace);
+    let errorSchema;
+    try {
+      errorSchema = registry.getSchema(errorIdentifier);
+    } catch (e) {
+      const baseExceptionSchema = import_schema9.TypeRegistry.for("smithy.ts.sdk.synthetic." + namespace).getBaseException();
+      if (baseExceptionSchema) {
+        const ErrorCtor = baseExceptionSchema.ctor;
+        throw Object.assign(new ErrorCtor(errorName), dataObject);
+      }
+      throw new Error(errorName);
+    }
+    const ns = import_schema9.NormalizedSchema.of(errorSchema);
+    const message = dataObject.Error?.message ?? dataObject.Error?.Message ?? dataObject.message ?? dataObject.Message ?? "Unknown";
+    const exception = new errorSchema.ctor(message);
+    await this.deserializeHttpMessage(errorSchema, context, response, dataObject);
+    const output = {};
+    for (const [name, member] of ns.structIterator()) {
+      const target = member.getMergedTraits().xmlName ?? name;
+      const value = dataObject.Error?.[target] ?? dataObject[target];
+      output[name] = this.codec.createDeserializer().readSchema(member, value);
+    }
+    Object.assign(exception, {
+      $metadata: metadata,
+      $response: response,
+      $fault: ns.getMergedTraits().error,
+      message,
+      ...output
+    });
+    throw exception;
+  }
+  /**
+   * @override
+   */
+  getDefaultContentType() {
+    return "application/xml";
+  }
+};
+// Annotate the CommonJS export names for ESM import in node:
+0 && (0);
+
+
+/***/ }),
+
+/***/ 1003:
+/***/ ((module) => {
+
+"use strict";
+
+var __defProp = Object.defineProperty;
+var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
+var __getOwnPropNames = Object.getOwnPropertyNames;
+var __hasOwnProp = Object.prototype.hasOwnProperty;
+var __name = (target, value) => __defProp(target, "name", { value, configurable: true });
+var __export = (target, all) => {
+  for (var name in all)
+    __defProp(target, name, { get: all[name], enumerable: true });
+};
+var __copyProps = (to, from, except, desc) => {
+  if (from && typeof from === "object" || typeof from === "function") {
+    for (let key of __getOwnPropNames(from))
+      if (!__hasOwnProp.call(to, key) && key !== except)
+        __defProp(to, key, { get: () => from[key], enumerable: !(desc = __getOwnPropDesc(from, key)) || desc.enumerable });
+  }
+  return to;
+};
+var __toCommonJS = (mod) => __copyProps(__defProp({}, "__esModule", { value: true }), mod);
+
+// src/index.ts
+var index_exports = {};
+__export(index_exports, {
+  XmlNode: () => XmlNode,
+  XmlText: () => XmlText
+});
+module.exports = __toCommonJS(index_exports);
+
+// src/escape-attribute.ts
+function escapeAttribute(value) {
+  return value.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
+}
+__name(escapeAttribute, "escapeAttribute");
+
+// src/escape-element.ts
+function escapeElement(value) {
+  return value.replace(/&/g, "&amp;").replace(/"/g, "&quot;").replace(/'/g, "&apos;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/\r/g, "&#x0D;").replace(/\n/g, "&#x0A;").replace(/\u0085/g, "&#x85;").replace(/\u2028/, "&#x2028;");
+}
+__name(escapeElement, "escapeElement");
+
+// src/XmlText.ts
+var XmlText = class {
+  constructor(value) {
+    this.value = value;
+  }
+  static {
+    __name(this, "XmlText");
+  }
+  toString() {
+    return escapeElement("" + this.value);
+  }
+};
+
+// src/XmlNode.ts
+var XmlNode = class _XmlNode {
+  constructor(name, children = []) {
+    this.name = name;
+    this.children = children;
+  }
+  static {
+    __name(this, "XmlNode");
+  }
+  attributes = {};
+  static of(name, childText, withName) {
+    const node = new _XmlNode(name);
+    if (childText !== void 0) {
+      node.addChildNode(new XmlText(childText));
+    }
+    if (withName !== void 0) {
+      node.withName(withName);
+    }
+    return node;
+  }
+  withName(name) {
+    this.name = name;
+    return this;
+  }
+  addAttribute(name, value) {
+    this.attributes[name] = value;
+    return this;
+  }
+  addChildNode(child) {
+    this.children.push(child);
+    return this;
+  }
+  removeAttribute(name) {
+    delete this.attributes[name];
+    return this;
+  }
+  /**
+   * @internal
+   * Alias of {@link XmlNode#withName(string)} for codegen brevity.
+   */
+  n(name) {
+    this.name = name;
+    return this;
+  }
+  /**
+   * @internal
+   * Alias of {@link XmlNode#addChildNode(string)} for codegen brevity.
+   */
+  c(child) {
+    this.children.push(child);
+    return this;
+  }
+  /**
+   * @internal
+   * Checked version of {@link XmlNode#addAttribute(string)} for codegen brevity.
+   */
+  a(name, value) {
+    if (value != null) {
+      this.attributes[name] = value;
+    }
+    return this;
+  }
+  /**
+   * Create a child node.
+   * Used in serialization of string fields.
+   * @internal
+   */
+  cc(input, field, withName = field) {
+    if (input[field] != null) {
+      const node = _XmlNode.of(field, input[field]).withName(withName);
+      this.c(node);
+    }
+  }
+  /**
+   * Creates list child nodes.
+   * @internal
+   */
+  l(input, listName, memberName, valueProvider) {
+    if (input[listName] != null) {
+      const nodes = valueProvider();
+      nodes.map((node) => {
+        node.withName(memberName);
+        this.c(node);
+      });
+    }
+  }
+  /**
+   * Creates list child nodes with container.
+   * @internal
+   */
+  lc(input, listName, memberName, valueProvider) {
+    if (input[listName] != null) {
+      const nodes = valueProvider();
+      const containerNode = new _XmlNode(memberName);
+      nodes.map((node) => {
+        containerNode.c(node);
+      });
+      this.c(containerNode);
+    }
+  }
+  toString() {
+    const hasChildren = Boolean(this.children.length);
+    let xmlText = `<${this.name}`;
+    const attributes = this.attributes;
+    for (const attributeName of Object.keys(attributes)) {
+      const attribute = attributes[attributeName];
+      if (attribute != null) {
+        xmlText += ` ${attributeName}="${escapeAttribute("" + attribute)}"`;
+      }
+    }
+    return xmlText += !hasChildren ? "/>" : `>${this.children.map((c) => c.toString()).join("")}</${this.name}>`;
+  }
+};
 // Annotate the CommonJS export names for ESM import in node:
 
 0 && (0);
@@ -43953,7 +50164,7 @@ function setSingleOverride(privateAccess, credentialsWithoutSessionToken) {
 __name(setSingleOverride, "setSingleOverride");
 
 // src/s3-express/functions/s3ExpressMiddleware.ts
-var import_core = __nccwpck_require__(9963);
+var import_core = __nccwpck_require__(9559);
 
 var s3ExpressMiddleware = /* @__PURE__ */ __name((options) => {
   return (next, context) => async (args) => {
@@ -44221,6 +50432,2421 @@ var getValidateBucketNamePlugin = /* @__PURE__ */ __name((options) => ({
     clientStack.addRelativeTo(bucketEndpointMiddleware(options), bucketEndpointMiddlewareOptions);
   }, "applyToStack")
 }), "getValidateBucketNamePlugin");
+// Annotate the CommonJS export names for ESM import in node:
+
+0 && (0);
+
+
+
+/***/ }),
+
+/***/ 9559:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+const tslib_1 = __nccwpck_require__(4351);
+tslib_1.__exportStar(__nccwpck_require__(9263), exports);
+tslib_1.__exportStar(__nccwpck_require__(7379), exports);
+tslib_1.__exportStar(__nccwpck_require__(6764), exports);
+
+
+/***/ }),
+
+/***/ 9263:
+/***/ ((module) => {
+
+"use strict";
+
+var __defProp = Object.defineProperty;
+var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
+var __getOwnPropNames = Object.getOwnPropertyNames;
+var __hasOwnProp = Object.prototype.hasOwnProperty;
+var __name = (target, value) => __defProp(target, "name", { value, configurable: true });
+var __export = (target, all) => {
+  for (var name in all)
+    __defProp(target, name, { get: all[name], enumerable: true });
+};
+var __copyProps = (to, from, except, desc) => {
+  if (from && typeof from === "object" || typeof from === "function") {
+    for (let key of __getOwnPropNames(from))
+      if (!__hasOwnProp.call(to, key) && key !== except)
+        __defProp(to, key, { get: () => from[key], enumerable: !(desc = __getOwnPropDesc(from, key)) || desc.enumerable });
+  }
+  return to;
+};
+var __toCommonJS = (mod) => __copyProps(__defProp({}, "__esModule", { value: true }), mod);
+
+// src/submodules/client/index.ts
+var index_exports = {};
+__export(index_exports, {
+  emitWarningIfUnsupportedVersion: () => emitWarningIfUnsupportedVersion,
+  setCredentialFeature: () => setCredentialFeature,
+  setFeature: () => setFeature,
+  setTokenFeature: () => setTokenFeature,
+  state: () => state
+});
+module.exports = __toCommonJS(index_exports);
+
+// src/submodules/client/emitWarningIfUnsupportedVersion.ts
+var state = {
+  warningEmitted: false
+};
+var emitWarningIfUnsupportedVersion = /* @__PURE__ */ __name((version) => {
+  if (version && !state.warningEmitted && parseInt(version.substring(1, version.indexOf("."))) < 18) {
+    state.warningEmitted = true;
+    process.emitWarning(
+      `NodeDeprecationWarning: The AWS SDK for JavaScript (v3) will
+no longer support Node.js 16.x on January 6, 2025.
+
+To continue receiving updates to AWS services, bug fixes, and security
+updates please upgrade to a supported Node.js LTS version.
+
+More information can be found at: https://a.co/74kJMmI`
+    );
+  }
+}, "emitWarningIfUnsupportedVersion");
+
+// src/submodules/client/setCredentialFeature.ts
+function setCredentialFeature(credentials, feature, value) {
+  if (!credentials.$source) {
+    credentials.$source = {};
+  }
+  credentials.$source[feature] = value;
+  return credentials;
+}
+__name(setCredentialFeature, "setCredentialFeature");
+
+// src/submodules/client/setFeature.ts
+function setFeature(context, feature, value) {
+  if (!context.__aws_sdk_context) {
+    context.__aws_sdk_context = {
+      features: {}
+    };
+  } else if (!context.__aws_sdk_context.features) {
+    context.__aws_sdk_context.features = {};
+  }
+  context.__aws_sdk_context.features[feature] = value;
+}
+__name(setFeature, "setFeature");
+
+// src/submodules/client/setTokenFeature.ts
+function setTokenFeature(token, feature, value) {
+  if (!token.$source) {
+    token.$source = {};
+  }
+  token.$source[feature] = value;
+  return token;
+}
+__name(setTokenFeature, "setTokenFeature");
+// Annotate the CommonJS export names for ESM import in node:
+0 && (0);
+
+
+/***/ }),
+
+/***/ 7379:
+/***/ ((module, __unused_webpack_exports, __nccwpck_require__) => {
+
+"use strict";
+
+var __defProp = Object.defineProperty;
+var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
+var __getOwnPropNames = Object.getOwnPropertyNames;
+var __hasOwnProp = Object.prototype.hasOwnProperty;
+var __name = (target, value) => __defProp(target, "name", { value, configurable: true });
+var __export = (target, all) => {
+  for (var name in all)
+    __defProp(target, name, { get: all[name], enumerable: true });
+};
+var __copyProps = (to, from, except, desc) => {
+  if (from && typeof from === "object" || typeof from === "function") {
+    for (let key of __getOwnPropNames(from))
+      if (!__hasOwnProp.call(to, key) && key !== except)
+        __defProp(to, key, { get: () => from[key], enumerable: !(desc = __getOwnPropDesc(from, key)) || desc.enumerable });
+  }
+  return to;
+};
+var __toCommonJS = (mod) => __copyProps(__defProp({}, "__esModule", { value: true }), mod);
+
+// src/submodules/httpAuthSchemes/index.ts
+var index_exports = {};
+__export(index_exports, {
+  AWSSDKSigV4Signer: () => AWSSDKSigV4Signer,
+  AwsSdkSigV4ASigner: () => AwsSdkSigV4ASigner,
+  AwsSdkSigV4Signer: () => AwsSdkSigV4Signer,
+  NODE_AUTH_SCHEME_PREFERENCE_OPTIONS: () => NODE_AUTH_SCHEME_PREFERENCE_OPTIONS,
+  NODE_SIGV4A_CONFIG_OPTIONS: () => NODE_SIGV4A_CONFIG_OPTIONS,
+  getBearerTokenEnvKey: () => getBearerTokenEnvKey,
+  resolveAWSSDKSigV4Config: () => resolveAWSSDKSigV4Config,
+  resolveAwsSdkSigV4AConfig: () => resolveAwsSdkSigV4AConfig,
+  resolveAwsSdkSigV4Config: () => resolveAwsSdkSigV4Config,
+  validateSigningProperties: () => validateSigningProperties
+});
+module.exports = __toCommonJS(index_exports);
+
+// src/submodules/httpAuthSchemes/aws_sdk/AwsSdkSigV4Signer.ts
+var import_protocol_http2 = __nccwpck_require__(4418);
+
+// src/submodules/httpAuthSchemes/utils/getDateHeader.ts
+var import_protocol_http = __nccwpck_require__(4418);
+var getDateHeader = /* @__PURE__ */ __name((response) => import_protocol_http.HttpResponse.isInstance(response) ? response.headers?.date ?? response.headers?.Date : void 0, "getDateHeader");
+
+// src/submodules/httpAuthSchemes/utils/getSkewCorrectedDate.ts
+var getSkewCorrectedDate = /* @__PURE__ */ __name((systemClockOffset) => new Date(Date.now() + systemClockOffset), "getSkewCorrectedDate");
+
+// src/submodules/httpAuthSchemes/utils/isClockSkewed.ts
+var isClockSkewed = /* @__PURE__ */ __name((clockTime, systemClockOffset) => Math.abs(getSkewCorrectedDate(systemClockOffset).getTime() - clockTime) >= 3e5, "isClockSkewed");
+
+// src/submodules/httpAuthSchemes/utils/getUpdatedSystemClockOffset.ts
+var getUpdatedSystemClockOffset = /* @__PURE__ */ __name((clockTime, currentSystemClockOffset) => {
+  const clockTimeInMs = Date.parse(clockTime);
+  if (isClockSkewed(clockTimeInMs, currentSystemClockOffset)) {
+    return clockTimeInMs - Date.now();
+  }
+  return currentSystemClockOffset;
+}, "getUpdatedSystemClockOffset");
+
+// src/submodules/httpAuthSchemes/aws_sdk/AwsSdkSigV4Signer.ts
+var throwSigningPropertyError = /* @__PURE__ */ __name((name, property) => {
+  if (!property) {
+    throw new Error(`Property \`${name}\` is not resolved for AWS SDK SigV4Auth`);
+  }
+  return property;
+}, "throwSigningPropertyError");
+var validateSigningProperties = /* @__PURE__ */ __name(async (signingProperties) => {
+  const context = throwSigningPropertyError(
+    "context",
+    signingProperties.context
+  );
+  const config = throwSigningPropertyError("config", signingProperties.config);
+  const authScheme = context.endpointV2?.properties?.authSchemes?.[0];
+  const signerFunction = throwSigningPropertyError(
+    "signer",
+    config.signer
+  );
+  const signer = await signerFunction(authScheme);
+  const signingRegion = signingProperties?.signingRegion;
+  const signingRegionSet = signingProperties?.signingRegionSet;
+  const signingName = signingProperties?.signingName;
+  return {
+    config,
+    signer,
+    signingRegion,
+    signingRegionSet,
+    signingName
+  };
+}, "validateSigningProperties");
+var AwsSdkSigV4Signer = class {
+  static {
+    __name(this, "AwsSdkSigV4Signer");
+  }
+  async sign(httpRequest, identity, signingProperties) {
+    if (!import_protocol_http2.HttpRequest.isInstance(httpRequest)) {
+      throw new Error("The request is not an instance of `HttpRequest` and cannot be signed");
+    }
+    const validatedProps = await validateSigningProperties(signingProperties);
+    const { config, signer } = validatedProps;
+    let { signingRegion, signingName } = validatedProps;
+    const handlerExecutionContext = signingProperties.context;
+    if (handlerExecutionContext?.authSchemes?.length ?? 0 > 1) {
+      const [first, second] = handlerExecutionContext.authSchemes;
+      if (first?.name === "sigv4a" && second?.name === "sigv4") {
+        signingRegion = second?.signingRegion ?? signingRegion;
+        signingName = second?.signingName ?? signingName;
+      }
+    }
+    const signedRequest = await signer.sign(httpRequest, {
+      signingDate: getSkewCorrectedDate(config.systemClockOffset),
+      signingRegion,
+      signingService: signingName
+    });
+    return signedRequest;
+  }
+  errorHandler(signingProperties) {
+    return (error) => {
+      const serverTime = error.ServerTime ?? getDateHeader(error.$response);
+      if (serverTime) {
+        const config = throwSigningPropertyError("config", signingProperties.config);
+        const initialSystemClockOffset = config.systemClockOffset;
+        config.systemClockOffset = getUpdatedSystemClockOffset(serverTime, config.systemClockOffset);
+        const clockSkewCorrected = config.systemClockOffset !== initialSystemClockOffset;
+        if (clockSkewCorrected && error.$metadata) {
+          error.$metadata.clockSkewCorrected = true;
+        }
+      }
+      throw error;
+    };
+  }
+  successHandler(httpResponse, signingProperties) {
+    const dateHeader = getDateHeader(httpResponse);
+    if (dateHeader) {
+      const config = throwSigningPropertyError("config", signingProperties.config);
+      config.systemClockOffset = getUpdatedSystemClockOffset(dateHeader, config.systemClockOffset);
+    }
+  }
+};
+var AWSSDKSigV4Signer = AwsSdkSigV4Signer;
+
+// src/submodules/httpAuthSchemes/aws_sdk/AwsSdkSigV4ASigner.ts
+var import_protocol_http3 = __nccwpck_require__(4418);
+var AwsSdkSigV4ASigner = class extends AwsSdkSigV4Signer {
+  static {
+    __name(this, "AwsSdkSigV4ASigner");
+  }
+  async sign(httpRequest, identity, signingProperties) {
+    if (!import_protocol_http3.HttpRequest.isInstance(httpRequest)) {
+      throw new Error("The request is not an instance of `HttpRequest` and cannot be signed");
+    }
+    const { config, signer, signingRegion, signingRegionSet, signingName } = await validateSigningProperties(
+      signingProperties
+    );
+    const configResolvedSigningRegionSet = await config.sigv4aSigningRegionSet?.();
+    const multiRegionOverride = (configResolvedSigningRegionSet ?? signingRegionSet ?? [signingRegion]).join(",");
+    const signedRequest = await signer.sign(httpRequest, {
+      signingDate: getSkewCorrectedDate(config.systemClockOffset),
+      signingRegion: multiRegionOverride,
+      signingService: signingName
+    });
+    return signedRequest;
+  }
+};
+
+// src/submodules/httpAuthSchemes/utils/getArrayForCommaSeparatedString.ts
+var getArrayForCommaSeparatedString = /* @__PURE__ */ __name((str) => typeof str === "string" && str.length > 0 ? str.split(",").map((item) => item.trim()) : [], "getArrayForCommaSeparatedString");
+
+// src/submodules/httpAuthSchemes/utils/getBearerTokenEnvKey.ts
+var getBearerTokenEnvKey = /* @__PURE__ */ __name((signingName) => `AWS_BEARER_TOKEN_${signingName.replace(/[\s-]/g, "_").toUpperCase()}`, "getBearerTokenEnvKey");
+
+// src/submodules/httpAuthSchemes/aws_sdk/NODE_AUTH_SCHEME_PREFERENCE_OPTIONS.ts
+var NODE_AUTH_SCHEME_PREFERENCE_ENV_KEY = "AWS_AUTH_SCHEME_PREFERENCE";
+var NODE_AUTH_SCHEME_PREFERENCE_CONFIG_KEY = "auth_scheme_preference";
+var NODE_AUTH_SCHEME_PREFERENCE_OPTIONS = {
+  /**
+   * Retrieves auth scheme preference from environment variables
+   * @param env - Node process environment object
+   * @returns Array of auth scheme strings if preference is set, undefined otherwise
+   */
+  environmentVariableSelector: /* @__PURE__ */ __name((env, options) => {
+    if (options?.signingName) {
+      const bearerTokenKey = getBearerTokenEnvKey(options.signingName);
+      if (bearerTokenKey in env) return ["httpBearerAuth"];
+    }
+    if (!(NODE_AUTH_SCHEME_PREFERENCE_ENV_KEY in env)) return void 0;
+    return getArrayForCommaSeparatedString(env[NODE_AUTH_SCHEME_PREFERENCE_ENV_KEY]);
+  }, "environmentVariableSelector"),
+  /**
+   * Retrieves auth scheme preference from config file
+   * @param profile - Config profile object
+   * @returns Array of auth scheme strings if preference is set, undefined otherwise
+   */
+  configFileSelector: /* @__PURE__ */ __name((profile) => {
+    if (!(NODE_AUTH_SCHEME_PREFERENCE_CONFIG_KEY in profile)) return void 0;
+    return getArrayForCommaSeparatedString(profile[NODE_AUTH_SCHEME_PREFERENCE_CONFIG_KEY]);
+  }, "configFileSelector"),
+  /**
+   * Default auth scheme preference if not specified in environment or config
+   */
+  default: []
+};
+
+// src/submodules/httpAuthSchemes/aws_sdk/resolveAwsSdkSigV4AConfig.ts
+var import_core = __nccwpck_require__(5829);
+var import_property_provider = __nccwpck_require__(9721);
+var resolveAwsSdkSigV4AConfig = /* @__PURE__ */ __name((config) => {
+  config.sigv4aSigningRegionSet = (0, import_core.normalizeProvider)(config.sigv4aSigningRegionSet);
+  return config;
+}, "resolveAwsSdkSigV4AConfig");
+var NODE_SIGV4A_CONFIG_OPTIONS = {
+  environmentVariableSelector(env) {
+    if (env.AWS_SIGV4A_SIGNING_REGION_SET) {
+      return env.AWS_SIGV4A_SIGNING_REGION_SET.split(",").map((_) => _.trim());
+    }
+    throw new import_property_provider.ProviderError("AWS_SIGV4A_SIGNING_REGION_SET not set in env.", {
+      tryNextLink: true
+    });
+  },
+  configFileSelector(profile) {
+    if (profile.sigv4a_signing_region_set) {
+      return (profile.sigv4a_signing_region_set ?? "").split(",").map((_) => _.trim());
+    }
+    throw new import_property_provider.ProviderError("sigv4a_signing_region_set not set in profile.", {
+      tryNextLink: true
+    });
+  },
+  default: void 0
+};
+
+// src/submodules/httpAuthSchemes/aws_sdk/resolveAwsSdkSigV4Config.ts
+var import_client = __nccwpck_require__(9263);
+var import_core2 = __nccwpck_require__(5829);
+var import_signature_v4 = __nccwpck_require__(1528);
+var resolveAwsSdkSigV4Config = /* @__PURE__ */ __name((config) => {
+  let inputCredentials = config.credentials;
+  let isUserSupplied = !!config.credentials;
+  let resolvedCredentials = void 0;
+  Object.defineProperty(config, "credentials", {
+    set(credentials) {
+      if (credentials && credentials !== inputCredentials && credentials !== resolvedCredentials) {
+        isUserSupplied = true;
+      }
+      inputCredentials = credentials;
+      const memoizedProvider = normalizeCredentialProvider(config, {
+        credentials: inputCredentials,
+        credentialDefaultProvider: config.credentialDefaultProvider
+      });
+      const boundProvider = bindCallerConfig(config, memoizedProvider);
+      if (isUserSupplied && !boundProvider.attributed) {
+        resolvedCredentials = /* @__PURE__ */ __name(async (options) => boundProvider(options).then(
+          (creds) => (0, import_client.setCredentialFeature)(creds, "CREDENTIALS_CODE", "e")
+        ), "resolvedCredentials");
+        resolvedCredentials.memoized = boundProvider.memoized;
+        resolvedCredentials.configBound = boundProvider.configBound;
+        resolvedCredentials.attributed = true;
+      } else {
+        resolvedCredentials = boundProvider;
+      }
+    },
+    get() {
+      return resolvedCredentials;
+    },
+    enumerable: true,
+    configurable: true
+  });
+  config.credentials = inputCredentials;
+  const {
+    // Default for signingEscapePath
+    signingEscapePath = true,
+    // Default for systemClockOffset
+    systemClockOffset = config.systemClockOffset || 0,
+    // No default for sha256 since it is platform dependent
+    sha256
+  } = config;
+  let signer;
+  if (config.signer) {
+    signer = (0, import_core2.normalizeProvider)(config.signer);
+  } else if (config.regionInfoProvider) {
+    signer = /* @__PURE__ */ __name(() => (0, import_core2.normalizeProvider)(config.region)().then(
+      async (region) => [
+        await config.regionInfoProvider(region, {
+          useFipsEndpoint: await config.useFipsEndpoint(),
+          useDualstackEndpoint: await config.useDualstackEndpoint()
+        }) || {},
+        region
+      ]
+    ).then(([regionInfo, region]) => {
+      const { signingRegion, signingService } = regionInfo;
+      config.signingRegion = config.signingRegion || signingRegion || region;
+      config.signingName = config.signingName || signingService || config.serviceId;
+      const params = {
+        ...config,
+        credentials: config.credentials,
+        region: config.signingRegion,
+        service: config.signingName,
+        sha256,
+        uriEscapePath: signingEscapePath
+      };
+      const SignerCtor = config.signerConstructor || import_signature_v4.SignatureV4;
+      return new SignerCtor(params);
+    }), "signer");
+  } else {
+    signer = /* @__PURE__ */ __name(async (authScheme) => {
+      authScheme = Object.assign(
+        {},
+        {
+          name: "sigv4",
+          signingName: config.signingName || config.defaultSigningName,
+          signingRegion: await (0, import_core2.normalizeProvider)(config.region)(),
+          properties: {}
+        },
+        authScheme
+      );
+      const signingRegion = authScheme.signingRegion;
+      const signingService = authScheme.signingName;
+      config.signingRegion = config.signingRegion || signingRegion;
+      config.signingName = config.signingName || signingService || config.serviceId;
+      const params = {
+        ...config,
+        credentials: config.credentials,
+        region: config.signingRegion,
+        service: config.signingName,
+        sha256,
+        uriEscapePath: signingEscapePath
+      };
+      const SignerCtor = config.signerConstructor || import_signature_v4.SignatureV4;
+      return new SignerCtor(params);
+    }, "signer");
+  }
+  const resolvedConfig = Object.assign(config, {
+    systemClockOffset,
+    signingEscapePath,
+    signer
+  });
+  return resolvedConfig;
+}, "resolveAwsSdkSigV4Config");
+var resolveAWSSDKSigV4Config = resolveAwsSdkSigV4Config;
+function normalizeCredentialProvider(config, {
+  credentials,
+  credentialDefaultProvider
+}) {
+  let credentialsProvider;
+  if (credentials) {
+    if (!credentials?.memoized) {
+      credentialsProvider = (0, import_core2.memoizeIdentityProvider)(credentials, import_core2.isIdentityExpired, import_core2.doesIdentityRequireRefresh);
+    } else {
+      credentialsProvider = credentials;
+    }
+  } else {
+    if (credentialDefaultProvider) {
+      credentialsProvider = (0, import_core2.normalizeProvider)(
+        credentialDefaultProvider(
+          Object.assign({}, config, {
+            parentClientConfig: config
+          })
+        )
+      );
+    } else {
+      credentialsProvider = /* @__PURE__ */ __name(async () => {
+        throw new Error(
+          "@aws-sdk/core::resolveAwsSdkSigV4Config - `credentials` not provided and no credentialDefaultProvider was configured."
+        );
+      }, "credentialsProvider");
+    }
+  }
+  credentialsProvider.memoized = true;
+  return credentialsProvider;
+}
+__name(normalizeCredentialProvider, "normalizeCredentialProvider");
+function bindCallerConfig(config, credentialsProvider) {
+  if (credentialsProvider.configBound) {
+    return credentialsProvider;
+  }
+  const fn = /* @__PURE__ */ __name(async (options) => credentialsProvider({ ...options, callerClientConfig: config }), "fn");
+  fn.memoized = credentialsProvider.memoized;
+  fn.configBound = true;
+  return fn;
+}
+__name(bindCallerConfig, "bindCallerConfig");
+// Annotate the CommonJS export names for ESM import in node:
+0 && (0);
+
+
+/***/ }),
+
+/***/ 6764:
+/***/ ((module, __unused_webpack_exports, __nccwpck_require__) => {
+
+"use strict";
+
+var __defProp = Object.defineProperty;
+var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
+var __getOwnPropNames = Object.getOwnPropertyNames;
+var __hasOwnProp = Object.prototype.hasOwnProperty;
+var __name = (target, value) => __defProp(target, "name", { value, configurable: true });
+var __export = (target, all) => {
+  for (var name in all)
+    __defProp(target, name, { get: all[name], enumerable: true });
+};
+var __copyProps = (to, from, except, desc) => {
+  if (from && typeof from === "object" || typeof from === "function") {
+    for (let key of __getOwnPropNames(from))
+      if (!__hasOwnProp.call(to, key) && key !== except)
+        __defProp(to, key, { get: () => from[key], enumerable: !(desc = __getOwnPropDesc(from, key)) || desc.enumerable });
+  }
+  return to;
+};
+var __toCommonJS = (mod) => __copyProps(__defProp({}, "__esModule", { value: true }), mod);
+
+// src/submodules/protocols/index.ts
+var index_exports = {};
+__export(index_exports, {
+  AwsEc2QueryProtocol: () => AwsEc2QueryProtocol,
+  AwsJson1_0Protocol: () => AwsJson1_0Protocol,
+  AwsJson1_1Protocol: () => AwsJson1_1Protocol,
+  AwsJsonRpcProtocol: () => AwsJsonRpcProtocol,
+  AwsQueryProtocol: () => AwsQueryProtocol,
+  AwsRestJsonProtocol: () => AwsRestJsonProtocol,
+  AwsRestXmlProtocol: () => AwsRestXmlProtocol,
+  JsonCodec: () => JsonCodec,
+  JsonShapeDeserializer: () => JsonShapeDeserializer,
+  JsonShapeSerializer: () => JsonShapeSerializer,
+  XmlCodec: () => XmlCodec,
+  XmlShapeDeserializer: () => XmlShapeDeserializer,
+  XmlShapeSerializer: () => XmlShapeSerializer,
+  _toBool: () => _toBool,
+  _toNum: () => _toNum,
+  _toStr: () => _toStr,
+  awsExpectUnion: () => awsExpectUnion,
+  loadRestJsonErrorCode: () => loadRestJsonErrorCode,
+  loadRestXmlErrorCode: () => loadRestXmlErrorCode,
+  parseJsonBody: () => parseJsonBody,
+  parseJsonErrorBody: () => parseJsonErrorBody,
+  parseXmlBody: () => parseXmlBody,
+  parseXmlErrorBody: () => parseXmlErrorBody
+});
+module.exports = __toCommonJS(index_exports);
+
+// src/submodules/protocols/coercing-serializers.ts
+var _toStr = /* @__PURE__ */ __name((val) => {
+  if (val == null) {
+    return val;
+  }
+  if (typeof val === "number" || typeof val === "bigint") {
+    const warning = new Error(`Received number ${val} where a string was expected.`);
+    warning.name = "Warning";
+    console.warn(warning);
+    return String(val);
+  }
+  if (typeof val === "boolean") {
+    const warning = new Error(`Received boolean ${val} where a string was expected.`);
+    warning.name = "Warning";
+    console.warn(warning);
+    return String(val);
+  }
+  return val;
+}, "_toStr");
+var _toBool = /* @__PURE__ */ __name((val) => {
+  if (val == null) {
+    return val;
+  }
+  if (typeof val === "number") {
+  }
+  if (typeof val === "string") {
+    const lowercase = val.toLowerCase();
+    if (val !== "" && lowercase !== "false" && lowercase !== "true") {
+      const warning = new Error(`Received string "${val}" where a boolean was expected.`);
+      warning.name = "Warning";
+      console.warn(warning);
+    }
+    return val !== "" && lowercase !== "false";
+  }
+  return val;
+}, "_toBool");
+var _toNum = /* @__PURE__ */ __name((val) => {
+  if (val == null) {
+    return val;
+  }
+  if (typeof val === "boolean") {
+  }
+  if (typeof val === "string") {
+    const num = Number(val);
+    if (num.toString() !== val) {
+      const warning = new Error(`Received string "${val}" where a number was expected.`);
+      warning.name = "Warning";
+      console.warn(warning);
+      return val;
+    }
+    return num;
+  }
+  return val;
+}, "_toNum");
+
+// src/submodules/protocols/json/AwsJsonRpcProtocol.ts
+var import_protocols = __nccwpck_require__(2241);
+var import_schema3 = __nccwpck_require__(9826);
+var import_util_body_length_browser = __nccwpck_require__(713);
+
+// src/submodules/protocols/ConfigurableSerdeContext.ts
+var SerdeContextConfig = class {
+  static {
+    __name(this, "SerdeContextConfig");
+  }
+  serdeContext;
+  setSerdeContext(serdeContext) {
+    this.serdeContext = serdeContext;
+  }
+};
+
+// src/submodules/protocols/json/JsonShapeDeserializer.ts
+var import_schema = __nccwpck_require__(9826);
+var import_serde2 = __nccwpck_require__(7669);
+var import_util_base64 = __nccwpck_require__(5600);
+
+// src/submodules/protocols/json/jsonReviver.ts
+var import_serde = __nccwpck_require__(7669);
+function jsonReviver(key, value, context) {
+  if (context?.source) {
+    const numericString = context.source;
+    if (typeof value === "number") {
+      if (value > Number.MAX_SAFE_INTEGER || value < Number.MIN_SAFE_INTEGER || numericString !== String(value)) {
+        const isFractional = numericString.includes(".");
+        if (isFractional) {
+          return new import_serde.NumericValue(numericString, "bigDecimal");
+        } else {
+          return BigInt(numericString);
+        }
+      }
+    }
+  }
+  return value;
+}
+__name(jsonReviver, "jsonReviver");
+
+// src/submodules/protocols/common.ts
+var import_smithy_client = __nccwpck_require__(3570);
+var collectBodyString = /* @__PURE__ */ __name((streamBody, context) => (0, import_smithy_client.collectBody)(streamBody, context).then((body) => context.utf8Encoder(body)), "collectBodyString");
+
+// src/submodules/protocols/json/parseJsonBody.ts
+var parseJsonBody = /* @__PURE__ */ __name((streamBody, context) => collectBodyString(streamBody, context).then((encoded) => {
+  if (encoded.length) {
+    try {
+      return JSON.parse(encoded);
+    } catch (e) {
+      if (e?.name === "SyntaxError") {
+        Object.defineProperty(e, "$responseBodyText", {
+          value: encoded
+        });
+      }
+      throw e;
+    }
+  }
+  return {};
+}), "parseJsonBody");
+var parseJsonErrorBody = /* @__PURE__ */ __name(async (errorBody, context) => {
+  const value = await parseJsonBody(errorBody, context);
+  value.message = value.message ?? value.Message;
+  return value;
+}, "parseJsonErrorBody");
+var loadRestJsonErrorCode = /* @__PURE__ */ __name((output, data) => {
+  const findKey = /* @__PURE__ */ __name((object, key) => Object.keys(object).find((k) => k.toLowerCase() === key.toLowerCase()), "findKey");
+  const sanitizeErrorCode = /* @__PURE__ */ __name((rawValue) => {
+    let cleanValue = rawValue;
+    if (typeof cleanValue === "number") {
+      cleanValue = cleanValue.toString();
+    }
+    if (cleanValue.indexOf(",") >= 0) {
+      cleanValue = cleanValue.split(",")[0];
+    }
+    if (cleanValue.indexOf(":") >= 0) {
+      cleanValue = cleanValue.split(":")[0];
+    }
+    if (cleanValue.indexOf("#") >= 0) {
+      cleanValue = cleanValue.split("#")[1];
+    }
+    return cleanValue;
+  }, "sanitizeErrorCode");
+  const headerKey = findKey(output.headers, "x-amzn-errortype");
+  if (headerKey !== void 0) {
+    return sanitizeErrorCode(output.headers[headerKey]);
+  }
+  if (data && typeof data === "object") {
+    const codeKey = findKey(data, "code");
+    if (codeKey && data[codeKey] !== void 0) {
+      return sanitizeErrorCode(data[codeKey]);
+    }
+    if (data["__type"] !== void 0) {
+      return sanitizeErrorCode(data["__type"]);
+    }
+  }
+}, "loadRestJsonErrorCode");
+
+// src/submodules/protocols/json/JsonShapeDeserializer.ts
+var JsonShapeDeserializer = class extends SerdeContextConfig {
+  constructor(settings) {
+    super();
+    this.settings = settings;
+  }
+  static {
+    __name(this, "JsonShapeDeserializer");
+  }
+  async read(schema, data) {
+    return this._read(
+      schema,
+      typeof data === "string" ? JSON.parse(data, jsonReviver) : await parseJsonBody(data, this.serdeContext)
+    );
+  }
+  readObject(schema, data) {
+    return this._read(schema, data);
+  }
+  _read(schema, value) {
+    const isObject = value !== null && typeof value === "object";
+    const ns = import_schema.NormalizedSchema.of(schema);
+    if (ns.isListSchema() && Array.isArray(value)) {
+      const listMember = ns.getValueSchema();
+      const out = [];
+      const sparse = !!ns.getMergedTraits().sparse;
+      for (const item of value) {
+        if (sparse || item != null) {
+          out.push(this._read(listMember, item));
+        }
+      }
+      return out;
+    } else if (ns.isMapSchema() && isObject) {
+      const mapMember = ns.getValueSchema();
+      const out = {};
+      const sparse = !!ns.getMergedTraits().sparse;
+      for (const [_k, _v] of Object.entries(value)) {
+        if (sparse || _v != null) {
+          out[_k] = this._read(mapMember, _v);
+        }
+      }
+      return out;
+    } else if (ns.isStructSchema() && isObject) {
+      const out = {};
+      for (const [memberName, memberSchema] of ns.structIterator()) {
+        const fromKey = this.settings.jsonName ? memberSchema.getMergedTraits().jsonName ?? memberName : memberName;
+        const deserializedValue = this._read(memberSchema, value[fromKey]);
+        if (deserializedValue != null) {
+          out[memberName] = deserializedValue;
+        }
+      }
+      return out;
+    }
+    if (ns.isBlobSchema() && typeof value === "string") {
+      return (0, import_util_base64.fromBase64)(value);
+    }
+    const mediaType = ns.getMergedTraits().mediaType;
+    if (ns.isStringSchema() && typeof value === "string" && mediaType) {
+      const isJson = mediaType === "application/json" || mediaType.endsWith("+json");
+      if (isJson) {
+        return import_serde2.LazyJsonString.from(value);
+      }
+    }
+    if (ns.isTimestampSchema()) {
+      const options = this.settings.timestampFormat;
+      const format = options.useTrait ? ns.getSchema() === import_schema.SCHEMA.TIMESTAMP_DEFAULT ? options.default : ns.getSchema() ?? options.default : options.default;
+      switch (format) {
+        case import_schema.SCHEMA.TIMESTAMP_DATE_TIME:
+          return (0, import_serde2.parseRfc3339DateTimeWithOffset)(value);
+        case import_schema.SCHEMA.TIMESTAMP_HTTP_DATE:
+          return (0, import_serde2.parseRfc7231DateTime)(value);
+        case import_schema.SCHEMA.TIMESTAMP_EPOCH_SECONDS:
+          return (0, import_serde2.parseEpochTimestamp)(value);
+        default:
+          console.warn("Missing timestamp format, parsing value with Date constructor:", value);
+          return new Date(value);
+      }
+    }
+    if (ns.isBigIntegerSchema() && (typeof value === "number" || typeof value === "string")) {
+      return BigInt(value);
+    }
+    if (ns.isBigDecimalSchema() && value != void 0) {
+      if (value instanceof import_serde2.NumericValue) {
+        return value;
+      }
+      return new import_serde2.NumericValue(String(value), "bigDecimal");
+    }
+    if (ns.isNumericSchema() && typeof value === "string") {
+      switch (value) {
+        case "Infinity":
+          return Infinity;
+        case "-Infinity":
+          return -Infinity;
+        case "NaN":
+          return NaN;
+      }
+    }
+    return value;
+  }
+};
+
+// src/submodules/protocols/json/JsonShapeSerializer.ts
+var import_schema2 = __nccwpck_require__(9826);
+var import_serde4 = __nccwpck_require__(7669);
+
+// src/submodules/protocols/json/jsonReplacer.ts
+var import_serde3 = __nccwpck_require__(7669);
+var NUMERIC_CONTROL_CHAR = String.fromCharCode(925);
+var JsonReplacer = class {
+  static {
+    __name(this, "JsonReplacer");
+  }
+  /**
+   * Stores placeholder key to true serialized value lookup.
+   */
+  values = /* @__PURE__ */ new Map();
+  counter = 0;
+  stage = 0;
+  /**
+   * Creates a jsonReplacer function that reserves big integer and big decimal values
+   * for later replacement.
+   */
+  createReplacer() {
+    if (this.stage === 1) {
+      throw new Error("@aws-sdk/core/protocols - JsonReplacer already created.");
+    }
+    if (this.stage === 2) {
+      throw new Error("@aws-sdk/core/protocols - JsonReplacer exhausted.");
+    }
+    this.stage = 1;
+    return (key, value) => {
+      if (value instanceof import_serde3.NumericValue) {
+        const v = `${NUMERIC_CONTROL_CHAR + "nv" + this.counter++}_` + value.string;
+        this.values.set(`"${v}"`, value.string);
+        return v;
+      }
+      if (typeof value === "bigint") {
+        const s = value.toString();
+        const v = `${NUMERIC_CONTROL_CHAR + "b" + this.counter++}_` + s;
+        this.values.set(`"${v}"`, s);
+        return v;
+      }
+      return value;
+    };
+  }
+  /**
+   * Replaces placeholder keys with their true values.
+   */
+  replaceInJson(json) {
+    if (this.stage === 0) {
+      throw new Error("@aws-sdk/core/protocols - JsonReplacer not created yet.");
+    }
+    if (this.stage === 2) {
+      throw new Error("@aws-sdk/core/protocols - JsonReplacer exhausted.");
+    }
+    this.stage = 2;
+    if (this.counter === 0) {
+      return json;
+    }
+    for (const [key, value] of this.values) {
+      json = json.replace(key, value);
+    }
+    return json;
+  }
+};
+
+// src/submodules/protocols/json/JsonShapeSerializer.ts
+var JsonShapeSerializer = class extends SerdeContextConfig {
+  constructor(settings) {
+    super();
+    this.settings = settings;
+  }
+  static {
+    __name(this, "JsonShapeSerializer");
+  }
+  buffer;
+  rootSchema;
+  write(schema, value) {
+    this.rootSchema = import_schema2.NormalizedSchema.of(schema);
+    this.buffer = this._write(this.rootSchema, value);
+  }
+  flush() {
+    if (this.rootSchema?.isStructSchema() || this.rootSchema?.isDocumentSchema()) {
+      const replacer = new JsonReplacer();
+      return replacer.replaceInJson(JSON.stringify(this.buffer, replacer.createReplacer(), 0));
+    }
+    return this.buffer;
+  }
+  _write(schema, value, container) {
+    const isObject = value !== null && typeof value === "object";
+    const ns = import_schema2.NormalizedSchema.of(schema);
+    if (ns.isListSchema() && Array.isArray(value)) {
+      const listMember = ns.getValueSchema();
+      const out = [];
+      const sparse = !!ns.getMergedTraits().sparse;
+      for (const item of value) {
+        if (sparse || item != null) {
+          out.push(this._write(listMember, item));
+        }
+      }
+      return out;
+    } else if (ns.isMapSchema() && isObject) {
+      const mapMember = ns.getValueSchema();
+      const out = {};
+      const sparse = !!ns.getMergedTraits().sparse;
+      for (const [_k, _v] of Object.entries(value)) {
+        if (sparse || _v != null) {
+          out[_k] = this._write(mapMember, _v);
+        }
+      }
+      return out;
+    } else if (ns.isStructSchema() && isObject) {
+      const out = {};
+      for (const [memberName, memberSchema] of ns.structIterator()) {
+        const targetKey = this.settings.jsonName ? memberSchema.getMergedTraits().jsonName ?? memberName : memberName;
+        const serializableValue = this._write(memberSchema, value[memberName], ns);
+        if (serializableValue !== void 0) {
+          out[targetKey] = serializableValue;
+        }
+      }
+      return out;
+    }
+    if (value === null && container?.isStructSchema()) {
+      return void 0;
+    }
+    if (ns.isBlobSchema() && (value instanceof Uint8Array || typeof value === "string")) {
+      if (ns === this.rootSchema) {
+        return value;
+      }
+      if (!this.serdeContext?.base64Encoder) {
+        throw new Error("Missing base64Encoder in serdeContext");
+      }
+      return this.serdeContext?.base64Encoder(value);
+    }
+    if (ns.isTimestampSchema() && value instanceof Date) {
+      const options = this.settings.timestampFormat;
+      const format = options.useTrait ? ns.getSchema() === import_schema2.SCHEMA.TIMESTAMP_DEFAULT ? options.default : ns.getSchema() ?? options.default : options.default;
+      switch (format) {
+        case import_schema2.SCHEMA.TIMESTAMP_DATE_TIME:
+          return value.toISOString().replace(".000Z", "Z");
+        case import_schema2.SCHEMA.TIMESTAMP_HTTP_DATE:
+          return (0, import_serde4.dateToUtcString)(value);
+        case import_schema2.SCHEMA.TIMESTAMP_EPOCH_SECONDS:
+          return value.getTime() / 1e3;
+        default:
+          console.warn("Missing timestamp format, using epoch seconds", value);
+          return value.getTime() / 1e3;
+      }
+    }
+    if (ns.isNumericSchema() && typeof value === "number") {
+      if (Math.abs(value) === Infinity || isNaN(value)) {
+        return String(value);
+      }
+    }
+    if (ns.isStringSchema()) {
+      if (typeof value === "undefined" && ns.isIdempotencyToken()) {
+        return (0, import_serde4.generateIdempotencyToken)();
+      }
+      const mediaType = ns.getMergedTraits().mediaType;
+      if (typeof value === "string" && mediaType) {
+        const isJson = mediaType === "application/json" || mediaType.endsWith("+json");
+        if (isJson) {
+          return import_serde4.LazyJsonString.from(value);
+        }
+      }
+    }
+    return value;
+  }
+};
+
+// src/submodules/protocols/json/JsonCodec.ts
+var JsonCodec = class extends SerdeContextConfig {
+  constructor(settings) {
+    super();
+    this.settings = settings;
+  }
+  static {
+    __name(this, "JsonCodec");
+  }
+  createSerializer() {
+    const serializer = new JsonShapeSerializer(this.settings);
+    serializer.setSerdeContext(this.serdeContext);
+    return serializer;
+  }
+  createDeserializer() {
+    const deserializer = new JsonShapeDeserializer(this.settings);
+    deserializer.setSerdeContext(this.serdeContext);
+    return deserializer;
+  }
+};
+
+// src/submodules/protocols/json/AwsJsonRpcProtocol.ts
+var AwsJsonRpcProtocol = class extends import_protocols.RpcProtocol {
+  static {
+    __name(this, "AwsJsonRpcProtocol");
+  }
+  serializer;
+  deserializer;
+  serviceTarget;
+  codec;
+  constructor({ defaultNamespace, serviceTarget }) {
+    super({
+      defaultNamespace
+    });
+    this.serviceTarget = serviceTarget;
+    this.codec = new JsonCodec({
+      timestampFormat: {
+        useTrait: true,
+        default: import_schema3.SCHEMA.TIMESTAMP_EPOCH_SECONDS
+      },
+      jsonName: false
+    });
+    this.serializer = this.codec.createSerializer();
+    this.deserializer = this.codec.createDeserializer();
+  }
+  async serializeRequest(operationSchema, input, context) {
+    const request = await super.serializeRequest(operationSchema, input, context);
+    if (!request.path.endsWith("/")) {
+      request.path += "/";
+    }
+    Object.assign(request.headers, {
+      "content-type": `application/x-amz-json-${this.getJsonRpcVersion()}`,
+      "x-amz-target": `${this.serviceTarget}.${import_schema3.NormalizedSchema.of(operationSchema).getName()}`
+    });
+    if ((0, import_schema3.deref)(operationSchema.input) === "unit" || !request.body) {
+      request.body = "{}";
+    }
+    try {
+      request.headers["content-length"] = String((0, import_util_body_length_browser.calculateBodyLength)(request.body));
+    } catch (e) {
+    }
+    return request;
+  }
+  getPayloadCodec() {
+    return this.codec;
+  }
+  async handleError(operationSchema, context, response, dataObject, metadata) {
+    const errorIdentifier = loadRestJsonErrorCode(response, dataObject) ?? "Unknown";
+    let namespace = this.options.defaultNamespace;
+    let errorName = errorIdentifier;
+    if (errorIdentifier.includes("#")) {
+      [namespace, errorName] = errorIdentifier.split("#");
+    }
+    const registry = import_schema3.TypeRegistry.for(namespace);
+    let errorSchema;
+    try {
+      errorSchema = registry.getSchema(errorIdentifier);
+    } catch (e) {
+      const baseExceptionSchema = import_schema3.TypeRegistry.for("smithy.ts.sdk.synthetic." + namespace).getBaseException();
+      if (baseExceptionSchema) {
+        const ErrorCtor = baseExceptionSchema.ctor;
+        throw Object.assign(new ErrorCtor(errorName), dataObject);
+      }
+      throw new Error(errorName);
+    }
+    const ns = import_schema3.NormalizedSchema.of(errorSchema);
+    const message = dataObject.message ?? dataObject.Message ?? "Unknown";
+    const exception = new errorSchema.ctor(message);
+    await this.deserializeHttpMessage(errorSchema, context, response, dataObject);
+    const output = {};
+    for (const [name, member] of ns.structIterator()) {
+      const target = member.getMergedTraits().jsonName ?? name;
+      output[name] = this.codec.createDeserializer().readObject(member, dataObject[target]);
+    }
+    Object.assign(exception, {
+      $metadata: metadata,
+      $response: response,
+      $fault: ns.getMergedTraits().error,
+      message,
+      ...output
+    });
+    throw exception;
+  }
+};
+
+// src/submodules/protocols/json/AwsJson1_0Protocol.ts
+var AwsJson1_0Protocol = class extends AwsJsonRpcProtocol {
+  static {
+    __name(this, "AwsJson1_0Protocol");
+  }
+  constructor({ defaultNamespace, serviceTarget }) {
+    super({
+      defaultNamespace,
+      serviceTarget
+    });
+  }
+  getShapeId() {
+    return "aws.protocols#awsJson1_0";
+  }
+  getJsonRpcVersion() {
+    return "1.0";
+  }
+  /**
+   * @override
+   */
+  getDefaultContentType() {
+    return "application/x-amz-json-1.0";
+  }
+};
+
+// src/submodules/protocols/json/AwsJson1_1Protocol.ts
+var AwsJson1_1Protocol = class extends AwsJsonRpcProtocol {
+  static {
+    __name(this, "AwsJson1_1Protocol");
+  }
+  constructor({ defaultNamespace, serviceTarget }) {
+    super({
+      defaultNamespace,
+      serviceTarget
+    });
+  }
+  getShapeId() {
+    return "aws.protocols#awsJson1_1";
+  }
+  getJsonRpcVersion() {
+    return "1.1";
+  }
+  /**
+   * @override
+   */
+  getDefaultContentType() {
+    return "application/x-amz-json-1.1";
+  }
+};
+
+// src/submodules/protocols/json/AwsRestJsonProtocol.ts
+var import_protocols2 = __nccwpck_require__(2241);
+var import_schema4 = __nccwpck_require__(9826);
+var import_util_body_length_browser2 = __nccwpck_require__(713);
+var AwsRestJsonProtocol = class extends import_protocols2.HttpBindingProtocol {
+  static {
+    __name(this, "AwsRestJsonProtocol");
+  }
+  serializer;
+  deserializer;
+  codec;
+  constructor({ defaultNamespace }) {
+    super({
+      defaultNamespace
+    });
+    const settings = {
+      timestampFormat: {
+        useTrait: true,
+        default: import_schema4.SCHEMA.TIMESTAMP_EPOCH_SECONDS
+      },
+      httpBindings: true,
+      jsonName: true
+    };
+    this.codec = new JsonCodec(settings);
+    this.serializer = new import_protocols2.HttpInterceptingShapeSerializer(this.codec.createSerializer(), settings);
+    this.deserializer = new import_protocols2.HttpInterceptingShapeDeserializer(this.codec.createDeserializer(), settings);
+  }
+  getShapeId() {
+    return "aws.protocols#restJson1";
+  }
+  getPayloadCodec() {
+    return this.codec;
+  }
+  setSerdeContext(serdeContext) {
+    this.codec.setSerdeContext(serdeContext);
+    super.setSerdeContext(serdeContext);
+  }
+  async serializeRequest(operationSchema, input, context) {
+    const request = await super.serializeRequest(operationSchema, input, context);
+    const inputSchema = import_schema4.NormalizedSchema.of(operationSchema.input);
+    const members = inputSchema.getMemberSchemas();
+    if (!request.headers["content-type"]) {
+      const httpPayloadMember = Object.values(members).find((m) => {
+        return !!m.getMergedTraits().httpPayload;
+      });
+      if (httpPayloadMember) {
+        const mediaType = httpPayloadMember.getMergedTraits().mediaType;
+        if (mediaType) {
+          request.headers["content-type"] = mediaType;
+        } else if (httpPayloadMember.isStringSchema()) {
+          request.headers["content-type"] = "text/plain";
+        } else if (httpPayloadMember.isBlobSchema()) {
+          request.headers["content-type"] = "application/octet-stream";
+        } else {
+          request.headers["content-type"] = this.getDefaultContentType();
+        }
+      } else if (!inputSchema.isUnitSchema()) {
+        const hasBody = Object.values(members).find((m) => {
+          const { httpQuery, httpQueryParams, httpHeader, httpLabel, httpPrefixHeaders } = m.getMergedTraits();
+          return !httpQuery && !httpQueryParams && !httpHeader && !httpLabel && httpPrefixHeaders === void 0;
+        });
+        if (hasBody) {
+          request.headers["content-type"] = this.getDefaultContentType();
+        }
+      }
+    }
+    if (request.headers["content-type"] && !request.body) {
+      request.body = "{}";
+    }
+    if (request.body) {
+      try {
+        request.headers["content-length"] = String((0, import_util_body_length_browser2.calculateBodyLength)(request.body));
+      } catch (e) {
+      }
+    }
+    return request;
+  }
+  async handleError(operationSchema, context, response, dataObject, metadata) {
+    const errorIdentifier = loadRestJsonErrorCode(response, dataObject) ?? "Unknown";
+    let namespace = this.options.defaultNamespace;
+    let errorName = errorIdentifier;
+    if (errorIdentifier.includes("#")) {
+      [namespace, errorName] = errorIdentifier.split("#");
+    }
+    const registry = import_schema4.TypeRegistry.for(namespace);
+    let errorSchema;
+    try {
+      errorSchema = registry.getSchema(errorIdentifier);
+    } catch (e) {
+      const baseExceptionSchema = import_schema4.TypeRegistry.for("smithy.ts.sdk.synthetic." + namespace).getBaseException();
+      if (baseExceptionSchema) {
+        const ErrorCtor = baseExceptionSchema.ctor;
+        throw Object.assign(new ErrorCtor(errorName), dataObject);
+      }
+      throw new Error(errorName);
+    }
+    const ns = import_schema4.NormalizedSchema.of(errorSchema);
+    const message = dataObject.message ?? dataObject.Message ?? "Unknown";
+    const exception = new errorSchema.ctor(message);
+    await this.deserializeHttpMessage(errorSchema, context, response, dataObject);
+    const output = {};
+    for (const [name, member] of ns.structIterator()) {
+      const target = member.getMergedTraits().jsonName ?? name;
+      output[name] = this.codec.createDeserializer().readObject(member, dataObject[target]);
+    }
+    Object.assign(exception, {
+      $metadata: metadata,
+      $response: response,
+      $fault: ns.getMergedTraits().error,
+      message,
+      ...output
+    });
+    throw exception;
+  }
+  /**
+   * @override
+   */
+  getDefaultContentType() {
+    return "application/json";
+  }
+};
+
+// src/submodules/protocols/json/awsExpectUnion.ts
+var import_smithy_client2 = __nccwpck_require__(3570);
+var awsExpectUnion = /* @__PURE__ */ __name((value) => {
+  if (value == null) {
+    return void 0;
+  }
+  if (typeof value === "object" && "__type" in value) {
+    delete value.__type;
+  }
+  return (0, import_smithy_client2.expectUnion)(value);
+}, "awsExpectUnion");
+
+// src/submodules/protocols/query/AwsQueryProtocol.ts
+var import_protocols5 = __nccwpck_require__(2241);
+var import_schema7 = __nccwpck_require__(9826);
+var import_util_body_length_browser3 = __nccwpck_require__(713);
+
+// src/submodules/protocols/xml/XmlShapeDeserializer.ts
+var import_protocols3 = __nccwpck_require__(2241);
+var import_schema5 = __nccwpck_require__(9826);
+var import_smithy_client3 = __nccwpck_require__(3570);
+var import_util_utf8 = __nccwpck_require__(1895);
+var import_fast_xml_parser = __nccwpck_require__(6388);
+var XmlShapeDeserializer = class extends SerdeContextConfig {
+  constructor(settings) {
+    super();
+    this.settings = settings;
+    this.stringDeserializer = new import_protocols3.FromStringShapeDeserializer(settings);
+  }
+  static {
+    __name(this, "XmlShapeDeserializer");
+  }
+  stringDeserializer;
+  setSerdeContext(serdeContext) {
+    this.serdeContext = serdeContext;
+    this.stringDeserializer.setSerdeContext(serdeContext);
+  }
+  /**
+   * @param schema - describing the data.
+   * @param bytes - serialized data.
+   * @param key - used by AwsQuery to step one additional depth into the object before reading it.
+   */
+  read(schema, bytes, key) {
+    const ns = import_schema5.NormalizedSchema.of(schema);
+    const memberSchemas = ns.getMemberSchemas();
+    const isEventPayload = ns.isStructSchema() && ns.isMemberSchema() && !!Object.values(memberSchemas).find((memberNs) => {
+      return !!memberNs.getMemberTraits().eventPayload;
+    });
+    if (isEventPayload) {
+      const output = {};
+      const memberName = Object.keys(memberSchemas)[0];
+      const eventMemberSchema = memberSchemas[memberName];
+      if (eventMemberSchema.isBlobSchema()) {
+        output[memberName] = bytes;
+      } else {
+        output[memberName] = this.read(memberSchemas[memberName], bytes);
+      }
+      return output;
+    }
+    const xmlString = (this.serdeContext?.utf8Encoder ?? import_util_utf8.toUtf8)(bytes);
+    const parsedObject = this.parseXml(xmlString);
+    return this.readSchema(schema, key ? parsedObject[key] : parsedObject);
+  }
+  readSchema(_schema, value) {
+    const ns = import_schema5.NormalizedSchema.of(_schema);
+    const traits = ns.getMergedTraits();
+    if (ns.isListSchema() && !Array.isArray(value)) {
+      return this.readSchema(ns, [value]);
+    }
+    if (value == null) {
+      return value;
+    }
+    if (typeof value === "object") {
+      const sparse = !!traits.sparse;
+      const flat = !!traits.xmlFlattened;
+      if (ns.isListSchema()) {
+        const listValue = ns.getValueSchema();
+        const buffer2 = [];
+        const sourceKey = listValue.getMergedTraits().xmlName ?? "member";
+        const source = flat ? value : (value[0] ?? value)[sourceKey];
+        const sourceArray = Array.isArray(source) ? source : [source];
+        for (const v of sourceArray) {
+          if (v != null || sparse) {
+            buffer2.push(this.readSchema(listValue, v));
+          }
+        }
+        return buffer2;
+      }
+      const buffer = {};
+      if (ns.isMapSchema()) {
+        const keyNs = ns.getKeySchema();
+        const memberNs = ns.getValueSchema();
+        let entries;
+        if (flat) {
+          entries = Array.isArray(value) ? value : [value];
+        } else {
+          entries = Array.isArray(value.entry) ? value.entry : [value.entry];
+        }
+        const keyProperty = keyNs.getMergedTraits().xmlName ?? "key";
+        const valueProperty = memberNs.getMergedTraits().xmlName ?? "value";
+        for (const entry of entries) {
+          const key = entry[keyProperty];
+          const value2 = entry[valueProperty];
+          if (value2 != null || sparse) {
+            buffer[key] = this.readSchema(memberNs, value2);
+          }
+        }
+        return buffer;
+      }
+      if (ns.isStructSchema()) {
+        for (const [memberName, memberSchema] of ns.structIterator()) {
+          const memberTraits = memberSchema.getMergedTraits();
+          const xmlObjectKey = !memberTraits.httpPayload ? memberSchema.getMemberTraits().xmlName ?? memberName : memberTraits.xmlName ?? memberSchema.getName();
+          if (value[xmlObjectKey] != null) {
+            buffer[memberName] = this.readSchema(memberSchema, value[xmlObjectKey]);
+          }
+        }
+        return buffer;
+      }
+      if (ns.isDocumentSchema()) {
+        return value;
+      }
+      throw new Error(`@aws-sdk/core/protocols - xml deserializer unhandled schema type for ${ns.getName(true)}`);
+    }
+    if (ns.isListSchema()) {
+      return [];
+    }
+    if (ns.isMapSchema() || ns.isStructSchema()) {
+      return {};
+    }
+    return this.stringDeserializer.read(ns, value);
+  }
+  parseXml(xml) {
+    if (xml.length) {
+      const parser = new import_fast_xml_parser.XMLParser({
+        attributeNamePrefix: "",
+        htmlEntities: true,
+        ignoreAttributes: false,
+        ignoreDeclaration: true,
+        parseTagValue: false,
+        trimValues: false,
+        tagValueProcessor: /* @__PURE__ */ __name((_, val) => val.trim() === "" && val.includes("\n") ? "" : void 0, "tagValueProcessor")
+      });
+      parser.addEntity("#xD", "\r");
+      parser.addEntity("#10", "\n");
+      let parsedObj;
+      try {
+        parsedObj = parser.parse(xml, true);
+      } catch (e) {
+        if (e && typeof e === "object") {
+          Object.defineProperty(e, "$responseBodyText", {
+            value: xml
+          });
+        }
+        throw e;
+      }
+      const textNodeName = "#text";
+      const key = Object.keys(parsedObj)[0];
+      const parsedObjToReturn = parsedObj[key];
+      if (parsedObjToReturn[textNodeName]) {
+        parsedObjToReturn[key] = parsedObjToReturn[textNodeName];
+        delete parsedObjToReturn[textNodeName];
+      }
+      return (0, import_smithy_client3.getValueFromTextNode)(parsedObjToReturn);
+    }
+    return {};
+  }
+};
+
+// src/submodules/protocols/query/QueryShapeSerializer.ts
+var import_protocols4 = __nccwpck_require__(2241);
+var import_schema6 = __nccwpck_require__(9826);
+var import_serde5 = __nccwpck_require__(7669);
+var import_smithy_client4 = __nccwpck_require__(3570);
+var import_util_base642 = __nccwpck_require__(5600);
+var QueryShapeSerializer = class extends SerdeContextConfig {
+  constructor(settings) {
+    super();
+    this.settings = settings;
+  }
+  static {
+    __name(this, "QueryShapeSerializer");
+  }
+  buffer;
+  write(schema, value, prefix = "") {
+    if (this.buffer === void 0) {
+      this.buffer = "";
+    }
+    const ns = import_schema6.NormalizedSchema.of(schema);
+    if (prefix && !prefix.endsWith(".")) {
+      prefix += ".";
+    }
+    if (ns.isBlobSchema()) {
+      if (typeof value === "string" || value instanceof Uint8Array) {
+        this.writeKey(prefix);
+        this.writeValue((this.serdeContext?.base64Encoder ?? import_util_base642.toBase64)(value));
+      }
+    } else if (ns.isBooleanSchema() || ns.isNumericSchema() || ns.isStringSchema()) {
+      if (value != null) {
+        this.writeKey(prefix);
+        this.writeValue(String(value));
+      } else if (ns.isIdempotencyToken()) {
+        this.writeKey(prefix);
+        this.writeValue((0, import_serde5.generateIdempotencyToken)());
+      }
+    } else if (ns.isBigIntegerSchema()) {
+      if (value != null) {
+        this.writeKey(prefix);
+        this.writeValue(String(value));
+      }
+    } else if (ns.isBigDecimalSchema()) {
+      if (value != null) {
+        this.writeKey(prefix);
+        this.writeValue(value instanceof import_serde5.NumericValue ? value.string : String(value));
+      }
+    } else if (ns.isTimestampSchema()) {
+      if (value instanceof Date) {
+        this.writeKey(prefix);
+        const format = (0, import_protocols4.determineTimestampFormat)(ns, this.settings);
+        switch (format) {
+          case import_schema6.SCHEMA.TIMESTAMP_DATE_TIME:
+            this.writeValue(value.toISOString().replace(".000Z", "Z"));
+            break;
+          case import_schema6.SCHEMA.TIMESTAMP_HTTP_DATE:
+            this.writeValue((0, import_smithy_client4.dateToUtcString)(value));
+            break;
+          case import_schema6.SCHEMA.TIMESTAMP_EPOCH_SECONDS:
+            this.writeValue(String(value.getTime() / 1e3));
+            break;
+        }
+      }
+    } else if (ns.isDocumentSchema()) {
+      throw new Error(`@aws-sdk/core/protocols - QuerySerializer unsupported document type ${ns.getName(true)}`);
+    } else if (ns.isListSchema()) {
+      if (Array.isArray(value)) {
+        if (value.length === 0) {
+          if (this.settings.serializeEmptyLists) {
+            this.writeKey(prefix);
+            this.writeValue("");
+          }
+        } else {
+          const member = ns.getValueSchema();
+          const flat = this.settings.flattenLists || ns.getMergedTraits().xmlFlattened;
+          let i = 1;
+          for (const item of value) {
+            if (item == null) {
+              continue;
+            }
+            const suffix = this.getKey("member", member.getMergedTraits().xmlName);
+            const key = flat ? `${prefix}${i}` : `${prefix}${suffix}.${i}`;
+            this.write(member, item, key);
+            ++i;
+          }
+        }
+      }
+    } else if (ns.isMapSchema()) {
+      if (value && typeof value === "object") {
+        const keySchema = ns.getKeySchema();
+        const memberSchema = ns.getValueSchema();
+        const flat = ns.getMergedTraits().xmlFlattened;
+        let i = 1;
+        for (const [k, v] of Object.entries(value)) {
+          if (v == null) {
+            continue;
+          }
+          const keySuffix = this.getKey("key", keySchema.getMergedTraits().xmlName);
+          const key = flat ? `${prefix}${i}.${keySuffix}` : `${prefix}entry.${i}.${keySuffix}`;
+          const valueSuffix = this.getKey("value", memberSchema.getMergedTraits().xmlName);
+          const valueKey = flat ? `${prefix}${i}.${valueSuffix}` : `${prefix}entry.${i}.${valueSuffix}`;
+          this.write(keySchema, k, key);
+          this.write(memberSchema, v, valueKey);
+          ++i;
+        }
+      }
+    } else if (ns.isStructSchema()) {
+      if (value && typeof value === "object") {
+        for (const [memberName, member] of ns.structIterator()) {
+          if (value[memberName] == null && !member.isIdempotencyToken()) {
+            continue;
+          }
+          const suffix = this.getKey(memberName, member.getMergedTraits().xmlName);
+          const key = `${prefix}${suffix}`;
+          this.write(member, value[memberName], key);
+        }
+      }
+    } else if (ns.isUnitSchema()) {
+    } else {
+      throw new Error(`@aws-sdk/core/protocols - QuerySerializer unrecognized schema type ${ns.getName(true)}`);
+    }
+  }
+  flush() {
+    if (this.buffer === void 0) {
+      throw new Error("@aws-sdk/core/protocols - QuerySerializer cannot flush with nothing written to buffer.");
+    }
+    const str = this.buffer;
+    delete this.buffer;
+    return str;
+  }
+  getKey(memberName, xmlName) {
+    const key = xmlName ?? memberName;
+    if (this.settings.capitalizeKeys) {
+      return key[0].toUpperCase() + key.slice(1);
+    }
+    return key;
+  }
+  writeKey(key) {
+    if (key.endsWith(".")) {
+      key = key.slice(0, key.length - 1);
+    }
+    this.buffer += `&${(0, import_protocols4.extendedEncodeURIComponent)(key)}=`;
+  }
+  writeValue(value) {
+    this.buffer += (0, import_protocols4.extendedEncodeURIComponent)(value);
+  }
+};
+
+// src/submodules/protocols/query/AwsQueryProtocol.ts
+var AwsQueryProtocol = class extends import_protocols5.RpcProtocol {
+  constructor(options) {
+    super({
+      defaultNamespace: options.defaultNamespace
+    });
+    this.options = options;
+    const settings = {
+      timestampFormat: {
+        useTrait: true,
+        default: import_schema7.SCHEMA.TIMESTAMP_DATE_TIME
+      },
+      httpBindings: false,
+      xmlNamespace: options.xmlNamespace,
+      serviceNamespace: options.defaultNamespace,
+      serializeEmptyLists: true
+    };
+    this.serializer = new QueryShapeSerializer(settings);
+    this.deserializer = new XmlShapeDeserializer(settings);
+  }
+  static {
+    __name(this, "AwsQueryProtocol");
+  }
+  serializer;
+  deserializer;
+  getShapeId() {
+    return "aws.protocols#awsQuery";
+  }
+  setSerdeContext(serdeContext) {
+    this.serializer.setSerdeContext(serdeContext);
+    this.deserializer.setSerdeContext(serdeContext);
+  }
+  getPayloadCodec() {
+    throw new Error("AWSQuery protocol has no payload codec.");
+  }
+  async serializeRequest(operationSchema, input, context) {
+    const request = await super.serializeRequest(operationSchema, input, context);
+    if (!request.path.endsWith("/")) {
+      request.path += "/";
+    }
+    Object.assign(request.headers, {
+      "content-type": `application/x-www-form-urlencoded`
+    });
+    if ((0, import_schema7.deref)(operationSchema.input) === "unit" || !request.body) {
+      request.body = "";
+    }
+    request.body = `Action=${operationSchema.name.split("#")[1]}&Version=${this.options.version}` + request.body;
+    if (request.body.endsWith("&")) {
+      request.body = request.body.slice(-1);
+    }
+    try {
+      request.headers["content-length"] = String((0, import_util_body_length_browser3.calculateBodyLength)(request.body));
+    } catch (e) {
+    }
+    return request;
+  }
+  async deserializeResponse(operationSchema, context, response) {
+    const deserializer = this.deserializer;
+    const ns = import_schema7.NormalizedSchema.of(operationSchema.output);
+    const dataObject = {};
+    if (response.statusCode >= 300) {
+      const bytes2 = await (0, import_protocols5.collectBody)(response.body, context);
+      if (bytes2.byteLength > 0) {
+        Object.assign(dataObject, await deserializer.read(import_schema7.SCHEMA.DOCUMENT, bytes2));
+      }
+      await this.handleError(operationSchema, context, response, dataObject, this.deserializeMetadata(response));
+    }
+    for (const header in response.headers) {
+      const value = response.headers[header];
+      delete response.headers[header];
+      response.headers[header.toLowerCase()] = value;
+    }
+    const awsQueryResultKey = ns.isStructSchema() && this.useNestedResult() ? operationSchema.name.split("#")[1] + "Result" : void 0;
+    const bytes = await (0, import_protocols5.collectBody)(response.body, context);
+    if (bytes.byteLength > 0) {
+      Object.assign(dataObject, await deserializer.read(ns, bytes, awsQueryResultKey));
+    }
+    const output = {
+      $metadata: this.deserializeMetadata(response),
+      ...dataObject
+    };
+    return output;
+  }
+  /**
+   * EC2 Query overrides this.
+   */
+  useNestedResult() {
+    return true;
+  }
+  async handleError(operationSchema, context, response, dataObject, metadata) {
+    const errorIdentifier = this.loadQueryErrorCode(response, dataObject) ?? "Unknown";
+    let namespace = this.options.defaultNamespace;
+    let errorName = errorIdentifier;
+    if (errorIdentifier.includes("#")) {
+      [namespace, errorName] = errorIdentifier.split("#");
+    }
+    const errorDataSource = this.loadQueryError(dataObject);
+    const registry = import_schema7.TypeRegistry.for(namespace);
+    let errorSchema;
+    try {
+      errorSchema = registry.find(
+        (schema) => import_schema7.NormalizedSchema.of(schema).getMergedTraits().awsQueryError?.[0] === errorName
+      );
+      if (!errorSchema) {
+        errorSchema = registry.getSchema(errorIdentifier);
+      }
+    } catch (e) {
+      const baseExceptionSchema = import_schema7.TypeRegistry.for("smithy.ts.sdk.synthetic." + namespace).getBaseException();
+      if (baseExceptionSchema) {
+        const ErrorCtor = baseExceptionSchema.ctor;
+        throw Object.assign(new ErrorCtor(errorName), errorDataSource);
+      }
+      throw new Error(errorName);
+    }
+    const ns = import_schema7.NormalizedSchema.of(errorSchema);
+    const message = this.loadQueryErrorMessage(dataObject);
+    const exception = new errorSchema.ctor(message);
+    const output = {};
+    for (const [name, member] of ns.structIterator()) {
+      const target = member.getMergedTraits().xmlName ?? name;
+      const value = errorDataSource[target] ?? dataObject[target];
+      output[name] = this.deserializer.readSchema(member, value);
+    }
+    Object.assign(exception, {
+      $metadata: metadata,
+      $response: response,
+      $fault: ns.getMergedTraits().error,
+      message,
+      ...output
+    });
+    throw exception;
+  }
+  /**
+   * The variations in the error and error message locations are attributed to
+   * divergence between AWS Query and EC2 Query behavior.
+   */
+  loadQueryErrorCode(output, data) {
+    const code = (data.Errors?.[0]?.Error ?? data.Errors?.Error ?? data.Error)?.Code;
+    if (code !== void 0) {
+      return code;
+    }
+    if (output.statusCode == 404) {
+      return "NotFound";
+    }
+  }
+  loadQueryError(data) {
+    return data.Errors?.[0]?.Error ?? data.Errors?.Error ?? data.Error;
+  }
+  loadQueryErrorMessage(data) {
+    const errorData = this.loadQueryError(data);
+    return errorData?.message ?? errorData?.Message ?? data.message ?? data.Message ?? "Unknown";
+  }
+  /**
+   * @override
+   */
+  getDefaultContentType() {
+    return "application/x-www-form-urlencoded";
+  }
+};
+
+// src/submodules/protocols/query/AwsEc2QueryProtocol.ts
+var AwsEc2QueryProtocol = class extends AwsQueryProtocol {
+  constructor(options) {
+    super(options);
+    this.options = options;
+    const ec2Settings = {
+      capitalizeKeys: true,
+      flattenLists: true,
+      serializeEmptyLists: false
+    };
+    Object.assign(this.serializer.settings, ec2Settings);
+  }
+  static {
+    __name(this, "AwsEc2QueryProtocol");
+  }
+  /**
+   * EC2 Query reads XResponse.XResult instead of XResponse directly.
+   */
+  useNestedResult() {
+    return false;
+  }
+};
+
+// src/submodules/protocols/xml/AwsRestXmlProtocol.ts
+var import_protocols6 = __nccwpck_require__(2241);
+var import_schema9 = __nccwpck_require__(9826);
+var import_util_body_length_browser4 = __nccwpck_require__(713);
+
+// src/submodules/protocols/xml/parseXmlBody.ts
+var import_smithy_client5 = __nccwpck_require__(3570);
+var import_fast_xml_parser2 = __nccwpck_require__(6388);
+var parseXmlBody = /* @__PURE__ */ __name((streamBody, context) => collectBodyString(streamBody, context).then((encoded) => {
+  if (encoded.length) {
+    const parser = new import_fast_xml_parser2.XMLParser({
+      attributeNamePrefix: "",
+      htmlEntities: true,
+      ignoreAttributes: false,
+      ignoreDeclaration: true,
+      parseTagValue: false,
+      trimValues: false,
+      tagValueProcessor: /* @__PURE__ */ __name((_, val) => val.trim() === "" && val.includes("\n") ? "" : void 0, "tagValueProcessor")
+    });
+    parser.addEntity("#xD", "\r");
+    parser.addEntity("#10", "\n");
+    let parsedObj;
+    try {
+      parsedObj = parser.parse(encoded, true);
+    } catch (e) {
+      if (e && typeof e === "object") {
+        Object.defineProperty(e, "$responseBodyText", {
+          value: encoded
+        });
+      }
+      throw e;
+    }
+    const textNodeName = "#text";
+    const key = Object.keys(parsedObj)[0];
+    const parsedObjToReturn = parsedObj[key];
+    if (parsedObjToReturn[textNodeName]) {
+      parsedObjToReturn[key] = parsedObjToReturn[textNodeName];
+      delete parsedObjToReturn[textNodeName];
+    }
+    return (0, import_smithy_client5.getValueFromTextNode)(parsedObjToReturn);
+  }
+  return {};
+}), "parseXmlBody");
+var parseXmlErrorBody = /* @__PURE__ */ __name(async (errorBody, context) => {
+  const value = await parseXmlBody(errorBody, context);
+  if (value.Error) {
+    value.Error.message = value.Error.message ?? value.Error.Message;
+  }
+  return value;
+}, "parseXmlErrorBody");
+var loadRestXmlErrorCode = /* @__PURE__ */ __name((output, data) => {
+  if (data?.Error?.Code !== void 0) {
+    return data.Error.Code;
+  }
+  if (data?.Code !== void 0) {
+    return data.Code;
+  }
+  if (output.statusCode == 404) {
+    return "NotFound";
+  }
+}, "loadRestXmlErrorCode");
+
+// src/submodules/protocols/xml/XmlShapeSerializer.ts
+var import_xml_builder = __nccwpck_require__(5721);
+var import_schema8 = __nccwpck_require__(9826);
+var import_serde6 = __nccwpck_require__(7669);
+var import_smithy_client6 = __nccwpck_require__(3570);
+var import_util_base643 = __nccwpck_require__(5600);
+var XmlShapeSerializer = class extends SerdeContextConfig {
+  constructor(settings) {
+    super();
+    this.settings = settings;
+  }
+  static {
+    __name(this, "XmlShapeSerializer");
+  }
+  stringBuffer;
+  byteBuffer;
+  buffer;
+  write(schema, value) {
+    const ns = import_schema8.NormalizedSchema.of(schema);
+    if (ns.isStringSchema() && typeof value === "string") {
+      this.stringBuffer = value;
+    } else if (ns.isBlobSchema()) {
+      this.byteBuffer = "byteLength" in value ? value : (this.serdeContext?.base64Decoder ?? import_util_base643.fromBase64)(value);
+    } else {
+      this.buffer = this.writeStruct(ns, value, void 0);
+      const traits = ns.getMergedTraits();
+      if (traits.httpPayload && !traits.xmlName) {
+        this.buffer.withName(ns.getName());
+      }
+    }
+  }
+  flush() {
+    if (this.byteBuffer !== void 0) {
+      const bytes = this.byteBuffer;
+      delete this.byteBuffer;
+      return bytes;
+    }
+    if (this.stringBuffer !== void 0) {
+      const str = this.stringBuffer;
+      delete this.stringBuffer;
+      return str;
+    }
+    const buffer = this.buffer;
+    if (this.settings.xmlNamespace) {
+      if (!buffer?.attributes?.["xmlns"]) {
+        buffer.addAttribute("xmlns", this.settings.xmlNamespace);
+      }
+    }
+    delete this.buffer;
+    return buffer.toString();
+  }
+  writeStruct(ns, value, parentXmlns) {
+    const traits = ns.getMergedTraits();
+    const name = ns.isMemberSchema() && !traits.httpPayload ? ns.getMemberTraits().xmlName ?? ns.getMemberName() : traits.xmlName ?? ns.getName();
+    if (!name || !ns.isStructSchema()) {
+      throw new Error(
+        `@aws-sdk/core/protocols - xml serializer, cannot write struct with empty name or non-struct, schema=${ns.getName(
+          true
+        )}.`
+      );
+    }
+    const structXmlNode = import_xml_builder.XmlNode.of(name);
+    const [xmlnsAttr, xmlns] = this.getXmlnsAttribute(ns, parentXmlns);
+    if (xmlns) {
+      structXmlNode.addAttribute(xmlnsAttr, xmlns);
+    }
+    for (const [memberName, memberSchema] of ns.structIterator()) {
+      const val = value[memberName];
+      if (val != null || memberSchema.isIdempotencyToken()) {
+        if (memberSchema.getMergedTraits().xmlAttribute) {
+          structXmlNode.addAttribute(
+            memberSchema.getMergedTraits().xmlName ?? memberName,
+            this.writeSimple(memberSchema, val)
+          );
+          continue;
+        }
+        if (memberSchema.isListSchema()) {
+          this.writeList(memberSchema, val, structXmlNode, xmlns);
+        } else if (memberSchema.isMapSchema()) {
+          this.writeMap(memberSchema, val, structXmlNode, xmlns);
+        } else if (memberSchema.isStructSchema()) {
+          structXmlNode.addChildNode(this.writeStruct(memberSchema, val, xmlns));
+        } else {
+          const memberNode = import_xml_builder.XmlNode.of(memberSchema.getMergedTraits().xmlName ?? memberSchema.getMemberName());
+          this.writeSimpleInto(memberSchema, val, memberNode, xmlns);
+          structXmlNode.addChildNode(memberNode);
+        }
+      }
+    }
+    return structXmlNode;
+  }
+  writeList(listMember, array, container, parentXmlns) {
+    if (!listMember.isMemberSchema()) {
+      throw new Error(
+        `@aws-sdk/core/protocols - xml serializer, cannot write non-member list: ${listMember.getName(true)}`
+      );
+    }
+    const listTraits = listMember.getMergedTraits();
+    const listValueSchema = listMember.getValueSchema();
+    const listValueTraits = listValueSchema.getMergedTraits();
+    const sparse = !!listValueTraits.sparse;
+    const flat = !!listTraits.xmlFlattened;
+    const [xmlnsAttr, xmlns] = this.getXmlnsAttribute(listMember, parentXmlns);
+    const writeItem = /* @__PURE__ */ __name((container2, value) => {
+      if (listValueSchema.isListSchema()) {
+        this.writeList(listValueSchema, Array.isArray(value) ? value : [value], container2, xmlns);
+      } else if (listValueSchema.isMapSchema()) {
+        this.writeMap(listValueSchema, value, container2, xmlns);
+      } else if (listValueSchema.isStructSchema()) {
+        const struct = this.writeStruct(listValueSchema, value, xmlns);
+        container2.addChildNode(
+          struct.withName(flat ? listTraits.xmlName ?? listMember.getMemberName() : listValueTraits.xmlName ?? "member")
+        );
+      } else {
+        const listItemNode = import_xml_builder.XmlNode.of(
+          flat ? listTraits.xmlName ?? listMember.getMemberName() : listValueTraits.xmlName ?? "member"
+        );
+        this.writeSimpleInto(listValueSchema, value, listItemNode, xmlns);
+        container2.addChildNode(listItemNode);
+      }
+    }, "writeItem");
+    if (flat) {
+      for (const value of array) {
+        if (sparse || value != null) {
+          writeItem(container, value);
+        }
+      }
+    } else {
+      const listNode = import_xml_builder.XmlNode.of(listTraits.xmlName ?? listMember.getMemberName());
+      if (xmlns) {
+        listNode.addAttribute(xmlnsAttr, xmlns);
+      }
+      for (const value of array) {
+        if (sparse || value != null) {
+          writeItem(listNode, value);
+        }
+      }
+      container.addChildNode(listNode);
+    }
+  }
+  writeMap(mapMember, map, container, parentXmlns, containerIsMap = false) {
+    if (!mapMember.isMemberSchema()) {
+      throw new Error(
+        `@aws-sdk/core/protocols - xml serializer, cannot write non-member map: ${mapMember.getName(true)}`
+      );
+    }
+    const mapTraits = mapMember.getMergedTraits();
+    const mapKeySchema = mapMember.getKeySchema();
+    const mapKeyTraits = mapKeySchema.getMergedTraits();
+    const keyTag = mapKeyTraits.xmlName ?? "key";
+    const mapValueSchema = mapMember.getValueSchema();
+    const mapValueTraits = mapValueSchema.getMergedTraits();
+    const valueTag = mapValueTraits.xmlName ?? "value";
+    const sparse = !!mapValueTraits.sparse;
+    const flat = !!mapTraits.xmlFlattened;
+    const [xmlnsAttr, xmlns] = this.getXmlnsAttribute(mapMember, parentXmlns);
+    const addKeyValue = /* @__PURE__ */ __name((entry, key, val) => {
+      const keyNode = import_xml_builder.XmlNode.of(keyTag, key);
+      const [keyXmlnsAttr, keyXmlns] = this.getXmlnsAttribute(mapKeySchema, xmlns);
+      if (keyXmlns) {
+        keyNode.addAttribute(keyXmlnsAttr, keyXmlns);
+      }
+      entry.addChildNode(keyNode);
+      let valueNode = import_xml_builder.XmlNode.of(valueTag);
+      if (mapValueSchema.isListSchema()) {
+        this.writeList(mapValueSchema, val, valueNode, xmlns);
+      } else if (mapValueSchema.isMapSchema()) {
+        this.writeMap(mapValueSchema, val, valueNode, xmlns, true);
+      } else if (mapValueSchema.isStructSchema()) {
+        valueNode = this.writeStruct(mapValueSchema, val, xmlns);
+      } else {
+        this.writeSimpleInto(mapValueSchema, val, valueNode, xmlns);
+      }
+      entry.addChildNode(valueNode);
+    }, "addKeyValue");
+    if (flat) {
+      for (const [key, val] of Object.entries(map)) {
+        if (sparse || val != null) {
+          const entry = import_xml_builder.XmlNode.of(mapTraits.xmlName ?? mapMember.getMemberName());
+          addKeyValue(entry, key, val);
+          container.addChildNode(entry);
+        }
+      }
+    } else {
+      let mapNode;
+      if (!containerIsMap) {
+        mapNode = import_xml_builder.XmlNode.of(mapTraits.xmlName ?? mapMember.getMemberName());
+        if (xmlns) {
+          mapNode.addAttribute(xmlnsAttr, xmlns);
+        }
+        container.addChildNode(mapNode);
+      }
+      for (const [key, val] of Object.entries(map)) {
+        if (sparse || val != null) {
+          const entry = import_xml_builder.XmlNode.of("entry");
+          addKeyValue(entry, key, val);
+          (containerIsMap ? container : mapNode).addChildNode(entry);
+        }
+      }
+    }
+  }
+  writeSimple(_schema, value) {
+    if (null === value) {
+      throw new Error("@aws-sdk/core/protocols - (XML serializer) cannot write null value.");
+    }
+    const ns = import_schema8.NormalizedSchema.of(_schema);
+    let nodeContents = null;
+    if (value && typeof value === "object") {
+      if (ns.isBlobSchema()) {
+        nodeContents = (this.serdeContext?.base64Encoder ?? import_util_base643.toBase64)(value);
+      } else if (ns.isTimestampSchema() && value instanceof Date) {
+        const options = this.settings.timestampFormat;
+        const format = options.useTrait ? ns.getSchema() === import_schema8.SCHEMA.TIMESTAMP_DEFAULT ? options.default : ns.getSchema() ?? options.default : options.default;
+        switch (format) {
+          case import_schema8.SCHEMA.TIMESTAMP_DATE_TIME:
+            nodeContents = value.toISOString().replace(".000Z", "Z");
+            break;
+          case import_schema8.SCHEMA.TIMESTAMP_HTTP_DATE:
+            nodeContents = (0, import_smithy_client6.dateToUtcString)(value);
+            break;
+          case import_schema8.SCHEMA.TIMESTAMP_EPOCH_SECONDS:
+            nodeContents = String(value.getTime() / 1e3);
+            break;
+          default:
+            console.warn("Missing timestamp format, using http date", value);
+            nodeContents = (0, import_smithy_client6.dateToUtcString)(value);
+            break;
+        }
+      } else if (ns.isBigDecimalSchema() && value) {
+        if (value instanceof import_serde6.NumericValue) {
+          return value.string;
+        }
+        return String(value);
+      } else if (ns.isMapSchema() || ns.isListSchema()) {
+        throw new Error(
+          "@aws-sdk/core/protocols - xml serializer, cannot call _write() on List/Map schema, call writeList or writeMap() instead."
+        );
+      } else {
+        throw new Error(
+          `@aws-sdk/core/protocols - xml serializer, unhandled schema type for object value and schema: ${ns.getName(
+            true
+          )}`
+        );
+      }
+    }
+    if (ns.isBooleanSchema() || ns.isNumericSchema() || ns.isBigIntegerSchema() || ns.isBigDecimalSchema()) {
+      nodeContents = String(value);
+    }
+    if (ns.isStringSchema()) {
+      if (value === void 0 && ns.isIdempotencyToken()) {
+        nodeContents = (0, import_serde6.generateIdempotencyToken)();
+      } else {
+        nodeContents = String(value);
+      }
+    }
+    if (nodeContents === null) {
+      throw new Error(`Unhandled schema-value pair ${ns.getName(true)}=${value}`);
+    }
+    return nodeContents;
+  }
+  writeSimpleInto(_schema, value, into, parentXmlns) {
+    const nodeContents = this.writeSimple(_schema, value);
+    const ns = import_schema8.NormalizedSchema.of(_schema);
+    const content = new import_xml_builder.XmlText(nodeContents);
+    const [xmlnsAttr, xmlns] = this.getXmlnsAttribute(ns, parentXmlns);
+    if (xmlns) {
+      into.addAttribute(xmlnsAttr, xmlns);
+    }
+    into.addChildNode(content);
+  }
+  getXmlnsAttribute(ns, parentXmlns) {
+    const traits = ns.getMergedTraits();
+    const [prefix, xmlns] = traits.xmlNamespace ?? [];
+    if (xmlns && xmlns !== parentXmlns) {
+      return [prefix ? `xmlns:${prefix}` : "xmlns", xmlns];
+    }
+    return [void 0, void 0];
+  }
+};
+
+// src/submodules/protocols/xml/XmlCodec.ts
+var XmlCodec = class extends SerdeContextConfig {
+  constructor(settings) {
+    super();
+    this.settings = settings;
+  }
+  static {
+    __name(this, "XmlCodec");
+  }
+  createSerializer() {
+    const serializer = new XmlShapeSerializer(this.settings);
+    serializer.setSerdeContext(this.serdeContext);
+    return serializer;
+  }
+  createDeserializer() {
+    const deserializer = new XmlShapeDeserializer(this.settings);
+    deserializer.setSerdeContext(this.serdeContext);
+    return deserializer;
+  }
+};
+
+// src/submodules/protocols/xml/AwsRestXmlProtocol.ts
+var AwsRestXmlProtocol = class extends import_protocols6.HttpBindingProtocol {
+  static {
+    __name(this, "AwsRestXmlProtocol");
+  }
+  codec;
+  serializer;
+  deserializer;
+  constructor(options) {
+    super(options);
+    const settings = {
+      timestampFormat: {
+        useTrait: true,
+        default: import_schema9.SCHEMA.TIMESTAMP_DATE_TIME
+      },
+      httpBindings: true,
+      xmlNamespace: options.xmlNamespace,
+      serviceNamespace: options.defaultNamespace
+    };
+    this.codec = new XmlCodec(settings);
+    this.serializer = new import_protocols6.HttpInterceptingShapeSerializer(this.codec.createSerializer(), settings);
+    this.deserializer = new import_protocols6.HttpInterceptingShapeDeserializer(this.codec.createDeserializer(), settings);
+  }
+  getPayloadCodec() {
+    return this.codec;
+  }
+  getShapeId() {
+    return "aws.protocols#restXml";
+  }
+  async serializeRequest(operationSchema, input, context) {
+    const request = await super.serializeRequest(operationSchema, input, context);
+    const ns = import_schema9.NormalizedSchema.of(operationSchema.input);
+    const members = ns.getMemberSchemas();
+    request.path = String(request.path).split("/").filter((segment) => {
+      return segment !== "{Bucket}";
+    }).join("/") || "/";
+    if (!request.headers["content-type"]) {
+      const httpPayloadMember = Object.values(members).find((m) => {
+        return !!m.getMergedTraits().httpPayload;
+      });
+      if (httpPayloadMember) {
+        const mediaType = httpPayloadMember.getMergedTraits().mediaType;
+        if (mediaType) {
+          request.headers["content-type"] = mediaType;
+        } else if (httpPayloadMember.isStringSchema()) {
+          request.headers["content-type"] = "text/plain";
+        } else if (httpPayloadMember.isBlobSchema()) {
+          request.headers["content-type"] = "application/octet-stream";
+        } else {
+          request.headers["content-type"] = this.getDefaultContentType();
+        }
+      } else if (!ns.isUnitSchema()) {
+        const hasBody = Object.values(members).find((m) => {
+          const { httpQuery, httpQueryParams, httpHeader, httpLabel, httpPrefixHeaders } = m.getMergedTraits();
+          return !httpQuery && !httpQueryParams && !httpHeader && !httpLabel && httpPrefixHeaders === void 0;
+        });
+        if (hasBody) {
+          request.headers["content-type"] = this.getDefaultContentType();
+        }
+      }
+    }
+    if (request.headers["content-type"] === this.getDefaultContentType()) {
+      if (typeof request.body === "string") {
+        request.body = '<?xml version="1.0" encoding="UTF-8"?>' + request.body;
+      }
+    }
+    if (request.body) {
+      try {
+        request.headers["content-length"] = String((0, import_util_body_length_browser4.calculateBodyLength)(request.body));
+      } catch (e) {
+      }
+    }
+    return request;
+  }
+  async deserializeResponse(operationSchema, context, response) {
+    return super.deserializeResponse(operationSchema, context, response);
+  }
+  async handleError(operationSchema, context, response, dataObject, metadata) {
+    const errorIdentifier = loadRestXmlErrorCode(response, dataObject) ?? "Unknown";
+    let namespace = this.options.defaultNamespace;
+    let errorName = errorIdentifier;
+    if (errorIdentifier.includes("#")) {
+      [namespace, errorName] = errorIdentifier.split("#");
+    }
+    const registry = import_schema9.TypeRegistry.for(namespace);
+    let errorSchema;
+    try {
+      errorSchema = registry.getSchema(errorIdentifier);
+    } catch (e) {
+      const baseExceptionSchema = import_schema9.TypeRegistry.for("smithy.ts.sdk.synthetic." + namespace).getBaseException();
+      if (baseExceptionSchema) {
+        const ErrorCtor = baseExceptionSchema.ctor;
+        throw Object.assign(new ErrorCtor(errorName), dataObject);
+      }
+      throw new Error(errorName);
+    }
+    const ns = import_schema9.NormalizedSchema.of(errorSchema);
+    const message = dataObject.Error?.message ?? dataObject.Error?.Message ?? dataObject.message ?? dataObject.Message ?? "Unknown";
+    const exception = new errorSchema.ctor(message);
+    await this.deserializeHttpMessage(errorSchema, context, response, dataObject);
+    const output = {};
+    for (const [name, member] of ns.structIterator()) {
+      const target = member.getMergedTraits().xmlName ?? name;
+      const value = dataObject.Error?.[target] ?? dataObject[target];
+      output[name] = this.codec.createDeserializer().readSchema(member, value);
+    }
+    Object.assign(exception, {
+      $metadata: metadata,
+      $response: response,
+      $fault: ns.getMergedTraits().error,
+      message,
+      ...output
+    });
+    throw exception;
+  }
+  /**
+   * @override
+   */
+  getDefaultContentType() {
+    return "application/xml";
+  }
+};
+// Annotate the CommonJS export names for ESM import in node:
+0 && (0);
+
+
+/***/ }),
+
+/***/ 5721:
+/***/ ((module) => {
+
+"use strict";
+
+var __defProp = Object.defineProperty;
+var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
+var __getOwnPropNames = Object.getOwnPropertyNames;
+var __hasOwnProp = Object.prototype.hasOwnProperty;
+var __name = (target, value) => __defProp(target, "name", { value, configurable: true });
+var __export = (target, all) => {
+  for (var name in all)
+    __defProp(target, name, { get: all[name], enumerable: true });
+};
+var __copyProps = (to, from, except, desc) => {
+  if (from && typeof from === "object" || typeof from === "function") {
+    for (let key of __getOwnPropNames(from))
+      if (!__hasOwnProp.call(to, key) && key !== except)
+        __defProp(to, key, { get: () => from[key], enumerable: !(desc = __getOwnPropDesc(from, key)) || desc.enumerable });
+  }
+  return to;
+};
+var __toCommonJS = (mod) => __copyProps(__defProp({}, "__esModule", { value: true }), mod);
+
+// src/index.ts
+var index_exports = {};
+__export(index_exports, {
+  XmlNode: () => XmlNode,
+  XmlText: () => XmlText
+});
+module.exports = __toCommonJS(index_exports);
+
+// src/escape-attribute.ts
+function escapeAttribute(value) {
+  return value.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
+}
+__name(escapeAttribute, "escapeAttribute");
+
+// src/escape-element.ts
+function escapeElement(value) {
+  return value.replace(/&/g, "&amp;").replace(/"/g, "&quot;").replace(/'/g, "&apos;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/\r/g, "&#x0D;").replace(/\n/g, "&#x0A;").replace(/\u0085/g, "&#x85;").replace(/\u2028/, "&#x2028;");
+}
+__name(escapeElement, "escapeElement");
+
+// src/XmlText.ts
+var XmlText = class {
+  constructor(value) {
+    this.value = value;
+  }
+  static {
+    __name(this, "XmlText");
+  }
+  toString() {
+    return escapeElement("" + this.value);
+  }
+};
+
+// src/XmlNode.ts
+var XmlNode = class _XmlNode {
+  constructor(name, children = []) {
+    this.name = name;
+    this.children = children;
+  }
+  static {
+    __name(this, "XmlNode");
+  }
+  attributes = {};
+  static of(name, childText, withName) {
+    const node = new _XmlNode(name);
+    if (childText !== void 0) {
+      node.addChildNode(new XmlText(childText));
+    }
+    if (withName !== void 0) {
+      node.withName(withName);
+    }
+    return node;
+  }
+  withName(name) {
+    this.name = name;
+    return this;
+  }
+  addAttribute(name, value) {
+    this.attributes[name] = value;
+    return this;
+  }
+  addChildNode(child) {
+    this.children.push(child);
+    return this;
+  }
+  removeAttribute(name) {
+    delete this.attributes[name];
+    return this;
+  }
+  /**
+   * @internal
+   * Alias of {@link XmlNode#withName(string)} for codegen brevity.
+   */
+  n(name) {
+    this.name = name;
+    return this;
+  }
+  /**
+   * @internal
+   * Alias of {@link XmlNode#addChildNode(string)} for codegen brevity.
+   */
+  c(child) {
+    this.children.push(child);
+    return this;
+  }
+  /**
+   * @internal
+   * Checked version of {@link XmlNode#addAttribute(string)} for codegen brevity.
+   */
+  a(name, value) {
+    if (value != null) {
+      this.attributes[name] = value;
+    }
+    return this;
+  }
+  /**
+   * Create a child node.
+   * Used in serialization of string fields.
+   * @internal
+   */
+  cc(input, field, withName = field) {
+    if (input[field] != null) {
+      const node = _XmlNode.of(field, input[field]).withName(withName);
+      this.c(node);
+    }
+  }
+  /**
+   * Creates list child nodes.
+   * @internal
+   */
+  l(input, listName, memberName, valueProvider) {
+    if (input[listName] != null) {
+      const nodes = valueProvider();
+      nodes.map((node) => {
+        node.withName(memberName);
+        this.c(node);
+      });
+    }
+  }
+  /**
+   * Creates list child nodes with container.
+   * @internal
+   */
+  lc(input, listName, memberName, valueProvider) {
+    if (input[listName] != null) {
+      const nodes = valueProvider();
+      const containerNode = new _XmlNode(memberName);
+      nodes.map((node) => {
+        containerNode.c(node);
+      });
+      this.c(containerNode);
+    }
+  }
+  toString() {
+    const hasChildren = Boolean(this.children.length);
+    let xmlText = `<${this.name}`;
+    const attributes = this.attributes;
+    for (const attributeName of Object.keys(attributes)) {
+      const attribute = attributes[attributeName];
+      if (attribute != null) {
+        xmlText += ` ${attributeName}="${escapeAttribute("" + attribute)}"`;
+      }
+    }
+    return xmlText += !hasChildren ? "/>" : `>${this.children.map((c) => c.toString()).join("")}</${this.name}>`;
+  }
+};
 // Annotate the CommonJS export names for ESM import in node:
 
 0 && (0);
@@ -48980,13 +57606,13 @@ function extendedEncodeURIComponent(str) {
 
 // src/submodules/protocols/HttpBindingProtocol.ts
 var import_schema2 = __nccwpck_require__(9826);
+var import_serde = __nccwpck_require__(7669);
 var import_protocol_http2 = __nccwpck_require__(4418);
+var import_util_stream2 = __nccwpck_require__(6607);
 
 // src/submodules/protocols/HttpProtocol.ts
 var import_schema = __nccwpck_require__(9826);
-var import_serde = __nccwpck_require__(7669);
 var import_protocol_http = __nccwpck_require__(4418);
-var import_util_stream2 = __nccwpck_require__(6607);
 var HttpProtocol = class {
   constructor(options) {
     this.options = options;
@@ -49061,89 +57687,7 @@ var HttpProtocol = class {
     };
   }
   async deserializeHttpMessage(schema, context, response, arg4, arg5) {
-    let dataObject;
-    if (arg4 instanceof Set) {
-      dataObject = arg5;
-    } else {
-      dataObject = arg4;
-    }
-    const deserializer = this.deserializer;
-    const ns = import_schema.NormalizedSchema.of(schema);
-    const nonHttpBindingMembers = [];
-    for (const [memberName, memberSchema] of ns.structIterator()) {
-      const memberTraits = memberSchema.getMemberTraits();
-      if (memberTraits.httpPayload) {
-        const isStreaming = memberSchema.isStreaming();
-        if (isStreaming) {
-          const isEventStream = memberSchema.isStructSchema();
-          if (isEventStream) {
-            const context2 = this.serdeContext;
-            if (!context2.eventStreamMarshaller) {
-              throw new Error("@smithy/core - HttpProtocol: eventStreamMarshaller missing in serdeContext.");
-            }
-            const memberSchemas = memberSchema.getMemberSchemas();
-            dataObject[memberName] = context2.eventStreamMarshaller.deserialize(response.body, async (event) => {
-              const unionMember = Object.keys(event).find((key) => {
-                return key !== "__type";
-              }) ?? "";
-              if (unionMember in memberSchemas) {
-                const eventStreamSchema = memberSchemas[unionMember];
-                return {
-                  [unionMember]: await deserializer.read(eventStreamSchema, event[unionMember].body)
-                };
-              } else {
-                return {
-                  $unknown: event
-                };
-              }
-            });
-          } else {
-            dataObject[memberName] = (0, import_util_stream2.sdkStreamMixin)(response.body);
-          }
-        } else if (response.body) {
-          const bytes = await collectBody(response.body, context);
-          if (bytes.byteLength > 0) {
-            dataObject[memberName] = await deserializer.read(memberSchema, bytes);
-          }
-        }
-      } else if (memberTraits.httpHeader) {
-        const key = String(memberTraits.httpHeader).toLowerCase();
-        const value = response.headers[key];
-        if (null != value) {
-          if (memberSchema.isListSchema()) {
-            const headerListValueSchema = memberSchema.getValueSchema();
-            let sections;
-            if (headerListValueSchema.isTimestampSchema() && headerListValueSchema.getSchema() === import_schema.SCHEMA.TIMESTAMP_DEFAULT) {
-              sections = (0, import_serde.splitEvery)(value, ",", 2);
-            } else {
-              sections = (0, import_serde.splitHeader)(value);
-            }
-            const list = [];
-            for (const section of sections) {
-              list.push(await deserializer.read([headerListValueSchema, { httpHeader: key }], section.trim()));
-            }
-            dataObject[memberName] = list;
-          } else {
-            dataObject[memberName] = await deserializer.read(memberSchema, value);
-          }
-        }
-      } else if (memberTraits.httpPrefixHeaders !== void 0) {
-        dataObject[memberName] = {};
-        for (const [header, value] of Object.entries(response.headers)) {
-          if (header.startsWith(memberTraits.httpPrefixHeaders)) {
-            dataObject[memberName][header.slice(memberTraits.httpPrefixHeaders.length)] = await deserializer.read(
-              [memberSchema.getValueSchema(), { httpHeader: header }],
-              value
-            );
-          }
-        }
-      } else if (memberTraits.httpResponseCode) {
-        dataObject[memberName] = response.statusCode;
-      } else {
-        nonHttpBindingMembers.push(memberName);
-      }
-    }
-    return nonHttpBindingMembers;
+    return [];
   }
 };
 
@@ -49318,6 +57862,91 @@ var HttpBindingProtocol = class extends HttpProtocol {
       ...dataObject
     };
     return output;
+  }
+  async deserializeHttpMessage(schema, context, response, arg4, arg5) {
+    let dataObject;
+    if (arg4 instanceof Set) {
+      dataObject = arg5;
+    } else {
+      dataObject = arg4;
+    }
+    const deserializer = this.deserializer;
+    const ns = import_schema2.NormalizedSchema.of(schema);
+    const nonHttpBindingMembers = [];
+    for (const [memberName, memberSchema] of ns.structIterator()) {
+      const memberTraits = memberSchema.getMemberTraits();
+      if (memberTraits.httpPayload) {
+        const isStreaming = memberSchema.isStreaming();
+        if (isStreaming) {
+          const isEventStream = memberSchema.isStructSchema();
+          if (isEventStream) {
+            const context2 = this.serdeContext;
+            if (!context2.eventStreamMarshaller) {
+              throw new Error("@smithy/core - HttpProtocol: eventStreamMarshaller missing in serdeContext.");
+            }
+            const memberSchemas = memberSchema.getMemberSchemas();
+            dataObject[memberName] = context2.eventStreamMarshaller.deserialize(response.body, async (event) => {
+              const unionMember = Object.keys(event).find((key) => {
+                return key !== "__type";
+              }) ?? "";
+              if (unionMember in memberSchemas) {
+                const eventStreamSchema = memberSchemas[unionMember];
+                return {
+                  [unionMember]: await deserializer.read(eventStreamSchema, event[unionMember].body)
+                };
+              } else {
+                return {
+                  $unknown: event
+                };
+              }
+            });
+          } else {
+            dataObject[memberName] = (0, import_util_stream2.sdkStreamMixin)(response.body);
+          }
+        } else if (response.body) {
+          const bytes = await collectBody(response.body, context);
+          if (bytes.byteLength > 0) {
+            dataObject[memberName] = await deserializer.read(memberSchema, bytes);
+          }
+        }
+      } else if (memberTraits.httpHeader) {
+        const key = String(memberTraits.httpHeader).toLowerCase();
+        const value = response.headers[key];
+        if (null != value) {
+          if (memberSchema.isListSchema()) {
+            const headerListValueSchema = memberSchema.getValueSchema();
+            let sections;
+            if (headerListValueSchema.isTimestampSchema() && headerListValueSchema.getSchema() === import_schema2.SCHEMA.TIMESTAMP_DEFAULT) {
+              sections = (0, import_serde.splitEvery)(value, ",", 2);
+            } else {
+              sections = (0, import_serde.splitHeader)(value);
+            }
+            const list = [];
+            for (const section of sections) {
+              list.push(await deserializer.read([headerListValueSchema, { httpHeader: key }], section.trim()));
+            }
+            dataObject[memberName] = list;
+          } else {
+            dataObject[memberName] = await deserializer.read(memberSchema, value);
+          }
+        }
+      } else if (memberTraits.httpPrefixHeaders !== void 0) {
+        dataObject[memberName] = {};
+        for (const [header, value] of Object.entries(response.headers)) {
+          if (header.startsWith(memberTraits.httpPrefixHeaders)) {
+            dataObject[memberName][header.slice(memberTraits.httpPrefixHeaders.length)] = await deserializer.read(
+              [memberSchema.getValueSchema(), { httpHeader: header }],
+              value
+            );
+          }
+        }
+      } else if (memberTraits.httpResponseCode) {
+        dataObject[memberName] = response.statusCode;
+      } else {
+        nonHttpBindingMembers.push(memberName);
+      }
+    }
+    return nonHttpBindingMembers;
   }
 };
 
@@ -50407,6 +59036,18 @@ var NormalizedSchema = class _NormalizedSchema {
     return this.getSchema() === SCHEMA.STREAMING_BLOB;
   }
   /**
+   * This is a shortcut to avoid calling `getMergedTraits().idempotencyToken` on every string.
+   * @returns whether the schema has the idempotencyToken trait.
+   */
+  isIdempotencyToken() {
+    if (typeof this.traits === "number") {
+      return (this.traits & 4) === 4;
+    } else if (typeof this.traits === "object") {
+      return !!this.traits.idempotencyToken;
+    }
+    return false;
+  }
+  /**
    * @returns own traits merged with member traits, where member traits of the same trait key take priority.
    * This method is cached.
    */
@@ -50617,6 +59258,7 @@ __export(serde_exports, {
   expectShort: () => expectShort,
   expectString: () => expectString,
   expectUnion: () => expectUnion,
+  generateIdempotencyToken: () => import_uuid.v4,
   handleFloat: () => handleFloat,
   limitedParseDouble: () => limitedParseDouble,
   limitedParseFloat: () => limitedParseFloat,
@@ -50643,57 +59285,7 @@ __export(serde_exports, {
 module.exports = __toCommonJS(serde_exports);
 
 // src/submodules/serde/copyDocumentWithTransform.ts
-var import_schema = __nccwpck_require__(9826);
-var copyDocumentWithTransform = (source, schemaRef, transform = (_) => _) => {
-  const ns = import_schema.NormalizedSchema.of(schemaRef);
-  switch (typeof source) {
-    case "undefined":
-    case "boolean":
-    case "number":
-    case "string":
-    case "bigint":
-    case "symbol":
-      return transform(source, ns);
-    case "function":
-    case "object":
-      if (source === null) {
-        return transform(null, ns);
-      }
-      if (Array.isArray(source)) {
-        const newArray = new Array(source.length);
-        let i = 0;
-        for (const item of source) {
-          newArray[i++] = copyDocumentWithTransform(item, ns.getValueSchema(), transform);
-        }
-        return transform(newArray, ns);
-      }
-      if ("byteLength" in source) {
-        const newBytes = new Uint8Array(source.byteLength);
-        newBytes.set(source, 0);
-        return transform(newBytes, ns);
-      }
-      if (source instanceof Date) {
-        return transform(source, ns);
-      }
-      const newObject = {};
-      if (ns.isMapSchema()) {
-        for (const key of Object.keys(source)) {
-          newObject[key] = copyDocumentWithTransform(source[key], ns.getValueSchema(), transform);
-        }
-      } else if (ns.isStructSchema()) {
-        for (const [key, memberSchema] of ns.structIterator()) {
-          newObject[key] = copyDocumentWithTransform(source[key], memberSchema, transform);
-        }
-      } else if (ns.isDocumentSchema()) {
-        for (const key of Object.keys(source)) {
-          newObject[key] = copyDocumentWithTransform(source[key], ns.getValueSchema(), transform);
-        }
-      }
-      return transform(newObject, ns);
-    default:
-      return transform(source, ns);
-  }
-};
+var copyDocumentWithTransform = (source, schemaRef, transform = (_) => _) => source;
 
 // src/submodules/serde/parse-utils.ts
 var parseBoolean = (value) => {
@@ -51148,6 +59740,9 @@ var stripLeadingZeroes = (value) => {
   return value.slice(idx);
 };
 
+// src/submodules/serde/generateIdempotencyToken.ts
+var import_uuid = __nccwpck_require__(5840);
+
 // src/submodules/serde/lazy-json.ts
 var LazyJsonString = function LazyJsonString2(val) {
   const str = Object.assign(new String(val), {
@@ -51249,7 +59844,7 @@ var splitHeader = (value) => {
 };
 
 // src/submodules/serde/value/NumericValue.ts
-var NumericValue = class {
+var NumericValue = class _NumericValue {
   constructor(string, type) {
     this.string = string;
     this.type = type;
@@ -51276,15 +59871,19 @@ var NumericValue = class {
   toString() {
     return this.string;
   }
-  [Symbol.hasInstance](object) {
+  static [Symbol.hasInstance](object) {
     if (!object || typeof object !== "object") {
       return false;
     }
     const _nv = object;
+    const prototypeMatch = _NumericValue.prototype.isPrototypeOf(object.constructor?.prototype);
+    if (prototypeMatch) {
+      return prototypeMatch;
+    }
     if (typeof _nv.string === "string" && typeof _nv.type === "string" && _nv.constructor?.name === "NumericValue") {
       return true;
     }
-    return false;
+    return prototypeMatch;
   }
 };
 function nv(input) {
@@ -53283,6 +61882,7 @@ var getEndpointFromInstructions = /* @__PURE__ */ __name(async (commandInput, in
     }
     if (endpointFromConfig) {
       clientConfig.endpoint = () => Promise.resolve(toEndpointV1(endpointFromConfig));
+      clientConfig.isCustomEndpoint = true;
     }
   }
   const endpointParams = await resolveParams(commandInput, instructionsSupplier, clientConfig);
@@ -60248,15 +68848,24 @@ var validateWaiterOptions = /* @__PURE__ */ __name((options) => {
 }, "validateWaiterOptions");
 
 // src/createWaiter.ts
-var abortTimeout = /* @__PURE__ */ __name(async (abortSignal) => {
-  return new Promise((resolve) => {
-    const onAbort = /* @__PURE__ */ __name(() => resolve({ state: "ABORTED" /* ABORTED */ }), "onAbort");
+var abortTimeout = /* @__PURE__ */ __name((abortSignal) => {
+  let onAbort;
+  const promise = new Promise((resolve) => {
+    onAbort = /* @__PURE__ */ __name(() => resolve({ state: "ABORTED" /* ABORTED */ }), "onAbort");
     if (typeof abortSignal.addEventListener === "function") {
       abortSignal.addEventListener("abort", onAbort);
     } else {
       abortSignal.onabort = onAbort;
     }
   });
+  return {
+    clearListener() {
+      if (typeof abortSignal.removeEventListener === "function") {
+        abortSignal.removeEventListener("abort", onAbort);
+      }
+    },
+    aborted: promise
+  };
 }, "abortTimeout");
 var createWaiter = /* @__PURE__ */ __name(async (options, input, acceptorChecks) => {
   const params = {
@@ -60265,13 +68874,23 @@ var createWaiter = /* @__PURE__ */ __name(async (options, input, acceptorChecks)
   };
   validateWaiterOptions(params);
   const exitConditions = [runPolling(params, input, acceptorChecks)];
-  if (options.abortController) {
-    exitConditions.push(abortTimeout(options.abortController.signal));
-  }
+  const finalize = [];
   if (options.abortSignal) {
-    exitConditions.push(abortTimeout(options.abortSignal));
+    const { aborted, clearListener } = abortTimeout(options.abortSignal);
+    finalize.push(clearListener);
+    exitConditions.push(aborted);
   }
-  return Promise.race(exitConditions);
+  if (options.abortController?.signal) {
+    const { aborted, clearListener } = abortTimeout(options.abortController.signal);
+    finalize.push(clearListener);
+    exitConditions.push(aborted);
+  }
+  return Promise.race(exitConditions).then((result) => {
+    for (const fn of finalize) {
+      fn();
+    }
+    return result;
+  });
 }, "createWaiter");
 // Annotate the CommonJS export names for ESM import in node:
 
@@ -91506,7 +100125,28 @@ module.exports = parseParams
 
 /***/ }),
 
+/***/ 2689:
+/***/ ((module) => {
+
+(()=>{"use strict";var t={d:(e,n)=>{for(var i in n)t.o(n,i)&&!t.o(e,i)&&Object.defineProperty(e,i,{enumerable:!0,get:n[i]})},o:(t,e)=>Object.prototype.hasOwnProperty.call(t,e),r:t=>{"undefined"!=typeof Symbol&&Symbol.toStringTag&&Object.defineProperty(t,Symbol.toStringTag,{value:"Module"}),Object.defineProperty(t,"__esModule",{value:!0})}},e={};t.r(e),t.d(e,{XMLBuilder:()=>ft,XMLParser:()=>st,XMLValidator:()=>mt});const n=":A-Za-z_\\u00C0-\\u00D6\\u00D8-\\u00F6\\u00F8-\\u02FF\\u0370-\\u037D\\u037F-\\u1FFF\\u200C-\\u200D\\u2070-\\u218F\\u2C00-\\u2FEF\\u3001-\\uD7FF\\uF900-\\uFDCF\\uFDF0-\\uFFFD",i=new RegExp("^["+n+"]["+n+"\\-.\\d\\u00B7\\u0300-\\u036F\\u203F-\\u2040]*$");function s(t,e){const n=[];let i=e.exec(t);for(;i;){const s=[];s.startIndex=e.lastIndex-i[0].length;const r=i.length;for(let t=0;t<r;t++)s.push(i[t]);n.push(s),i=e.exec(t)}return n}const r=function(t){return!(null==i.exec(t))},o={allowBooleanAttributes:!1,unpairedTags:[]};function a(t,e){e=Object.assign({},o,e);const n=[];let i=!1,s=!1;"\ufeff"===t[0]&&(t=t.substr(1));for(let o=0;o<t.length;o++)if("<"===t[o]&&"?"===t[o+1]){if(o+=2,o=u(t,o),o.err)return o}else{if("<"!==t[o]){if(l(t[o]))continue;return x("InvalidChar","char '"+t[o]+"' is not expected.",N(t,o))}{let a=o;if(o++,"!"===t[o]){o=h(t,o);continue}{let d=!1;"/"===t[o]&&(d=!0,o++);let f="";for(;o<t.length&&">"!==t[o]&&" "!==t[o]&&"\t"!==t[o]&&"\n"!==t[o]&&"\r"!==t[o];o++)f+=t[o];if(f=f.trim(),"/"===f[f.length-1]&&(f=f.substring(0,f.length-1),o--),!r(f)){let e;return e=0===f.trim().length?"Invalid space after '<'.":"Tag '"+f+"' is an invalid name.",x("InvalidTag",e,N(t,o))}const p=c(t,o);if(!1===p)return x("InvalidAttr","Attributes for '"+f+"' have open quote.",N(t,o));let b=p.value;if(o=p.index,"/"===b[b.length-1]){const n=o-b.length;b=b.substring(0,b.length-1);const s=g(b,e);if(!0!==s)return x(s.err.code,s.err.msg,N(t,n+s.err.line));i=!0}else if(d){if(!p.tagClosed)return x("InvalidTag","Closing tag '"+f+"' doesn't have proper closing.",N(t,o));if(b.trim().length>0)return x("InvalidTag","Closing tag '"+f+"' can't have attributes or invalid starting.",N(t,a));if(0===n.length)return x("InvalidTag","Closing tag '"+f+"' has not been opened.",N(t,a));{const e=n.pop();if(f!==e.tagName){let n=N(t,e.tagStartPos);return x("InvalidTag","Expected closing tag '"+e.tagName+"' (opened in line "+n.line+", col "+n.col+") instead of closing tag '"+f+"'.",N(t,a))}0==n.length&&(s=!0)}}else{const r=g(b,e);if(!0!==r)return x(r.err.code,r.err.msg,N(t,o-b.length+r.err.line));if(!0===s)return x("InvalidXml","Multiple possible root nodes found.",N(t,o));-1!==e.unpairedTags.indexOf(f)||n.push({tagName:f,tagStartPos:a}),i=!0}for(o++;o<t.length;o++)if("<"===t[o]){if("!"===t[o+1]){o++,o=h(t,o);continue}if("?"!==t[o+1])break;if(o=u(t,++o),o.err)return o}else if("&"===t[o]){const e=m(t,o);if(-1==e)return x("InvalidChar","char '&' is not expected.",N(t,o));o=e}else if(!0===s&&!l(t[o]))return x("InvalidXml","Extra text at the end",N(t,o));"<"===t[o]&&o--}}}return i?1==n.length?x("InvalidTag","Unclosed tag '"+n[0].tagName+"'.",N(t,n[0].tagStartPos)):!(n.length>0)||x("InvalidXml","Invalid '"+JSON.stringify(n.map((t=>t.tagName)),null,4).replace(/\r?\n/g,"")+"' found.",{line:1,col:1}):x("InvalidXml","Start tag expected.",1)}function l(t){return" "===t||"\t"===t||"\n"===t||"\r"===t}function u(t,e){const n=e;for(;e<t.length;e++)if("?"!=t[e]&&" "!=t[e]);else{const i=t.substr(n,e-n);if(e>5&&"xml"===i)return x("InvalidXml","XML declaration allowed only at the start of the document.",N(t,e));if("?"==t[e]&&">"==t[e+1]){e++;break}}return e}function h(t,e){if(t.length>e+5&&"-"===t[e+1]&&"-"===t[e+2]){for(e+=3;e<t.length;e++)if("-"===t[e]&&"-"===t[e+1]&&">"===t[e+2]){e+=2;break}}else if(t.length>e+8&&"D"===t[e+1]&&"O"===t[e+2]&&"C"===t[e+3]&&"T"===t[e+4]&&"Y"===t[e+5]&&"P"===t[e+6]&&"E"===t[e+7]){let n=1;for(e+=8;e<t.length;e++)if("<"===t[e])n++;else if(">"===t[e]&&(n--,0===n))break}else if(t.length>e+9&&"["===t[e+1]&&"C"===t[e+2]&&"D"===t[e+3]&&"A"===t[e+4]&&"T"===t[e+5]&&"A"===t[e+6]&&"["===t[e+7])for(e+=8;e<t.length;e++)if("]"===t[e]&&"]"===t[e+1]&&">"===t[e+2]){e+=2;break}return e}const d='"',f="'";function c(t,e){let n="",i="",s=!1;for(;e<t.length;e++){if(t[e]===d||t[e]===f)""===i?i=t[e]:i!==t[e]||(i="");else if(">"===t[e]&&""===i){s=!0;break}n+=t[e]}return""===i&&{value:n,index:e,tagClosed:s}}const p=new RegExp("(\\s*)([^\\s=]+)(\\s*=)?(\\s*(['\"])(([\\s\\S])*?)\\5)?","g");function g(t,e){const n=s(t,p),i={};for(let t=0;t<n.length;t++){if(0===n[t][1].length)return x("InvalidAttr","Attribute '"+n[t][2]+"' has no space in starting.",E(n[t]));if(void 0!==n[t][3]&&void 0===n[t][4])return x("InvalidAttr","Attribute '"+n[t][2]+"' is without value.",E(n[t]));if(void 0===n[t][3]&&!e.allowBooleanAttributes)return x("InvalidAttr","boolean attribute '"+n[t][2]+"' is not allowed.",E(n[t]));const s=n[t][2];if(!b(s))return x("InvalidAttr","Attribute '"+s+"' is an invalid name.",E(n[t]));if(i.hasOwnProperty(s))return x("InvalidAttr","Attribute '"+s+"' is repeated.",E(n[t]));i[s]=1}return!0}function m(t,e){if(";"===t[++e])return-1;if("#"===t[e])return function(t,e){let n=/\d/;for("x"===t[e]&&(e++,n=/[\da-fA-F]/);e<t.length;e++){if(";"===t[e])return e;if(!t[e].match(n))break}return-1}(t,++e);let n=0;for(;e<t.length;e++,n++)if(!(t[e].match(/\w/)&&n<20)){if(";"===t[e])break;return-1}return e}function x(t,e,n){return{err:{code:t,msg:e,line:n.line||n,col:n.col}}}function b(t){return r(t)}function N(t,e){const n=t.substring(0,e).split(/\r?\n/);return{line:n.length,col:n[n.length-1].length+1}}function E(t){return t.startIndex+t[1].length}const v={preserveOrder:!1,attributeNamePrefix:"@_",attributesGroupName:!1,textNodeName:"#text",ignoreAttributes:!0,removeNSPrefix:!1,allowBooleanAttributes:!1,parseTagValue:!0,parseAttributeValue:!1,trimValues:!0,cdataPropName:!1,numberParseOptions:{hex:!0,leadingZeros:!0,eNotation:!0},tagValueProcessor:function(t,e){return e},attributeValueProcessor:function(t,e){return e},stopNodes:[],alwaysCreateTextNode:!1,isArray:()=>!1,commentPropName:!1,unpairedTags:[],processEntities:!0,htmlEntities:!1,ignoreDeclaration:!1,ignorePiTags:!1,transformTagName:!1,transformAttributeName:!1,updateTag:function(t,e,n){return t},captureMetaData:!1};let y;y="function"!=typeof Symbol?"@@xmlMetadata":Symbol("XML Node Metadata");class T{constructor(t){this.tagname=t,this.child=[],this[":@"]={}}add(t,e){"__proto__"===t&&(t="#__proto__"),this.child.push({[t]:e})}addChild(t,e){"__proto__"===t.tagname&&(t.tagname="#__proto__"),t[":@"]&&Object.keys(t[":@"]).length>0?this.child.push({[t.tagname]:t.child,":@":t[":@"]}):this.child.push({[t.tagname]:t.child}),void 0!==e&&(this.child[this.child.length-1][y]={startIndex:e})}static getMetaDataSymbol(){return y}}function w(t,e){const n={};if("O"!==t[e+3]||"C"!==t[e+4]||"T"!==t[e+5]||"Y"!==t[e+6]||"P"!==t[e+7]||"E"!==t[e+8])throw new Error("Invalid Tag instead of DOCTYPE");{e+=9;let i=1,s=!1,r=!1,o="";for(;e<t.length;e++)if("<"!==t[e]||r)if(">"===t[e]){if(r?"-"===t[e-1]&&"-"===t[e-2]&&(r=!1,i--):i--,0===i)break}else"["===t[e]?s=!0:o+=t[e];else{if(s&&C(t,"!ENTITY",e)){let i,s;e+=7,[i,s,e]=O(t,e+1),-1===s.indexOf("&")&&(n[i]={regx:RegExp(`&${i};`,"g"),val:s})}else if(s&&C(t,"!ELEMENT",e)){e+=8;const{index:n}=S(t,e+1);e=n}else if(s&&C(t,"!ATTLIST",e))e+=8;else if(s&&C(t,"!NOTATION",e)){e+=9;const{index:n}=A(t,e+1);e=n}else{if(!C(t,"!--",e))throw new Error("Invalid DOCTYPE");r=!0}i++,o=""}if(0!==i)throw new Error("Unclosed DOCTYPE")}return{entities:n,i:e}}const P=(t,e)=>{for(;e<t.length&&/\s/.test(t[e]);)e++;return e};function O(t,e){e=P(t,e);let n="";for(;e<t.length&&!/\s/.test(t[e])&&'"'!==t[e]&&"'"!==t[e];)n+=t[e],e++;if($(n),e=P(t,e),"SYSTEM"===t.substring(e,e+6).toUpperCase())throw new Error("External entities are not supported");if("%"===t[e])throw new Error("Parameter entities are not supported");let i="";return[e,i]=I(t,e,"entity"),[n,i,--e]}function A(t,e){e=P(t,e);let n="";for(;e<t.length&&!/\s/.test(t[e]);)n+=t[e],e++;$(n),e=P(t,e);const i=t.substring(e,e+6).toUpperCase();if("SYSTEM"!==i&&"PUBLIC"!==i)throw new Error(`Expected SYSTEM or PUBLIC, found "${i}"`);e+=i.length,e=P(t,e);let s=null,r=null;if("PUBLIC"===i)[e,s]=I(t,e,"publicIdentifier"),'"'!==t[e=P(t,e)]&&"'"!==t[e]||([e,r]=I(t,e,"systemIdentifier"));else if("SYSTEM"===i&&([e,r]=I(t,e,"systemIdentifier"),!r))throw new Error("Missing mandatory system identifier for SYSTEM notation");return{notationName:n,publicIdentifier:s,systemIdentifier:r,index:--e}}function I(t,e,n){let i="";const s=t[e];if('"'!==s&&"'"!==s)throw new Error(`Expected quoted string, found "${s}"`);for(e++;e<t.length&&t[e]!==s;)i+=t[e],e++;if(t[e]!==s)throw new Error(`Unterminated ${n} value`);return[++e,i]}function S(t,e){e=P(t,e);let n="";for(;e<t.length&&!/\s/.test(t[e]);)n+=t[e],e++;if(!$(n))throw new Error(`Invalid element name: "${n}"`);let i="";if("E"===t[e=P(t,e)]&&C(t,"MPTY",e))e+=4;else if("A"===t[e]&&C(t,"NY",e))e+=2;else{if("("!==t[e])throw new Error(`Invalid Element Expression, found "${t[e]}"`);for(e++;e<t.length&&")"!==t[e];)i+=t[e],e++;if(")"!==t[e])throw new Error("Unterminated content model")}return{elementName:n,contentModel:i.trim(),index:e}}function C(t,e,n){for(let i=0;i<e.length;i++)if(e[i]!==t[n+i+1])return!1;return!0}function $(t){if(r(t))return t;throw new Error(`Invalid entity name ${t}`)}const j=/^[-+]?0x[a-fA-F0-9]+$/,D=/^([\-\+])?(0*)([0-9]*(\.[0-9]*)?)$/,V={hex:!0,leadingZeros:!0,decimalPoint:".",eNotation:!0};const M=/^([-+])?(0*)(\d*(\.\d*)?[eE][-\+]?\d+)$/;function _(t){return"function"==typeof t?t:Array.isArray(t)?e=>{for(const n of t){if("string"==typeof n&&e===n)return!0;if(n instanceof RegExp&&n.test(e))return!0}}:()=>!1}class k{constructor(t){this.options=t,this.currentNode=null,this.tagsNodeStack=[],this.docTypeEntities={},this.lastEntities={apos:{regex:/&(apos|#39|#x27);/g,val:"'"},gt:{regex:/&(gt|#62|#x3E);/g,val:">"},lt:{regex:/&(lt|#60|#x3C);/g,val:"<"},quot:{regex:/&(quot|#34|#x22);/g,val:'"'}},this.ampEntity={regex:/&(amp|#38|#x26);/g,val:"&"},this.htmlEntities={space:{regex:/&(nbsp|#160);/g,val:" "},cent:{regex:/&(cent|#162);/g,val:"¢"},pound:{regex:/&(pound|#163);/g,val:"£"},yen:{regex:/&(yen|#165);/g,val:"¥"},euro:{regex:/&(euro|#8364);/g,val:"€"},copyright:{regex:/&(copy|#169);/g,val:"©"},reg:{regex:/&(reg|#174);/g,val:"®"},inr:{regex:/&(inr|#8377);/g,val:"₹"},num_dec:{regex:/&#([0-9]{1,7});/g,val:(t,e)=>String.fromCodePoint(Number.parseInt(e,10))},num_hex:{regex:/&#x([0-9a-fA-F]{1,6});/g,val:(t,e)=>String.fromCodePoint(Number.parseInt(e,16))}},this.addExternalEntities=F,this.parseXml=X,this.parseTextData=L,this.resolveNameSpace=B,this.buildAttributesMap=G,this.isItStopNode=Z,this.replaceEntitiesValue=R,this.readStopNodeData=J,this.saveTextToParentTag=q,this.addChild=Y,this.ignoreAttributesFn=_(this.options.ignoreAttributes)}}function F(t){const e=Object.keys(t);for(let n=0;n<e.length;n++){const i=e[n];this.lastEntities[i]={regex:new RegExp("&"+i+";","g"),val:t[i]}}}function L(t,e,n,i,s,r,o){if(void 0!==t&&(this.options.trimValues&&!i&&(t=t.trim()),t.length>0)){o||(t=this.replaceEntitiesValue(t));const i=this.options.tagValueProcessor(e,t,n,s,r);return null==i?t:typeof i!=typeof t||i!==t?i:this.options.trimValues||t.trim()===t?H(t,this.options.parseTagValue,this.options.numberParseOptions):t}}function B(t){if(this.options.removeNSPrefix){const e=t.split(":"),n="/"===t.charAt(0)?"/":"";if("xmlns"===e[0])return"";2===e.length&&(t=n+e[1])}return t}const U=new RegExp("([^\\s=]+)\\s*(=\\s*(['\"])([\\s\\S]*?)\\3)?","gm");function G(t,e,n){if(!0!==this.options.ignoreAttributes&&"string"==typeof t){const n=s(t,U),i=n.length,r={};for(let t=0;t<i;t++){const i=this.resolveNameSpace(n[t][1]);if(this.ignoreAttributesFn(i,e))continue;let s=n[t][4],o=this.options.attributeNamePrefix+i;if(i.length)if(this.options.transformAttributeName&&(o=this.options.transformAttributeName(o)),"__proto__"===o&&(o="#__proto__"),void 0!==s){this.options.trimValues&&(s=s.trim()),s=this.replaceEntitiesValue(s);const t=this.options.attributeValueProcessor(i,s,e);r[o]=null==t?s:typeof t!=typeof s||t!==s?t:H(s,this.options.parseAttributeValue,this.options.numberParseOptions)}else this.options.allowBooleanAttributes&&(r[o]=!0)}if(!Object.keys(r).length)return;if(this.options.attributesGroupName){const t={};return t[this.options.attributesGroupName]=r,t}return r}}const X=function(t){t=t.replace(/\r\n?/g,"\n");const e=new T("!xml");let n=e,i="",s="";for(let r=0;r<t.length;r++)if("<"===t[r])if("/"===t[r+1]){const e=W(t,">",r,"Closing Tag is not closed.");let o=t.substring(r+2,e).trim();if(this.options.removeNSPrefix){const t=o.indexOf(":");-1!==t&&(o=o.substr(t+1))}this.options.transformTagName&&(o=this.options.transformTagName(o)),n&&(i=this.saveTextToParentTag(i,n,s));const a=s.substring(s.lastIndexOf(".")+1);if(o&&-1!==this.options.unpairedTags.indexOf(o))throw new Error(`Unpaired tag can not be used as closing tag: </${o}>`);let l=0;a&&-1!==this.options.unpairedTags.indexOf(a)?(l=s.lastIndexOf(".",s.lastIndexOf(".")-1),this.tagsNodeStack.pop()):l=s.lastIndexOf("."),s=s.substring(0,l),n=this.tagsNodeStack.pop(),i="",r=e}else if("?"===t[r+1]){let e=z(t,r,!1,"?>");if(!e)throw new Error("Pi Tag is not closed.");if(i=this.saveTextToParentTag(i,n,s),this.options.ignoreDeclaration&&"?xml"===e.tagName||this.options.ignorePiTags);else{const t=new T(e.tagName);t.add(this.options.textNodeName,""),e.tagName!==e.tagExp&&e.attrExpPresent&&(t[":@"]=this.buildAttributesMap(e.tagExp,s,e.tagName)),this.addChild(n,t,s,r)}r=e.closeIndex+1}else if("!--"===t.substr(r+1,3)){const e=W(t,"--\x3e",r+4,"Comment is not closed.");if(this.options.commentPropName){const o=t.substring(r+4,e-2);i=this.saveTextToParentTag(i,n,s),n.add(this.options.commentPropName,[{[this.options.textNodeName]:o}])}r=e}else if("!D"===t.substr(r+1,2)){const e=w(t,r);this.docTypeEntities=e.entities,r=e.i}else if("!["===t.substr(r+1,2)){const e=W(t,"]]>",r,"CDATA is not closed.")-2,o=t.substring(r+9,e);i=this.saveTextToParentTag(i,n,s);let a=this.parseTextData(o,n.tagname,s,!0,!1,!0,!0);null==a&&(a=""),this.options.cdataPropName?n.add(this.options.cdataPropName,[{[this.options.textNodeName]:o}]):n.add(this.options.textNodeName,a),r=e+2}else{let o=z(t,r,this.options.removeNSPrefix),a=o.tagName;const l=o.rawTagName;let u=o.tagExp,h=o.attrExpPresent,d=o.closeIndex;this.options.transformTagName&&(a=this.options.transformTagName(a)),n&&i&&"!xml"!==n.tagname&&(i=this.saveTextToParentTag(i,n,s,!1));const f=n;f&&-1!==this.options.unpairedTags.indexOf(f.tagname)&&(n=this.tagsNodeStack.pop(),s=s.substring(0,s.lastIndexOf("."))),a!==e.tagname&&(s+=s?"."+a:a);const c=r;if(this.isItStopNode(this.options.stopNodes,s,a)){let e="";if(u.length>0&&u.lastIndexOf("/")===u.length-1)"/"===a[a.length-1]?(a=a.substr(0,a.length-1),s=s.substr(0,s.length-1),u=a):u=u.substr(0,u.length-1),r=o.closeIndex;else if(-1!==this.options.unpairedTags.indexOf(a))r=o.closeIndex;else{const n=this.readStopNodeData(t,l,d+1);if(!n)throw new Error(`Unexpected end of ${l}`);r=n.i,e=n.tagContent}const i=new T(a);a!==u&&h&&(i[":@"]=this.buildAttributesMap(u,s,a)),e&&(e=this.parseTextData(e,a,s,!0,h,!0,!0)),s=s.substr(0,s.lastIndexOf(".")),i.add(this.options.textNodeName,e),this.addChild(n,i,s,c)}else{if(u.length>0&&u.lastIndexOf("/")===u.length-1){"/"===a[a.length-1]?(a=a.substr(0,a.length-1),s=s.substr(0,s.length-1),u=a):u=u.substr(0,u.length-1),this.options.transformTagName&&(a=this.options.transformTagName(a));const t=new T(a);a!==u&&h&&(t[":@"]=this.buildAttributesMap(u,s,a)),this.addChild(n,t,s,c),s=s.substr(0,s.lastIndexOf("."))}else{const t=new T(a);this.tagsNodeStack.push(n),a!==u&&h&&(t[":@"]=this.buildAttributesMap(u,s,a)),this.addChild(n,t,s,c),n=t}i="",r=d}}else i+=t[r];return e.child};function Y(t,e,n,i){this.options.captureMetaData||(i=void 0);const s=this.options.updateTag(e.tagname,n,e[":@"]);!1===s||("string"==typeof s?(e.tagname=s,t.addChild(e,i)):t.addChild(e,i))}const R=function(t){if(this.options.processEntities){for(let e in this.docTypeEntities){const n=this.docTypeEntities[e];t=t.replace(n.regx,n.val)}for(let e in this.lastEntities){const n=this.lastEntities[e];t=t.replace(n.regex,n.val)}if(this.options.htmlEntities)for(let e in this.htmlEntities){const n=this.htmlEntities[e];t=t.replace(n.regex,n.val)}t=t.replace(this.ampEntity.regex,this.ampEntity.val)}return t};function q(t,e,n,i){return t&&(void 0===i&&(i=0===e.child.length),void 0!==(t=this.parseTextData(t,e.tagname,n,!1,!!e[":@"]&&0!==Object.keys(e[":@"]).length,i))&&""!==t&&e.add(this.options.textNodeName,t),t=""),t}function Z(t,e,n){const i="*."+n;for(const n in t){const s=t[n];if(i===s||e===s)return!0}return!1}function W(t,e,n,i){const s=t.indexOf(e,n);if(-1===s)throw new Error(i);return s+e.length-1}function z(t,e,n,i=">"){const s=function(t,e,n=">"){let i,s="";for(let r=e;r<t.length;r++){let e=t[r];if(i)e===i&&(i="");else if('"'===e||"'"===e)i=e;else if(e===n[0]){if(!n[1])return{data:s,index:r};if(t[r+1]===n[1])return{data:s,index:r}}else"\t"===e&&(e=" ");s+=e}}(t,e+1,i);if(!s)return;let r=s.data;const o=s.index,a=r.search(/\s/);let l=r,u=!0;-1!==a&&(l=r.substring(0,a),r=r.substring(a+1).trimStart());const h=l;if(n){const t=l.indexOf(":");-1!==t&&(l=l.substr(t+1),u=l!==s.data.substr(t+1))}return{tagName:l,tagExp:r,closeIndex:o,attrExpPresent:u,rawTagName:h}}function J(t,e,n){const i=n;let s=1;for(;n<t.length;n++)if("<"===t[n])if("/"===t[n+1]){const r=W(t,">",n,`${e} is not closed`);if(t.substring(n+2,r).trim()===e&&(s--,0===s))return{tagContent:t.substring(i,n),i:r};n=r}else if("?"===t[n+1])n=W(t,"?>",n+1,"StopNode is not closed.");else if("!--"===t.substr(n+1,3))n=W(t,"--\x3e",n+3,"StopNode is not closed.");else if("!["===t.substr(n+1,2))n=W(t,"]]>",n,"StopNode is not closed.")-2;else{const i=z(t,n,">");i&&((i&&i.tagName)===e&&"/"!==i.tagExp[i.tagExp.length-1]&&s++,n=i.closeIndex)}}function H(t,e,n){if(e&&"string"==typeof t){const e=t.trim();return"true"===e||"false"!==e&&function(t,e={}){if(e=Object.assign({},V,e),!t||"string"!=typeof t)return t;let n=t.trim();if(void 0!==e.skipLike&&e.skipLike.test(n))return t;if("0"===t)return 0;if(e.hex&&j.test(n))return function(t){if(parseInt)return parseInt(t,16);if(Number.parseInt)return Number.parseInt(t,16);if(window&&window.parseInt)return window.parseInt(t,16);throw new Error("parseInt, Number.parseInt, window.parseInt are not supported")}(n);if(-1!==n.search(/.+[eE].+/))return function(t,e,n){if(!n.eNotation)return t;const i=e.match(M);if(i){let s=i[1]||"";const r=-1===i[3].indexOf("e")?"E":"e",o=i[2],a=s?t[o.length+1]===r:t[o.length]===r;return o.length>1&&a?t:1!==o.length||!i[3].startsWith(`.${r}`)&&i[3][0]!==r?n.leadingZeros&&!a?(e=(i[1]||"")+i[3],Number(e)):t:Number(e)}return t}(t,n,e);{const s=D.exec(n);if(s){const r=s[1]||"",o=s[2];let a=(i=s[3])&&-1!==i.indexOf(".")?("."===(i=i.replace(/0+$/,""))?i="0":"."===i[0]?i="0"+i:"."===i[i.length-1]&&(i=i.substring(0,i.length-1)),i):i;const l=r?"."===t[o.length+1]:"."===t[o.length];if(!e.leadingZeros&&(o.length>1||1===o.length&&!l))return t;{const i=Number(n),s=String(i);if(0===i||-0===i)return i;if(-1!==s.search(/[eE]/))return e.eNotation?i:t;if(-1!==n.indexOf("."))return"0"===s||s===a||s===`${r}${a}`?i:t;let l=o?a:n;return o?l===s||r+l===s?i:t:l===s||l===r+s?i:t}}return t}var i}(t,n)}return void 0!==t?t:""}const K=T.getMetaDataSymbol();function Q(t,e){return tt(t,e)}function tt(t,e,n){let i;const s={};for(let r=0;r<t.length;r++){const o=t[r],a=et(o);let l="";if(l=void 0===n?a:n+"."+a,a===e.textNodeName)void 0===i?i=o[a]:i+=""+o[a];else{if(void 0===a)continue;if(o[a]){let t=tt(o[a],e,l);const n=it(t,e);void 0!==o[K]&&(t[K]=o[K]),o[":@"]?nt(t,o[":@"],l,e):1!==Object.keys(t).length||void 0===t[e.textNodeName]||e.alwaysCreateTextNode?0===Object.keys(t).length&&(e.alwaysCreateTextNode?t[e.textNodeName]="":t=""):t=t[e.textNodeName],void 0!==s[a]&&s.hasOwnProperty(a)?(Array.isArray(s[a])||(s[a]=[s[a]]),s[a].push(t)):e.isArray(a,l,n)?s[a]=[t]:s[a]=t}}}return"string"==typeof i?i.length>0&&(s[e.textNodeName]=i):void 0!==i&&(s[e.textNodeName]=i),s}function et(t){const e=Object.keys(t);for(let t=0;t<e.length;t++){const n=e[t];if(":@"!==n)return n}}function nt(t,e,n,i){if(e){const s=Object.keys(e),r=s.length;for(let o=0;o<r;o++){const r=s[o];i.isArray(r,n+"."+r,!0,!0)?t[r]=[e[r]]:t[r]=e[r]}}}function it(t,e){const{textNodeName:n}=e,i=Object.keys(t).length;return 0===i||!(1!==i||!t[n]&&"boolean"!=typeof t[n]&&0!==t[n])}class st{constructor(t){this.externalEntities={},this.options=function(t){return Object.assign({},v,t)}(t)}parse(t,e){if("string"==typeof t);else{if(!t.toString)throw new Error("XML data is accepted in String or Bytes[] form.");t=t.toString()}if(e){!0===e&&(e={});const n=a(t,e);if(!0!==n)throw Error(`${n.err.msg}:${n.err.line}:${n.err.col}`)}const n=new k(this.options);n.addExternalEntities(this.externalEntities);const i=n.parseXml(t);return this.options.preserveOrder||void 0===i?i:Q(i,this.options)}addEntity(t,e){if(-1!==e.indexOf("&"))throw new Error("Entity value can't have '&'");if(-1!==t.indexOf("&")||-1!==t.indexOf(";"))throw new Error("An entity must be set without '&' and ';'. Eg. use '#xD' for '&#xD;'");if("&"===e)throw new Error("An entity with value '&' is not permitted");this.externalEntities[t]=e}static getMetaDataSymbol(){return T.getMetaDataSymbol()}}function rt(t,e){let n="";return e.format&&e.indentBy.length>0&&(n="\n"),ot(t,e,"",n)}function ot(t,e,n,i){let s="",r=!1;for(let o=0;o<t.length;o++){const a=t[o],l=at(a);if(void 0===l)continue;let u="";if(u=0===n.length?l:`${n}.${l}`,l===e.textNodeName){let t=a[l];ut(u,e)||(t=e.tagValueProcessor(l,t),t=ht(t,e)),r&&(s+=i),s+=t,r=!1;continue}if(l===e.cdataPropName){r&&(s+=i),s+=`<![CDATA[${a[l][0][e.textNodeName]}]]>`,r=!1;continue}if(l===e.commentPropName){s+=i+`\x3c!--${a[l][0][e.textNodeName]}--\x3e`,r=!0;continue}if("?"===l[0]){const t=lt(a[":@"],e),n="?xml"===l?"":i;let o=a[l][0][e.textNodeName];o=0!==o.length?" "+o:"",s+=n+`<${l}${o}${t}?>`,r=!0;continue}let h=i;""!==h&&(h+=e.indentBy);const d=i+`<${l}${lt(a[":@"],e)}`,f=ot(a[l],e,u,h);-1!==e.unpairedTags.indexOf(l)?e.suppressUnpairedNode?s+=d+">":s+=d+"/>":f&&0!==f.length||!e.suppressEmptyNode?f&&f.endsWith(">")?s+=d+`>${f}${i}</${l}>`:(s+=d+">",f&&""!==i&&(f.includes("/>")||f.includes("</"))?s+=i+e.indentBy+f+i:s+=f,s+=`</${l}>`):s+=d+"/>",r=!0}return s}function at(t){const e=Object.keys(t);for(let n=0;n<e.length;n++){const i=e[n];if(t.hasOwnProperty(i)&&":@"!==i)return i}}function lt(t,e){let n="";if(t&&!e.ignoreAttributes)for(let i in t){if(!t.hasOwnProperty(i))continue;let s=e.attributeValueProcessor(i,t[i]);s=ht(s,e),!0===s&&e.suppressBooleanAttributes?n+=` ${i.substr(e.attributeNamePrefix.length)}`:n+=` ${i.substr(e.attributeNamePrefix.length)}="${s}"`}return n}function ut(t,e){let n=(t=t.substr(0,t.length-e.textNodeName.length-1)).substr(t.lastIndexOf(".")+1);for(let i in e.stopNodes)if(e.stopNodes[i]===t||e.stopNodes[i]==="*."+n)return!0;return!1}function ht(t,e){if(t&&t.length>0&&e.processEntities)for(let n=0;n<e.entities.length;n++){const i=e.entities[n];t=t.replace(i.regex,i.val)}return t}const dt={attributeNamePrefix:"@_",attributesGroupName:!1,textNodeName:"#text",ignoreAttributes:!0,cdataPropName:!1,format:!1,indentBy:"  ",suppressEmptyNode:!1,suppressUnpairedNode:!0,suppressBooleanAttributes:!0,tagValueProcessor:function(t,e){return e},attributeValueProcessor:function(t,e){return e},preserveOrder:!1,commentPropName:!1,unpairedTags:[],entities:[{regex:new RegExp("&","g"),val:"&amp;"},{regex:new RegExp(">","g"),val:"&gt;"},{regex:new RegExp("<","g"),val:"&lt;"},{regex:new RegExp("'","g"),val:"&apos;"},{regex:new RegExp('"',"g"),val:"&quot;"}],processEntities:!0,stopNodes:[],oneListGroup:!1};function ft(t){this.options=Object.assign({},dt,t),!0===this.options.ignoreAttributes||this.options.attributesGroupName?this.isAttribute=function(){return!1}:(this.ignoreAttributesFn=_(this.options.ignoreAttributes),this.attrPrefixLen=this.options.attributeNamePrefix.length,this.isAttribute=gt),this.processTextOrObjNode=ct,this.options.format?(this.indentate=pt,this.tagEndChar=">\n",this.newLine="\n"):(this.indentate=function(){return""},this.tagEndChar=">",this.newLine="")}function ct(t,e,n,i){const s=this.j2x(t,n+1,i.concat(e));return void 0!==t[this.options.textNodeName]&&1===Object.keys(t).length?this.buildTextValNode(t[this.options.textNodeName],e,s.attrStr,n):this.buildObjectNode(s.val,e,s.attrStr,n)}function pt(t){return this.options.indentBy.repeat(t)}function gt(t){return!(!t.startsWith(this.options.attributeNamePrefix)||t===this.options.textNodeName)&&t.substr(this.attrPrefixLen)}ft.prototype.build=function(t){return this.options.preserveOrder?rt(t,this.options):(Array.isArray(t)&&this.options.arrayNodeName&&this.options.arrayNodeName.length>1&&(t={[this.options.arrayNodeName]:t}),this.j2x(t,0,[]).val)},ft.prototype.j2x=function(t,e,n){let i="",s="";const r=n.join(".");for(let o in t)if(Object.prototype.hasOwnProperty.call(t,o))if(void 0===t[o])this.isAttribute(o)&&(s+="");else if(null===t[o])this.isAttribute(o)||o===this.options.cdataPropName?s+="":"?"===o[0]?s+=this.indentate(e)+"<"+o+"?"+this.tagEndChar:s+=this.indentate(e)+"<"+o+"/"+this.tagEndChar;else if(t[o]instanceof Date)s+=this.buildTextValNode(t[o],o,"",e);else if("object"!=typeof t[o]){const n=this.isAttribute(o);if(n&&!this.ignoreAttributesFn(n,r))i+=this.buildAttrPairStr(n,""+t[o]);else if(!n)if(o===this.options.textNodeName){let e=this.options.tagValueProcessor(o,""+t[o]);s+=this.replaceEntitiesValue(e)}else s+=this.buildTextValNode(t[o],o,"",e)}else if(Array.isArray(t[o])){const i=t[o].length;let r="",a="";for(let l=0;l<i;l++){const i=t[o][l];if(void 0===i);else if(null===i)"?"===o[0]?s+=this.indentate(e)+"<"+o+"?"+this.tagEndChar:s+=this.indentate(e)+"<"+o+"/"+this.tagEndChar;else if("object"==typeof i)if(this.options.oneListGroup){const t=this.j2x(i,e+1,n.concat(o));r+=t.val,this.options.attributesGroupName&&i.hasOwnProperty(this.options.attributesGroupName)&&(a+=t.attrStr)}else r+=this.processTextOrObjNode(i,o,e,n);else if(this.options.oneListGroup){let t=this.options.tagValueProcessor(o,i);t=this.replaceEntitiesValue(t),r+=t}else r+=this.buildTextValNode(i,o,"",e)}this.options.oneListGroup&&(r=this.buildObjectNode(r,o,a,e)),s+=r}else if(this.options.attributesGroupName&&o===this.options.attributesGroupName){const e=Object.keys(t[o]),n=e.length;for(let s=0;s<n;s++)i+=this.buildAttrPairStr(e[s],""+t[o][e[s]])}else s+=this.processTextOrObjNode(t[o],o,e,n);return{attrStr:i,val:s}},ft.prototype.buildAttrPairStr=function(t,e){return e=this.options.attributeValueProcessor(t,""+e),e=this.replaceEntitiesValue(e),this.options.suppressBooleanAttributes&&"true"===e?" "+t:" "+t+'="'+e+'"'},ft.prototype.buildObjectNode=function(t,e,n,i){if(""===t)return"?"===e[0]?this.indentate(i)+"<"+e+n+"?"+this.tagEndChar:this.indentate(i)+"<"+e+n+this.closeTag(e)+this.tagEndChar;{let s="</"+e+this.tagEndChar,r="";return"?"===e[0]&&(r="?",s=""),!n&&""!==n||-1!==t.indexOf("<")?!1!==this.options.commentPropName&&e===this.options.commentPropName&&0===r.length?this.indentate(i)+`\x3c!--${t}--\x3e`+this.newLine:this.indentate(i)+"<"+e+n+r+this.tagEndChar+t+this.indentate(i)+s:this.indentate(i)+"<"+e+n+r+">"+t+s}},ft.prototype.closeTag=function(t){let e="";return-1!==this.options.unpairedTags.indexOf(t)?this.options.suppressUnpairedNode||(e="/"):e=this.options.suppressEmptyNode?"/":`></${t}`,e},ft.prototype.buildTextValNode=function(t,e,n,i){if(!1!==this.options.cdataPropName&&e===this.options.cdataPropName)return this.indentate(i)+`<![CDATA[${t}]]>`+this.newLine;if(!1!==this.options.commentPropName&&e===this.options.commentPropName)return this.indentate(i)+`\x3c!--${t}--\x3e`+this.newLine;if("?"===e[0])return this.indentate(i)+"<"+e+n+"?"+this.tagEndChar;{let s=this.options.tagValueProcessor(e,t);return s=this.replaceEntitiesValue(s),""===s?this.indentate(i)+"<"+e+n+this.closeTag(e)+this.tagEndChar:this.indentate(i)+"<"+e+n+">"+s+"</"+e+this.tagEndChar}},ft.prototype.replaceEntitiesValue=function(t){if(t&&t.length>0&&this.options.processEntities)for(let e=0;e<this.options.entities.length;e++){const n=this.options.entities[e];t=t.replace(n.regex,n.val)}return t};const mt={validate:a};module.exports=e})();
+
+/***/ }),
+
 /***/ 7773:
+/***/ ((module) => {
+
+(()=>{"use strict";var t={d:(e,n)=>{for(var i in n)t.o(n,i)&&!t.o(e,i)&&Object.defineProperty(e,i,{enumerable:!0,get:n[i]})},o:(t,e)=>Object.prototype.hasOwnProperty.call(t,e),r:t=>{"undefined"!=typeof Symbol&&Symbol.toStringTag&&Object.defineProperty(t,Symbol.toStringTag,{value:"Module"}),Object.defineProperty(t,"__esModule",{value:!0})}},e={};t.r(e),t.d(e,{XMLBuilder:()=>ft,XMLParser:()=>st,XMLValidator:()=>mt});const n=":A-Za-z_\\u00C0-\\u00D6\\u00D8-\\u00F6\\u00F8-\\u02FF\\u0370-\\u037D\\u037F-\\u1FFF\\u200C-\\u200D\\u2070-\\u218F\\u2C00-\\u2FEF\\u3001-\\uD7FF\\uF900-\\uFDCF\\uFDF0-\\uFFFD",i=new RegExp("^["+n+"]["+n+"\\-.\\d\\u00B7\\u0300-\\u036F\\u203F-\\u2040]*$");function s(t,e){const n=[];let i=e.exec(t);for(;i;){const s=[];s.startIndex=e.lastIndex-i[0].length;const r=i.length;for(let t=0;t<r;t++)s.push(i[t]);n.push(s),i=e.exec(t)}return n}const r=function(t){return!(null==i.exec(t))},o={allowBooleanAttributes:!1,unpairedTags:[]};function a(t,e){e=Object.assign({},o,e);const n=[];let i=!1,s=!1;"\ufeff"===t[0]&&(t=t.substr(1));for(let o=0;o<t.length;o++)if("<"===t[o]&&"?"===t[o+1]){if(o+=2,o=u(t,o),o.err)return o}else{if("<"!==t[o]){if(l(t[o]))continue;return x("InvalidChar","char '"+t[o]+"' is not expected.",N(t,o))}{let a=o;if(o++,"!"===t[o]){o=h(t,o);continue}{let d=!1;"/"===t[o]&&(d=!0,o++);let f="";for(;o<t.length&&">"!==t[o]&&" "!==t[o]&&"\t"!==t[o]&&"\n"!==t[o]&&"\r"!==t[o];o++)f+=t[o];if(f=f.trim(),"/"===f[f.length-1]&&(f=f.substring(0,f.length-1),o--),!r(f)){let e;return e=0===f.trim().length?"Invalid space after '<'.":"Tag '"+f+"' is an invalid name.",x("InvalidTag",e,N(t,o))}const p=c(t,o);if(!1===p)return x("InvalidAttr","Attributes for '"+f+"' have open quote.",N(t,o));let b=p.value;if(o=p.index,"/"===b[b.length-1]){const n=o-b.length;b=b.substring(0,b.length-1);const s=g(b,e);if(!0!==s)return x(s.err.code,s.err.msg,N(t,n+s.err.line));i=!0}else if(d){if(!p.tagClosed)return x("InvalidTag","Closing tag '"+f+"' doesn't have proper closing.",N(t,o));if(b.trim().length>0)return x("InvalidTag","Closing tag '"+f+"' can't have attributes or invalid starting.",N(t,a));if(0===n.length)return x("InvalidTag","Closing tag '"+f+"' has not been opened.",N(t,a));{const e=n.pop();if(f!==e.tagName){let n=N(t,e.tagStartPos);return x("InvalidTag","Expected closing tag '"+e.tagName+"' (opened in line "+n.line+", col "+n.col+") instead of closing tag '"+f+"'.",N(t,a))}0==n.length&&(s=!0)}}else{const r=g(b,e);if(!0!==r)return x(r.err.code,r.err.msg,N(t,o-b.length+r.err.line));if(!0===s)return x("InvalidXml","Multiple possible root nodes found.",N(t,o));-1!==e.unpairedTags.indexOf(f)||n.push({tagName:f,tagStartPos:a}),i=!0}for(o++;o<t.length;o++)if("<"===t[o]){if("!"===t[o+1]){o++,o=h(t,o);continue}if("?"!==t[o+1])break;if(o=u(t,++o),o.err)return o}else if("&"===t[o]){const e=m(t,o);if(-1==e)return x("InvalidChar","char '&' is not expected.",N(t,o));o=e}else if(!0===s&&!l(t[o]))return x("InvalidXml","Extra text at the end",N(t,o));"<"===t[o]&&o--}}}return i?1==n.length?x("InvalidTag","Unclosed tag '"+n[0].tagName+"'.",N(t,n[0].tagStartPos)):!(n.length>0)||x("InvalidXml","Invalid '"+JSON.stringify(n.map((t=>t.tagName)),null,4).replace(/\r?\n/g,"")+"' found.",{line:1,col:1}):x("InvalidXml","Start tag expected.",1)}function l(t){return" "===t||"\t"===t||"\n"===t||"\r"===t}function u(t,e){const n=e;for(;e<t.length;e++)if("?"!=t[e]&&" "!=t[e]);else{const i=t.substr(n,e-n);if(e>5&&"xml"===i)return x("InvalidXml","XML declaration allowed only at the start of the document.",N(t,e));if("?"==t[e]&&">"==t[e+1]){e++;break}}return e}function h(t,e){if(t.length>e+5&&"-"===t[e+1]&&"-"===t[e+2]){for(e+=3;e<t.length;e++)if("-"===t[e]&&"-"===t[e+1]&&">"===t[e+2]){e+=2;break}}else if(t.length>e+8&&"D"===t[e+1]&&"O"===t[e+2]&&"C"===t[e+3]&&"T"===t[e+4]&&"Y"===t[e+5]&&"P"===t[e+6]&&"E"===t[e+7]){let n=1;for(e+=8;e<t.length;e++)if("<"===t[e])n++;else if(">"===t[e]&&(n--,0===n))break}else if(t.length>e+9&&"["===t[e+1]&&"C"===t[e+2]&&"D"===t[e+3]&&"A"===t[e+4]&&"T"===t[e+5]&&"A"===t[e+6]&&"["===t[e+7])for(e+=8;e<t.length;e++)if("]"===t[e]&&"]"===t[e+1]&&">"===t[e+2]){e+=2;break}return e}const d='"',f="'";function c(t,e){let n="",i="",s=!1;for(;e<t.length;e++){if(t[e]===d||t[e]===f)""===i?i=t[e]:i!==t[e]||(i="");else if(">"===t[e]&&""===i){s=!0;break}n+=t[e]}return""===i&&{value:n,index:e,tagClosed:s}}const p=new RegExp("(\\s*)([^\\s=]+)(\\s*=)?(\\s*(['\"])(([\\s\\S])*?)\\5)?","g");function g(t,e){const n=s(t,p),i={};for(let t=0;t<n.length;t++){if(0===n[t][1].length)return x("InvalidAttr","Attribute '"+n[t][2]+"' has no space in starting.",E(n[t]));if(void 0!==n[t][3]&&void 0===n[t][4])return x("InvalidAttr","Attribute '"+n[t][2]+"' is without value.",E(n[t]));if(void 0===n[t][3]&&!e.allowBooleanAttributes)return x("InvalidAttr","boolean attribute '"+n[t][2]+"' is not allowed.",E(n[t]));const s=n[t][2];if(!b(s))return x("InvalidAttr","Attribute '"+s+"' is an invalid name.",E(n[t]));if(i.hasOwnProperty(s))return x("InvalidAttr","Attribute '"+s+"' is repeated.",E(n[t]));i[s]=1}return!0}function m(t,e){if(";"===t[++e])return-1;if("#"===t[e])return function(t,e){let n=/\d/;for("x"===t[e]&&(e++,n=/[\da-fA-F]/);e<t.length;e++){if(";"===t[e])return e;if(!t[e].match(n))break}return-1}(t,++e);let n=0;for(;e<t.length;e++,n++)if(!(t[e].match(/\w/)&&n<20)){if(";"===t[e])break;return-1}return e}function x(t,e,n){return{err:{code:t,msg:e,line:n.line||n,col:n.col}}}function b(t){return r(t)}function N(t,e){const n=t.substring(0,e).split(/\r?\n/);return{line:n.length,col:n[n.length-1].length+1}}function E(t){return t.startIndex+t[1].length}const v={preserveOrder:!1,attributeNamePrefix:"@_",attributesGroupName:!1,textNodeName:"#text",ignoreAttributes:!0,removeNSPrefix:!1,allowBooleanAttributes:!1,parseTagValue:!0,parseAttributeValue:!1,trimValues:!0,cdataPropName:!1,numberParseOptions:{hex:!0,leadingZeros:!0,eNotation:!0},tagValueProcessor:function(t,e){return e},attributeValueProcessor:function(t,e){return e},stopNodes:[],alwaysCreateTextNode:!1,isArray:()=>!1,commentPropName:!1,unpairedTags:[],processEntities:!0,htmlEntities:!1,ignoreDeclaration:!1,ignorePiTags:!1,transformTagName:!1,transformAttributeName:!1,updateTag:function(t,e,n){return t},captureMetaData:!1};let y;y="function"!=typeof Symbol?"@@xmlMetadata":Symbol("XML Node Metadata");class T{constructor(t){this.tagname=t,this.child=[],this[":@"]={}}add(t,e){"__proto__"===t&&(t="#__proto__"),this.child.push({[t]:e})}addChild(t,e){"__proto__"===t.tagname&&(t.tagname="#__proto__"),t[":@"]&&Object.keys(t[":@"]).length>0?this.child.push({[t.tagname]:t.child,":@":t[":@"]}):this.child.push({[t.tagname]:t.child}),void 0!==e&&(this.child[this.child.length-1][y]={startIndex:e})}static getMetaDataSymbol(){return y}}function w(t,e){const n={};if("O"!==t[e+3]||"C"!==t[e+4]||"T"!==t[e+5]||"Y"!==t[e+6]||"P"!==t[e+7]||"E"!==t[e+8])throw new Error("Invalid Tag instead of DOCTYPE");{e+=9;let i=1,s=!1,r=!1,o="";for(;e<t.length;e++)if("<"!==t[e]||r)if(">"===t[e]){if(r?"-"===t[e-1]&&"-"===t[e-2]&&(r=!1,i--):i--,0===i)break}else"["===t[e]?s=!0:o+=t[e];else{if(s&&C(t,"!ENTITY",e)){let i,s;e+=7,[i,s,e]=O(t,e+1),-1===s.indexOf("&")&&(n[i]={regx:RegExp(`&${i};`,"g"),val:s})}else if(s&&C(t,"!ELEMENT",e)){e+=8;const{index:n}=S(t,e+1);e=n}else if(s&&C(t,"!ATTLIST",e))e+=8;else if(s&&C(t,"!NOTATION",e)){e+=9;const{index:n}=A(t,e+1);e=n}else{if(!C(t,"!--",e))throw new Error("Invalid DOCTYPE");r=!0}i++,o=""}if(0!==i)throw new Error("Unclosed DOCTYPE")}return{entities:n,i:e}}const P=(t,e)=>{for(;e<t.length&&/\s/.test(t[e]);)e++;return e};function O(t,e){e=P(t,e);let n="";for(;e<t.length&&!/\s/.test(t[e])&&'"'!==t[e]&&"'"!==t[e];)n+=t[e],e++;if($(n),e=P(t,e),"SYSTEM"===t.substring(e,e+6).toUpperCase())throw new Error("External entities are not supported");if("%"===t[e])throw new Error("Parameter entities are not supported");let i="";return[e,i]=I(t,e,"entity"),[n,i,--e]}function A(t,e){e=P(t,e);let n="";for(;e<t.length&&!/\s/.test(t[e]);)n+=t[e],e++;$(n),e=P(t,e);const i=t.substring(e,e+6).toUpperCase();if("SYSTEM"!==i&&"PUBLIC"!==i)throw new Error(`Expected SYSTEM or PUBLIC, found "${i}"`);e+=i.length,e=P(t,e);let s=null,r=null;if("PUBLIC"===i)[e,s]=I(t,e,"publicIdentifier"),'"'!==t[e=P(t,e)]&&"'"!==t[e]||([e,r]=I(t,e,"systemIdentifier"));else if("SYSTEM"===i&&([e,r]=I(t,e,"systemIdentifier"),!r))throw new Error("Missing mandatory system identifier for SYSTEM notation");return{notationName:n,publicIdentifier:s,systemIdentifier:r,index:--e}}function I(t,e,n){let i="";const s=t[e];if('"'!==s&&"'"!==s)throw new Error(`Expected quoted string, found "${s}"`);for(e++;e<t.length&&t[e]!==s;)i+=t[e],e++;if(t[e]!==s)throw new Error(`Unterminated ${n} value`);return[++e,i]}function S(t,e){e=P(t,e);let n="";for(;e<t.length&&!/\s/.test(t[e]);)n+=t[e],e++;if(!$(n))throw new Error(`Invalid element name: "${n}"`);let i="";if("E"===t[e=P(t,e)]&&C(t,"MPTY",e))e+=4;else if("A"===t[e]&&C(t,"NY",e))e+=2;else{if("("!==t[e])throw new Error(`Invalid Element Expression, found "${t[e]}"`);for(e++;e<t.length&&")"!==t[e];)i+=t[e],e++;if(")"!==t[e])throw new Error("Unterminated content model")}return{elementName:n,contentModel:i.trim(),index:e}}function C(t,e,n){for(let i=0;i<e.length;i++)if(e[i]!==t[n+i+1])return!1;return!0}function $(t){if(r(t))return t;throw new Error(`Invalid entity name ${t}`)}const j=/^[-+]?0x[a-fA-F0-9]+$/,D=/^([\-\+])?(0*)([0-9]*(\.[0-9]*)?)$/,V={hex:!0,leadingZeros:!0,decimalPoint:".",eNotation:!0};const M=/^([-+])?(0*)(\d*(\.\d*)?[eE][-\+]?\d+)$/;function _(t){return"function"==typeof t?t:Array.isArray(t)?e=>{for(const n of t){if("string"==typeof n&&e===n)return!0;if(n instanceof RegExp&&n.test(e))return!0}}:()=>!1}class k{constructor(t){this.options=t,this.currentNode=null,this.tagsNodeStack=[],this.docTypeEntities={},this.lastEntities={apos:{regex:/&(apos|#39|#x27);/g,val:"'"},gt:{regex:/&(gt|#62|#x3E);/g,val:">"},lt:{regex:/&(lt|#60|#x3C);/g,val:"<"},quot:{regex:/&(quot|#34|#x22);/g,val:'"'}},this.ampEntity={regex:/&(amp|#38|#x26);/g,val:"&"},this.htmlEntities={space:{regex:/&(nbsp|#160);/g,val:" "},cent:{regex:/&(cent|#162);/g,val:"¢"},pound:{regex:/&(pound|#163);/g,val:"£"},yen:{regex:/&(yen|#165);/g,val:"¥"},euro:{regex:/&(euro|#8364);/g,val:"€"},copyright:{regex:/&(copy|#169);/g,val:"©"},reg:{regex:/&(reg|#174);/g,val:"®"},inr:{regex:/&(inr|#8377);/g,val:"₹"},num_dec:{regex:/&#([0-9]{1,7});/g,val:(t,e)=>String.fromCodePoint(Number.parseInt(e,10))},num_hex:{regex:/&#x([0-9a-fA-F]{1,6});/g,val:(t,e)=>String.fromCodePoint(Number.parseInt(e,16))}},this.addExternalEntities=F,this.parseXml=X,this.parseTextData=L,this.resolveNameSpace=B,this.buildAttributesMap=G,this.isItStopNode=Z,this.replaceEntitiesValue=R,this.readStopNodeData=J,this.saveTextToParentTag=q,this.addChild=Y,this.ignoreAttributesFn=_(this.options.ignoreAttributes)}}function F(t){const e=Object.keys(t);for(let n=0;n<e.length;n++){const i=e[n];this.lastEntities[i]={regex:new RegExp("&"+i+";","g"),val:t[i]}}}function L(t,e,n,i,s,r,o){if(void 0!==t&&(this.options.trimValues&&!i&&(t=t.trim()),t.length>0)){o||(t=this.replaceEntitiesValue(t));const i=this.options.tagValueProcessor(e,t,n,s,r);return null==i?t:typeof i!=typeof t||i!==t?i:this.options.trimValues||t.trim()===t?H(t,this.options.parseTagValue,this.options.numberParseOptions):t}}function B(t){if(this.options.removeNSPrefix){const e=t.split(":"),n="/"===t.charAt(0)?"/":"";if("xmlns"===e[0])return"";2===e.length&&(t=n+e[1])}return t}const U=new RegExp("([^\\s=]+)\\s*(=\\s*(['\"])([\\s\\S]*?)\\3)?","gm");function G(t,e,n){if(!0!==this.options.ignoreAttributes&&"string"==typeof t){const n=s(t,U),i=n.length,r={};for(let t=0;t<i;t++){const i=this.resolveNameSpace(n[t][1]);if(this.ignoreAttributesFn(i,e))continue;let s=n[t][4],o=this.options.attributeNamePrefix+i;if(i.length)if(this.options.transformAttributeName&&(o=this.options.transformAttributeName(o)),"__proto__"===o&&(o="#__proto__"),void 0!==s){this.options.trimValues&&(s=s.trim()),s=this.replaceEntitiesValue(s);const t=this.options.attributeValueProcessor(i,s,e);r[o]=null==t?s:typeof t!=typeof s||t!==s?t:H(s,this.options.parseAttributeValue,this.options.numberParseOptions)}else this.options.allowBooleanAttributes&&(r[o]=!0)}if(!Object.keys(r).length)return;if(this.options.attributesGroupName){const t={};return t[this.options.attributesGroupName]=r,t}return r}}const X=function(t){t=t.replace(/\r\n?/g,"\n");const e=new T("!xml");let n=e,i="",s="";for(let r=0;r<t.length;r++)if("<"===t[r])if("/"===t[r+1]){const e=W(t,">",r,"Closing Tag is not closed.");let o=t.substring(r+2,e).trim();if(this.options.removeNSPrefix){const t=o.indexOf(":");-1!==t&&(o=o.substr(t+1))}this.options.transformTagName&&(o=this.options.transformTagName(o)),n&&(i=this.saveTextToParentTag(i,n,s));const a=s.substring(s.lastIndexOf(".")+1);if(o&&-1!==this.options.unpairedTags.indexOf(o))throw new Error(`Unpaired tag can not be used as closing tag: </${o}>`);let l=0;a&&-1!==this.options.unpairedTags.indexOf(a)?(l=s.lastIndexOf(".",s.lastIndexOf(".")-1),this.tagsNodeStack.pop()):l=s.lastIndexOf("."),s=s.substring(0,l),n=this.tagsNodeStack.pop(),i="",r=e}else if("?"===t[r+1]){let e=z(t,r,!1,"?>");if(!e)throw new Error("Pi Tag is not closed.");if(i=this.saveTextToParentTag(i,n,s),this.options.ignoreDeclaration&&"?xml"===e.tagName||this.options.ignorePiTags);else{const t=new T(e.tagName);t.add(this.options.textNodeName,""),e.tagName!==e.tagExp&&e.attrExpPresent&&(t[":@"]=this.buildAttributesMap(e.tagExp,s,e.tagName)),this.addChild(n,t,s,r)}r=e.closeIndex+1}else if("!--"===t.substr(r+1,3)){const e=W(t,"--\x3e",r+4,"Comment is not closed.");if(this.options.commentPropName){const o=t.substring(r+4,e-2);i=this.saveTextToParentTag(i,n,s),n.add(this.options.commentPropName,[{[this.options.textNodeName]:o}])}r=e}else if("!D"===t.substr(r+1,2)){const e=w(t,r);this.docTypeEntities=e.entities,r=e.i}else if("!["===t.substr(r+1,2)){const e=W(t,"]]>",r,"CDATA is not closed.")-2,o=t.substring(r+9,e);i=this.saveTextToParentTag(i,n,s);let a=this.parseTextData(o,n.tagname,s,!0,!1,!0,!0);null==a&&(a=""),this.options.cdataPropName?n.add(this.options.cdataPropName,[{[this.options.textNodeName]:o}]):n.add(this.options.textNodeName,a),r=e+2}else{let o=z(t,r,this.options.removeNSPrefix),a=o.tagName;const l=o.rawTagName;let u=o.tagExp,h=o.attrExpPresent,d=o.closeIndex;this.options.transformTagName&&(a=this.options.transformTagName(a)),n&&i&&"!xml"!==n.tagname&&(i=this.saveTextToParentTag(i,n,s,!1));const f=n;f&&-1!==this.options.unpairedTags.indexOf(f.tagname)&&(n=this.tagsNodeStack.pop(),s=s.substring(0,s.lastIndexOf("."))),a!==e.tagname&&(s+=s?"."+a:a);const c=r;if(this.isItStopNode(this.options.stopNodes,s,a)){let e="";if(u.length>0&&u.lastIndexOf("/")===u.length-1)"/"===a[a.length-1]?(a=a.substr(0,a.length-1),s=s.substr(0,s.length-1),u=a):u=u.substr(0,u.length-1),r=o.closeIndex;else if(-1!==this.options.unpairedTags.indexOf(a))r=o.closeIndex;else{const n=this.readStopNodeData(t,l,d+1);if(!n)throw new Error(`Unexpected end of ${l}`);r=n.i,e=n.tagContent}const i=new T(a);a!==u&&h&&(i[":@"]=this.buildAttributesMap(u,s,a)),e&&(e=this.parseTextData(e,a,s,!0,h,!0,!0)),s=s.substr(0,s.lastIndexOf(".")),i.add(this.options.textNodeName,e),this.addChild(n,i,s,c)}else{if(u.length>0&&u.lastIndexOf("/")===u.length-1){"/"===a[a.length-1]?(a=a.substr(0,a.length-1),s=s.substr(0,s.length-1),u=a):u=u.substr(0,u.length-1),this.options.transformTagName&&(a=this.options.transformTagName(a));const t=new T(a);a!==u&&h&&(t[":@"]=this.buildAttributesMap(u,s,a)),this.addChild(n,t,s,c),s=s.substr(0,s.lastIndexOf("."))}else{const t=new T(a);this.tagsNodeStack.push(n),a!==u&&h&&(t[":@"]=this.buildAttributesMap(u,s,a)),this.addChild(n,t,s,c),n=t}i="",r=d}}else i+=t[r];return e.child};function Y(t,e,n,i){this.options.captureMetaData||(i=void 0);const s=this.options.updateTag(e.tagname,n,e[":@"]);!1===s||("string"==typeof s?(e.tagname=s,t.addChild(e,i)):t.addChild(e,i))}const R=function(t){if(this.options.processEntities){for(let e in this.docTypeEntities){const n=this.docTypeEntities[e];t=t.replace(n.regx,n.val)}for(let e in this.lastEntities){const n=this.lastEntities[e];t=t.replace(n.regex,n.val)}if(this.options.htmlEntities)for(let e in this.htmlEntities){const n=this.htmlEntities[e];t=t.replace(n.regex,n.val)}t=t.replace(this.ampEntity.regex,this.ampEntity.val)}return t};function q(t,e,n,i){return t&&(void 0===i&&(i=0===e.child.length),void 0!==(t=this.parseTextData(t,e.tagname,n,!1,!!e[":@"]&&0!==Object.keys(e[":@"]).length,i))&&""!==t&&e.add(this.options.textNodeName,t),t=""),t}function Z(t,e,n){const i="*."+n;for(const n in t){const s=t[n];if(i===s||e===s)return!0}return!1}function W(t,e,n,i){const s=t.indexOf(e,n);if(-1===s)throw new Error(i);return s+e.length-1}function z(t,e,n,i=">"){const s=function(t,e,n=">"){let i,s="";for(let r=e;r<t.length;r++){let e=t[r];if(i)e===i&&(i="");else if('"'===e||"'"===e)i=e;else if(e===n[0]){if(!n[1])return{data:s,index:r};if(t[r+1]===n[1])return{data:s,index:r}}else"\t"===e&&(e=" ");s+=e}}(t,e+1,i);if(!s)return;let r=s.data;const o=s.index,a=r.search(/\s/);let l=r,u=!0;-1!==a&&(l=r.substring(0,a),r=r.substring(a+1).trimStart());const h=l;if(n){const t=l.indexOf(":");-1!==t&&(l=l.substr(t+1),u=l!==s.data.substr(t+1))}return{tagName:l,tagExp:r,closeIndex:o,attrExpPresent:u,rawTagName:h}}function J(t,e,n){const i=n;let s=1;for(;n<t.length;n++)if("<"===t[n])if("/"===t[n+1]){const r=W(t,">",n,`${e} is not closed`);if(t.substring(n+2,r).trim()===e&&(s--,0===s))return{tagContent:t.substring(i,n),i:r};n=r}else if("?"===t[n+1])n=W(t,"?>",n+1,"StopNode is not closed.");else if("!--"===t.substr(n+1,3))n=W(t,"--\x3e",n+3,"StopNode is not closed.");else if("!["===t.substr(n+1,2))n=W(t,"]]>",n,"StopNode is not closed.")-2;else{const i=z(t,n,">");i&&((i&&i.tagName)===e&&"/"!==i.tagExp[i.tagExp.length-1]&&s++,n=i.closeIndex)}}function H(t,e,n){if(e&&"string"==typeof t){const e=t.trim();return"true"===e||"false"!==e&&function(t,e={}){if(e=Object.assign({},V,e),!t||"string"!=typeof t)return t;let n=t.trim();if(void 0!==e.skipLike&&e.skipLike.test(n))return t;if("0"===t)return 0;if(e.hex&&j.test(n))return function(t){if(parseInt)return parseInt(t,16);if(Number.parseInt)return Number.parseInt(t,16);if(window&&window.parseInt)return window.parseInt(t,16);throw new Error("parseInt, Number.parseInt, window.parseInt are not supported")}(n);if(-1!==n.search(/.+[eE].+/))return function(t,e,n){if(!n.eNotation)return t;const i=e.match(M);if(i){let s=i[1]||"";const r=-1===i[3].indexOf("e")?"E":"e",o=i[2],a=s?t[o.length+1]===r:t[o.length]===r;return o.length>1&&a?t:1!==o.length||!i[3].startsWith(`.${r}`)&&i[3][0]!==r?n.leadingZeros&&!a?(e=(i[1]||"")+i[3],Number(e)):t:Number(e)}return t}(t,n,e);{const s=D.exec(n);if(s){const r=s[1]||"",o=s[2];let a=(i=s[3])&&-1!==i.indexOf(".")?("."===(i=i.replace(/0+$/,""))?i="0":"."===i[0]?i="0"+i:"."===i[i.length-1]&&(i=i.substring(0,i.length-1)),i):i;const l=r?"."===t[o.length+1]:"."===t[o.length];if(!e.leadingZeros&&(o.length>1||1===o.length&&!l))return t;{const i=Number(n),s=String(i);if(0===i||-0===i)return i;if(-1!==s.search(/[eE]/))return e.eNotation?i:t;if(-1!==n.indexOf("."))return"0"===s||s===a||s===`${r}${a}`?i:t;let l=o?a:n;return o?l===s||r+l===s?i:t:l===s||l===r+s?i:t}}return t}var i}(t,n)}return void 0!==t?t:""}const K=T.getMetaDataSymbol();function Q(t,e){return tt(t,e)}function tt(t,e,n){let i;const s={};for(let r=0;r<t.length;r++){const o=t[r],a=et(o);let l="";if(l=void 0===n?a:n+"."+a,a===e.textNodeName)void 0===i?i=o[a]:i+=""+o[a];else{if(void 0===a)continue;if(o[a]){let t=tt(o[a],e,l);const n=it(t,e);void 0!==o[K]&&(t[K]=o[K]),o[":@"]?nt(t,o[":@"],l,e):1!==Object.keys(t).length||void 0===t[e.textNodeName]||e.alwaysCreateTextNode?0===Object.keys(t).length&&(e.alwaysCreateTextNode?t[e.textNodeName]="":t=""):t=t[e.textNodeName],void 0!==s[a]&&s.hasOwnProperty(a)?(Array.isArray(s[a])||(s[a]=[s[a]]),s[a].push(t)):e.isArray(a,l,n)?s[a]=[t]:s[a]=t}}}return"string"==typeof i?i.length>0&&(s[e.textNodeName]=i):void 0!==i&&(s[e.textNodeName]=i),s}function et(t){const e=Object.keys(t);for(let t=0;t<e.length;t++){const n=e[t];if(":@"!==n)return n}}function nt(t,e,n,i){if(e){const s=Object.keys(e),r=s.length;for(let o=0;o<r;o++){const r=s[o];i.isArray(r,n+"."+r,!0,!0)?t[r]=[e[r]]:t[r]=e[r]}}}function it(t,e){const{textNodeName:n}=e,i=Object.keys(t).length;return 0===i||!(1!==i||!t[n]&&"boolean"!=typeof t[n]&&0!==t[n])}class st{constructor(t){this.externalEntities={},this.options=function(t){return Object.assign({},v,t)}(t)}parse(t,e){if("string"==typeof t);else{if(!t.toString)throw new Error("XML data is accepted in String or Bytes[] form.");t=t.toString()}if(e){!0===e&&(e={});const n=a(t,e);if(!0!==n)throw Error(`${n.err.msg}:${n.err.line}:${n.err.col}`)}const n=new k(this.options);n.addExternalEntities(this.externalEntities);const i=n.parseXml(t);return this.options.preserveOrder||void 0===i?i:Q(i,this.options)}addEntity(t,e){if(-1!==e.indexOf("&"))throw new Error("Entity value can't have '&'");if(-1!==t.indexOf("&")||-1!==t.indexOf(";"))throw new Error("An entity must be set without '&' and ';'. Eg. use '#xD' for '&#xD;'");if("&"===e)throw new Error("An entity with value '&' is not permitted");this.externalEntities[t]=e}static getMetaDataSymbol(){return T.getMetaDataSymbol()}}function rt(t,e){let n="";return e.format&&e.indentBy.length>0&&(n="\n"),ot(t,e,"",n)}function ot(t,e,n,i){let s="",r=!1;for(let o=0;o<t.length;o++){const a=t[o],l=at(a);if(void 0===l)continue;let u="";if(u=0===n.length?l:`${n}.${l}`,l===e.textNodeName){let t=a[l];ut(u,e)||(t=e.tagValueProcessor(l,t),t=ht(t,e)),r&&(s+=i),s+=t,r=!1;continue}if(l===e.cdataPropName){r&&(s+=i),s+=`<![CDATA[${a[l][0][e.textNodeName]}]]>`,r=!1;continue}if(l===e.commentPropName){s+=i+`\x3c!--${a[l][0][e.textNodeName]}--\x3e`,r=!0;continue}if("?"===l[0]){const t=lt(a[":@"],e),n="?xml"===l?"":i;let o=a[l][0][e.textNodeName];o=0!==o.length?" "+o:"",s+=n+`<${l}${o}${t}?>`,r=!0;continue}let h=i;""!==h&&(h+=e.indentBy);const d=i+`<${l}${lt(a[":@"],e)}`,f=ot(a[l],e,u,h);-1!==e.unpairedTags.indexOf(l)?e.suppressUnpairedNode?s+=d+">":s+=d+"/>":f&&0!==f.length||!e.suppressEmptyNode?f&&f.endsWith(">")?s+=d+`>${f}${i}</${l}>`:(s+=d+">",f&&""!==i&&(f.includes("/>")||f.includes("</"))?s+=i+e.indentBy+f+i:s+=f,s+=`</${l}>`):s+=d+"/>",r=!0}return s}function at(t){const e=Object.keys(t);for(let n=0;n<e.length;n++){const i=e[n];if(t.hasOwnProperty(i)&&":@"!==i)return i}}function lt(t,e){let n="";if(t&&!e.ignoreAttributes)for(let i in t){if(!t.hasOwnProperty(i))continue;let s=e.attributeValueProcessor(i,t[i]);s=ht(s,e),!0===s&&e.suppressBooleanAttributes?n+=` ${i.substr(e.attributeNamePrefix.length)}`:n+=` ${i.substr(e.attributeNamePrefix.length)}="${s}"`}return n}function ut(t,e){let n=(t=t.substr(0,t.length-e.textNodeName.length-1)).substr(t.lastIndexOf(".")+1);for(let i in e.stopNodes)if(e.stopNodes[i]===t||e.stopNodes[i]==="*."+n)return!0;return!1}function ht(t,e){if(t&&t.length>0&&e.processEntities)for(let n=0;n<e.entities.length;n++){const i=e.entities[n];t=t.replace(i.regex,i.val)}return t}const dt={attributeNamePrefix:"@_",attributesGroupName:!1,textNodeName:"#text",ignoreAttributes:!0,cdataPropName:!1,format:!1,indentBy:"  ",suppressEmptyNode:!1,suppressUnpairedNode:!0,suppressBooleanAttributes:!0,tagValueProcessor:function(t,e){return e},attributeValueProcessor:function(t,e){return e},preserveOrder:!1,commentPropName:!1,unpairedTags:[],entities:[{regex:new RegExp("&","g"),val:"&amp;"},{regex:new RegExp(">","g"),val:"&gt;"},{regex:new RegExp("<","g"),val:"&lt;"},{regex:new RegExp("'","g"),val:"&apos;"},{regex:new RegExp('"',"g"),val:"&quot;"}],processEntities:!0,stopNodes:[],oneListGroup:!1};function ft(t){this.options=Object.assign({},dt,t),!0===this.options.ignoreAttributes||this.options.attributesGroupName?this.isAttribute=function(){return!1}:(this.ignoreAttributesFn=_(this.options.ignoreAttributes),this.attrPrefixLen=this.options.attributeNamePrefix.length,this.isAttribute=gt),this.processTextOrObjNode=ct,this.options.format?(this.indentate=pt,this.tagEndChar=">\n",this.newLine="\n"):(this.indentate=function(){return""},this.tagEndChar=">",this.newLine="")}function ct(t,e,n,i){const s=this.j2x(t,n+1,i.concat(e));return void 0!==t[this.options.textNodeName]&&1===Object.keys(t).length?this.buildTextValNode(t[this.options.textNodeName],e,s.attrStr,n):this.buildObjectNode(s.val,e,s.attrStr,n)}function pt(t){return this.options.indentBy.repeat(t)}function gt(t){return!(!t.startsWith(this.options.attributeNamePrefix)||t===this.options.textNodeName)&&t.substr(this.attrPrefixLen)}ft.prototype.build=function(t){return this.options.preserveOrder?rt(t,this.options):(Array.isArray(t)&&this.options.arrayNodeName&&this.options.arrayNodeName.length>1&&(t={[this.options.arrayNodeName]:t}),this.j2x(t,0,[]).val)},ft.prototype.j2x=function(t,e,n){let i="",s="";const r=n.join(".");for(let o in t)if(Object.prototype.hasOwnProperty.call(t,o))if(void 0===t[o])this.isAttribute(o)&&(s+="");else if(null===t[o])this.isAttribute(o)||o===this.options.cdataPropName?s+="":"?"===o[0]?s+=this.indentate(e)+"<"+o+"?"+this.tagEndChar:s+=this.indentate(e)+"<"+o+"/"+this.tagEndChar;else if(t[o]instanceof Date)s+=this.buildTextValNode(t[o],o,"",e);else if("object"!=typeof t[o]){const n=this.isAttribute(o);if(n&&!this.ignoreAttributesFn(n,r))i+=this.buildAttrPairStr(n,""+t[o]);else if(!n)if(o===this.options.textNodeName){let e=this.options.tagValueProcessor(o,""+t[o]);s+=this.replaceEntitiesValue(e)}else s+=this.buildTextValNode(t[o],o,"",e)}else if(Array.isArray(t[o])){const i=t[o].length;let r="",a="";for(let l=0;l<i;l++){const i=t[o][l];if(void 0===i);else if(null===i)"?"===o[0]?s+=this.indentate(e)+"<"+o+"?"+this.tagEndChar:s+=this.indentate(e)+"<"+o+"/"+this.tagEndChar;else if("object"==typeof i)if(this.options.oneListGroup){const t=this.j2x(i,e+1,n.concat(o));r+=t.val,this.options.attributesGroupName&&i.hasOwnProperty(this.options.attributesGroupName)&&(a+=t.attrStr)}else r+=this.processTextOrObjNode(i,o,e,n);else if(this.options.oneListGroup){let t=this.options.tagValueProcessor(o,i);t=this.replaceEntitiesValue(t),r+=t}else r+=this.buildTextValNode(i,o,"",e)}this.options.oneListGroup&&(r=this.buildObjectNode(r,o,a,e)),s+=r}else if(this.options.attributesGroupName&&o===this.options.attributesGroupName){const e=Object.keys(t[o]),n=e.length;for(let s=0;s<n;s++)i+=this.buildAttrPairStr(e[s],""+t[o][e[s]])}else s+=this.processTextOrObjNode(t[o],o,e,n);return{attrStr:i,val:s}},ft.prototype.buildAttrPairStr=function(t,e){return e=this.options.attributeValueProcessor(t,""+e),e=this.replaceEntitiesValue(e),this.options.suppressBooleanAttributes&&"true"===e?" "+t:" "+t+'="'+e+'"'},ft.prototype.buildObjectNode=function(t,e,n,i){if(""===t)return"?"===e[0]?this.indentate(i)+"<"+e+n+"?"+this.tagEndChar:this.indentate(i)+"<"+e+n+this.closeTag(e)+this.tagEndChar;{let s="</"+e+this.tagEndChar,r="";return"?"===e[0]&&(r="?",s=""),!n&&""!==n||-1!==t.indexOf("<")?!1!==this.options.commentPropName&&e===this.options.commentPropName&&0===r.length?this.indentate(i)+`\x3c!--${t}--\x3e`+this.newLine:this.indentate(i)+"<"+e+n+r+this.tagEndChar+t+this.indentate(i)+s:this.indentate(i)+"<"+e+n+r+">"+t+s}},ft.prototype.closeTag=function(t){let e="";return-1!==this.options.unpairedTags.indexOf(t)?this.options.suppressUnpairedNode||(e="/"):e=this.options.suppressEmptyNode?"/":`></${t}`,e},ft.prototype.buildTextValNode=function(t,e,n,i){if(!1!==this.options.cdataPropName&&e===this.options.cdataPropName)return this.indentate(i)+`<![CDATA[${t}]]>`+this.newLine;if(!1!==this.options.commentPropName&&e===this.options.commentPropName)return this.indentate(i)+`\x3c!--${t}--\x3e`+this.newLine;if("?"===e[0])return this.indentate(i)+"<"+e+n+"?"+this.tagEndChar;{let s=this.options.tagValueProcessor(e,t);return s=this.replaceEntitiesValue(s),""===s?this.indentate(i)+"<"+e+n+this.closeTag(e)+this.tagEndChar:this.indentate(i)+"<"+e+n+">"+s+"</"+e+this.tagEndChar}},ft.prototype.replaceEntitiesValue=function(t){if(t&&t.length>0&&this.options.processEntities)for(let e=0;e<this.options.entities.length;e++){const n=this.options.entities[e];t=t.replace(n.regex,n.val)}return t};const mt={validate:a};module.exports=e})();
+
+/***/ }),
+
+/***/ 4678:
+/***/ ((module) => {
+
+(()=>{"use strict";var t={d:(e,n)=>{for(var i in n)t.o(n,i)&&!t.o(e,i)&&Object.defineProperty(e,i,{enumerable:!0,get:n[i]})},o:(t,e)=>Object.prototype.hasOwnProperty.call(t,e),r:t=>{"undefined"!=typeof Symbol&&Symbol.toStringTag&&Object.defineProperty(t,Symbol.toStringTag,{value:"Module"}),Object.defineProperty(t,"__esModule",{value:!0})}},e={};t.r(e),t.d(e,{XMLBuilder:()=>ft,XMLParser:()=>st,XMLValidator:()=>mt});const n=":A-Za-z_\\u00C0-\\u00D6\\u00D8-\\u00F6\\u00F8-\\u02FF\\u0370-\\u037D\\u037F-\\u1FFF\\u200C-\\u200D\\u2070-\\u218F\\u2C00-\\u2FEF\\u3001-\\uD7FF\\uF900-\\uFDCF\\uFDF0-\\uFFFD",i=new RegExp("^["+n+"]["+n+"\\-.\\d\\u00B7\\u0300-\\u036F\\u203F-\\u2040]*$");function s(t,e){const n=[];let i=e.exec(t);for(;i;){const s=[];s.startIndex=e.lastIndex-i[0].length;const r=i.length;for(let t=0;t<r;t++)s.push(i[t]);n.push(s),i=e.exec(t)}return n}const r=function(t){return!(null==i.exec(t))},o={allowBooleanAttributes:!1,unpairedTags:[]};function a(t,e){e=Object.assign({},o,e);const n=[];let i=!1,s=!1;"\ufeff"===t[0]&&(t=t.substr(1));for(let o=0;o<t.length;o++)if("<"===t[o]&&"?"===t[o+1]){if(o+=2,o=u(t,o),o.err)return o}else{if("<"!==t[o]){if(l(t[o]))continue;return x("InvalidChar","char '"+t[o]+"' is not expected.",N(t,o))}{let a=o;if(o++,"!"===t[o]){o=h(t,o);continue}{let d=!1;"/"===t[o]&&(d=!0,o++);let f="";for(;o<t.length&&">"!==t[o]&&" "!==t[o]&&"\t"!==t[o]&&"\n"!==t[o]&&"\r"!==t[o];o++)f+=t[o];if(f=f.trim(),"/"===f[f.length-1]&&(f=f.substring(0,f.length-1),o--),!r(f)){let e;return e=0===f.trim().length?"Invalid space after '<'.":"Tag '"+f+"' is an invalid name.",x("InvalidTag",e,N(t,o))}const p=c(t,o);if(!1===p)return x("InvalidAttr","Attributes for '"+f+"' have open quote.",N(t,o));let b=p.value;if(o=p.index,"/"===b[b.length-1]){const n=o-b.length;b=b.substring(0,b.length-1);const s=g(b,e);if(!0!==s)return x(s.err.code,s.err.msg,N(t,n+s.err.line));i=!0}else if(d){if(!p.tagClosed)return x("InvalidTag","Closing tag '"+f+"' doesn't have proper closing.",N(t,o));if(b.trim().length>0)return x("InvalidTag","Closing tag '"+f+"' can't have attributes or invalid starting.",N(t,a));if(0===n.length)return x("InvalidTag","Closing tag '"+f+"' has not been opened.",N(t,a));{const e=n.pop();if(f!==e.tagName){let n=N(t,e.tagStartPos);return x("InvalidTag","Expected closing tag '"+e.tagName+"' (opened in line "+n.line+", col "+n.col+") instead of closing tag '"+f+"'.",N(t,a))}0==n.length&&(s=!0)}}else{const r=g(b,e);if(!0!==r)return x(r.err.code,r.err.msg,N(t,o-b.length+r.err.line));if(!0===s)return x("InvalidXml","Multiple possible root nodes found.",N(t,o));-1!==e.unpairedTags.indexOf(f)||n.push({tagName:f,tagStartPos:a}),i=!0}for(o++;o<t.length;o++)if("<"===t[o]){if("!"===t[o+1]){o++,o=h(t,o);continue}if("?"!==t[o+1])break;if(o=u(t,++o),o.err)return o}else if("&"===t[o]){const e=m(t,o);if(-1==e)return x("InvalidChar","char '&' is not expected.",N(t,o));o=e}else if(!0===s&&!l(t[o]))return x("InvalidXml","Extra text at the end",N(t,o));"<"===t[o]&&o--}}}return i?1==n.length?x("InvalidTag","Unclosed tag '"+n[0].tagName+"'.",N(t,n[0].tagStartPos)):!(n.length>0)||x("InvalidXml","Invalid '"+JSON.stringify(n.map((t=>t.tagName)),null,4).replace(/\r?\n/g,"")+"' found.",{line:1,col:1}):x("InvalidXml","Start tag expected.",1)}function l(t){return" "===t||"\t"===t||"\n"===t||"\r"===t}function u(t,e){const n=e;for(;e<t.length;e++)if("?"!=t[e]&&" "!=t[e]);else{const i=t.substr(n,e-n);if(e>5&&"xml"===i)return x("InvalidXml","XML declaration allowed only at the start of the document.",N(t,e));if("?"==t[e]&&">"==t[e+1]){e++;break}}return e}function h(t,e){if(t.length>e+5&&"-"===t[e+1]&&"-"===t[e+2]){for(e+=3;e<t.length;e++)if("-"===t[e]&&"-"===t[e+1]&&">"===t[e+2]){e+=2;break}}else if(t.length>e+8&&"D"===t[e+1]&&"O"===t[e+2]&&"C"===t[e+3]&&"T"===t[e+4]&&"Y"===t[e+5]&&"P"===t[e+6]&&"E"===t[e+7]){let n=1;for(e+=8;e<t.length;e++)if("<"===t[e])n++;else if(">"===t[e]&&(n--,0===n))break}else if(t.length>e+9&&"["===t[e+1]&&"C"===t[e+2]&&"D"===t[e+3]&&"A"===t[e+4]&&"T"===t[e+5]&&"A"===t[e+6]&&"["===t[e+7])for(e+=8;e<t.length;e++)if("]"===t[e]&&"]"===t[e+1]&&">"===t[e+2]){e+=2;break}return e}const d='"',f="'";function c(t,e){let n="",i="",s=!1;for(;e<t.length;e++){if(t[e]===d||t[e]===f)""===i?i=t[e]:i!==t[e]||(i="");else if(">"===t[e]&&""===i){s=!0;break}n+=t[e]}return""===i&&{value:n,index:e,tagClosed:s}}const p=new RegExp("(\\s*)([^\\s=]+)(\\s*=)?(\\s*(['\"])(([\\s\\S])*?)\\5)?","g");function g(t,e){const n=s(t,p),i={};for(let t=0;t<n.length;t++){if(0===n[t][1].length)return x("InvalidAttr","Attribute '"+n[t][2]+"' has no space in starting.",E(n[t]));if(void 0!==n[t][3]&&void 0===n[t][4])return x("InvalidAttr","Attribute '"+n[t][2]+"' is without value.",E(n[t]));if(void 0===n[t][3]&&!e.allowBooleanAttributes)return x("InvalidAttr","boolean attribute '"+n[t][2]+"' is not allowed.",E(n[t]));const s=n[t][2];if(!b(s))return x("InvalidAttr","Attribute '"+s+"' is an invalid name.",E(n[t]));if(i.hasOwnProperty(s))return x("InvalidAttr","Attribute '"+s+"' is repeated.",E(n[t]));i[s]=1}return!0}function m(t,e){if(";"===t[++e])return-1;if("#"===t[e])return function(t,e){let n=/\d/;for("x"===t[e]&&(e++,n=/[\da-fA-F]/);e<t.length;e++){if(";"===t[e])return e;if(!t[e].match(n))break}return-1}(t,++e);let n=0;for(;e<t.length;e++,n++)if(!(t[e].match(/\w/)&&n<20)){if(";"===t[e])break;return-1}return e}function x(t,e,n){return{err:{code:t,msg:e,line:n.line||n,col:n.col}}}function b(t){return r(t)}function N(t,e){const n=t.substring(0,e).split(/\r?\n/);return{line:n.length,col:n[n.length-1].length+1}}function E(t){return t.startIndex+t[1].length}const v={preserveOrder:!1,attributeNamePrefix:"@_",attributesGroupName:!1,textNodeName:"#text",ignoreAttributes:!0,removeNSPrefix:!1,allowBooleanAttributes:!1,parseTagValue:!0,parseAttributeValue:!1,trimValues:!0,cdataPropName:!1,numberParseOptions:{hex:!0,leadingZeros:!0,eNotation:!0},tagValueProcessor:function(t,e){return e},attributeValueProcessor:function(t,e){return e},stopNodes:[],alwaysCreateTextNode:!1,isArray:()=>!1,commentPropName:!1,unpairedTags:[],processEntities:!0,htmlEntities:!1,ignoreDeclaration:!1,ignorePiTags:!1,transformTagName:!1,transformAttributeName:!1,updateTag:function(t,e,n){return t},captureMetaData:!1};let y;y="function"!=typeof Symbol?"@@xmlMetadata":Symbol("XML Node Metadata");class T{constructor(t){this.tagname=t,this.child=[],this[":@"]={}}add(t,e){"__proto__"===t&&(t="#__proto__"),this.child.push({[t]:e})}addChild(t,e){"__proto__"===t.tagname&&(t.tagname="#__proto__"),t[":@"]&&Object.keys(t[":@"]).length>0?this.child.push({[t.tagname]:t.child,":@":t[":@"]}):this.child.push({[t.tagname]:t.child}),void 0!==e&&(this.child[this.child.length-1][y]={startIndex:e})}static getMetaDataSymbol(){return y}}function w(t,e){const n={};if("O"!==t[e+3]||"C"!==t[e+4]||"T"!==t[e+5]||"Y"!==t[e+6]||"P"!==t[e+7]||"E"!==t[e+8])throw new Error("Invalid Tag instead of DOCTYPE");{e+=9;let i=1,s=!1,r=!1,o="";for(;e<t.length;e++)if("<"!==t[e]||r)if(">"===t[e]){if(r?"-"===t[e-1]&&"-"===t[e-2]&&(r=!1,i--):i--,0===i)break}else"["===t[e]?s=!0:o+=t[e];else{if(s&&C(t,"!ENTITY",e)){let i,s;e+=7,[i,s,e]=O(t,e+1),-1===s.indexOf("&")&&(n[i]={regx:RegExp(`&${i};`,"g"),val:s})}else if(s&&C(t,"!ELEMENT",e)){e+=8;const{index:n}=S(t,e+1);e=n}else if(s&&C(t,"!ATTLIST",e))e+=8;else if(s&&C(t,"!NOTATION",e)){e+=9;const{index:n}=A(t,e+1);e=n}else{if(!C(t,"!--",e))throw new Error("Invalid DOCTYPE");r=!0}i++,o=""}if(0!==i)throw new Error("Unclosed DOCTYPE")}return{entities:n,i:e}}const P=(t,e)=>{for(;e<t.length&&/\s/.test(t[e]);)e++;return e};function O(t,e){e=P(t,e);let n="";for(;e<t.length&&!/\s/.test(t[e])&&'"'!==t[e]&&"'"!==t[e];)n+=t[e],e++;if($(n),e=P(t,e),"SYSTEM"===t.substring(e,e+6).toUpperCase())throw new Error("External entities are not supported");if("%"===t[e])throw new Error("Parameter entities are not supported");let i="";return[e,i]=I(t,e,"entity"),[n,i,--e]}function A(t,e){e=P(t,e);let n="";for(;e<t.length&&!/\s/.test(t[e]);)n+=t[e],e++;$(n),e=P(t,e);const i=t.substring(e,e+6).toUpperCase();if("SYSTEM"!==i&&"PUBLIC"!==i)throw new Error(`Expected SYSTEM or PUBLIC, found "${i}"`);e+=i.length,e=P(t,e);let s=null,r=null;if("PUBLIC"===i)[e,s]=I(t,e,"publicIdentifier"),'"'!==t[e=P(t,e)]&&"'"!==t[e]||([e,r]=I(t,e,"systemIdentifier"));else if("SYSTEM"===i&&([e,r]=I(t,e,"systemIdentifier"),!r))throw new Error("Missing mandatory system identifier for SYSTEM notation");return{notationName:n,publicIdentifier:s,systemIdentifier:r,index:--e}}function I(t,e,n){let i="";const s=t[e];if('"'!==s&&"'"!==s)throw new Error(`Expected quoted string, found "${s}"`);for(e++;e<t.length&&t[e]!==s;)i+=t[e],e++;if(t[e]!==s)throw new Error(`Unterminated ${n} value`);return[++e,i]}function S(t,e){e=P(t,e);let n="";for(;e<t.length&&!/\s/.test(t[e]);)n+=t[e],e++;if(!$(n))throw new Error(`Invalid element name: "${n}"`);let i="";if("E"===t[e=P(t,e)]&&C(t,"MPTY",e))e+=4;else if("A"===t[e]&&C(t,"NY",e))e+=2;else{if("("!==t[e])throw new Error(`Invalid Element Expression, found "${t[e]}"`);for(e++;e<t.length&&")"!==t[e];)i+=t[e],e++;if(")"!==t[e])throw new Error("Unterminated content model")}return{elementName:n,contentModel:i.trim(),index:e}}function C(t,e,n){for(let i=0;i<e.length;i++)if(e[i]!==t[n+i+1])return!1;return!0}function $(t){if(r(t))return t;throw new Error(`Invalid entity name ${t}`)}const j=/^[-+]?0x[a-fA-F0-9]+$/,D=/^([\-\+])?(0*)([0-9]*(\.[0-9]*)?)$/,V={hex:!0,leadingZeros:!0,decimalPoint:".",eNotation:!0};const M=/^([-+])?(0*)(\d*(\.\d*)?[eE][-\+]?\d+)$/;function _(t){return"function"==typeof t?t:Array.isArray(t)?e=>{for(const n of t){if("string"==typeof n&&e===n)return!0;if(n instanceof RegExp&&n.test(e))return!0}}:()=>!1}class k{constructor(t){this.options=t,this.currentNode=null,this.tagsNodeStack=[],this.docTypeEntities={},this.lastEntities={apos:{regex:/&(apos|#39|#x27);/g,val:"'"},gt:{regex:/&(gt|#62|#x3E);/g,val:">"},lt:{regex:/&(lt|#60|#x3C);/g,val:"<"},quot:{regex:/&(quot|#34|#x22);/g,val:'"'}},this.ampEntity={regex:/&(amp|#38|#x26);/g,val:"&"},this.htmlEntities={space:{regex:/&(nbsp|#160);/g,val:" "},cent:{regex:/&(cent|#162);/g,val:"¢"},pound:{regex:/&(pound|#163);/g,val:"£"},yen:{regex:/&(yen|#165);/g,val:"¥"},euro:{regex:/&(euro|#8364);/g,val:"€"},copyright:{regex:/&(copy|#169);/g,val:"©"},reg:{regex:/&(reg|#174);/g,val:"®"},inr:{regex:/&(inr|#8377);/g,val:"₹"},num_dec:{regex:/&#([0-9]{1,7});/g,val:(t,e)=>String.fromCodePoint(Number.parseInt(e,10))},num_hex:{regex:/&#x([0-9a-fA-F]{1,6});/g,val:(t,e)=>String.fromCodePoint(Number.parseInt(e,16))}},this.addExternalEntities=F,this.parseXml=X,this.parseTextData=L,this.resolveNameSpace=B,this.buildAttributesMap=G,this.isItStopNode=Z,this.replaceEntitiesValue=R,this.readStopNodeData=J,this.saveTextToParentTag=q,this.addChild=Y,this.ignoreAttributesFn=_(this.options.ignoreAttributes)}}function F(t){const e=Object.keys(t);for(let n=0;n<e.length;n++){const i=e[n];this.lastEntities[i]={regex:new RegExp("&"+i+";","g"),val:t[i]}}}function L(t,e,n,i,s,r,o){if(void 0!==t&&(this.options.trimValues&&!i&&(t=t.trim()),t.length>0)){o||(t=this.replaceEntitiesValue(t));const i=this.options.tagValueProcessor(e,t,n,s,r);return null==i?t:typeof i!=typeof t||i!==t?i:this.options.trimValues||t.trim()===t?H(t,this.options.parseTagValue,this.options.numberParseOptions):t}}function B(t){if(this.options.removeNSPrefix){const e=t.split(":"),n="/"===t.charAt(0)?"/":"";if("xmlns"===e[0])return"";2===e.length&&(t=n+e[1])}return t}const U=new RegExp("([^\\s=]+)\\s*(=\\s*(['\"])([\\s\\S]*?)\\3)?","gm");function G(t,e,n){if(!0!==this.options.ignoreAttributes&&"string"==typeof t){const n=s(t,U),i=n.length,r={};for(let t=0;t<i;t++){const i=this.resolveNameSpace(n[t][1]);if(this.ignoreAttributesFn(i,e))continue;let s=n[t][4],o=this.options.attributeNamePrefix+i;if(i.length)if(this.options.transformAttributeName&&(o=this.options.transformAttributeName(o)),"__proto__"===o&&(o="#__proto__"),void 0!==s){this.options.trimValues&&(s=s.trim()),s=this.replaceEntitiesValue(s);const t=this.options.attributeValueProcessor(i,s,e);r[o]=null==t?s:typeof t!=typeof s||t!==s?t:H(s,this.options.parseAttributeValue,this.options.numberParseOptions)}else this.options.allowBooleanAttributes&&(r[o]=!0)}if(!Object.keys(r).length)return;if(this.options.attributesGroupName){const t={};return t[this.options.attributesGroupName]=r,t}return r}}const X=function(t){t=t.replace(/\r\n?/g,"\n");const e=new T("!xml");let n=e,i="",s="";for(let r=0;r<t.length;r++)if("<"===t[r])if("/"===t[r+1]){const e=W(t,">",r,"Closing Tag is not closed.");let o=t.substring(r+2,e).trim();if(this.options.removeNSPrefix){const t=o.indexOf(":");-1!==t&&(o=o.substr(t+1))}this.options.transformTagName&&(o=this.options.transformTagName(o)),n&&(i=this.saveTextToParentTag(i,n,s));const a=s.substring(s.lastIndexOf(".")+1);if(o&&-1!==this.options.unpairedTags.indexOf(o))throw new Error(`Unpaired tag can not be used as closing tag: </${o}>`);let l=0;a&&-1!==this.options.unpairedTags.indexOf(a)?(l=s.lastIndexOf(".",s.lastIndexOf(".")-1),this.tagsNodeStack.pop()):l=s.lastIndexOf("."),s=s.substring(0,l),n=this.tagsNodeStack.pop(),i="",r=e}else if("?"===t[r+1]){let e=z(t,r,!1,"?>");if(!e)throw new Error("Pi Tag is not closed.");if(i=this.saveTextToParentTag(i,n,s),this.options.ignoreDeclaration&&"?xml"===e.tagName||this.options.ignorePiTags);else{const t=new T(e.tagName);t.add(this.options.textNodeName,""),e.tagName!==e.tagExp&&e.attrExpPresent&&(t[":@"]=this.buildAttributesMap(e.tagExp,s,e.tagName)),this.addChild(n,t,s,r)}r=e.closeIndex+1}else if("!--"===t.substr(r+1,3)){const e=W(t,"--\x3e",r+4,"Comment is not closed.");if(this.options.commentPropName){const o=t.substring(r+4,e-2);i=this.saveTextToParentTag(i,n,s),n.add(this.options.commentPropName,[{[this.options.textNodeName]:o}])}r=e}else if("!D"===t.substr(r+1,2)){const e=w(t,r);this.docTypeEntities=e.entities,r=e.i}else if("!["===t.substr(r+1,2)){const e=W(t,"]]>",r,"CDATA is not closed.")-2,o=t.substring(r+9,e);i=this.saveTextToParentTag(i,n,s);let a=this.parseTextData(o,n.tagname,s,!0,!1,!0,!0);null==a&&(a=""),this.options.cdataPropName?n.add(this.options.cdataPropName,[{[this.options.textNodeName]:o}]):n.add(this.options.textNodeName,a),r=e+2}else{let o=z(t,r,this.options.removeNSPrefix),a=o.tagName;const l=o.rawTagName;let u=o.tagExp,h=o.attrExpPresent,d=o.closeIndex;this.options.transformTagName&&(a=this.options.transformTagName(a)),n&&i&&"!xml"!==n.tagname&&(i=this.saveTextToParentTag(i,n,s,!1));const f=n;f&&-1!==this.options.unpairedTags.indexOf(f.tagname)&&(n=this.tagsNodeStack.pop(),s=s.substring(0,s.lastIndexOf("."))),a!==e.tagname&&(s+=s?"."+a:a);const c=r;if(this.isItStopNode(this.options.stopNodes,s,a)){let e="";if(u.length>0&&u.lastIndexOf("/")===u.length-1)"/"===a[a.length-1]?(a=a.substr(0,a.length-1),s=s.substr(0,s.length-1),u=a):u=u.substr(0,u.length-1),r=o.closeIndex;else if(-1!==this.options.unpairedTags.indexOf(a))r=o.closeIndex;else{const n=this.readStopNodeData(t,l,d+1);if(!n)throw new Error(`Unexpected end of ${l}`);r=n.i,e=n.tagContent}const i=new T(a);a!==u&&h&&(i[":@"]=this.buildAttributesMap(u,s,a)),e&&(e=this.parseTextData(e,a,s,!0,h,!0,!0)),s=s.substr(0,s.lastIndexOf(".")),i.add(this.options.textNodeName,e),this.addChild(n,i,s,c)}else{if(u.length>0&&u.lastIndexOf("/")===u.length-1){"/"===a[a.length-1]?(a=a.substr(0,a.length-1),s=s.substr(0,s.length-1),u=a):u=u.substr(0,u.length-1),this.options.transformTagName&&(a=this.options.transformTagName(a));const t=new T(a);a!==u&&h&&(t[":@"]=this.buildAttributesMap(u,s,a)),this.addChild(n,t,s,c),s=s.substr(0,s.lastIndexOf("."))}else{const t=new T(a);this.tagsNodeStack.push(n),a!==u&&h&&(t[":@"]=this.buildAttributesMap(u,s,a)),this.addChild(n,t,s,c),n=t}i="",r=d}}else i+=t[r];return e.child};function Y(t,e,n,i){this.options.captureMetaData||(i=void 0);const s=this.options.updateTag(e.tagname,n,e[":@"]);!1===s||("string"==typeof s?(e.tagname=s,t.addChild(e,i)):t.addChild(e,i))}const R=function(t){if(this.options.processEntities){for(let e in this.docTypeEntities){const n=this.docTypeEntities[e];t=t.replace(n.regx,n.val)}for(let e in this.lastEntities){const n=this.lastEntities[e];t=t.replace(n.regex,n.val)}if(this.options.htmlEntities)for(let e in this.htmlEntities){const n=this.htmlEntities[e];t=t.replace(n.regex,n.val)}t=t.replace(this.ampEntity.regex,this.ampEntity.val)}return t};function q(t,e,n,i){return t&&(void 0===i&&(i=0===e.child.length),void 0!==(t=this.parseTextData(t,e.tagname,n,!1,!!e[":@"]&&0!==Object.keys(e[":@"]).length,i))&&""!==t&&e.add(this.options.textNodeName,t),t=""),t}function Z(t,e,n){const i="*."+n;for(const n in t){const s=t[n];if(i===s||e===s)return!0}return!1}function W(t,e,n,i){const s=t.indexOf(e,n);if(-1===s)throw new Error(i);return s+e.length-1}function z(t,e,n,i=">"){const s=function(t,e,n=">"){let i,s="";for(let r=e;r<t.length;r++){let e=t[r];if(i)e===i&&(i="");else if('"'===e||"'"===e)i=e;else if(e===n[0]){if(!n[1])return{data:s,index:r};if(t[r+1]===n[1])return{data:s,index:r}}else"\t"===e&&(e=" ");s+=e}}(t,e+1,i);if(!s)return;let r=s.data;const o=s.index,a=r.search(/\s/);let l=r,u=!0;-1!==a&&(l=r.substring(0,a),r=r.substring(a+1).trimStart());const h=l;if(n){const t=l.indexOf(":");-1!==t&&(l=l.substr(t+1),u=l!==s.data.substr(t+1))}return{tagName:l,tagExp:r,closeIndex:o,attrExpPresent:u,rawTagName:h}}function J(t,e,n){const i=n;let s=1;for(;n<t.length;n++)if("<"===t[n])if("/"===t[n+1]){const r=W(t,">",n,`${e} is not closed`);if(t.substring(n+2,r).trim()===e&&(s--,0===s))return{tagContent:t.substring(i,n),i:r};n=r}else if("?"===t[n+1])n=W(t,"?>",n+1,"StopNode is not closed.");else if("!--"===t.substr(n+1,3))n=W(t,"--\x3e",n+3,"StopNode is not closed.");else if("!["===t.substr(n+1,2))n=W(t,"]]>",n,"StopNode is not closed.")-2;else{const i=z(t,n,">");i&&((i&&i.tagName)===e&&"/"!==i.tagExp[i.tagExp.length-1]&&s++,n=i.closeIndex)}}function H(t,e,n){if(e&&"string"==typeof t){const e=t.trim();return"true"===e||"false"!==e&&function(t,e={}){if(e=Object.assign({},V,e),!t||"string"!=typeof t)return t;let n=t.trim();if(void 0!==e.skipLike&&e.skipLike.test(n))return t;if("0"===t)return 0;if(e.hex&&j.test(n))return function(t){if(parseInt)return parseInt(t,16);if(Number.parseInt)return Number.parseInt(t,16);if(window&&window.parseInt)return window.parseInt(t,16);throw new Error("parseInt, Number.parseInt, window.parseInt are not supported")}(n);if(-1!==n.search(/.+[eE].+/))return function(t,e,n){if(!n.eNotation)return t;const i=e.match(M);if(i){let s=i[1]||"";const r=-1===i[3].indexOf("e")?"E":"e",o=i[2],a=s?t[o.length+1]===r:t[o.length]===r;return o.length>1&&a?t:1!==o.length||!i[3].startsWith(`.${r}`)&&i[3][0]!==r?n.leadingZeros&&!a?(e=(i[1]||"")+i[3],Number(e)):t:Number(e)}return t}(t,n,e);{const s=D.exec(n);if(s){const r=s[1]||"",o=s[2];let a=(i=s[3])&&-1!==i.indexOf(".")?("."===(i=i.replace(/0+$/,""))?i="0":"."===i[0]?i="0"+i:"."===i[i.length-1]&&(i=i.substring(0,i.length-1)),i):i;const l=r?"."===t[o.length+1]:"."===t[o.length];if(!e.leadingZeros&&(o.length>1||1===o.length&&!l))return t;{const i=Number(n),s=String(i);if(0===i||-0===i)return i;if(-1!==s.search(/[eE]/))return e.eNotation?i:t;if(-1!==n.indexOf("."))return"0"===s||s===a||s===`${r}${a}`?i:t;let l=o?a:n;return o?l===s||r+l===s?i:t:l===s||l===r+s?i:t}}return t}var i}(t,n)}return void 0!==t?t:""}const K=T.getMetaDataSymbol();function Q(t,e){return tt(t,e)}function tt(t,e,n){let i;const s={};for(let r=0;r<t.length;r++){const o=t[r],a=et(o);let l="";if(l=void 0===n?a:n+"."+a,a===e.textNodeName)void 0===i?i=o[a]:i+=""+o[a];else{if(void 0===a)continue;if(o[a]){let t=tt(o[a],e,l);const n=it(t,e);void 0!==o[K]&&(t[K]=o[K]),o[":@"]?nt(t,o[":@"],l,e):1!==Object.keys(t).length||void 0===t[e.textNodeName]||e.alwaysCreateTextNode?0===Object.keys(t).length&&(e.alwaysCreateTextNode?t[e.textNodeName]="":t=""):t=t[e.textNodeName],void 0!==s[a]&&s.hasOwnProperty(a)?(Array.isArray(s[a])||(s[a]=[s[a]]),s[a].push(t)):e.isArray(a,l,n)?s[a]=[t]:s[a]=t}}}return"string"==typeof i?i.length>0&&(s[e.textNodeName]=i):void 0!==i&&(s[e.textNodeName]=i),s}function et(t){const e=Object.keys(t);for(let t=0;t<e.length;t++){const n=e[t];if(":@"!==n)return n}}function nt(t,e,n,i){if(e){const s=Object.keys(e),r=s.length;for(let o=0;o<r;o++){const r=s[o];i.isArray(r,n+"."+r,!0,!0)?t[r]=[e[r]]:t[r]=e[r]}}}function it(t,e){const{textNodeName:n}=e,i=Object.keys(t).length;return 0===i||!(1!==i||!t[n]&&"boolean"!=typeof t[n]&&0!==t[n])}class st{constructor(t){this.externalEntities={},this.options=function(t){return Object.assign({},v,t)}(t)}parse(t,e){if("string"==typeof t);else{if(!t.toString)throw new Error("XML data is accepted in String or Bytes[] form.");t=t.toString()}if(e){!0===e&&(e={});const n=a(t,e);if(!0!==n)throw Error(`${n.err.msg}:${n.err.line}:${n.err.col}`)}const n=new k(this.options);n.addExternalEntities(this.externalEntities);const i=n.parseXml(t);return this.options.preserveOrder||void 0===i?i:Q(i,this.options)}addEntity(t,e){if(-1!==e.indexOf("&"))throw new Error("Entity value can't have '&'");if(-1!==t.indexOf("&")||-1!==t.indexOf(";"))throw new Error("An entity must be set without '&' and ';'. Eg. use '#xD' for '&#xD;'");if("&"===e)throw new Error("An entity with value '&' is not permitted");this.externalEntities[t]=e}static getMetaDataSymbol(){return T.getMetaDataSymbol()}}function rt(t,e){let n="";return e.format&&e.indentBy.length>0&&(n="\n"),ot(t,e,"",n)}function ot(t,e,n,i){let s="",r=!1;for(let o=0;o<t.length;o++){const a=t[o],l=at(a);if(void 0===l)continue;let u="";if(u=0===n.length?l:`${n}.${l}`,l===e.textNodeName){let t=a[l];ut(u,e)||(t=e.tagValueProcessor(l,t),t=ht(t,e)),r&&(s+=i),s+=t,r=!1;continue}if(l===e.cdataPropName){r&&(s+=i),s+=`<![CDATA[${a[l][0][e.textNodeName]}]]>`,r=!1;continue}if(l===e.commentPropName){s+=i+`\x3c!--${a[l][0][e.textNodeName]}--\x3e`,r=!0;continue}if("?"===l[0]){const t=lt(a[":@"],e),n="?xml"===l?"":i;let o=a[l][0][e.textNodeName];o=0!==o.length?" "+o:"",s+=n+`<${l}${o}${t}?>`,r=!0;continue}let h=i;""!==h&&(h+=e.indentBy);const d=i+`<${l}${lt(a[":@"],e)}`,f=ot(a[l],e,u,h);-1!==e.unpairedTags.indexOf(l)?e.suppressUnpairedNode?s+=d+">":s+=d+"/>":f&&0!==f.length||!e.suppressEmptyNode?f&&f.endsWith(">")?s+=d+`>${f}${i}</${l}>`:(s+=d+">",f&&""!==i&&(f.includes("/>")||f.includes("</"))?s+=i+e.indentBy+f+i:s+=f,s+=`</${l}>`):s+=d+"/>",r=!0}return s}function at(t){const e=Object.keys(t);for(let n=0;n<e.length;n++){const i=e[n];if(t.hasOwnProperty(i)&&":@"!==i)return i}}function lt(t,e){let n="";if(t&&!e.ignoreAttributes)for(let i in t){if(!t.hasOwnProperty(i))continue;let s=e.attributeValueProcessor(i,t[i]);s=ht(s,e),!0===s&&e.suppressBooleanAttributes?n+=` ${i.substr(e.attributeNamePrefix.length)}`:n+=` ${i.substr(e.attributeNamePrefix.length)}="${s}"`}return n}function ut(t,e){let n=(t=t.substr(0,t.length-e.textNodeName.length-1)).substr(t.lastIndexOf(".")+1);for(let i in e.stopNodes)if(e.stopNodes[i]===t||e.stopNodes[i]==="*."+n)return!0;return!1}function ht(t,e){if(t&&t.length>0&&e.processEntities)for(let n=0;n<e.entities.length;n++){const i=e.entities[n];t=t.replace(i.regex,i.val)}return t}const dt={attributeNamePrefix:"@_",attributesGroupName:!1,textNodeName:"#text",ignoreAttributes:!0,cdataPropName:!1,format:!1,indentBy:"  ",suppressEmptyNode:!1,suppressUnpairedNode:!0,suppressBooleanAttributes:!0,tagValueProcessor:function(t,e){return e},attributeValueProcessor:function(t,e){return e},preserveOrder:!1,commentPropName:!1,unpairedTags:[],entities:[{regex:new RegExp("&","g"),val:"&amp;"},{regex:new RegExp(">","g"),val:"&gt;"},{regex:new RegExp("<","g"),val:"&lt;"},{regex:new RegExp("'","g"),val:"&apos;"},{regex:new RegExp('"',"g"),val:"&quot;"}],processEntities:!0,stopNodes:[],oneListGroup:!1};function ft(t){this.options=Object.assign({},dt,t),!0===this.options.ignoreAttributes||this.options.attributesGroupName?this.isAttribute=function(){return!1}:(this.ignoreAttributesFn=_(this.options.ignoreAttributes),this.attrPrefixLen=this.options.attributeNamePrefix.length,this.isAttribute=gt),this.processTextOrObjNode=ct,this.options.format?(this.indentate=pt,this.tagEndChar=">\n",this.newLine="\n"):(this.indentate=function(){return""},this.tagEndChar=">",this.newLine="")}function ct(t,e,n,i){const s=this.j2x(t,n+1,i.concat(e));return void 0!==t[this.options.textNodeName]&&1===Object.keys(t).length?this.buildTextValNode(t[this.options.textNodeName],e,s.attrStr,n):this.buildObjectNode(s.val,e,s.attrStr,n)}function pt(t){return this.options.indentBy.repeat(t)}function gt(t){return!(!t.startsWith(this.options.attributeNamePrefix)||t===this.options.textNodeName)&&t.substr(this.attrPrefixLen)}ft.prototype.build=function(t){return this.options.preserveOrder?rt(t,this.options):(Array.isArray(t)&&this.options.arrayNodeName&&this.options.arrayNodeName.length>1&&(t={[this.options.arrayNodeName]:t}),this.j2x(t,0,[]).val)},ft.prototype.j2x=function(t,e,n){let i="",s="";const r=n.join(".");for(let o in t)if(Object.prototype.hasOwnProperty.call(t,o))if(void 0===t[o])this.isAttribute(o)&&(s+="");else if(null===t[o])this.isAttribute(o)||o===this.options.cdataPropName?s+="":"?"===o[0]?s+=this.indentate(e)+"<"+o+"?"+this.tagEndChar:s+=this.indentate(e)+"<"+o+"/"+this.tagEndChar;else if(t[o]instanceof Date)s+=this.buildTextValNode(t[o],o,"",e);else if("object"!=typeof t[o]){const n=this.isAttribute(o);if(n&&!this.ignoreAttributesFn(n,r))i+=this.buildAttrPairStr(n,""+t[o]);else if(!n)if(o===this.options.textNodeName){let e=this.options.tagValueProcessor(o,""+t[o]);s+=this.replaceEntitiesValue(e)}else s+=this.buildTextValNode(t[o],o,"",e)}else if(Array.isArray(t[o])){const i=t[o].length;let r="",a="";for(let l=0;l<i;l++){const i=t[o][l];if(void 0===i);else if(null===i)"?"===o[0]?s+=this.indentate(e)+"<"+o+"?"+this.tagEndChar:s+=this.indentate(e)+"<"+o+"/"+this.tagEndChar;else if("object"==typeof i)if(this.options.oneListGroup){const t=this.j2x(i,e+1,n.concat(o));r+=t.val,this.options.attributesGroupName&&i.hasOwnProperty(this.options.attributesGroupName)&&(a+=t.attrStr)}else r+=this.processTextOrObjNode(i,o,e,n);else if(this.options.oneListGroup){let t=this.options.tagValueProcessor(o,i);t=this.replaceEntitiesValue(t),r+=t}else r+=this.buildTextValNode(i,o,"",e)}this.options.oneListGroup&&(r=this.buildObjectNode(r,o,a,e)),s+=r}else if(this.options.attributesGroupName&&o===this.options.attributesGroupName){const e=Object.keys(t[o]),n=e.length;for(let s=0;s<n;s++)i+=this.buildAttrPairStr(e[s],""+t[o][e[s]])}else s+=this.processTextOrObjNode(t[o],o,e,n);return{attrStr:i,val:s}},ft.prototype.buildAttrPairStr=function(t,e){return e=this.options.attributeValueProcessor(t,""+e),e=this.replaceEntitiesValue(e),this.options.suppressBooleanAttributes&&"true"===e?" "+t:" "+t+'="'+e+'"'},ft.prototype.buildObjectNode=function(t,e,n,i){if(""===t)return"?"===e[0]?this.indentate(i)+"<"+e+n+"?"+this.tagEndChar:this.indentate(i)+"<"+e+n+this.closeTag(e)+this.tagEndChar;{let s="</"+e+this.tagEndChar,r="";return"?"===e[0]&&(r="?",s=""),!n&&""!==n||-1!==t.indexOf("<")?!1!==this.options.commentPropName&&e===this.options.commentPropName&&0===r.length?this.indentate(i)+`\x3c!--${t}--\x3e`+this.newLine:this.indentate(i)+"<"+e+n+r+this.tagEndChar+t+this.indentate(i)+s:this.indentate(i)+"<"+e+n+r+">"+t+s}},ft.prototype.closeTag=function(t){let e="";return-1!==this.options.unpairedTags.indexOf(t)?this.options.suppressUnpairedNode||(e="/"):e=this.options.suppressEmptyNode?"/":`></${t}`,e},ft.prototype.buildTextValNode=function(t,e,n,i){if(!1!==this.options.cdataPropName&&e===this.options.cdataPropName)return this.indentate(i)+`<![CDATA[${t}]]>`+this.newLine;if(!1!==this.options.commentPropName&&e===this.options.commentPropName)return this.indentate(i)+`\x3c!--${t}--\x3e`+this.newLine;if("?"===e[0])return this.indentate(i)+"<"+e+n+"?"+this.tagEndChar;{let s=this.options.tagValueProcessor(e,t);return s=this.replaceEntitiesValue(s),""===s?this.indentate(i)+"<"+e+n+this.closeTag(e)+this.tagEndChar:this.indentate(i)+"<"+e+n+">"+s+"</"+e+this.tagEndChar}},ft.prototype.replaceEntitiesValue=function(t){if(t&&t.length>0&&this.options.processEntities)for(let e=0;e<this.options.entities.length;e++){const n=this.options.entities[e];t=t.replace(n.regex,n.val)}return t};const mt={validate:a};module.exports=e})();
+
+/***/ }),
+
+/***/ 6388:
 /***/ ((module) => {
 
 (()=>{"use strict";var t={d:(e,n)=>{for(var i in n)t.o(n,i)&&!t.o(e,i)&&Object.defineProperty(e,i,{enumerable:!0,get:n[i]})},o:(t,e)=>Object.prototype.hasOwnProperty.call(t,e),r:t=>{"undefined"!=typeof Symbol&&Symbol.toStringTag&&Object.defineProperty(t,Symbol.toStringTag,{value:"Module"}),Object.defineProperty(t,"__esModule",{value:!0})}},e={};t.r(e),t.d(e,{XMLBuilder:()=>ft,XMLParser:()=>st,XMLValidator:()=>mt});const n=":A-Za-z_\\u00C0-\\u00D6\\u00D8-\\u00F6\\u00F8-\\u02FF\\u0370-\\u037D\\u037F-\\u1FFF\\u200C-\\u200D\\u2070-\\u218F\\u2C00-\\u2FEF\\u3001-\\uD7FF\\uF900-\\uFDCF\\uFDF0-\\uFFFD",i=new RegExp("^["+n+"]["+n+"\\-.\\d\\u00B7\\u0300-\\u036F\\u203F-\\u2040]*$");function s(t,e){const n=[];let i=e.exec(t);for(;i;){const s=[];s.startIndex=e.lastIndex-i[0].length;const r=i.length;for(let t=0;t<r;t++)s.push(i[t]);n.push(s),i=e.exec(t)}return n}const r=function(t){return!(null==i.exec(t))},o={allowBooleanAttributes:!1,unpairedTags:[]};function a(t,e){e=Object.assign({},o,e);const n=[];let i=!1,s=!1;"\ufeff"===t[0]&&(t=t.substr(1));for(let o=0;o<t.length;o++)if("<"===t[o]&&"?"===t[o+1]){if(o+=2,o=u(t,o),o.err)return o}else{if("<"!==t[o]){if(l(t[o]))continue;return x("InvalidChar","char '"+t[o]+"' is not expected.",N(t,o))}{let a=o;if(o++,"!"===t[o]){o=h(t,o);continue}{let d=!1;"/"===t[o]&&(d=!0,o++);let f="";for(;o<t.length&&">"!==t[o]&&" "!==t[o]&&"\t"!==t[o]&&"\n"!==t[o]&&"\r"!==t[o];o++)f+=t[o];if(f=f.trim(),"/"===f[f.length-1]&&(f=f.substring(0,f.length-1),o--),!r(f)){let e;return e=0===f.trim().length?"Invalid space after '<'.":"Tag '"+f+"' is an invalid name.",x("InvalidTag",e,N(t,o))}const p=c(t,o);if(!1===p)return x("InvalidAttr","Attributes for '"+f+"' have open quote.",N(t,o));let b=p.value;if(o=p.index,"/"===b[b.length-1]){const n=o-b.length;b=b.substring(0,b.length-1);const s=g(b,e);if(!0!==s)return x(s.err.code,s.err.msg,N(t,n+s.err.line));i=!0}else if(d){if(!p.tagClosed)return x("InvalidTag","Closing tag '"+f+"' doesn't have proper closing.",N(t,o));if(b.trim().length>0)return x("InvalidTag","Closing tag '"+f+"' can't have attributes or invalid starting.",N(t,a));if(0===n.length)return x("InvalidTag","Closing tag '"+f+"' has not been opened.",N(t,a));{const e=n.pop();if(f!==e.tagName){let n=N(t,e.tagStartPos);return x("InvalidTag","Expected closing tag '"+e.tagName+"' (opened in line "+n.line+", col "+n.col+") instead of closing tag '"+f+"'.",N(t,a))}0==n.length&&(s=!0)}}else{const r=g(b,e);if(!0!==r)return x(r.err.code,r.err.msg,N(t,o-b.length+r.err.line));if(!0===s)return x("InvalidXml","Multiple possible root nodes found.",N(t,o));-1!==e.unpairedTags.indexOf(f)||n.push({tagName:f,tagStartPos:a}),i=!0}for(o++;o<t.length;o++)if("<"===t[o]){if("!"===t[o+1]){o++,o=h(t,o);continue}if("?"!==t[o+1])break;if(o=u(t,++o),o.err)return o}else if("&"===t[o]){const e=m(t,o);if(-1==e)return x("InvalidChar","char '&' is not expected.",N(t,o));o=e}else if(!0===s&&!l(t[o]))return x("InvalidXml","Extra text at the end",N(t,o));"<"===t[o]&&o--}}}return i?1==n.length?x("InvalidTag","Unclosed tag '"+n[0].tagName+"'.",N(t,n[0].tagStartPos)):!(n.length>0)||x("InvalidXml","Invalid '"+JSON.stringify(n.map((t=>t.tagName)),null,4).replace(/\r?\n/g,"")+"' found.",{line:1,col:1}):x("InvalidXml","Start tag expected.",1)}function l(t){return" "===t||"\t"===t||"\n"===t||"\r"===t}function u(t,e){const n=e;for(;e<t.length;e++)if("?"!=t[e]&&" "!=t[e]);else{const i=t.substr(n,e-n);if(e>5&&"xml"===i)return x("InvalidXml","XML declaration allowed only at the start of the document.",N(t,e));if("?"==t[e]&&">"==t[e+1]){e++;break}}return e}function h(t,e){if(t.length>e+5&&"-"===t[e+1]&&"-"===t[e+2]){for(e+=3;e<t.length;e++)if("-"===t[e]&&"-"===t[e+1]&&">"===t[e+2]){e+=2;break}}else if(t.length>e+8&&"D"===t[e+1]&&"O"===t[e+2]&&"C"===t[e+3]&&"T"===t[e+4]&&"Y"===t[e+5]&&"P"===t[e+6]&&"E"===t[e+7]){let n=1;for(e+=8;e<t.length;e++)if("<"===t[e])n++;else if(">"===t[e]&&(n--,0===n))break}else if(t.length>e+9&&"["===t[e+1]&&"C"===t[e+2]&&"D"===t[e+3]&&"A"===t[e+4]&&"T"===t[e+5]&&"A"===t[e+6]&&"["===t[e+7])for(e+=8;e<t.length;e++)if("]"===t[e]&&"]"===t[e+1]&&">"===t[e+2]){e+=2;break}return e}const d='"',f="'";function c(t,e){let n="",i="",s=!1;for(;e<t.length;e++){if(t[e]===d||t[e]===f)""===i?i=t[e]:i!==t[e]||(i="");else if(">"===t[e]&&""===i){s=!0;break}n+=t[e]}return""===i&&{value:n,index:e,tagClosed:s}}const p=new RegExp("(\\s*)([^\\s=]+)(\\s*=)?(\\s*(['\"])(([\\s\\S])*?)\\5)?","g");function g(t,e){const n=s(t,p),i={};for(let t=0;t<n.length;t++){if(0===n[t][1].length)return x("InvalidAttr","Attribute '"+n[t][2]+"' has no space in starting.",E(n[t]));if(void 0!==n[t][3]&&void 0===n[t][4])return x("InvalidAttr","Attribute '"+n[t][2]+"' is without value.",E(n[t]));if(void 0===n[t][3]&&!e.allowBooleanAttributes)return x("InvalidAttr","boolean attribute '"+n[t][2]+"' is not allowed.",E(n[t]));const s=n[t][2];if(!b(s))return x("InvalidAttr","Attribute '"+s+"' is an invalid name.",E(n[t]));if(i.hasOwnProperty(s))return x("InvalidAttr","Attribute '"+s+"' is repeated.",E(n[t]));i[s]=1}return!0}function m(t,e){if(";"===t[++e])return-1;if("#"===t[e])return function(t,e){let n=/\d/;for("x"===t[e]&&(e++,n=/[\da-fA-F]/);e<t.length;e++){if(";"===t[e])return e;if(!t[e].match(n))break}return-1}(t,++e);let n=0;for(;e<t.length;e++,n++)if(!(t[e].match(/\w/)&&n<20)){if(";"===t[e])break;return-1}return e}function x(t,e,n){return{err:{code:t,msg:e,line:n.line||n,col:n.col}}}function b(t){return r(t)}function N(t,e){const n=t.substring(0,e).split(/\r?\n/);return{line:n.length,col:n[n.length-1].length+1}}function E(t){return t.startIndex+t[1].length}const v={preserveOrder:!1,attributeNamePrefix:"@_",attributesGroupName:!1,textNodeName:"#text",ignoreAttributes:!0,removeNSPrefix:!1,allowBooleanAttributes:!1,parseTagValue:!0,parseAttributeValue:!1,trimValues:!0,cdataPropName:!1,numberParseOptions:{hex:!0,leadingZeros:!0,eNotation:!0},tagValueProcessor:function(t,e){return e},attributeValueProcessor:function(t,e){return e},stopNodes:[],alwaysCreateTextNode:!1,isArray:()=>!1,commentPropName:!1,unpairedTags:[],processEntities:!0,htmlEntities:!1,ignoreDeclaration:!1,ignorePiTags:!1,transformTagName:!1,transformAttributeName:!1,updateTag:function(t,e,n){return t},captureMetaData:!1};let y;y="function"!=typeof Symbol?"@@xmlMetadata":Symbol("XML Node Metadata");class T{constructor(t){this.tagname=t,this.child=[],this[":@"]={}}add(t,e){"__proto__"===t&&(t="#__proto__"),this.child.push({[t]:e})}addChild(t,e){"__proto__"===t.tagname&&(t.tagname="#__proto__"),t[":@"]&&Object.keys(t[":@"]).length>0?this.child.push({[t.tagname]:t.child,":@":t[":@"]}):this.child.push({[t.tagname]:t.child}),void 0!==e&&(this.child[this.child.length-1][y]={startIndex:e})}static getMetaDataSymbol(){return y}}function w(t,e){const n={};if("O"!==t[e+3]||"C"!==t[e+4]||"T"!==t[e+5]||"Y"!==t[e+6]||"P"!==t[e+7]||"E"!==t[e+8])throw new Error("Invalid Tag instead of DOCTYPE");{e+=9;let i=1,s=!1,r=!1,o="";for(;e<t.length;e++)if("<"!==t[e]||r)if(">"===t[e]){if(r?"-"===t[e-1]&&"-"===t[e-2]&&(r=!1,i--):i--,0===i)break}else"["===t[e]?s=!0:o+=t[e];else{if(s&&C(t,"!ENTITY",e)){let i,s;e+=7,[i,s,e]=O(t,e+1),-1===s.indexOf("&")&&(n[i]={regx:RegExp(`&${i};`,"g"),val:s})}else if(s&&C(t,"!ELEMENT",e)){e+=8;const{index:n}=S(t,e+1);e=n}else if(s&&C(t,"!ATTLIST",e))e+=8;else if(s&&C(t,"!NOTATION",e)){e+=9;const{index:n}=A(t,e+1);e=n}else{if(!C(t,"!--",e))throw new Error("Invalid DOCTYPE");r=!0}i++,o=""}if(0!==i)throw new Error("Unclosed DOCTYPE")}return{entities:n,i:e}}const P=(t,e)=>{for(;e<t.length&&/\s/.test(t[e]);)e++;return e};function O(t,e){e=P(t,e);let n="";for(;e<t.length&&!/\s/.test(t[e])&&'"'!==t[e]&&"'"!==t[e];)n+=t[e],e++;if($(n),e=P(t,e),"SYSTEM"===t.substring(e,e+6).toUpperCase())throw new Error("External entities are not supported");if("%"===t[e])throw new Error("Parameter entities are not supported");let i="";return[e,i]=I(t,e,"entity"),[n,i,--e]}function A(t,e){e=P(t,e);let n="";for(;e<t.length&&!/\s/.test(t[e]);)n+=t[e],e++;$(n),e=P(t,e);const i=t.substring(e,e+6).toUpperCase();if("SYSTEM"!==i&&"PUBLIC"!==i)throw new Error(`Expected SYSTEM or PUBLIC, found "${i}"`);e+=i.length,e=P(t,e);let s=null,r=null;if("PUBLIC"===i)[e,s]=I(t,e,"publicIdentifier"),'"'!==t[e=P(t,e)]&&"'"!==t[e]||([e,r]=I(t,e,"systemIdentifier"));else if("SYSTEM"===i&&([e,r]=I(t,e,"systemIdentifier"),!r))throw new Error("Missing mandatory system identifier for SYSTEM notation");return{notationName:n,publicIdentifier:s,systemIdentifier:r,index:--e}}function I(t,e,n){let i="";const s=t[e];if('"'!==s&&"'"!==s)throw new Error(`Expected quoted string, found "${s}"`);for(e++;e<t.length&&t[e]!==s;)i+=t[e],e++;if(t[e]!==s)throw new Error(`Unterminated ${n} value`);return[++e,i]}function S(t,e){e=P(t,e);let n="";for(;e<t.length&&!/\s/.test(t[e]);)n+=t[e],e++;if(!$(n))throw new Error(`Invalid element name: "${n}"`);let i="";if("E"===t[e=P(t,e)]&&C(t,"MPTY",e))e+=4;else if("A"===t[e]&&C(t,"NY",e))e+=2;else{if("("!==t[e])throw new Error(`Invalid Element Expression, found "${t[e]}"`);for(e++;e<t.length&&")"!==t[e];)i+=t[e],e++;if(")"!==t[e])throw new Error("Unterminated content model")}return{elementName:n,contentModel:i.trim(),index:e}}function C(t,e,n){for(let i=0;i<e.length;i++)if(e[i]!==t[n+i+1])return!1;return!0}function $(t){if(r(t))return t;throw new Error(`Invalid entity name ${t}`)}const j=/^[-+]?0x[a-fA-F0-9]+$/,D=/^([\-\+])?(0*)([0-9]*(\.[0-9]*)?)$/,V={hex:!0,leadingZeros:!0,decimalPoint:".",eNotation:!0};const M=/^([-+])?(0*)(\d*(\.\d*)?[eE][-\+]?\d+)$/;function _(t){return"function"==typeof t?t:Array.isArray(t)?e=>{for(const n of t){if("string"==typeof n&&e===n)return!0;if(n instanceof RegExp&&n.test(e))return!0}}:()=>!1}class k{constructor(t){this.options=t,this.currentNode=null,this.tagsNodeStack=[],this.docTypeEntities={},this.lastEntities={apos:{regex:/&(apos|#39|#x27);/g,val:"'"},gt:{regex:/&(gt|#62|#x3E);/g,val:">"},lt:{regex:/&(lt|#60|#x3C);/g,val:"<"},quot:{regex:/&(quot|#34|#x22);/g,val:'"'}},this.ampEntity={regex:/&(amp|#38|#x26);/g,val:"&"},this.htmlEntities={space:{regex:/&(nbsp|#160);/g,val:" "},cent:{regex:/&(cent|#162);/g,val:"¢"},pound:{regex:/&(pound|#163);/g,val:"£"},yen:{regex:/&(yen|#165);/g,val:"¥"},euro:{regex:/&(euro|#8364);/g,val:"€"},copyright:{regex:/&(copy|#169);/g,val:"©"},reg:{regex:/&(reg|#174);/g,val:"®"},inr:{regex:/&(inr|#8377);/g,val:"₹"},num_dec:{regex:/&#([0-9]{1,7});/g,val:(t,e)=>String.fromCodePoint(Number.parseInt(e,10))},num_hex:{regex:/&#x([0-9a-fA-F]{1,6});/g,val:(t,e)=>String.fromCodePoint(Number.parseInt(e,16))}},this.addExternalEntities=F,this.parseXml=X,this.parseTextData=L,this.resolveNameSpace=B,this.buildAttributesMap=G,this.isItStopNode=Z,this.replaceEntitiesValue=R,this.readStopNodeData=J,this.saveTextToParentTag=q,this.addChild=Y,this.ignoreAttributesFn=_(this.options.ignoreAttributes)}}function F(t){const e=Object.keys(t);for(let n=0;n<e.length;n++){const i=e[n];this.lastEntities[i]={regex:new RegExp("&"+i+";","g"),val:t[i]}}}function L(t,e,n,i,s,r,o){if(void 0!==t&&(this.options.trimValues&&!i&&(t=t.trim()),t.length>0)){o||(t=this.replaceEntitiesValue(t));const i=this.options.tagValueProcessor(e,t,n,s,r);return null==i?t:typeof i!=typeof t||i!==t?i:this.options.trimValues||t.trim()===t?H(t,this.options.parseTagValue,this.options.numberParseOptions):t}}function B(t){if(this.options.removeNSPrefix){const e=t.split(":"),n="/"===t.charAt(0)?"/":"";if("xmlns"===e[0])return"";2===e.length&&(t=n+e[1])}return t}const U=new RegExp("([^\\s=]+)\\s*(=\\s*(['\"])([\\s\\S]*?)\\3)?","gm");function G(t,e,n){if(!0!==this.options.ignoreAttributes&&"string"==typeof t){const n=s(t,U),i=n.length,r={};for(let t=0;t<i;t++){const i=this.resolveNameSpace(n[t][1]);if(this.ignoreAttributesFn(i,e))continue;let s=n[t][4],o=this.options.attributeNamePrefix+i;if(i.length)if(this.options.transformAttributeName&&(o=this.options.transformAttributeName(o)),"__proto__"===o&&(o="#__proto__"),void 0!==s){this.options.trimValues&&(s=s.trim()),s=this.replaceEntitiesValue(s);const t=this.options.attributeValueProcessor(i,s,e);r[o]=null==t?s:typeof t!=typeof s||t!==s?t:H(s,this.options.parseAttributeValue,this.options.numberParseOptions)}else this.options.allowBooleanAttributes&&(r[o]=!0)}if(!Object.keys(r).length)return;if(this.options.attributesGroupName){const t={};return t[this.options.attributesGroupName]=r,t}return r}}const X=function(t){t=t.replace(/\r\n?/g,"\n");const e=new T("!xml");let n=e,i="",s="";for(let r=0;r<t.length;r++)if("<"===t[r])if("/"===t[r+1]){const e=W(t,">",r,"Closing Tag is not closed.");let o=t.substring(r+2,e).trim();if(this.options.removeNSPrefix){const t=o.indexOf(":");-1!==t&&(o=o.substr(t+1))}this.options.transformTagName&&(o=this.options.transformTagName(o)),n&&(i=this.saveTextToParentTag(i,n,s));const a=s.substring(s.lastIndexOf(".")+1);if(o&&-1!==this.options.unpairedTags.indexOf(o))throw new Error(`Unpaired tag can not be used as closing tag: </${o}>`);let l=0;a&&-1!==this.options.unpairedTags.indexOf(a)?(l=s.lastIndexOf(".",s.lastIndexOf(".")-1),this.tagsNodeStack.pop()):l=s.lastIndexOf("."),s=s.substring(0,l),n=this.tagsNodeStack.pop(),i="",r=e}else if("?"===t[r+1]){let e=z(t,r,!1,"?>");if(!e)throw new Error("Pi Tag is not closed.");if(i=this.saveTextToParentTag(i,n,s),this.options.ignoreDeclaration&&"?xml"===e.tagName||this.options.ignorePiTags);else{const t=new T(e.tagName);t.add(this.options.textNodeName,""),e.tagName!==e.tagExp&&e.attrExpPresent&&(t[":@"]=this.buildAttributesMap(e.tagExp,s,e.tagName)),this.addChild(n,t,s,r)}r=e.closeIndex+1}else if("!--"===t.substr(r+1,3)){const e=W(t,"--\x3e",r+4,"Comment is not closed.");if(this.options.commentPropName){const o=t.substring(r+4,e-2);i=this.saveTextToParentTag(i,n,s),n.add(this.options.commentPropName,[{[this.options.textNodeName]:o}])}r=e}else if("!D"===t.substr(r+1,2)){const e=w(t,r);this.docTypeEntities=e.entities,r=e.i}else if("!["===t.substr(r+1,2)){const e=W(t,"]]>",r,"CDATA is not closed.")-2,o=t.substring(r+9,e);i=this.saveTextToParentTag(i,n,s);let a=this.parseTextData(o,n.tagname,s,!0,!1,!0,!0);null==a&&(a=""),this.options.cdataPropName?n.add(this.options.cdataPropName,[{[this.options.textNodeName]:o}]):n.add(this.options.textNodeName,a),r=e+2}else{let o=z(t,r,this.options.removeNSPrefix),a=o.tagName;const l=o.rawTagName;let u=o.tagExp,h=o.attrExpPresent,d=o.closeIndex;this.options.transformTagName&&(a=this.options.transformTagName(a)),n&&i&&"!xml"!==n.tagname&&(i=this.saveTextToParentTag(i,n,s,!1));const f=n;f&&-1!==this.options.unpairedTags.indexOf(f.tagname)&&(n=this.tagsNodeStack.pop(),s=s.substring(0,s.lastIndexOf("."))),a!==e.tagname&&(s+=s?"."+a:a);const c=r;if(this.isItStopNode(this.options.stopNodes,s,a)){let e="";if(u.length>0&&u.lastIndexOf("/")===u.length-1)"/"===a[a.length-1]?(a=a.substr(0,a.length-1),s=s.substr(0,s.length-1),u=a):u=u.substr(0,u.length-1),r=o.closeIndex;else if(-1!==this.options.unpairedTags.indexOf(a))r=o.closeIndex;else{const n=this.readStopNodeData(t,l,d+1);if(!n)throw new Error(`Unexpected end of ${l}`);r=n.i,e=n.tagContent}const i=new T(a);a!==u&&h&&(i[":@"]=this.buildAttributesMap(u,s,a)),e&&(e=this.parseTextData(e,a,s,!0,h,!0,!0)),s=s.substr(0,s.lastIndexOf(".")),i.add(this.options.textNodeName,e),this.addChild(n,i,s,c)}else{if(u.length>0&&u.lastIndexOf("/")===u.length-1){"/"===a[a.length-1]?(a=a.substr(0,a.length-1),s=s.substr(0,s.length-1),u=a):u=u.substr(0,u.length-1),this.options.transformTagName&&(a=this.options.transformTagName(a));const t=new T(a);a!==u&&h&&(t[":@"]=this.buildAttributesMap(u,s,a)),this.addChild(n,t,s,c),s=s.substr(0,s.lastIndexOf("."))}else{const t=new T(a);this.tagsNodeStack.push(n),a!==u&&h&&(t[":@"]=this.buildAttributesMap(u,s,a)),this.addChild(n,t,s,c),n=t}i="",r=d}}else i+=t[r];return e.child};function Y(t,e,n,i){this.options.captureMetaData||(i=void 0);const s=this.options.updateTag(e.tagname,n,e[":@"]);!1===s||("string"==typeof s?(e.tagname=s,t.addChild(e,i)):t.addChild(e,i))}const R=function(t){if(this.options.processEntities){for(let e in this.docTypeEntities){const n=this.docTypeEntities[e];t=t.replace(n.regx,n.val)}for(let e in this.lastEntities){const n=this.lastEntities[e];t=t.replace(n.regex,n.val)}if(this.options.htmlEntities)for(let e in this.htmlEntities){const n=this.htmlEntities[e];t=t.replace(n.regex,n.val)}t=t.replace(this.ampEntity.regex,this.ampEntity.val)}return t};function q(t,e,n,i){return t&&(void 0===i&&(i=0===e.child.length),void 0!==(t=this.parseTextData(t,e.tagname,n,!1,!!e[":@"]&&0!==Object.keys(e[":@"]).length,i))&&""!==t&&e.add(this.options.textNodeName,t),t=""),t}function Z(t,e,n){const i="*."+n;for(const n in t){const s=t[n];if(i===s||e===s)return!0}return!1}function W(t,e,n,i){const s=t.indexOf(e,n);if(-1===s)throw new Error(i);return s+e.length-1}function z(t,e,n,i=">"){const s=function(t,e,n=">"){let i,s="";for(let r=e;r<t.length;r++){let e=t[r];if(i)e===i&&(i="");else if('"'===e||"'"===e)i=e;else if(e===n[0]){if(!n[1])return{data:s,index:r};if(t[r+1]===n[1])return{data:s,index:r}}else"\t"===e&&(e=" ");s+=e}}(t,e+1,i);if(!s)return;let r=s.data;const o=s.index,a=r.search(/\s/);let l=r,u=!0;-1!==a&&(l=r.substring(0,a),r=r.substring(a+1).trimStart());const h=l;if(n){const t=l.indexOf(":");-1!==t&&(l=l.substr(t+1),u=l!==s.data.substr(t+1))}return{tagName:l,tagExp:r,closeIndex:o,attrExpPresent:u,rawTagName:h}}function J(t,e,n){const i=n;let s=1;for(;n<t.length;n++)if("<"===t[n])if("/"===t[n+1]){const r=W(t,">",n,`${e} is not closed`);if(t.substring(n+2,r).trim()===e&&(s--,0===s))return{tagContent:t.substring(i,n),i:r};n=r}else if("?"===t[n+1])n=W(t,"?>",n+1,"StopNode is not closed.");else if("!--"===t.substr(n+1,3))n=W(t,"--\x3e",n+3,"StopNode is not closed.");else if("!["===t.substr(n+1,2))n=W(t,"]]>",n,"StopNode is not closed.")-2;else{const i=z(t,n,">");i&&((i&&i.tagName)===e&&"/"!==i.tagExp[i.tagExp.length-1]&&s++,n=i.closeIndex)}}function H(t,e,n){if(e&&"string"==typeof t){const e=t.trim();return"true"===e||"false"!==e&&function(t,e={}){if(e=Object.assign({},V,e),!t||"string"!=typeof t)return t;let n=t.trim();if(void 0!==e.skipLike&&e.skipLike.test(n))return t;if("0"===t)return 0;if(e.hex&&j.test(n))return function(t){if(parseInt)return parseInt(t,16);if(Number.parseInt)return Number.parseInt(t,16);if(window&&window.parseInt)return window.parseInt(t,16);throw new Error("parseInt, Number.parseInt, window.parseInt are not supported")}(n);if(-1!==n.search(/.+[eE].+/))return function(t,e,n){if(!n.eNotation)return t;const i=e.match(M);if(i){let s=i[1]||"";const r=-1===i[3].indexOf("e")?"E":"e",o=i[2],a=s?t[o.length+1]===r:t[o.length]===r;return o.length>1&&a?t:1!==o.length||!i[3].startsWith(`.${r}`)&&i[3][0]!==r?n.leadingZeros&&!a?(e=(i[1]||"")+i[3],Number(e)):t:Number(e)}return t}(t,n,e);{const s=D.exec(n);if(s){const r=s[1]||"",o=s[2];let a=(i=s[3])&&-1!==i.indexOf(".")?("."===(i=i.replace(/0+$/,""))?i="0":"."===i[0]?i="0"+i:"."===i[i.length-1]&&(i=i.substring(0,i.length-1)),i):i;const l=r?"."===t[o.length+1]:"."===t[o.length];if(!e.leadingZeros&&(o.length>1||1===o.length&&!l))return t;{const i=Number(n),s=String(i);if(0===i||-0===i)return i;if(-1!==s.search(/[eE]/))return e.eNotation?i:t;if(-1!==n.indexOf("."))return"0"===s||s===a||s===`${r}${a}`?i:t;let l=o?a:n;return o?l===s||r+l===s?i:t:l===s||l===r+s?i:t}}return t}var i}(t,n)}return void 0!==t?t:""}const K=T.getMetaDataSymbol();function Q(t,e){return tt(t,e)}function tt(t,e,n){let i;const s={};for(let r=0;r<t.length;r++){const o=t[r],a=et(o);let l="";if(l=void 0===n?a:n+"."+a,a===e.textNodeName)void 0===i?i=o[a]:i+=""+o[a];else{if(void 0===a)continue;if(o[a]){let t=tt(o[a],e,l);const n=it(t,e);void 0!==o[K]&&(t[K]=o[K]),o[":@"]?nt(t,o[":@"],l,e):1!==Object.keys(t).length||void 0===t[e.textNodeName]||e.alwaysCreateTextNode?0===Object.keys(t).length&&(e.alwaysCreateTextNode?t[e.textNodeName]="":t=""):t=t[e.textNodeName],void 0!==s[a]&&s.hasOwnProperty(a)?(Array.isArray(s[a])||(s[a]=[s[a]]),s[a].push(t)):e.isArray(a,l,n)?s[a]=[t]:s[a]=t}}}return"string"==typeof i?i.length>0&&(s[e.textNodeName]=i):void 0!==i&&(s[e.textNodeName]=i),s}function et(t){const e=Object.keys(t);for(let t=0;t<e.length;t++){const n=e[t];if(":@"!==n)return n}}function nt(t,e,n,i){if(e){const s=Object.keys(e),r=s.length;for(let o=0;o<r;o++){const r=s[o];i.isArray(r,n+"."+r,!0,!0)?t[r]=[e[r]]:t[r]=e[r]}}}function it(t,e){const{textNodeName:n}=e,i=Object.keys(t).length;return 0===i||!(1!==i||!t[n]&&"boolean"!=typeof t[n]&&0!==t[n])}class st{constructor(t){this.externalEntities={},this.options=function(t){return Object.assign({},v,t)}(t)}parse(t,e){if("string"==typeof t);else{if(!t.toString)throw new Error("XML data is accepted in String or Bytes[] form.");t=t.toString()}if(e){!0===e&&(e={});const n=a(t,e);if(!0!==n)throw Error(`${n.err.msg}:${n.err.line}:${n.err.col}`)}const n=new k(this.options);n.addExternalEntities(this.externalEntities);const i=n.parseXml(t);return this.options.preserveOrder||void 0===i?i:Q(i,this.options)}addEntity(t,e){if(-1!==e.indexOf("&"))throw new Error("Entity value can't have '&'");if(-1!==t.indexOf("&")||-1!==t.indexOf(";"))throw new Error("An entity must be set without '&' and ';'. Eg. use '#xD' for '&#xD;'");if("&"===e)throw new Error("An entity with value '&' is not permitted");this.externalEntities[t]=e}static getMetaDataSymbol(){return T.getMetaDataSymbol()}}function rt(t,e){let n="";return e.format&&e.indentBy.length>0&&(n="\n"),ot(t,e,"",n)}function ot(t,e,n,i){let s="",r=!1;for(let o=0;o<t.length;o++){const a=t[o],l=at(a);if(void 0===l)continue;let u="";if(u=0===n.length?l:`${n}.${l}`,l===e.textNodeName){let t=a[l];ut(u,e)||(t=e.tagValueProcessor(l,t),t=ht(t,e)),r&&(s+=i),s+=t,r=!1;continue}if(l===e.cdataPropName){r&&(s+=i),s+=`<![CDATA[${a[l][0][e.textNodeName]}]]>`,r=!1;continue}if(l===e.commentPropName){s+=i+`\x3c!--${a[l][0][e.textNodeName]}--\x3e`,r=!0;continue}if("?"===l[0]){const t=lt(a[":@"],e),n="?xml"===l?"":i;let o=a[l][0][e.textNodeName];o=0!==o.length?" "+o:"",s+=n+`<${l}${o}${t}?>`,r=!0;continue}let h=i;""!==h&&(h+=e.indentBy);const d=i+`<${l}${lt(a[":@"],e)}`,f=ot(a[l],e,u,h);-1!==e.unpairedTags.indexOf(l)?e.suppressUnpairedNode?s+=d+">":s+=d+"/>":f&&0!==f.length||!e.suppressEmptyNode?f&&f.endsWith(">")?s+=d+`>${f}${i}</${l}>`:(s+=d+">",f&&""!==i&&(f.includes("/>")||f.includes("</"))?s+=i+e.indentBy+f+i:s+=f,s+=`</${l}>`):s+=d+"/>",r=!0}return s}function at(t){const e=Object.keys(t);for(let n=0;n<e.length;n++){const i=e[n];if(t.hasOwnProperty(i)&&":@"!==i)return i}}function lt(t,e){let n="";if(t&&!e.ignoreAttributes)for(let i in t){if(!t.hasOwnProperty(i))continue;let s=e.attributeValueProcessor(i,t[i]);s=ht(s,e),!0===s&&e.suppressBooleanAttributes?n+=` ${i.substr(e.attributeNamePrefix.length)}`:n+=` ${i.substr(e.attributeNamePrefix.length)}="${s}"`}return n}function ut(t,e){let n=(t=t.substr(0,t.length-e.textNodeName.length-1)).substr(t.lastIndexOf(".")+1);for(let i in e.stopNodes)if(e.stopNodes[i]===t||e.stopNodes[i]==="*."+n)return!0;return!1}function ht(t,e){if(t&&t.length>0&&e.processEntities)for(let n=0;n<e.entities.length;n++){const i=e.entities[n];t=t.replace(i.regex,i.val)}return t}const dt={attributeNamePrefix:"@_",attributesGroupName:!1,textNodeName:"#text",ignoreAttributes:!0,cdataPropName:!1,format:!1,indentBy:"  ",suppressEmptyNode:!1,suppressUnpairedNode:!0,suppressBooleanAttributes:!0,tagValueProcessor:function(t,e){return e},attributeValueProcessor:function(t,e){return e},preserveOrder:!1,commentPropName:!1,unpairedTags:[],entities:[{regex:new RegExp("&","g"),val:"&amp;"},{regex:new RegExp(">","g"),val:"&gt;"},{regex:new RegExp("<","g"),val:"&lt;"},{regex:new RegExp("'","g"),val:"&apos;"},{regex:new RegExp('"',"g"),val:"&quot;"}],processEntities:!0,stopNodes:[],oneListGroup:!1};function ft(t){this.options=Object.assign({},dt,t),!0===this.options.ignoreAttributes||this.options.attributesGroupName?this.isAttribute=function(){return!1}:(this.ignoreAttributesFn=_(this.options.ignoreAttributes),this.attrPrefixLen=this.options.attributeNamePrefix.length,this.isAttribute=gt),this.processTextOrObjNode=ct,this.options.format?(this.indentate=pt,this.tagEndChar=">\n",this.newLine="\n"):(this.indentate=function(){return""},this.tagEndChar=">",this.newLine="")}function ct(t,e,n,i){const s=this.j2x(t,n+1,i.concat(e));return void 0!==t[this.options.textNodeName]&&1===Object.keys(t).length?this.buildTextValNode(t[this.options.textNodeName],e,s.attrStr,n):this.buildObjectNode(s.val,e,s.attrStr,n)}function pt(t){return this.options.indentBy.repeat(t)}function gt(t){return!(!t.startsWith(this.options.attributeNamePrefix)||t===this.options.textNodeName)&&t.substr(this.attrPrefixLen)}ft.prototype.build=function(t){return this.options.preserveOrder?rt(t,this.options):(Array.isArray(t)&&this.options.arrayNodeName&&this.options.arrayNodeName.length>1&&(t={[this.options.arrayNodeName]:t}),this.j2x(t,0,[]).val)},ft.prototype.j2x=function(t,e,n){let i="",s="";const r=n.join(".");for(let o in t)if(Object.prototype.hasOwnProperty.call(t,o))if(void 0===t[o])this.isAttribute(o)&&(s+="");else if(null===t[o])this.isAttribute(o)||o===this.options.cdataPropName?s+="":"?"===o[0]?s+=this.indentate(e)+"<"+o+"?"+this.tagEndChar:s+=this.indentate(e)+"<"+o+"/"+this.tagEndChar;else if(t[o]instanceof Date)s+=this.buildTextValNode(t[o],o,"",e);else if("object"!=typeof t[o]){const n=this.isAttribute(o);if(n&&!this.ignoreAttributesFn(n,r))i+=this.buildAttrPairStr(n,""+t[o]);else if(!n)if(o===this.options.textNodeName){let e=this.options.tagValueProcessor(o,""+t[o]);s+=this.replaceEntitiesValue(e)}else s+=this.buildTextValNode(t[o],o,"",e)}else if(Array.isArray(t[o])){const i=t[o].length;let r="",a="";for(let l=0;l<i;l++){const i=t[o][l];if(void 0===i);else if(null===i)"?"===o[0]?s+=this.indentate(e)+"<"+o+"?"+this.tagEndChar:s+=this.indentate(e)+"<"+o+"/"+this.tagEndChar;else if("object"==typeof i)if(this.options.oneListGroup){const t=this.j2x(i,e+1,n.concat(o));r+=t.val,this.options.attributesGroupName&&i.hasOwnProperty(this.options.attributesGroupName)&&(a+=t.attrStr)}else r+=this.processTextOrObjNode(i,o,e,n);else if(this.options.oneListGroup){let t=this.options.tagValueProcessor(o,i);t=this.replaceEntitiesValue(t),r+=t}else r+=this.buildTextValNode(i,o,"",e)}this.options.oneListGroup&&(r=this.buildObjectNode(r,o,a,e)),s+=r}else if(this.options.attributesGroupName&&o===this.options.attributesGroupName){const e=Object.keys(t[o]),n=e.length;for(let s=0;s<n;s++)i+=this.buildAttrPairStr(e[s],""+t[o][e[s]])}else s+=this.processTextOrObjNode(t[o],o,e,n);return{attrStr:i,val:s}},ft.prototype.buildAttrPairStr=function(t,e){return e=this.options.attributeValueProcessor(t,""+e),e=this.replaceEntitiesValue(e),this.options.suppressBooleanAttributes&&"true"===e?" "+t:" "+t+'="'+e+'"'},ft.prototype.buildObjectNode=function(t,e,n,i){if(""===t)return"?"===e[0]?this.indentate(i)+"<"+e+n+"?"+this.tagEndChar:this.indentate(i)+"<"+e+n+this.closeTag(e)+this.tagEndChar;{let s="</"+e+this.tagEndChar,r="";return"?"===e[0]&&(r="?",s=""),!n&&""!==n||-1!==t.indexOf("<")?!1!==this.options.commentPropName&&e===this.options.commentPropName&&0===r.length?this.indentate(i)+`\x3c!--${t}--\x3e`+this.newLine:this.indentate(i)+"<"+e+n+r+this.tagEndChar+t+this.indentate(i)+s:this.indentate(i)+"<"+e+n+r+">"+t+s}},ft.prototype.closeTag=function(t){let e="";return-1!==this.options.unpairedTags.indexOf(t)?this.options.suppressUnpairedNode||(e="/"):e=this.options.suppressEmptyNode?"/":`></${t}`,e},ft.prototype.buildTextValNode=function(t,e,n,i){if(!1!==this.options.cdataPropName&&e===this.options.cdataPropName)return this.indentate(i)+`<![CDATA[${t}]]>`+this.newLine;if(!1!==this.options.commentPropName&&e===this.options.commentPropName)return this.indentate(i)+`\x3c!--${t}--\x3e`+this.newLine;if("?"===e[0])return this.indentate(i)+"<"+e+n+"?"+this.tagEndChar;{let s=this.options.tagValueProcessor(e,t);return s=this.replaceEntitiesValue(s),""===s?this.indentate(i)+"<"+e+n+this.closeTag(e)+this.tagEndChar:this.indentate(i)+"<"+e+n+">"+s+"</"+e+this.tagEndChar}},ft.prototype.replaceEntitiesValue=function(t){if(t&&t.length>0&&this.options.processEntities)for(let e=0;e<this.options.entities.length;e++){const n=this.options.entities[e];t=t.replace(n.regex,n.val)}return t};const mt={validate:a};module.exports=e})();
@@ -91525,7 +100165,7 @@ module.exports = JSON.parse('{"name":"@aws-sdk/client-lambda","description":"AWS
 /***/ ((module) => {
 
 "use strict";
-module.exports = JSON.parse('{"name":"@aws-sdk/client-sso","description":"AWS SDK for JavaScript Sso Client for Node.js, Browser and React Native","version":"3.830.0","scripts":{"build":"concurrently \'yarn:build:cjs\' \'yarn:build:es\' \'yarn:build:types\'","build:cjs":"node ../../scripts/compilation/inline client-sso","build:es":"tsc -p tsconfig.es.json","build:include:deps":"lerna run --scope $npm_package_name --include-dependencies build","build:types":"tsc -p tsconfig.types.json","build:types:downlevel":"downlevel-dts dist-types dist-types/ts3.4","clean":"rimraf ./dist-* && rimraf *.tsbuildinfo","extract:docs":"api-extractor run --local","generate:client":"node ../../scripts/generate-clients/single-service --solo sso"},"main":"./dist-cjs/index.js","types":"./dist-types/index.d.ts","module":"./dist-es/index.js","sideEffects":false,"dependencies":{"@aws-crypto/sha256-browser":"5.2.0","@aws-crypto/sha256-js":"5.2.0","@aws-sdk/core":"3.826.0","@aws-sdk/middleware-host-header":"3.821.0","@aws-sdk/middleware-logger":"3.821.0","@aws-sdk/middleware-recursion-detection":"3.821.0","@aws-sdk/middleware-user-agent":"3.828.0","@aws-sdk/region-config-resolver":"3.821.0","@aws-sdk/types":"3.821.0","@aws-sdk/util-endpoints":"3.828.0","@aws-sdk/util-user-agent-browser":"3.821.0","@aws-sdk/util-user-agent-node":"3.828.0","@smithy/config-resolver":"^4.1.4","@smithy/core":"^3.5.3","@smithy/fetch-http-handler":"^5.0.4","@smithy/hash-node":"^4.0.4","@smithy/invalid-dependency":"^4.0.4","@smithy/middleware-content-length":"^4.0.4","@smithy/middleware-endpoint":"^4.1.11","@smithy/middleware-retry":"^4.1.12","@smithy/middleware-serde":"^4.0.8","@smithy/middleware-stack":"^4.0.4","@smithy/node-config-provider":"^4.1.3","@smithy/node-http-handler":"^4.0.6","@smithy/protocol-http":"^5.1.2","@smithy/smithy-client":"^4.4.3","@smithy/types":"^4.3.1","@smithy/url-parser":"^4.0.4","@smithy/util-base64":"^4.0.0","@smithy/util-body-length-browser":"^4.0.0","@smithy/util-body-length-node":"^4.0.0","@smithy/util-defaults-mode-browser":"^4.0.19","@smithy/util-defaults-mode-node":"^4.0.19","@smithy/util-endpoints":"^3.0.6","@smithy/util-middleware":"^4.0.4","@smithy/util-retry":"^4.0.5","@smithy/util-utf8":"^4.0.0","tslib":"^2.6.2"},"devDependencies":{"@tsconfig/node18":"18.2.4","@types/node":"^18.19.69","concurrently":"7.0.0","downlevel-dts":"0.10.1","rimraf":"3.0.2","typescript":"~5.8.3"},"engines":{"node":">=18.0.0"},"typesVersions":{"<4.0":{"dist-types/*":["dist-types/ts3.4/*"]}},"files":["dist-*/**"],"author":{"name":"AWS SDK for JavaScript Team","url":"https://aws.amazon.com/javascript/"},"license":"Apache-2.0","browser":{"./dist-es/runtimeConfig":"./dist-es/runtimeConfig.browser"},"react-native":{"./dist-es/runtimeConfig":"./dist-es/runtimeConfig.native"},"homepage":"https://github.com/aws/aws-sdk-js-v3/tree/main/clients/client-sso","repository":{"type":"git","url":"https://github.com/aws/aws-sdk-js-v3.git","directory":"clients/client-sso"}}');
+module.exports = JSON.parse('{"name":"@aws-sdk/client-sso","description":"AWS SDK for JavaScript Sso Client for Node.js, Browser and React Native","version":"3.864.0","scripts":{"build":"concurrently \'yarn:build:cjs\' \'yarn:build:es\' \'yarn:build:types\'","build:cjs":"node ../../scripts/compilation/inline client-sso","build:es":"tsc -p tsconfig.es.json","build:include:deps":"lerna run --scope $npm_package_name --include-dependencies build","build:types":"tsc -p tsconfig.types.json","build:types:downlevel":"downlevel-dts dist-types dist-types/ts3.4","clean":"rimraf ./dist-* && rimraf *.tsbuildinfo","extract:docs":"api-extractor run --local","generate:client":"node ../../scripts/generate-clients/single-service --solo sso"},"main":"./dist-cjs/index.js","types":"./dist-types/index.d.ts","module":"./dist-es/index.js","sideEffects":false,"dependencies":{"@aws-crypto/sha256-browser":"5.2.0","@aws-crypto/sha256-js":"5.2.0","@aws-sdk/core":"3.864.0","@aws-sdk/middleware-host-header":"3.862.0","@aws-sdk/middleware-logger":"3.862.0","@aws-sdk/middleware-recursion-detection":"3.862.0","@aws-sdk/middleware-user-agent":"3.864.0","@aws-sdk/region-config-resolver":"3.862.0","@aws-sdk/types":"3.862.0","@aws-sdk/util-endpoints":"3.862.0","@aws-sdk/util-user-agent-browser":"3.862.0","@aws-sdk/util-user-agent-node":"3.864.0","@smithy/config-resolver":"^4.1.5","@smithy/core":"^3.8.0","@smithy/fetch-http-handler":"^5.1.1","@smithy/hash-node":"^4.0.5","@smithy/invalid-dependency":"^4.0.5","@smithy/middleware-content-length":"^4.0.5","@smithy/middleware-endpoint":"^4.1.18","@smithy/middleware-retry":"^4.1.19","@smithy/middleware-serde":"^4.0.9","@smithy/middleware-stack":"^4.0.5","@smithy/node-config-provider":"^4.1.4","@smithy/node-http-handler":"^4.1.1","@smithy/protocol-http":"^5.1.3","@smithy/smithy-client":"^4.4.10","@smithy/types":"^4.3.2","@smithy/url-parser":"^4.0.5","@smithy/util-base64":"^4.0.0","@smithy/util-body-length-browser":"^4.0.0","@smithy/util-body-length-node":"^4.0.0","@smithy/util-defaults-mode-browser":"^4.0.26","@smithy/util-defaults-mode-node":"^4.0.26","@smithy/util-endpoints":"^3.0.7","@smithy/util-middleware":"^4.0.5","@smithy/util-retry":"^4.0.7","@smithy/util-utf8":"^4.0.0","tslib":"^2.6.2"},"devDependencies":{"@tsconfig/node18":"18.2.4","@types/node":"^18.19.69","concurrently":"7.0.0","downlevel-dts":"0.10.1","rimraf":"3.0.2","typescript":"~5.8.3"},"engines":{"node":">=18.0.0"},"typesVersions":{"<4.0":{"dist-types/*":["dist-types/ts3.4/*"]}},"files":["dist-*/**"],"author":{"name":"AWS SDK for JavaScript Team","url":"https://aws.amazon.com/javascript/"},"license":"Apache-2.0","browser":{"./dist-es/runtimeConfig":"./dist-es/runtimeConfig.browser"},"react-native":{"./dist-es/runtimeConfig":"./dist-es/runtimeConfig.native"},"homepage":"https://github.com/aws/aws-sdk-js-v3/tree/main/clients/client-sso","repository":{"type":"git","url":"https://github.com/aws/aws-sdk-js-v3.git","directory":"clients/client-sso"}}');
 
 /***/ }),
 
@@ -91533,7 +100173,7 @@ module.exports = JSON.parse('{"name":"@aws-sdk/client-sso","description":"AWS SD
 /***/ ((module) => {
 
 "use strict";
-module.exports = JSON.parse('{"name":"@aws-sdk/nested-clients","version":"3.830.0","description":"Nested clients for AWS SDK packages.","main":"./dist-cjs/index.js","module":"./dist-es/index.js","types":"./dist-types/index.d.ts","scripts":{"build":"yarn lint && concurrently \'yarn:build:cjs\' \'yarn:build:es\' \'yarn:build:types\'","build:cjs":"node ../../scripts/compilation/inline nested-clients","build:es":"tsc -p tsconfig.es.json","build:include:deps":"lerna run --scope $npm_package_name --include-dependencies build","build:types":"tsc -p tsconfig.types.json","build:types:downlevel":"downlevel-dts dist-types dist-types/ts3.4","clean":"rimraf ./dist-* && rimraf *.tsbuildinfo","lint":"node ../../scripts/validation/submodules-linter.js --pkg nested-clients","test":"yarn g:vitest run","test:watch":"yarn g:vitest watch"},"engines":{"node":">=18.0.0"},"author":{"name":"AWS SDK for JavaScript Team","url":"https://aws.amazon.com/javascript/"},"license":"Apache-2.0","dependencies":{"@aws-crypto/sha256-browser":"5.2.0","@aws-crypto/sha256-js":"5.2.0","@aws-sdk/core":"3.826.0","@aws-sdk/middleware-host-header":"3.821.0","@aws-sdk/middleware-logger":"3.821.0","@aws-sdk/middleware-recursion-detection":"3.821.0","@aws-sdk/middleware-user-agent":"3.828.0","@aws-sdk/region-config-resolver":"3.821.0","@aws-sdk/types":"3.821.0","@aws-sdk/util-endpoints":"3.828.0","@aws-sdk/util-user-agent-browser":"3.821.0","@aws-sdk/util-user-agent-node":"3.828.0","@smithy/config-resolver":"^4.1.4","@smithy/core":"^3.5.3","@smithy/fetch-http-handler":"^5.0.4","@smithy/hash-node":"^4.0.4","@smithy/invalid-dependency":"^4.0.4","@smithy/middleware-content-length":"^4.0.4","@smithy/middleware-endpoint":"^4.1.11","@smithy/middleware-retry":"^4.1.12","@smithy/middleware-serde":"^4.0.8","@smithy/middleware-stack":"^4.0.4","@smithy/node-config-provider":"^4.1.3","@smithy/node-http-handler":"^4.0.6","@smithy/protocol-http":"^5.1.2","@smithy/smithy-client":"^4.4.3","@smithy/types":"^4.3.1","@smithy/url-parser":"^4.0.4","@smithy/util-base64":"^4.0.0","@smithy/util-body-length-browser":"^4.0.0","@smithy/util-body-length-node":"^4.0.0","@smithy/util-defaults-mode-browser":"^4.0.19","@smithy/util-defaults-mode-node":"^4.0.19","@smithy/util-endpoints":"^3.0.6","@smithy/util-middleware":"^4.0.4","@smithy/util-retry":"^4.0.5","@smithy/util-utf8":"^4.0.0","tslib":"^2.6.2"},"devDependencies":{"concurrently":"7.0.0","downlevel-dts":"0.10.1","rimraf":"3.0.2","typescript":"~5.8.3"},"typesVersions":{"<4.0":{"dist-types/*":["dist-types/ts3.4/*"]}},"files":["./sso-oidc.d.ts","./sso-oidc.js","./sts.d.ts","./sts.js","dist-*/**"],"browser":{"./dist-es/submodules/sso-oidc/runtimeConfig":"./dist-es/submodules/sso-oidc/runtimeConfig.browser","./dist-es/submodules/sts/runtimeConfig":"./dist-es/submodules/sts/runtimeConfig.browser"},"react-native":{},"homepage":"https://github.com/aws/aws-sdk-js-v3/tree/main/packages/nested-clients","repository":{"type":"git","url":"https://github.com/aws/aws-sdk-js-v3.git","directory":"packages/nested-clients"},"exports":{"./sso-oidc":{"types":"./dist-types/submodules/sso-oidc/index.d.ts","module":"./dist-es/submodules/sso-oidc/index.js","node":"./dist-cjs/submodules/sso-oidc/index.js","import":"./dist-es/submodules/sso-oidc/index.js","require":"./dist-cjs/submodules/sso-oidc/index.js"},"./sts":{"types":"./dist-types/submodules/sts/index.d.ts","module":"./dist-es/submodules/sts/index.js","node":"./dist-cjs/submodules/sts/index.js","import":"./dist-es/submodules/sts/index.js","require":"./dist-cjs/submodules/sts/index.js"}}}');
+module.exports = JSON.parse('{"name":"@aws-sdk/nested-clients","version":"3.864.0","description":"Nested clients for AWS SDK packages.","main":"./dist-cjs/index.js","module":"./dist-es/index.js","types":"./dist-types/index.d.ts","scripts":{"build":"yarn lint && concurrently \'yarn:build:cjs\' \'yarn:build:es\' \'yarn:build:types\'","build:cjs":"node ../../scripts/compilation/inline nested-clients","build:es":"tsc -p tsconfig.es.json","build:include:deps":"lerna run --scope $npm_package_name --include-dependencies build","build:types":"tsc -p tsconfig.types.json","build:types:downlevel":"downlevel-dts dist-types dist-types/ts3.4","clean":"rimraf ./dist-* && rimraf *.tsbuildinfo","lint":"node ../../scripts/validation/submodules-linter.js --pkg nested-clients","test":"yarn g:vitest run","test:watch":"yarn g:vitest watch"},"engines":{"node":">=18.0.0"},"author":{"name":"AWS SDK for JavaScript Team","url":"https://aws.amazon.com/javascript/"},"license":"Apache-2.0","dependencies":{"@aws-crypto/sha256-browser":"5.2.0","@aws-crypto/sha256-js":"5.2.0","@aws-sdk/core":"3.864.0","@aws-sdk/middleware-host-header":"3.862.0","@aws-sdk/middleware-logger":"3.862.0","@aws-sdk/middleware-recursion-detection":"3.862.0","@aws-sdk/middleware-user-agent":"3.864.0","@aws-sdk/region-config-resolver":"3.862.0","@aws-sdk/types":"3.862.0","@aws-sdk/util-endpoints":"3.862.0","@aws-sdk/util-user-agent-browser":"3.862.0","@aws-sdk/util-user-agent-node":"3.864.0","@smithy/config-resolver":"^4.1.5","@smithy/core":"^3.8.0","@smithy/fetch-http-handler":"^5.1.1","@smithy/hash-node":"^4.0.5","@smithy/invalid-dependency":"^4.0.5","@smithy/middleware-content-length":"^4.0.5","@smithy/middleware-endpoint":"^4.1.18","@smithy/middleware-retry":"^4.1.19","@smithy/middleware-serde":"^4.0.9","@smithy/middleware-stack":"^4.0.5","@smithy/node-config-provider":"^4.1.4","@smithy/node-http-handler":"^4.1.1","@smithy/protocol-http":"^5.1.3","@smithy/smithy-client":"^4.4.10","@smithy/types":"^4.3.2","@smithy/url-parser":"^4.0.5","@smithy/util-base64":"^4.0.0","@smithy/util-body-length-browser":"^4.0.0","@smithy/util-body-length-node":"^4.0.0","@smithy/util-defaults-mode-browser":"^4.0.26","@smithy/util-defaults-mode-node":"^4.0.26","@smithy/util-endpoints":"^3.0.7","@smithy/util-middleware":"^4.0.5","@smithy/util-retry":"^4.0.7","@smithy/util-utf8":"^4.0.0","tslib":"^2.6.2"},"devDependencies":{"concurrently":"7.0.0","downlevel-dts":"0.10.1","rimraf":"3.0.2","typescript":"~5.8.3"},"typesVersions":{"<4.0":{"dist-types/*":["dist-types/ts3.4/*"]}},"files":["./sso-oidc.d.ts","./sso-oidc.js","./sts.d.ts","./sts.js","dist-*/**"],"browser":{"./dist-es/submodules/sso-oidc/runtimeConfig":"./dist-es/submodules/sso-oidc/runtimeConfig.browser","./dist-es/submodules/sts/runtimeConfig":"./dist-es/submodules/sts/runtimeConfig.browser"},"react-native":{},"homepage":"https://github.com/aws/aws-sdk-js-v3/tree/main/packages/nested-clients","repository":{"type":"git","url":"https://github.com/aws/aws-sdk-js-v3.git","directory":"packages/nested-clients"},"exports":{"./sso-oidc":{"types":"./dist-types/submodules/sso-oidc/index.d.ts","module":"./dist-es/submodules/sso-oidc/index.js","node":"./dist-cjs/submodules/sso-oidc/index.js","import":"./dist-es/submodules/sso-oidc/index.js","require":"./dist-cjs/submodules/sso-oidc/index.js"},"./sts":{"types":"./dist-types/submodules/sts/index.d.ts","module":"./dist-es/submodules/sts/index.js","node":"./dist-cjs/submodules/sts/index.js","import":"./dist-es/submodules/sts/index.js","require":"./dist-cjs/submodules/sts/index.js"}}}');
 
 /***/ }),
 
@@ -91541,7 +100181,7 @@ module.exports = JSON.parse('{"name":"@aws-sdk/nested-clients","version":"3.830.
 /***/ ((module) => {
 
 "use strict";
-module.exports = JSON.parse('{"name":"@aws-sdk/client-s3","description":"AWS SDK for JavaScript S3 Client for Node.js, Browser and React Native","version":"3.830.0","scripts":{"build":"concurrently \'yarn:build:cjs\' \'yarn:build:es\' \'yarn:build:types\'","build:cjs":"node ../../scripts/compilation/inline client-s3","build:es":"tsc -p tsconfig.es.json","build:include:deps":"lerna run --scope $npm_package_name --include-dependencies build","build:types":"tsc -p tsconfig.types.json","build:types:downlevel":"downlevel-dts dist-types dist-types/ts3.4","clean":"rimraf ./dist-* && rimraf *.tsbuildinfo","extract:docs":"api-extractor run --local","generate:client":"node ../../scripts/generate-clients/single-service --solo s3","test":"yarn g:vitest run","test:browser":"node ./test/browser-build/esbuild && yarn g:vitest run -c vitest.config.browser.ts","test:browser:watch":"node ./test/browser-build/esbuild && yarn g:vitest watch -c vitest.config.browser.ts","test:e2e":"yarn g:vitest run -c vitest.config.e2e.ts && yarn test:browser","test:e2e:watch":"yarn g:vitest watch -c vitest.config.e2e.ts","test:integration":"yarn g:vitest run -c vitest.config.integ.ts","test:integration:watch":"yarn g:vitest watch -c vitest.config.integ.ts","test:watch":"yarn g:vitest watch"},"main":"./dist-cjs/index.js","types":"./dist-types/index.d.ts","module":"./dist-es/index.js","sideEffects":false,"dependencies":{"@aws-crypto/sha1-browser":"5.2.0","@aws-crypto/sha256-browser":"5.2.0","@aws-crypto/sha256-js":"5.2.0","@aws-sdk/core":"3.826.0","@aws-sdk/credential-provider-node":"3.830.0","@aws-sdk/middleware-bucket-endpoint":"3.830.0","@aws-sdk/middleware-expect-continue":"3.821.0","@aws-sdk/middleware-flexible-checksums":"3.826.0","@aws-sdk/middleware-host-header":"3.821.0","@aws-sdk/middleware-location-constraint":"3.821.0","@aws-sdk/middleware-logger":"3.821.0","@aws-sdk/middleware-recursion-detection":"3.821.0","@aws-sdk/middleware-sdk-s3":"3.826.0","@aws-sdk/middleware-ssec":"3.821.0","@aws-sdk/middleware-user-agent":"3.828.0","@aws-sdk/region-config-resolver":"3.821.0","@aws-sdk/signature-v4-multi-region":"3.826.0","@aws-sdk/types":"3.821.0","@aws-sdk/util-endpoints":"3.828.0","@aws-sdk/util-user-agent-browser":"3.821.0","@aws-sdk/util-user-agent-node":"3.828.0","@aws-sdk/xml-builder":"3.821.0","@smithy/config-resolver":"^4.1.4","@smithy/core":"^3.5.3","@smithy/eventstream-serde-browser":"^4.0.4","@smithy/eventstream-serde-config-resolver":"^4.1.2","@smithy/eventstream-serde-node":"^4.0.4","@smithy/fetch-http-handler":"^5.0.4","@smithy/hash-blob-browser":"^4.0.4","@smithy/hash-node":"^4.0.4","@smithy/hash-stream-node":"^4.0.4","@smithy/invalid-dependency":"^4.0.4","@smithy/md5-js":"^4.0.4","@smithy/middleware-content-length":"^4.0.4","@smithy/middleware-endpoint":"^4.1.11","@smithy/middleware-retry":"^4.1.12","@smithy/middleware-serde":"^4.0.8","@smithy/middleware-stack":"^4.0.4","@smithy/node-config-provider":"^4.1.3","@smithy/node-http-handler":"^4.0.6","@smithy/protocol-http":"^5.1.2","@smithy/smithy-client":"^4.4.3","@smithy/types":"^4.3.1","@smithy/url-parser":"^4.0.4","@smithy/util-base64":"^4.0.0","@smithy/util-body-length-browser":"^4.0.0","@smithy/util-body-length-node":"^4.0.0","@smithy/util-defaults-mode-browser":"^4.0.19","@smithy/util-defaults-mode-node":"^4.0.19","@smithy/util-endpoints":"^3.0.6","@smithy/util-middleware":"^4.0.4","@smithy/util-retry":"^4.0.5","@smithy/util-stream":"^4.2.2","@smithy/util-utf8":"^4.0.0","@smithy/util-waiter":"^4.0.5","tslib":"^2.6.2"},"devDependencies":{"@aws-sdk/signature-v4-crt":"3.828.0","@tsconfig/node18":"18.2.4","@types/node":"^18.19.69","concurrently":"7.0.0","downlevel-dts":"0.10.1","rimraf":"3.0.2","typescript":"~5.8.3"},"engines":{"node":">=18.0.0"},"typesVersions":{"<4.0":{"dist-types/*":["dist-types/ts3.4/*"]}},"files":["dist-*/**"],"author":{"name":"AWS SDK for JavaScript Team","url":"https://aws.amazon.com/javascript/"},"license":"Apache-2.0","browser":{"./dist-es/runtimeConfig":"./dist-es/runtimeConfig.browser"},"react-native":{"./dist-es/runtimeConfig":"./dist-es/runtimeConfig.native"},"homepage":"https://github.com/aws/aws-sdk-js-v3/tree/main/clients/client-s3","repository":{"type":"git","url":"https://github.com/aws/aws-sdk-js-v3.git","directory":"clients/client-s3"}}');
+module.exports = JSON.parse('{"name":"@aws-sdk/client-s3","description":"AWS SDK for JavaScript S3 Client for Node.js, Browser and React Native","version":"3.864.0","scripts":{"build":"concurrently \'yarn:build:cjs\' \'yarn:build:es\' \'yarn:build:types\'","build:cjs":"node ../../scripts/compilation/inline client-s3","build:es":"tsc -p tsconfig.es.json","build:include:deps":"lerna run --scope $npm_package_name --include-dependencies build","build:types":"tsc -p tsconfig.types.json","build:types:downlevel":"downlevel-dts dist-types dist-types/ts3.4","clean":"rimraf ./dist-* && rimraf *.tsbuildinfo","extract:docs":"api-extractor run --local","generate:client":"node ../../scripts/generate-clients/single-service --solo s3","test":"yarn g:vitest run","test:browser":"node ./test/browser-build/esbuild && yarn g:vitest run -c vitest.config.browser.ts","test:browser:watch":"node ./test/browser-build/esbuild && yarn g:vitest watch -c vitest.config.browser.ts","test:e2e":"yarn g:vitest run -c vitest.config.e2e.ts && yarn test:browser","test:e2e:watch":"yarn g:vitest watch -c vitest.config.e2e.ts","test:integration":"yarn g:vitest run -c vitest.config.integ.ts","test:integration:watch":"yarn g:vitest watch -c vitest.config.integ.ts","test:watch":"yarn g:vitest watch"},"main":"./dist-cjs/index.js","types":"./dist-types/index.d.ts","module":"./dist-es/index.js","sideEffects":false,"dependencies":{"@aws-crypto/sha1-browser":"5.2.0","@aws-crypto/sha256-browser":"5.2.0","@aws-crypto/sha256-js":"5.2.0","@aws-sdk/core":"3.864.0","@aws-sdk/credential-provider-node":"3.864.0","@aws-sdk/middleware-bucket-endpoint":"3.862.0","@aws-sdk/middleware-expect-continue":"3.862.0","@aws-sdk/middleware-flexible-checksums":"3.864.0","@aws-sdk/middleware-host-header":"3.862.0","@aws-sdk/middleware-location-constraint":"3.862.0","@aws-sdk/middleware-logger":"3.862.0","@aws-sdk/middleware-recursion-detection":"3.862.0","@aws-sdk/middleware-sdk-s3":"3.864.0","@aws-sdk/middleware-ssec":"3.862.0","@aws-sdk/middleware-user-agent":"3.864.0","@aws-sdk/region-config-resolver":"3.862.0","@aws-sdk/signature-v4-multi-region":"3.864.0","@aws-sdk/types":"3.862.0","@aws-sdk/util-endpoints":"3.862.0","@aws-sdk/util-user-agent-browser":"3.862.0","@aws-sdk/util-user-agent-node":"3.864.0","@aws-sdk/xml-builder":"3.862.0","@smithy/config-resolver":"^4.1.5","@smithy/core":"^3.8.0","@smithy/eventstream-serde-browser":"^4.0.5","@smithy/eventstream-serde-config-resolver":"^4.1.3","@smithy/eventstream-serde-node":"^4.0.5","@smithy/fetch-http-handler":"^5.1.1","@smithy/hash-blob-browser":"^4.0.5","@smithy/hash-node":"^4.0.5","@smithy/hash-stream-node":"^4.0.5","@smithy/invalid-dependency":"^4.0.5","@smithy/md5-js":"^4.0.5","@smithy/middleware-content-length":"^4.0.5","@smithy/middleware-endpoint":"^4.1.18","@smithy/middleware-retry":"^4.1.19","@smithy/middleware-serde":"^4.0.9","@smithy/middleware-stack":"^4.0.5","@smithy/node-config-provider":"^4.1.4","@smithy/node-http-handler":"^4.1.1","@smithy/protocol-http":"^5.1.3","@smithy/smithy-client":"^4.4.10","@smithy/types":"^4.3.2","@smithy/url-parser":"^4.0.5","@smithy/util-base64":"^4.0.0","@smithy/util-body-length-browser":"^4.0.0","@smithy/util-body-length-node":"^4.0.0","@smithy/util-defaults-mode-browser":"^4.0.26","@smithy/util-defaults-mode-node":"^4.0.26","@smithy/util-endpoints":"^3.0.7","@smithy/util-middleware":"^4.0.5","@smithy/util-retry":"^4.0.7","@smithy/util-stream":"^4.2.4","@smithy/util-utf8":"^4.0.0","@smithy/util-waiter":"^4.0.7","@types/uuid":"^9.0.1","tslib":"^2.6.2","uuid":"^9.0.1"},"devDependencies":{"@aws-sdk/signature-v4-crt":"3.864.0","@tsconfig/node18":"18.2.4","@types/node":"^18.19.69","concurrently":"7.0.0","downlevel-dts":"0.10.1","rimraf":"3.0.2","typescript":"~5.8.3"},"engines":{"node":">=18.0.0"},"typesVersions":{"<4.0":{"dist-types/*":["dist-types/ts3.4/*"]}},"files":["dist-*/**"],"author":{"name":"AWS SDK for JavaScript Team","url":"https://aws.amazon.com/javascript/"},"license":"Apache-2.0","browser":{"./dist-es/runtimeConfig":"./dist-es/runtimeConfig.browser"},"react-native":{"./dist-es/runtimeConfig":"./dist-es/runtimeConfig.native"},"homepage":"https://github.com/aws/aws-sdk-js-v3/tree/main/clients/client-s3","repository":{"type":"git","url":"https://github.com/aws/aws-sdk-js-v3.git","directory":"clients/client-s3"}}');
 
 /***/ }),
 
@@ -91589,7 +100229,7 @@ module.exports = JSON.parse('{"name":"@aws-sdk/nested-clients","version":"3.826.
 /***/ ((module) => {
 
 "use strict";
-module.exports = JSON.parse('{"name":"@amzn/github-action-lambda-deploy","version":"1.0.0","description":"GitHub Action for AWS Lambda Function Deployment","main":"index.js","scripts":{"build":"ncc build index.js -o dist","test":"jest","lint":"eslint .","lint:fix":"eslint . --fix"},"keywords":["aws","lambda","deployment"],"author":"","license":"MIT","dependencies":{"@actions/core":"^1.10.0","@actions/github":"^6.0.1","@aws-sdk/client-lambda":"^3.826.0","@aws-sdk/client-s3":"^3.826.0","@aws-sdk/util-retry":"^3.370.0","@smithy/node-http-handler":"^4.0.6","@aws-sdk/client-sts":"3.844.0","adm-zip":"^0.5.16","glob":"^11.0.2"},"devDependencies":{"@vercel/ncc":"^0.36.1","eslint":"^8.45.0","eslint-plugin-jest":"^27.2.2","jest":"^29.5.0"}}');
+module.exports = JSON.parse('{"name":"@amzn/github-action-lambda-deploy","version":"1.0.0","description":"GitHub Action for AWS Lambda Function Deployment","main":"index.js","scripts":{"build":"ncc build index.js -o dist","test":"jest","lint":"eslint .","lint:fix":"eslint . --fix"},"keywords":["aws","lambda","deployment"],"author":"","license":"MIT","dependencies":{"@actions/core":"^1.10.0","@actions/github":"^6.0.1","@aws-sdk/client-lambda":"^3.826.0","@aws-sdk/client-s3":"^3.864.0","@aws-sdk/util-retry":"^3.370.0","@smithy/node-http-handler":"^4.0.6","@aws-sdk/client-sts":"3.844.0","adm-zip":"^0.5.16","glob":"^11.0.2"},"devDependencies":{"@vercel/ncc":"^0.36.1","eslint":"^8.45.0","eslint-plugin-jest":"^27.2.2","jest":"^29.5.0"}}');
 
 /***/ })
 
