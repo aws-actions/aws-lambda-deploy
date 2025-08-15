@@ -26,11 +26,11 @@ function validateNumericInputs() {
     return { valid: false };
   }
 
-  return { 
-    valid: true, 
-    ephemeralStorage, 
-    parsedMemorySize, 
-    timeout 
+  return {
+    valid: true,
+    ephemeralStorage,
+    parsedMemorySize,
+    timeout
   };
 }
 
@@ -41,24 +41,61 @@ function validateRequiredInputs() {
     return { valid: false };
   }
 
-  const codeArtifactsDir = core.getInput('code-artifacts-dir');
-  if (!codeArtifactsDir) {
-    core.setFailed('Code-artifacts-dir must be provided');
+  // Get package type (defaults to 'Zip')
+  let packageType = core.getInput('package-type', { required: false }) || 'Zip';
+
+  // Validate package type value
+  if (!['Zip', 'Image'].includes(packageType)) {
+    core.setFailed(`Package type must be either 'Zip' or 'Image', got: ${packageType}`);
     return { valid: false };
   }
 
-  let handler = core.getInput('handler', { required: true });
-  handler = handler || 'index.handler'; 
-  
-  let runtime = core.getInput('runtime', { required: true });
-  runtime = runtime || 'node20js.x'; 
+  let codeArtifactsDir, handler, runtime, imageUri;
 
-  return { 
-    valid: true, 
-    functionName, 
+  if (packageType === 'Zip') {
+    // For Zip packages, require code-artifacts-dir, handler, and runtime
+    codeArtifactsDir = core.getInput('code-artifacts-dir');
+    if (!codeArtifactsDir) {
+      core.setFailed('code-artifacts-dir must be provided when package-type is "Zip"');
+      return { valid: false };
+    }
+
+    handler = core.getInput('handler', { required: false }) || 'index.handler';
+    runtime = core.getInput('runtime', { required: false }) || 'nodejs20.x';
+    
+    // Warn if Image-only parameters are provided with Zip package type
+    imageUri = core.getInput('image-uri', { required: false });
+    if (imageUri) {
+      core.warning('image-uri parameter is ignored when package-type is "Zip"');
+    }
+
+  } else if (packageType === 'Image') {
+    // For Image packages, require image-uri
+    imageUri = core.getInput('image-uri', { required: false });
+    if (!imageUri) {
+      core.setFailed('image-uri must be provided when package-type is "Image"');
+      return { valid: false };
+    }
+
+    // Handler and runtime are optional for container images
+    handler = core.getInput('handler', { required: false });
+    runtime = core.getInput('runtime', { required: false });
+
+    // Warn if Zip-only parameters are provided with Image package type
+    codeArtifactsDir = core.getInput('code-artifacts-dir', { required: false });
+    if (codeArtifactsDir) {
+      core.warning('code-artifacts-dir parameter is ignored when package-type is "Image"');
+    }
+  }
+
+  return {
+    valid: true,
+    functionName,
+    packageType,
     codeArtifactsDir,
     handler,
-    runtime
+    runtime,
+    imageUri
   };
 }
 
@@ -67,19 +104,19 @@ function validateArnInputs() {
   const codeSigningConfigArn = core.getInput('code-signing-config-arn', { required: false });
   const kmsKeyArn = core.getInput('kms-key-arn', { required: false });
   const sourceKmsKeyArn = core.getInput('source-kms-key-arn', { required: false });
-  
+
   if (role && !validateRoleArn(role)) {
     return { valid: false };
   }
-  
+
   if (codeSigningConfigArn && !validateCodeSigningConfigArn(codeSigningConfigArn)) {
     return { valid: false };
   }
-  
+
   if (kmsKeyArn && !validateKmsKeyArn(kmsKeyArn)) {
     return { valid: false };
   }
-  
+
   if (sourceKmsKeyArn && !validateKmsKeyArn(sourceKmsKeyArn)) {
     return { valid: false };
   }
@@ -104,7 +141,7 @@ function validateJsonInputs() {
   const snapStart = core.getInput('snap-start', { required: false });
   const loggingConfig = core.getInput('logging-config', { required: false });
   const tags = core.getInput('tags', { required: false });
-  
+
   let parsedEnvironment, parsedVpcConfig, parsedDeadLetterConfig, parsedTracingConfig,
     parsedLayers, parsedFileSystemConfigs, parsedImageConfig, parsedSnapStart,
     parsedLoggingConfig, parsedTags;
@@ -113,7 +150,7 @@ function validateJsonInputs() {
     if (environment) {
       parsedEnvironment = parseJsonInput(environment, 'environment');
     }
-    
+
     if (vpcConfig) {
       parsedVpcConfig = parseJsonInput(vpcConfig, 'vpc-config');
       if (!parsedVpcConfig.SubnetIds || !Array.isArray(parsedVpcConfig.SubnetIds)) {
@@ -123,28 +160,28 @@ function validateJsonInputs() {
         throw new Error("vpc-config must include 'SecurityGroupIds' as an array");
       }
     }
-    
+
     if (deadLetterConfig) {
       parsedDeadLetterConfig = parseJsonInput(deadLetterConfig, 'dead-letter-config');
       if (!parsedDeadLetterConfig.TargetArn) {
         throw new Error("dead-letter-config must include 'TargetArn'");
       }
     }
-    
+
     if (tracingConfig) {
       parsedTracingConfig = parseJsonInput(tracingConfig, 'tracing-config');
       if (!parsedTracingConfig.Mode || !['Active', 'PassThrough'].includes(parsedTracingConfig.Mode)) {
         throw new Error("tracing-config Mode must be 'Active' or 'PassThrough'");
       }
     }
-    
+
     if (layers) {
       parsedLayers = parseJsonInput(layers, 'layers');
       if (!Array.isArray(parsedLayers)) {
         throw new Error("layers must be an array of layer ARNs");
       }
     }
-    
+
     if (fileSystemConfigs) {
       parsedFileSystemConfigs = parseJsonInput(fileSystemConfigs, 'file-system-configs');
       if (!Array.isArray(parsedFileSystemConfigs)) {
@@ -156,22 +193,22 @@ function validateJsonInputs() {
         }
       }
     }
-    
+
     if (imageConfig) {
       parsedImageConfig = parseJsonInput(imageConfig, 'image-config');
     }
-    
+
     if (snapStart) {
       parsedSnapStart = parseJsonInput(snapStart, 'snap-start');
       if (!parsedSnapStart.ApplyOn || !['PublishedVersions', 'None'].includes(parsedSnapStart.ApplyOn)) {
         throw new Error("snap-start ApplyOn must be 'PublishedVersions' or 'None'");
       }
     }
-    
+
     if (loggingConfig) {
       parsedLoggingConfig = parseJsonInput(loggingConfig, 'logging-config');
     }
-    
+
     if (tags) {
       parsedTags = parseJsonInput(tags, 'tags');
       if (typeof parsedTags !== 'object' || Array.isArray(parsedTags)) {
@@ -190,7 +227,7 @@ function validateJsonInputs() {
     deadLetterConfig,
     tracingConfig,
     layers,
-    fileSystemConfigs, 
+    fileSystemConfigs,
     imageConfig,
     snapStart,
     loggingConfig,
@@ -201,7 +238,7 @@ function validateJsonInputs() {
     parsedTracingConfig,
     parsedLayers,
     parsedFileSystemConfigs,
-    parsedImageConfig, 
+    parsedImageConfig,
     parsedSnapStart,
     parsedLoggingConfig,
     parsedTags
@@ -247,7 +284,7 @@ function parseJsonInput(jsonString, inputName) {
 
 function validateRoleArn(arn) {
   const rolePattern = /^arn:aws(-[a-z0-9-]+)?:iam::[0-9]{12}:role\/[a-zA-Z0-9+=,.@_\/-]+$/;
-  
+
   if (!rolePattern.test(arn)) {
     core.setFailed(`Invalid IAM role ARN format: ${arn}`);
     return false;
@@ -267,7 +304,7 @@ function validateCodeSigningConfigArn(arn) {
 
 function validateKmsKeyArn(arn) {
   const kmsPattern = /^arn:aws(-[a-z0-9-]+)?:kms:[a-z0-9-]+:[0-9]{12}:key\/[a-zA-Z0-9-]+$/;
-  
+
   if (!kmsPattern.test(arn)) {
     core.setFailed(`Invalid KMS key ARN format: ${arn}`);
     return false;
@@ -289,29 +326,52 @@ function validateAndResolvePath(userPath, basePath) {
   return resolvedPath;
 }
 
+function checkInputConflicts(packageType, additionalInputs) {
+  const { s3Bucket, s3Key, useS3Method } = additionalInputs;
+  const sourceKmsKeyArn = core.getInput('source-kms-key-arn', { required: false });
+  
+  if (packageType === 'Image') {
+    // Warn about S3-related parameters being ignored for Image package type
+    if (s3Bucket) {
+      core.warning('s3-bucket parameter is ignored when package-type is "Image"');
+    }
+    if (s3Key) {
+      core.warning('s3-key parameter is ignored when package-type is "Image"');
+    }
+    if (sourceKmsKeyArn) {
+      core.warning('source-kms-key-arn parameter is ignored when package-type is "Image"');
+    }
+  }
+}
+
 function validateAllInputs() {
   const requiredInputs = validateRequiredInputs();
   if (!requiredInputs.valid) {
     return { valid: false };
   }
-  
+
   const numericInputs = validateNumericInputs();
   if (!numericInputs.valid) {
     return { valid: false };
   }
-  
+
   const arnInputs = validateArnInputs();
   if (!arnInputs.valid) {
     return { valid: false };
   }
-  
+
   const jsonInputs = validateJsonInputs();
   if (!jsonInputs.valid) {
     return { valid: false };
   }
-  
+
   const additionalInputs = getAdditionalInputs();
   
+  // Check for input conflicts based on package type
+  if (requiredInputs.packageType) {
+    checkInputConflicts(requiredInputs.packageType, additionalInputs);
+  }
+
   return {
     valid: true,
     ...requiredInputs,

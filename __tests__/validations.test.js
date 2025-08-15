@@ -210,7 +210,7 @@ describe('Validations Tests', () => {
         });
         const result = originalValidations.validateAllInputs();
         expect(result.valid).toBe(false);
-        expect(core.setFailed).toHaveBeenCalledWith('Code-artifacts-dir must be provided');
+        expect(core.setFailed).toHaveBeenCalledWith('code-artifacts-dir must be provided when package-type is "Zip"');
       });
     });
     describe('Handler Validation', () => {
@@ -278,7 +278,7 @@ describe('Validations Tests', () => {
         });
         const result = originalValidations.validateAllInputs();
         expect(result.valid).toBe(true);
-        expect(result.runtime).toBe('node20js.x');
+        expect(result.runtime).toBe('nodejs20.x');
         expect(core.setFailed).not.toHaveBeenCalled();
       });
     });

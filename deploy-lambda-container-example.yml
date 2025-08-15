@@ -1,0 +1,101 @@
+# This workflow deploys a container image to an AWS Lambda function using the Lambda GitHub Action.
+# It uses OpenID Connect (OIDC) to authenticate with AWS instead of long-term access keys.
+#
+# To use this workflow, you will need to complete the following set-up steps:
+#
+# 1. Configure AWS IAM OIDC identity provider for GitHub Actions:
+#    - Go to the IAM console, navigate to "Identity providers", and create a new provider
+#    - Use https://token.actions.githubusercontent.com as the provider URL
+#    - Use sts.amazonaws.com as the audience
+#    - Complete the wizard to create the provider
+#
+# 2. Create an IAM role for GitHub Actions:
+#    - Create a new role with Web Identity as the trusted entity
+#    - Select the OIDC provider you created above
+#    - For "Audience", enter "sts.amazonaws.com"
+#    - Add a condition to limit the role to your repository:
+#      token.actions.githubusercontent.com:sub: repo:your-org/your-repo:*
+#    - Attach policies for Lambda and ECR permissions (Can be found on the README.md)
+#
+# 3. Create an ECR repository for your Lambda container images:
+#    - Navigate to Amazon ECR in the AWS Console
+#    - Create a new repository with your desired name
+#    - Configure the repository policy to allow Lambda service access (see README.md)
+#
+# 4. Create a Dockerfile in your repository root with your Lambda function code
+#    - Use an AWS Lambda base image (e.g., public.ecr.aws/lambda/python:3.11)
+#    - Copy your function code and dependencies
+#    - Set the CMD to your handler function
+#
+# 5. Replace the value of the required parameters:
+#    - AWS_REGION
+#    - AWS_ROLE_TO_ASSUME
+#    - ECR_REPOSITORY
+#    - LAMBDA_FUNCTION_NAME
+#    - LAMBDA_EXECUTION_ROLE
+#
+# 6. Add any additional parameters under the environment variable section and Deploy Lambda Function step.
+
+
+name: Deploy Container to AWS Lambda
+
+on:
+  push:
+    branches: [ "main" ]
+
+env:
+  AWS_REGION: MY_AWS_REGION                         # set this to your AWS region
+  AWS_ROLE_TO_ASSUME: MY_ROLE_TO_ASSUME             # set this to your IAM role ARN
+  ECR_REPOSITORY: MY_ECR_REPOSITORY                 # set this to your ECR repository name
+  LAMBDA_FUNCTION_NAME: MY_FUNCTION_NAME            # set this to your Lambda function name
+  LAMBDA_EXECUTION_ROLE: MY_LAMBDA_EXECUTION_ROLE   # set this to your function's IAM execution role
+  # Include additional parameters as needed (Format as LAMBDA_PARAMETER)
+
+permissions:
+  id-token: write   # This is required for OIDC authentication
+  contents: read    # This is required to checkout the repository
+
+jobs:
+  deploy:
+    name: Deploy
+    runs-on: ubuntu-latest
+    environment: production
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v4
+
+    - name: Configure AWS credentials
+      uses: aws-actions/configure-aws-credentials@v4
+      with:
+        role-to-assume: ${{ env.AWS_ROLE_TO_ASSUME }}
+        aws-region: ${{ env.AWS_REGION }}
+        # The role-to-assume should be the ARN of the IAM role you created for GitHub Actions OIDC
+
+    - name: Login to Amazon ECR
+      id: login-ecr
+      uses: aws-actions/amazon-ecr-login@v1
+      # Authenticates with ECR and returns the registry URL for building images
+
+    - name: Build, tag, and push image to Amazon ECR
+      id: build-image
+      env:
+        ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+        IMAGE_TAG: ${{ github.sha }}
+      run: |
+        # Build Docker image from Dockerfile in repository root
+        docker build -t $ECR_REGISTRY/${{ env.ECR_REPOSITORY }}:$IMAGE_TAG .
+        # Push the built image to ECR repository
+        docker push $ECR_REGISTRY/${{ env.ECR_REPOSITORY }}:$IMAGE_TAG
+        # Output the full image URI for the next step
+        echo "image=$ECR_REGISTRY/${{ env.ECR_REPOSITORY }}:$IMAGE_TAG" >> $GITHUB_OUTPUT
+
+    - name: Deploy Lambda Function with Container Image
+      uses: aws-actions/aws-lambda-deploy@v1.1.0
+      with:
+        function-name: ${{ env.LAMBDA_FUNCTION_NAME }}
+        package-type: Image  # Required: Indicates container deployment (not zip)
+        image-uri: ${{ steps.build-image.outputs.image }}  # ECR image URI from previous step
+        role: ${{ env.LAMBDA_EXECUTION_ROLE }}  # IAM execution role for Lambda
+        # Add any additional inputs your action supports
+        # Note: handler, runtime, and layers should not be provided for container images
