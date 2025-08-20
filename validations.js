@@ -154,42 +154,42 @@ function validateJsonInputs() {
     if (vpcConfig) {
       parsedVpcConfig = parseJsonInput(vpcConfig, 'vpc-config');
       if (!parsedVpcConfig.SubnetIds || !Array.isArray(parsedVpcConfig.SubnetIds)) {
-        throw new Error("vpc-config must include 'SubnetIds' as an array");
+        throw new Error('vpc-config must include \'SubnetIds\' as an array');
       }
       if (!parsedVpcConfig.SecurityGroupIds || !Array.isArray(parsedVpcConfig.SecurityGroupIds)) {
-        throw new Error("vpc-config must include 'SecurityGroupIds' as an array");
+        throw new Error('vpc-config must include \'SecurityGroupIds\' as an array');
       }
     }
 
     if (deadLetterConfig) {
       parsedDeadLetterConfig = parseJsonInput(deadLetterConfig, 'dead-letter-config');
       if (!parsedDeadLetterConfig.TargetArn) {
-        throw new Error("dead-letter-config must include 'TargetArn'");
+        throw new Error('dead-letter-config must include \'TargetArn\'');
       }
     }
 
     if (tracingConfig) {
       parsedTracingConfig = parseJsonInput(tracingConfig, 'tracing-config');
       if (!parsedTracingConfig.Mode || !['Active', 'PassThrough'].includes(parsedTracingConfig.Mode)) {
-        throw new Error("tracing-config Mode must be 'Active' or 'PassThrough'");
+        throw new Error('tracing-config Mode must be \'Active\' or \'PassThrough\'');
       }
     }
 
     if (layers) {
       parsedLayers = parseJsonInput(layers, 'layers');
       if (!Array.isArray(parsedLayers)) {
-        throw new Error("layers must be an array of layer ARNs");
+        throw new Error('layers must be an array of layer ARNs');
       }
     }
 
     if (fileSystemConfigs) {
       parsedFileSystemConfigs = parseJsonInput(fileSystemConfigs, 'file-system-configs');
       if (!Array.isArray(parsedFileSystemConfigs)) {
-        throw new Error("file-system-configs must be an array");
+        throw new Error('file-system-configs must be an array');
       }
       for (const config of parsedFileSystemConfigs) {
         if (!config.Arn || !config.LocalMountPath) {
-          throw new Error("Each file-system-config must include 'Arn' and 'LocalMountPath'");
+          throw new Error('Each file-system-config must include \'Arn\' and \'LocalMountPath\'');
         }
       }
     }
@@ -201,7 +201,7 @@ function validateJsonInputs() {
     if (snapStart) {
       parsedSnapStart = parseJsonInput(snapStart, 'snap-start');
       if (!parsedSnapStart.ApplyOn || !['PublishedVersions', 'None'].includes(parsedSnapStart.ApplyOn)) {
-        throw new Error("snap-start ApplyOn must be 'PublishedVersions' or 'None'");
+        throw new Error('snap-start ApplyOn must be \'PublishedVersions\' or \'None\'');
       }
     }
 
@@ -212,7 +212,7 @@ function validateJsonInputs() {
     if (tags) {
       parsedTags = parseJsonInput(tags, 'tags');
       if (typeof parsedTags !== 'object' || Array.isArray(parsedTags)) {
-        throw new Error("tags must be an object of key-value pairs");
+        throw new Error('tags must be an object of key-value pairs');
       }
     }
   } catch (error) {
@@ -283,7 +283,7 @@ function parseJsonInput(jsonString, inputName) {
 }
 
 function validateRoleArn(arn) {
-  const rolePattern = /^arn:aws(-[a-z0-9-]+)?:iam::[0-9]{12}:role\/[a-zA-Z0-9+=,.@_\/-]+$/;
+  const rolePattern = /^arn:aws(-[a-z0-9-]+)?:iam::[0-9]{12}:role\/[a-zA-Z0-9+=,.@_/-]+$/;
 
   if (!rolePattern.test(arn)) {
     core.setFailed(`Invalid IAM role ARN format: ${arn}`);
@@ -327,7 +327,7 @@ function validateAndResolvePath(userPath, basePath) {
 }
 
 function checkInputConflicts(packageType, additionalInputs) {
-  const { s3Bucket, s3Key, useS3Method } = additionalInputs;
+  const { s3Bucket, s3Key } = additionalInputs;
   const sourceKmsKeyArn = core.getInput('source-kms-key-arn', { required: false });
   
   if (packageType === 'Image') {

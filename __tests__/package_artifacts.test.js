@@ -176,7 +176,6 @@ describe('Package Artifacts Tests', () => {
   
   test('should handle error during directory cleanup', async () => {
     
-    const expectedTempDir = '/mock/tmp/lambda-temp-1234567890';
     const expectedZipPath = '/mock/tmp/lambda-function-1234567890.zip';
     
     const rmError = new Error('Failed to remove directory');
@@ -212,7 +211,7 @@ describe('Package Artifacts Tests', () => {
   
   test('should handle error during file copying', async () => {
     
-    fs.cp.mockImplementation((src, dest, options) => {
+    fs.cp.mockImplementation((src, _dest, _options) => {
       if (src.includes('file1.js')) {
         return Promise.reject(new Error('Failed to copy file'));
       }

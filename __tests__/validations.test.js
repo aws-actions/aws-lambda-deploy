@@ -40,12 +40,12 @@ describe('Validations Tests', () => {
       test('should handle empty memory size input', () => {
         jest.clearAllMocks();
         core.getInput.mockImplementation((name) => {
-            if (name === 'memory-size') return '';
-            if (name === 'function-name') return 'test-function';
-            if (name === 'region') return 'us-east-1';
-            if (name === 'code-artifacts-dir') return './artifacts';
-            if (name === 'handler') return 'index.handler';
-            if (name === 'runtime') return 'nodejs18.x';
+          if (name === 'memory-size') return '';
+          if (name === 'function-name') return 'test-function';
+          if (name === 'region') return 'us-east-1';
+          if (name === 'code-artifacts-dir') return './artifacts';
+          if (name === 'handler') return 'index.handler';
+          if (name === 'runtime') return 'nodejs18.x';
           return '';
         });
         const result = originalValidations.validateAllInputs();
@@ -56,12 +56,12 @@ describe('Validations Tests', () => {
       test('should handle non-numeric memory size input', () => {
         jest.clearAllMocks();
         core.getInput.mockImplementation((name) => {
-            if (name === 'memory-size') return 'hello';
-            if (name === 'function-name') return 'test-function';
-            if (name === 'region') return 'us-east-1';
-            if (name === 'code-artifacts-dir') return './artifacts';
-            if (name === 'handler') return 'index.handler';
-            if (name === 'runtime') return 'nodejs18.x';
+          if (name === 'memory-size') return 'hello';
+          if (name === 'function-name') return 'test-function';
+          if (name === 'region') return 'us-east-1';
+          if (name === 'code-artifacts-dir') return './artifacts';
+          if (name === 'handler') return 'index.handler';
+          if (name === 'runtime') return 'nodejs18.x';
           return '';
         });
         const result = originalValidations.validateAllInputs();
@@ -93,13 +93,13 @@ describe('Validations Tests', () => {
       test('should handle non-numeric memory size input', () => {
         jest.clearAllMocks();
         core.getInput.mockImplementation((name) => {
-            if (name === 'timeout') return 'hello';
-            if (name === 'function-name') return 'test-function';
-            if (name === 'region') return 'us-east-1';
-            if (name === 'code-artifacts-dir') return './artifacts';
-            if (name === 'handler') return 'index.handler';
-            if (name === 'runtime') return 'nodejs18.x';
-            return '';
+          if (name === 'timeout') return 'hello';
+          if (name === 'function-name') return 'test-function';
+          if (name === 'region') return 'us-east-1';
+          if (name === 'code-artifacts-dir') return './artifacts';
+          if (name === 'handler') return 'index.handler';
+          if (name === 'runtime') return 'nodejs18.x';
+          return '';
         });
         const result = originalValidations.validateAllInputs();
         expect(result.valid).toBe(false);
@@ -130,13 +130,13 @@ describe('Validations Tests', () => {
       test('should handle non-numeric memory size input', () => {
         jest.clearAllMocks();
         core.getInput.mockImplementation((name) => {
-            if (name === 'ephemeral-storage') return 'hello';
-            if (name === 'function-name') return 'test-function';
-            if (name === 'region') return 'us-east-1';
-            if (name === 'code-artifacts-dir') return './artifacts';
-            if (name === 'handler') return 'index.handler';
-            if (name === 'runtime') return 'nodejs18.x';
-            return '';
+          if (name === 'ephemeral-storage') return 'hello';
+          if (name === 'function-name') return 'test-function';
+          if (name === 'region') return 'us-east-1';
+          if (name === 'code-artifacts-dir') return './artifacts';
+          if (name === 'handler') return 'index.handler';
+          if (name === 'runtime') return 'nodejs18.x';
+          return '';
         });
         const result = originalValidations.validateAllInputs();
         expect(result.valid).toBe(false);
@@ -353,7 +353,7 @@ describe('Validations Tests', () => {
       test('should reject invalid source KMS key ARN format', () => {
         core.getInput.mockImplementation((name) => {
           if (name === 'kms-key-arn') return 'invalid:kms:key:arn';
-          if (name === 'source-kms-key-arn') return 'invalid:kms:key:arn'
+          if (name === 'source-kms-key-arn') return 'invalid:kms:key:arn';
           if (name === 'function-name') return 'test-function';
           if (name === 'region') return 'us-east-1';
           if (name === 'code-artifacts-dir') return './artifacts';
@@ -402,7 +402,7 @@ describe('Validations Tests', () => {
       test('should accept valid environment variables', () => {
         const mockGetInput = jest.fn((name) => {
           if (name === 'environment') {
-            return '{"ENV":"prod","DEBUG":"true","API_URL":"https://api.example.com"}'
+            return '{"ENV":"prod","DEBUG":"true","API_URL":"https://api.example.com"}';
           }
           const inputs = {
             'function-name': 'test-function',
@@ -889,7 +889,7 @@ describe('Validations Tests', () => {
     describe('VPC Configuration Edge Cases', () => {
       test('should reject vpc-config with malformed SubnetIds', () => {
         const invalidVpcConfig = JSON.stringify({
-          SubnetIds: "subnet-123", 
+          SubnetIds: 'subnet-123', 
           SecurityGroupIds: ['sg-123']
         });
         core.getInput.mockImplementation((name) => {
@@ -906,7 +906,7 @@ describe('Validations Tests', () => {
         const result = originalValidations.validateAllInputs();
         expect(result.valid).toBe(false);
         expect(core.setFailed).toHaveBeenCalledWith(
-          expect.stringContaining("vpc-config must include 'SubnetIds' as an array")
+          expect.stringContaining('vpc-config must include \'SubnetIds\' as an array')
         );
       });
       test('should reject vpc-config with empty SecurityGroupIds array', () => {
@@ -1010,7 +1010,7 @@ describe('Validations Tests', () => {
         const result = originalValidations.validateAllInputs();
         expect(result.valid).toBe(false);
         expect(core.setFailed).toHaveBeenCalledWith(
-          expect.stringContaining("tracing-config Mode must be 'Active' or 'PassThrough'")
+          expect.stringContaining('tracing-config Mode must be \'Active\' or \'PassThrough\'')
         );
       });
     });
@@ -1057,7 +1057,7 @@ describe('Validations Tests', () => {
         const result = originalValidations.validateAllInputs();
         expect(result.valid).toBe(false);
         expect(core.setFailed).toHaveBeenCalledWith(
-          expect.stringContaining("snap-start ApplyOn must be 'PublishedVersions' or 'None'")
+          expect.stringContaining('snap-start ApplyOn must be \'PublishedVersions\' or \'None\'')
         );
       });
     });
@@ -1077,7 +1077,7 @@ describe('Validations Tests', () => {
         const result = originalValidations.validateAllInputs();
         expect(result.valid).toBe(false);
         expect(core.setFailed).toHaveBeenCalledWith(
-          expect.stringContaining("file-system-configs must be an array")
+          expect.stringContaining('file-system-configs must be an array')
         );
       });
       test('should reject file-system-configs with missing Arn', () => {
@@ -1096,7 +1096,7 @@ describe('Validations Tests', () => {
         const result = originalValidations.validateAllInputs();
         expect(result.valid).toBe(false);
         expect(core.setFailed).toHaveBeenCalledWith(
-          expect.stringContaining("Each file-system-config must include 'Arn' and 'LocalMountPath'")
+          expect.stringContaining('Each file-system-config must include \'Arn\' and \'LocalMountPath\'')
         );
       });
       test('should validate multiple file system configs', () => {
@@ -1154,7 +1154,7 @@ describe('Validations Tests', () => {
         const result = originalValidations.validateAllInputs();
         expect(result.valid).toBe(false);
         expect(core.setFailed).toHaveBeenCalledWith(
-          expect.stringContaining("tags must be an object of key-value pairs")
+          expect.stringContaining('tags must be an object of key-value pairs')
         );
       });
     });

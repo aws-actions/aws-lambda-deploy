@@ -85,11 +85,6 @@ describe('Lambda Function Code Tests', () => {
     const originalUpdateFunctionCode = index.updateFunctionCode;
     
     index.updateFunctionCode = jest.fn().mockImplementation(async (client, params) => {
-      const s3Result = {
-        bucket: params.s3Bucket,
-        key: params.s3Key
-      };
-      
       const command = new UpdateFunctionCodeCommand({
         FunctionName: params.functionName,
         S3Bucket: params.s3Bucket,
