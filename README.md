@@ -1,6 +1,6 @@
 # AWS Lambda Deploy GitHub Action
 
-Updates the code and configuration of AWS Lambda functions as part of GitHub Actions workflow steps.
+Updates the code and configuration of AWS Lambda functions as part of GitHub Actions workflow steps. Supports both .zip file archives and container images stored in Amazon ECR.
 
 **Table of Contents**
 
@@ -10,6 +10,7 @@ Updates the code and configuration of AWS Lambda functions as part of GitHub Act
   * [Update Function Configuration](#update-function-configuration)
   * [Using S3 Deployment Method](#using-s3-deployment-method)
   * [Dry Run Mode](#dry-run-mode)
+  * [Container Image Deployment](#container-image-deployment)
 - [Build from Source](#build-from-source)
 - [Inputs](#inputs)
 - [Outputs](#outputs)
@@ -51,7 +52,7 @@ jobs:
         # The role-to-assume should be the ARN of the IAM role you created for GitHub Actions OIDC
 
     - name: Deploy Lambda Function
-      uses: aws-actions/aws-lambda-deploy@v1
+      uses: aws-actions/aws-lambda-deploy@v1.1.0
       with:
         function-name: my-function-name
         code-artifacts-dir: my-code-artifacts-dir
@@ -60,9 +61,22 @@ jobs:
         # Add any additional inputs this action supports
 ```
 
-The required parameters to deploy are `function-name`, `code-artifacts-dir`, `handler`, and `runtime`. If the function does not exist yet, the `role` parameter is also required to specify the function's IAM execution role.
+The required parameters depend on the deployment type:
 
-If a function with the name specified by `function-name` does not exist, it will be created with the provided code within `code-artifacts-dir` and configuration parameters using the [CreateFunction](https://docs.aws.amazon.com/lambda/latest/api/API_CreateFunction.html) API.
+**For zip file deployments (default):**
+- `function-name` - Name of the Lambda function
+- `code-artifacts-dir` - Path to code artifacts directory
+- `handler` - Function handler method
+- `runtime` - Function runtime identifier
+
+**For container image deployments:**
+- `function-name` - Name of the Lambda function
+- `package-type` - Must be set to `Image`
+- `image-uri` - URI of the container image in Amazon ECR
+
+**Note:** If the function does not exist yet, the `role` parameter is also required for both deployment types to specify the function's IAM execution role.
+
+If a function with the name specified by `function-name` does not exist, it will be created with the provided code or image and configuration parameters using the [CreateFunction](https://docs.aws.amazon.com/lambda/latest/api/API_CreateFunction.html) API.
 
 For the full list of inputs this GitHub Action supports, see [Inputs](#inputs).
 
@@ -72,7 +86,7 @@ Function configuration will be updated using the [UpdateFunctionConfiguration](h
 As a first step, [GetFunctionConfiguration](https://docs.aws.amazon.com/lambda/latest/api/API_GetFunctionConfiguration.html) is called to perform a diff between the provided configuration parameters and the configuration of the currently deployed function. If there is no change, UpdateFunctionConfiguration will not be called.
 ```yaml
       - name: Update Lambda configuration
-        uses: aws-actions/aws-lambda-deploy@v1
+        uses: aws-actions/aws-lambda-deploy@v1.1.0
         with:
           function-name: my-function-name
           code-artifacts-dir: my-code-artifacts-dir
@@ -82,10 +96,10 @@ As a first step, [GetFunctionConfiguration](https://docs.aws.amazon.com/lambda/l
 ```
 
 ### Using S3 Deployment Method
-Optionally store code artifacts in S3 instead of direct `.zip` file upload.
+For zip file deployments, you can optionally store code artifacts in S3 instead of direct `.zip` file upload. Note: This method is only available for zip deployments, not container images.
 ```yaml
       - name: Deploy Lambda function via S3
-        uses: aws-actions/aws-lambda-deploy@v1
+        uses: aws-actions/aws-lambda-deploy@v1.1.0
         with:
           function-name: my-function-name
           code-artifacts-dir: my-code-artifacts-dir
@@ -97,16 +111,48 @@ Optionally store code artifacts in S3 instead of direct `.zip` file upload.
 Validate parameters and permissions without any function code or configuration modifications.
 ```yaml
       - name: Deploy on dry run mode
-        uses: aws-actions/aws-lambda-deploy@v1
+        uses: aws-actions/aws-lambda-deploy@v1.1.0
         with:
           function-name: my-function-name
           code-artifacts-dir: my-code-artifacts-dir
           dry-run: true
 ```
- **Note**: Dry run will still call `GetFunctionConfiguration` to check if the function exists and perform configuration diffs against what's currently deployed.
+**Note**: Dry run will still call `GetFunctionConfiguration` to check if the function exists and perform configuration diffs against what's currently deployed.
+
+### Container Image Deployment
+Deploy Lambda functions using container images from Amazon ECR. See [aws-actions/amazon-ecr-login](https://github.com/aws-actions/amazon-ecr-login) for details on logging into ECR.
+```yaml
+      - name: Login to Amazon ECR
+        id: login-ecr
+        uses: aws-actions/amazon-ecr-login@v1
+        # Authenticates with ECR and returns the registry URL for building images
+
+      - name: Build, tag, and push image to Amazon ECR
+        id: build-image
+        env:
+          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+          ECR_REPOSITORY: my-lambda-repo
+          IMAGE_TAG: ${{ github.sha }}
+        run: |
+          # Build Docker image from Dockerfile in repository root
+          docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
+          # Push the built image to ECR repository
+          docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
+          # Output the full image URI for the next step
+          echo "image=$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG" >> $GITHUB_OUTPUT
+
+      - name: Deploy Lambda function with container image
+        uses: aws-actions/aws-lambda-deploy@v1.1.0
+        with:
+          function-name: my-container-function
+          package-type: Image  # Required: Indicates container deployment (not zip)
+          image-uri: ${{ steps.build-image.outputs.image }}  # ECR image URI from previous step
+          role: arn:aws:iam::123456789012:role/lambda-role  # IAM execution role for Lambda
+          # Note: handler, runtime, and layers should not be provided for container images
+```
 ## Build from Source
 
-To automate building your source code, add a build step based on your runtime and build process. This build step should be performed before the AWS Lambda Deploy step, and AWS Lambda Deploy's `code-artifacts-dir` parameter will typically be set to the build step's code artifact output directory.
+For zip file deployments, to automate building your source code, add a build step based on your runtime and build process. This build step should be performed before the AWS Lambda Deploy step, and AWS Lambda Deploy's `code-artifacts-dir` parameter will typically be set to the build step's code artifact output directory.
 
 Below are two commonly used Build examples for Node.js and Python:
 
@@ -138,9 +184,11 @@ Below are two commonly used Build examples for Node.js and Python:
 | Name | Description | Required | Default |
 |------|-------------|----------|---------|
 | `function-name` | Name of the Lambda function | Yes | |
-| `code-artifacts-dir` | Path to a directory of code artifacts to zip and deploy | Yes | |
-| `handler` | Name of the function handler method | Yes | `index.handler` |
-| `runtime` | Function runtime identifier | Yes | `nodejs20.x` |
+| `package-type` | Package type of the Lambda function (`Zip` or `Image`) | No | `Zip` |
+| `image-uri` | URI of the container image in Amazon ECR (required when package-type is `Image`) | No | |
+| `code-artifacts-dir` | Path to a directory of code artifacts to zip and deploy (required when package-type is `Zip`) | No | |
+| `handler` | Name of the function handler method (required when package-type is `Zip`) | No | `index.handler` |
+| `runtime` | Function runtime identifier (required when package-type is `Zip`) | No | `nodejs20.x` |
 | `s3-bucket` | S3 bucket name for Lambda deployment package. Uses S3 deployment method if provided | No | |
 | `s3-key` | S3 key (path) for the Lambda deployment package | No | Auto-generated |
 | `publish` | Publish a new version of the function after updating | No | `true` |
@@ -252,7 +300,66 @@ This action requires the following minimum set of permissions:
 }
 ```
 
-If you're using the S3 deployment method, ensure your IAM role also has the following permissions:
+If you're using container image deployments, two sets of permissions are required:
+
+**1. IAM permissions for the GitHub Actions role** to create/update the Lambda function with the container image:
+
+```json
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Sid": "ECRAuthToken",
+      "Effect": "Allow",
+      "Action": "ecr:GetAuthorizationToken",
+      "Resource": "*"
+    },
+    {
+      "Sid": "AllowPushPull",
+      "Effect": "Allow",
+      "Action": [
+        "ecr:BatchGetImage",
+        "ecr:BatchCheckLayerAvailability",
+        "ecr:CompleteLayerUpload",
+        "ecr:GetDownloadUrlForLayer",
+        "ecr:InitiateLayerUpload",
+        "ecr:PutImage",
+        "ecr:UploadLayerPart"
+      ],
+      "Resource": "arn:aws:ecr:<region>:<aws_account_id>:repository/<repository_name>"
+    }
+  ]
+}
+```
+
+**Note:** The above permissions include both push and pull operations for ECR. If you're only pulling pre-built images (not pushing), you can remove the write permissions and keep only:
+- `ecr:BatchGetImage`
+- `ecr:GetDownloadUrlForLayer`
+
+**2. ECR repository policy** to allow the Lambda service to pull images:
+
+```json
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Sid": "LambdaECRImageRetrievalPolicy",
+      "Effect": "Allow",
+      "Principal": {
+        "Service": "lambda.amazonaws.com"
+      },
+      "Action": [
+        "ecr:BatchGetImage",
+        "ecr:GetDownloadUrlForLayer"
+      ]
+    }
+  ]
+}
+```
+
+For cross-account deployments or more details, see [AWS Lambda container image deployment documentation](https://docs.aws.amazon.com/lambda/latest/dg/images-create.html#images-create-permissions).
+
+If you're using the S3 deployment method (for zip file deployments), ensure your IAM role also has the following permissions:
 
 ```json
 {
@@ -264,6 +371,7 @@ If you're using the S3 deployment method, ensure your IAM role also has the foll
       "Action": [
         "s3:ListBucket",
         "s3:CreateBucket",
+        "s3:GetObject",
         "s3:PutObject",
         "s3:PutBucketPublicAccessBlock",
         "s3:PutEncryptionConfiguration",

@@ -23,7 +23,7 @@ async function run() {
     }
 
     const {
-      functionName, codeArtifactsDir,
+      functionName, packageType, codeArtifactsDir, imageUri,
       ephemeralStorage, parsedMemorySize, timeout,
       role, codeSigningConfigArn, kmsKeyArn, sourceKmsKeyArn,
       environment, vpcConfig, deadLetterConfig, tracingConfig,
@@ -68,13 +68,18 @@ async function run() {
       }
     }
 
-    // Creating zip file
-    core.info(`Packaging code artifacts from ${codeArtifactsDir}`);
-    let finalZipPath = await packageCodeArtifacts(codeArtifactsDir);
+    // Creating zip file (only for Zip package type)
+    let finalZipPath = null;
+    if (packageType === 'Zip') {
+      core.info(`Packaging code artifacts from ${codeArtifactsDir}`);
+      finalZipPath = await packageCodeArtifacts(codeArtifactsDir);
+    } else if (packageType === 'Image') {
+      core.info(`Using container image: ${imageUri}`);
+    }
 
     // Create function
     await createFunction(client, {
-      functionName, region, finalZipPath, dryRun, role,
+      functionName, packageType, region, finalZipPath, imageUri, dryRun, role,
       s3Bucket, s3Key, sourceKmsKeyArn, runtime, handler,
       functionDescription, parsedMemorySize, timeout,
       publish, architectures, ephemeralStorage,
@@ -91,22 +96,30 @@ async function run() {
     const configCommand = new GetFunctionConfigurationCommand({FunctionName: functionName});
     let currentConfig = await client.send(configCommand);
 
+    // Check if package type is being changed (not supported by AWS)
+    if (currentConfig.PackageType && currentConfig.PackageType !== packageType) {
+      core.setFailed(`Cannot change package type of existing Lambda function from ${currentConfig.PackageType} to ${packageType}`);
+      return;
+    }
+
     const configChanged = hasConfigurationChanged(currentConfig, {
       ...(role && { Role: role }),
-      ...(handler && { Handler: handler }),
+      // Only include handler, runtime, and layers for Zip package type
+      ...(packageType === 'Zip' && handler && { Handler: handler }),
       ...(functionDescription && { Description: functionDescription }),
       ...(parsedMemorySize && { MemorySize: parsedMemorySize }),
       ...(timeout && { Timeout: timeout }),
-      ...(runtime && { Runtime: runtime }),
+      ...(packageType === 'Zip' && runtime && { Runtime: runtime }),
       ...(kmsKeyArn && { KMSKeyArn: kmsKeyArn }),
       ...(ephemeralStorage && { EphemeralStorage: { Size: ephemeralStorage } }),
       ...(vpcConfig && { VpcConfig: parsedVpcConfig }),
       Environment: { Variables: parsedEnvironment },
       ...(deadLetterConfig && { DeadLetterConfig: parsedDeadLetterConfig }),
       ...(tracingConfig && { TracingConfig: parsedTracingConfig }),
-      ...(layers && { Layers: parsedLayers }),
+      ...(packageType === 'Zip' && layers && { Layers: parsedLayers }),
       ...(fileSystemConfigs && { FileSystemConfigs: parsedFileSystemConfigs }),
-      ...(imageConfig && { ImageConfig: parsedImageConfig }),
+      // Only include ImageConfig for Image package type
+      ...(packageType === 'Image' && imageConfig && { ImageConfig: parsedImageConfig }),
       ...(snapStart && { SnapStart: parsedSnapStart }),
       ...(loggingConfig && { LoggingConfig: parsedLoggingConfig })
     });
@@ -120,28 +133,29 @@ async function run() {
       await updateFunctionConfiguration(client, {
         functionName,
         role,
-        handler,
+        // Only include handler, runtime, and layers for Zip package type
+        ...(packageType === 'Zip' && { handler }),
         functionDescription,
         parsedMemorySize,
         timeout,
-        runtime,
+        ...(packageType === 'Zip' && { runtime }),
         kmsKeyArn,
         ephemeralStorage,
         vpcConfig,
         parsedEnvironment,
         deadLetterConfig,
         tracingConfig,
-        layers,
+        ...(packageType === 'Zip' && { layers }),
         fileSystemConfigs,
-        imageConfig,
+        ...(packageType === 'Image' && { imageConfig }),
         snapStart,
         loggingConfig,
         parsedVpcConfig,
         parsedDeadLetterConfig,
         parsedTracingConfig,
-        parsedLayers,
+        ...(packageType === 'Zip' && { parsedLayers }),
         parsedFileSystemConfigs,
-        parsedImageConfig,
+        ...(packageType === 'Image' && { parsedImageConfig }),
         parsedSnapStart,
         parsedLoggingConfig
       });
@@ -152,6 +166,8 @@ async function run() {
     // Update Function Code
     await updateFunctionCode(client, {
       functionName,
+      packageType,
+      imageUri,
       finalZipPath,
       useS3Method,
       s3Bucket,
@@ -296,7 +312,7 @@ async function checkFunctionExists(client, functionName) {
 // Helper functions for creating Lambda function
 async function createFunction(client, inputs, functionExists) {
   const {
-    functionName, region, finalZipPath, dryRun, role, s3Bucket, s3Key,
+    functionName, packageType, region, finalZipPath, imageUri, dryRun, role, s3Bucket, s3Key,
     sourceKmsKeyArn, runtime, handler, functionDescription, parsedMemorySize,
     timeout, publish, architectures, ephemeralStorage, revisionId,
     vpcConfig, parsedEnvironment, deadLetterConfig, tracingConfig,
@@ -320,56 +336,67 @@ async function createFunction(client, inputs, functionExists) {
       }
 
       try {
-        core.info('Creating Lambda function with deployment package');
+        core.info(`Creating Lambda function with ${packageType} package type`);
 
         let codeParameter;
 
-        if (s3Bucket) {
-          try {
-            await uploadToS3(finalZipPath, s3Bucket, s3Key, region);
-            core.info(`Successfully uploaded package to S3: s3://${s3Bucket}/${s3Key}`);
-
-            codeParameter = {
-              S3Bucket: s3Bucket,
-              S3Key: s3Key,
-              ...(sourceKmsKeyArn && { SourceKmsKeyArn: sourceKmsKeyArn })
-            };
-          } catch (error) {
-            core.setFailed(`Failed to upload package to S3: ${error.message}`);
-            if (error.stack) {
-              core.debug(error.stack);
-            }
-            throw error;
-          }
+        if (packageType === 'Image') {
+          // For container images, use ImageUri
+          core.info(`Using container image: ${imageUri}`);
+          codeParameter = {
+            ImageUri: imageUri
+          };
         } else {
-          try {
-            const zipFileContent = await fs.readFile(finalZipPath);
-            core.info(`Zip file read successfully, size: ${zipFileContent.length} bytes`);
+          // For Zip packages, handle S3 or direct upload
+          if (s3Bucket) {
+            try {
+              await uploadToS3(finalZipPath, s3Bucket, s3Key, region);
+              core.info(`Successfully uploaded package to S3: s3://${s3Bucket}/${s3Key}`);
 
-            codeParameter = {
-              ZipFile: zipFileContent,
-              ...(sourceKmsKeyArn && { SourceKmsKeyArn: sourceKmsKeyArn })
-            };
-          } catch (error) {
-            if (error.code === 'EACCES') {
-              core.setFailed(`Failed to read Lambda deployment package: Permission denied`);
-              core.error('Permission denied. Check file access permissions.');
-            } else {
-              core.setFailed(`Failed to read Lambda deployment package: ${error.message}`);
+              codeParameter = {
+                S3Bucket: s3Bucket,
+                S3Key: s3Key,
+                ...(sourceKmsKeyArn && { SourceKmsKeyArn: sourceKmsKeyArn })
+              };
+            } catch (error) {
+              core.setFailed(`Failed to upload package to S3: ${error.message}`);
+              if (error.stack) {
+                core.debug(error.stack);
+              }
+              throw error;
             }
-            if (error.stack) {
-              core.debug(error.stack);
+          } else {
+            try {
+              const zipFileContent = await fs.readFile(finalZipPath);
+              core.info(`Zip file read successfully, size: ${zipFileContent.length} bytes`);
+
+              codeParameter = {
+                ZipFile: zipFileContent,
+                ...(sourceKmsKeyArn && { SourceKmsKeyArn: sourceKmsKeyArn })
+              };
+            } catch (error) {
+              if (error.code === 'EACCES') {
+                core.setFailed(`Failed to read Lambda deployment package: Permission denied`);
+                core.error('Permission denied. Check file access permissions.');
+              } else {
+                core.setFailed(`Failed to read Lambda deployment package: ${error.message}`);
+              }
+              if (error.stack) {
+                core.debug(error.stack);
+              }
+              throw error;
             }
-            throw error;
           }
         }
 
         const input = {
           FunctionName: functionName,
           Code: codeParameter,
-          ...(runtime && { Runtime: runtime }),
+          PackageType: packageType,
           ...(role && { Role: role }),
-          ...(handler && { Handler: handler }),
+          // Only include runtime and handler for Zip packages
+          ...(packageType === 'Zip' && runtime && { Runtime: runtime }),
+          ...(packageType === 'Zip' && handler && { Handler: handler }),
           ...(functionDescription && { Description: functionDescription }),
           ...(parsedMemorySize && { MemorySize: parsedMemorySize }),
           ...(timeout && { Timeout: timeout }),
@@ -381,9 +408,11 @@ async function createFunction(client, inputs, functionExists) {
           Environment: { Variables: parsedEnvironment },
           ...(deadLetterConfig && { DeadLetterConfig: parsedDeadLetterConfig }),
           ...(tracingConfig && { TracingConfig: parsedTracingConfig }),
-          ...(layers && { Layers: parsedLayers }),
+          // Only include Layers for Zip package type
+          ...(packageType === 'Zip' && layers && { Layers: parsedLayers }),
           ...(fileSystemConfigs && { FileSystemConfigs: parsedFileSystemConfigs }),
-          ...(imageConfig && { ImageConfig: parsedImageConfig }),
+          // Only include ImageConfig for Image package type
+          ...(packageType === 'Image' && imageConfig && { ImageConfig: parsedImageConfig }),
           ...(snapStart && { SnapStart: parsedSnapStart }),
           ...(loggingConfig && { LoggingConfig: parsedLoggingConfig }),
           ...(tags && { Tags: parsedTags }),
@@ -489,6 +518,7 @@ async function updateFunctionConfiguration(client, params) {
     const input = {
       FunctionName: functionName,
       ...(role && { Role: role }),
+      // Handler, Runtime, and Layers should not be included for Image package type
       ...(handler && { Handler: handler }),
       ...(functionDescription && { Description: functionDescription }),
       ...(parsedMemorySize && { MemorySize: parsedMemorySize }),
@@ -500,8 +530,9 @@ async function updateFunctionConfiguration(client, params) {
       Environment: { Variables: parsedEnvironment },
       ...(deadLetterConfig && { DeadLetterConfig: parsedDeadLetterConfig }),
       ...(tracingConfig && { TracingConfig: parsedTracingConfig }),
-      ...(layers && { Layers: parsedLayers }),
+      ...(parsedLayers && { Layers: parsedLayers }),
       ...(fileSystemConfigs && { FileSystemConfigs: parsedFileSystemConfigs }),
+      // ImageConfig should only be included for Image package type
       ...(imageConfig && { ImageConfig: parsedImageConfig }),
       ...(snapStart && { SnapStart: parsedSnapStart }),
       ...(loggingConfig && { LoggingConfig: parsedLoggingConfig })
@@ -570,62 +601,73 @@ async function waitForFunctionUpdated(client, functionName, waitForMinutes = 5) 
 // Helper function for updating Lambda function code
 async function updateFunctionCode(client, params) {
   const {
-    functionName, finalZipPath, useS3Method, s3Bucket, s3Key,
+    functionName, packageType, imageUri, finalZipPath, useS3Method, s3Bucket, s3Key,
     codeArtifactsDir, architectures, publish, revisionId,
     sourceKmsKeyArn, dryRun, region
   } = params;
 
-  core.info(`Updating function code for ${functionName} with ${finalZipPath}`);
+  core.info(`Updating function code for ${functionName}`);
 
   try {
     const commonCodeParams = {
       FunctionName: functionName,
       ...(architectures && { Architectures: Array.isArray(architectures) ? architectures : [architectures] }),
       ...(publish !== undefined && { Publish: publish }),
-      ...(revisionId && { RevisionId: revisionId }),
-      ...(sourceKmsKeyArn && { SourceKmsKeyArn: sourceKmsKeyArn })
+      ...(revisionId && { RevisionId: revisionId })
     };
 
     let codeInput;
 
-    if (useS3Method) {
-      core.info(`Using S3 deployment method with bucket: ${s3Bucket}, key: ${s3Key}`);
-
-      await uploadToS3(finalZipPath, s3Bucket, s3Key, region);
-      core.info(`Successfully uploaded package to S3: s3://${s3Bucket}/${s3Key}`);
-
+    if (packageType === 'Image') {
+      // For container images, use ImageUri
+      core.info(`Using container image: ${imageUri}`);
       codeInput = {
         ...commonCodeParams,
-        S3Bucket: s3Bucket,
-        S3Key: s3Key
+        ImageUri: imageUri
       };
     } else {
-      let zipFileContent;
+      // For Zip packages, handle S3 or direct upload
+      if (useS3Method) {
+        core.info(`Using S3 deployment method with bucket: ${s3Bucket}, key: ${s3Key}`);
 
-      try {
-        zipFileContent = await fs.readFile(finalZipPath);
-      } catch (error) {
-        core.setFailed(`Failed to read Lambda deployment package at ${finalZipPath}: ${error.message}`);
+        await uploadToS3(finalZipPath, s3Bucket, s3Key, region);
+        core.info(`Successfully uploaded package to S3: s3://${s3Bucket}/${s3Key}`);
 
-        if (error.code === 'ENOENT') {
-          core.error(`File not found. Ensure the code artifacts directory "${codeArtifactsDir}" contains the required files.`);
-        } else if (error.code === 'EACCES') {
-          core.error('Permission denied. Check file access permissions.');
+        codeInput = {
+          ...commonCodeParams,
+          S3Bucket: s3Bucket,
+          S3Key: s3Key,
+          ...(sourceKmsKeyArn && { SourceKmsKeyArn: sourceKmsKeyArn })
+        };
+      } else {
+        let zipFileContent;
+
+        try {
+          zipFileContent = await fs.readFile(finalZipPath);
+        } catch (error) {
+          core.setFailed(`Failed to read Lambda deployment package at ${finalZipPath}: ${error.message}`);
+
+          if (error.code === 'ENOENT') {
+            core.error(`File not found. Ensure the code artifacts directory "${codeArtifactsDir}" contains the required files.`);
+          } else if (error.code === 'EACCES') {
+            core.error('Permission denied. Check file access permissions.');
+          }
+
+          if (error.stack) {
+            core.debug(error.stack);
+          }
+
+          throw error;
         }
 
-        if (error.stack) {
-          core.debug(error.stack);
-        }
+        codeInput = {
+          ...commonCodeParams,
+          ZipFile: zipFileContent,
+          ...(sourceKmsKeyArn && { SourceKmsKeyArn: sourceKmsKeyArn })
+        };
 
-        throw error;
+        core.info(`Original buffer length: ${zipFileContent.length} bytes`);
       }
-
-      codeInput = {
-        ...commonCodeParams,
-        ZipFile: zipFileContent
-      };
-
-      core.info(`Original buffer length: ${zipFileContent.length} bytes`);
     }
 
     if (dryRun) {
@@ -97927,11 +97969,11 @@ function validateNumericInputs() {
     return { valid: false };
   }
 
-  return { 
-    valid: true, 
-    ephemeralStorage, 
-    parsedMemorySize, 
-    timeout 
+  return {
+    valid: true,
+    ephemeralStorage,
+    parsedMemorySize,
+    timeout
   };
 }
 
@@ -97942,24 +97984,61 @@ function validateRequiredInputs() {
     return { valid: false };
   }
 
-  const codeArtifactsDir = core.getInput('code-artifacts-dir');
-  if (!codeArtifactsDir) {
-    core.setFailed('Code-artifacts-dir must be provided');
+  // Get package type (defaults to 'Zip')
+  let packageType = core.getInput('package-type', { required: false }) || 'Zip';
+
+  // Validate package type value
+  if (!['Zip', 'Image'].includes(packageType)) {
+    core.setFailed(`Package type must be either 'Zip' or 'Image', got: ${packageType}`);
     return { valid: false };
   }
 
-  let handler = core.getInput('handler', { required: true });
-  handler = handler || 'index.handler'; 
-  
-  let runtime = core.getInput('runtime', { required: true });
-  runtime = runtime || 'node20js.x'; 
+  let codeArtifactsDir, handler, runtime, imageUri;
 
-  return { 
-    valid: true, 
-    functionName, 
+  if (packageType === 'Zip') {
+    // For Zip packages, require code-artifacts-dir, handler, and runtime
+    codeArtifactsDir = core.getInput('code-artifacts-dir');
+    if (!codeArtifactsDir) {
+      core.setFailed('code-artifacts-dir must be provided when package-type is "Zip"');
+      return { valid: false };
+    }
+
+    handler = core.getInput('handler', { required: false }) || 'index.handler';
+    runtime = core.getInput('runtime', { required: false }) || 'nodejs20.x';
+    
+    // Warn if Image-only parameters are provided with Zip package type
+    imageUri = core.getInput('image-uri', { required: false });
+    if (imageUri) {
+      core.warning('image-uri parameter is ignored when package-type is "Zip"');
+    }
+
+  } else if (packageType === 'Image') {
+    // For Image packages, require image-uri
+    imageUri = core.getInput('image-uri', { required: false });
+    if (!imageUri) {
+      core.setFailed('image-uri must be provided when package-type is "Image"');
+      return { valid: false };
+    }
+
+    // Handler and runtime are optional for container images
+    handler = core.getInput('handler', { required: false });
+    runtime = core.getInput('runtime', { required: false });
+
+    // Warn if Zip-only parameters are provided with Image package type
+    codeArtifactsDir = core.getInput('code-artifacts-dir', { required: false });
+    if (codeArtifactsDir) {
+      core.warning('code-artifacts-dir parameter is ignored when package-type is "Image"');
+    }
+  }
+
+  return {
+    valid: true,
+    functionName,
+    packageType,
     codeArtifactsDir,
     handler,
-    runtime
+    runtime,
+    imageUri
   };
 }
 
@@ -97968,19 +98047,19 @@ function validateArnInputs() {
   const codeSigningConfigArn = core.getInput('code-signing-config-arn', { required: false });
   const kmsKeyArn = core.getInput('kms-key-arn', { required: false });
   const sourceKmsKeyArn = core.getInput('source-kms-key-arn', { required: false });
-  
+
   if (role && !validateRoleArn(role)) {
     return { valid: false };
   }
-  
+
   if (codeSigningConfigArn && !validateCodeSigningConfigArn(codeSigningConfigArn)) {
     return { valid: false };
   }
-  
+
   if (kmsKeyArn && !validateKmsKeyArn(kmsKeyArn)) {
     return { valid: false };
   }
-  
+
   if (sourceKmsKeyArn && !validateKmsKeyArn(sourceKmsKeyArn)) {
     return { valid: false };
   }
@@ -98005,7 +98084,7 @@ function validateJsonInputs() {
   const snapStart = core.getInput('snap-start', { required: false });
   const loggingConfig = core.getInput('logging-config', { required: false });
   const tags = core.getInput('tags', { required: false });
-  
+
   let parsedEnvironment, parsedVpcConfig, parsedDeadLetterConfig, parsedTracingConfig,
     parsedLayers, parsedFileSystemConfigs, parsedImageConfig, parsedSnapStart,
     parsedLoggingConfig, parsedTags;
@@ -98014,7 +98093,7 @@ function validateJsonInputs() {
     if (environment) {
       parsedEnvironment = parseJsonInput(environment, 'environment');
     }
-    
+
     if (vpcConfig) {
       parsedVpcConfig = parseJsonInput(vpcConfig, 'vpc-config');
       if (!parsedVpcConfig.SubnetIds || !Array.isArray(parsedVpcConfig.SubnetIds)) {
@@ -98024,28 +98103,28 @@ function validateJsonInputs() {
         throw new Error("vpc-config must include 'SecurityGroupIds' as an array");
       }
     }
-    
+
     if (deadLetterConfig) {
       parsedDeadLetterConfig = parseJsonInput(deadLetterConfig, 'dead-letter-config');
       if (!parsedDeadLetterConfig.TargetArn) {
         throw new Error("dead-letter-config must include 'TargetArn'");
       }
     }
-    
+
     if (tracingConfig) {
       parsedTracingConfig = parseJsonInput(tracingConfig, 'tracing-config');
       if (!parsedTracingConfig.Mode || !['Active', 'PassThrough'].includes(parsedTracingConfig.Mode)) {
         throw new Error("tracing-config Mode must be 'Active' or 'PassThrough'");
       }
     }
-    
+
     if (layers) {
       parsedLayers = parseJsonInput(layers, 'layers');
       if (!Array.isArray(parsedLayers)) {
         throw new Error("layers must be an array of layer ARNs");
       }
     }
-    
+
     if (fileSystemConfigs) {
       parsedFileSystemConfigs = parseJsonInput(fileSystemConfigs, 'file-system-configs');
       if (!Array.isArray(parsedFileSystemConfigs)) {
@@ -98057,22 +98136,22 @@ function validateJsonInputs() {
         }
       }
     }
-    
+
     if (imageConfig) {
       parsedImageConfig = parseJsonInput(imageConfig, 'image-config');
     }
-    
+
     if (snapStart) {
       parsedSnapStart = parseJsonInput(snapStart, 'snap-start');
       if (!parsedSnapStart.ApplyOn || !['PublishedVersions', 'None'].includes(parsedSnapStart.ApplyOn)) {
         throw new Error("snap-start ApplyOn must be 'PublishedVersions' or 'None'");
       }
     }
-    
+
     if (loggingConfig) {
       parsedLoggingConfig = parseJsonInput(loggingConfig, 'logging-config');
     }
-    
+
     if (tags) {
       parsedTags = parseJsonInput(tags, 'tags');
       if (typeof parsedTags !== 'object' || Array.isArray(parsedTags)) {
@@ -98091,7 +98170,7 @@ function validateJsonInputs() {
     deadLetterConfig,
     tracingConfig,
     layers,
-    fileSystemConfigs, 
+    fileSystemConfigs,
     imageConfig,
     snapStart,
     loggingConfig,
@@ -98102,7 +98181,7 @@ function validateJsonInputs() {
     parsedTracingConfig,
     parsedLayers,
     parsedFileSystemConfigs,
-    parsedImageConfig, 
+    parsedImageConfig,
     parsedSnapStart,
     parsedLoggingConfig,
     parsedTags
@@ -98148,7 +98227,7 @@ function parseJsonInput(jsonString, inputName) {
 
 function validateRoleArn(arn) {
   const rolePattern = /^arn:aws(-[a-z0-9-]+)?:iam::[0-9]{12}:role\/[a-zA-Z0-9+=,.@_\/-]+$/;
-  
+
   if (!rolePattern.test(arn)) {
     core.setFailed(`Invalid IAM role ARN format: ${arn}`);
     return false;
@@ -98168,7 +98247,7 @@ function validateCodeSigningConfigArn(arn) {
 
 function validateKmsKeyArn(arn) {
   const kmsPattern = /^arn:aws(-[a-z0-9-]+)?:kms:[a-z0-9-]+:[0-9]{12}:key\/[a-zA-Z0-9-]+$/;
-  
+
   if (!kmsPattern.test(arn)) {
     core.setFailed(`Invalid KMS key ARN format: ${arn}`);
     return false;
@@ -98190,29 +98269,52 @@ function validateAndResolvePath(userPath, basePath) {
   return resolvedPath;
 }
 
+function checkInputConflicts(packageType, additionalInputs) {
+  const { s3Bucket, s3Key, useS3Method } = additionalInputs;
+  const sourceKmsKeyArn = core.getInput('source-kms-key-arn', { required: false });
+  
+  if (packageType === 'Image') {
+    // Warn about S3-related parameters being ignored for Image package type
+    if (s3Bucket) {
+      core.warning('s3-bucket parameter is ignored when package-type is "Image"');
+    }
+    if (s3Key) {
+      core.warning('s3-key parameter is ignored when package-type is "Image"');
+    }
+    if (sourceKmsKeyArn) {
+      core.warning('source-kms-key-arn parameter is ignored when package-type is "Image"');
+    }
+  }
+}
+
 function validateAllInputs() {
   const requiredInputs = validateRequiredInputs();
   if (!requiredInputs.valid) {
     return { valid: false };
   }
-  
+
   const numericInputs = validateNumericInputs();
   if (!numericInputs.valid) {
     return { valid: false };
   }
-  
+
   const arnInputs = validateArnInputs();
   if (!arnInputs.valid) {
     return { valid: false };
   }
-  
+
   const jsonInputs = validateJsonInputs();
   if (!jsonInputs.valid) {
     return { valid: false };
   }
-  
+
   const additionalInputs = getAdditionalInputs();
   
+  // Check for input conflicts based on package type
+  if (requiredInputs.packageType) {
+    checkInputConflicts(requiredInputs.packageType, additionalInputs);
+  }
+
   return {
     valid: true,
     ...requiredInputs,

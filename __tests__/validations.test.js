@@ -210,7 +210,7 @@ describe('Validations Tests', () => {
         });
         const result = originalValidations.validateAllInputs();
         expect(result.valid).toBe(false);
-        expect(core.setFailed).toHaveBeenCalledWith('Code-artifacts-dir must be provided');
+        expect(core.setFailed).toHaveBeenCalledWith('code-artifacts-dir must be provided when package-type is "Zip"');
       });
     });
     describe('Handler Validation', () => {
@@ -278,7 +278,7 @@ describe('Validations Tests', () => {
         });
         const result = originalValidations.validateAllInputs();
         expect(result.valid).toBe(true);
-        expect(result.runtime).toBe('node20js.x');
+        expect(result.runtime).toBe('nodejs20.x');
         expect(core.setFailed).not.toHaveBeenCalled();
       });
     });
@@ -1330,6 +1330,83 @@ describe('Validations Tests', () => {
       expect(result).toBe('/base/path/file.js');
     });
   });
+  describe('Input Conflict Warnings', () => {
+    test('should warn when code-artifacts-dir is provided with Image package type', () => {
+      core.getInput.mockImplementation((name) => {
+        const inputs = {
+          'function-name': 'test-function',
+          'package-type': 'Image',
+          'image-uri': '123456789012.dkr.ecr.us-east-1.amazonaws.com/my-repo:latest',
+          'code-artifacts-dir': './artifacts',
+          'region': 'us-east-1'
+        };
+        return inputs[name] || '';
+      });
+      
+      const result = originalValidations.validateAllInputs();
+      expect(result.valid).toBe(true);
+      expect(core.warning).toHaveBeenCalledWith('code-artifacts-dir parameter is ignored when package-type is "Image"');
+    });
+
+    test('should warn when image-uri is provided with Zip package type', () => {
+      core.getInput.mockImplementation((name) => {
+        const inputs = {
+          'function-name': 'test-function',
+          'package-type': 'Zip',
+          'code-artifacts-dir': './artifacts',
+          'image-uri': '123456789012.dkr.ecr.us-east-1.amazonaws.com/my-repo:latest',
+          'region': 'us-east-1'
+        };
+        return inputs[name] || '';
+      });
+      
+      const result = originalValidations.validateAllInputs();
+      expect(result.valid).toBe(true);
+      expect(core.warning).toHaveBeenCalledWith('image-uri parameter is ignored when package-type is "Zip"');
+    });
+
+    test('should warn when S3 parameters are provided with Image package type', () => {
+      core.getInput.mockImplementation((name) => {
+        const inputs = {
+          'function-name': 'test-function',
+          'package-type': 'Image',
+          'image-uri': '123456789012.dkr.ecr.us-east-1.amazonaws.com/my-repo:latest',
+          's3-bucket': 'my-bucket',
+          's3-key': 'my-key',
+          'source-kms-key-arn': 'arn:aws:kms:us-east-1:123456789012:key/12345678-1234-1234-1234-123456789012',
+          'region': 'us-east-1'
+        };
+        return inputs[name] || '';
+      });
+      
+      const result = originalValidations.validateAllInputs();
+      expect(result.valid).toBe(true);
+      expect(core.warning).toHaveBeenCalledWith('s3-bucket parameter is ignored when package-type is "Image"');
+      expect(core.warning).toHaveBeenCalledWith('s3-key parameter is ignored when package-type is "Image"');
+      expect(core.warning).toHaveBeenCalledWith('source-kms-key-arn parameter is ignored when package-type is "Image"');
+    });
+
+    test('should not warn about S3 parameters with Zip package type', () => {
+      core.getInput.mockImplementation((name) => {
+        const inputs = {
+          'function-name': 'test-function',
+          'package-type': 'Zip',
+          'code-artifacts-dir': './artifacts',
+          's3-bucket': 'my-bucket',
+          's3-key': 'my-key',
+          'region': 'us-east-1'
+        };
+        return inputs[name] || '';
+      });
+      
+      const result = originalValidations.validateAllInputs();
+      expect(result.valid).toBe(true);
+      // Check that warning was not called for S3 parameters
+      expect(core.warning).not.toHaveBeenCalledWith(expect.stringContaining('s3-bucket'));
+      expect(core.warning).not.toHaveBeenCalledWith(expect.stringContaining('s3-key'));
+    });
+  });
+
   describe('Early Return on Invalid Inputs', () => {
     test('run should return early when validations fail', async () => {
       const mockValidateAllInputs = jest.fn().mockReturnValue({ valid: false });

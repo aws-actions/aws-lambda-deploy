@@ -4,16 +4,23 @@ inputs:
   function-name:
     description: 'Name of the Lambda function.'
     required: true
+  package-type:
+    description: 'The package type of the Lambda function. Set to "Image" for container image functions, defaults to "Zip" for .zip file functions.'
+    required: false
+    default: 'Zip'
+  image-uri:
+    description: 'The URI of the container image in Amazon ECR. Required when package-type is "Image".'
+    required: false
   code-artifacts-dir:
-    description: 'The path to a directory of code artifacts to zip and deploy to Lambda.'
-    required: true
+    description: 'The path to a directory of code artifacts to zip and deploy to Lambda. Required when package-type is "Zip".'
+    required: false
   handler:
-    description: 'The name of the method within your code that Lambda calls to run your function. Required for .zip file'
-    required: true
+    description: 'The name of the method within your code that Lambda calls to run your function. Required when package-type is "Zip".'
+    required: false
     default: 'index.handler'
   runtime:
-    description: 'The identifier of the runtime. Required for .zip file'
-    required: true
+    description: 'The identifier of the runtime. Required when package-type is "Zip".'
+    required: false
     default: 'nodejs20.x'
   s3-bucket:
     description: 'S3 bucket name to use for Lambda deployment package. If provided, S3 deployment method will be used instead of direct upload.'
@@ -28,7 +35,7 @@ inputs:
     description: 'Set true to validate the request parameters and access permissions without modifying the function code. Applicable for updating function code only. Creating and updating function configuration will be skipped since they do not support dry run.'
     required: false
     default: 'false'
-  revision-id: 
+  revision-id:
     description: 'Update the function only if the revision ID matches the ID that is specified.'
     required: false
   architectures:
@@ -76,7 +83,7 @@ inputs:
   ephemeral-storage:
     description: 'The size of the functions /tmp directory in MB. The default value is 512, but can be any whole number between 512 and 10,240 MB.'
     required: false
-  snap-start: 
+  snap-start:
     description: 'The functions SnapStart setting.'
     required: false
   logging-config:

@@ -72,7 +72,7 @@ jobs:
         # The role-to-assume should be the ARN of the IAM role you created for GitHub Actions OIDC
 
     - name: Deploy Lambda Function
-      uses: aws-actions/aws-lambda-deploy@v1
+      uses: aws-actions/aws-lambda-deploy@v1.1.0
       with:
         function-name: ${{ env.LAMBDA_FUNCTION_NAME }}
         code-artifacts-dir: ${{ env.LAMBDA_CODE_ARTIFACTS_DIR }}
