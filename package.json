@@ -25,7 +25,7 @@
     "@smithy/node-http-handler": "^4.0.6",
     "@aws-sdk/client-sts": "3.864.0",
     "adm-zip": "^0.5.16",
-    "glob": "^11.0.2"
+    "glob": "^11.0.3"
   },
   "devDependencies": {
     "@vercel/ncc": "^0.36.1",
