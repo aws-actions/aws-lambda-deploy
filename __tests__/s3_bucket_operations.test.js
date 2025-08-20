@@ -242,17 +242,13 @@ describe('S3 Bucket Operations Tests', () => {
 
       jest.spyOn(mainModule, 'createBucket').mockResolvedValue(true);
       mockS3Send.mockResolvedValueOnce({}); 
-      try {
-        await mainModule.uploadToS3(
-          '/path/to/deployment.zip',
-          'new-bucket',
-          'lambda/function.zip',
-          'us-east-1',
-          '123456789012' 
-        );
-      } catch (error) {
-        throw error;
-      }
+      await mainModule.uploadToS3(
+        '/path/to/deployment.zip',
+        'new-bucket',
+        'lambda/function.zip',
+        'us-east-1',
+        '123456789012' 
+      );
       expect(core.info).toHaveBeenCalledWith(expect.stringContaining('Bucket new-bucket does not exist. Attempting to create it'));
       expect(mockS3Send).toHaveBeenCalledWith(expect.any(PutObjectCommand));
     });
@@ -649,7 +645,6 @@ describe('S3 Bucket Operations Tests', () => {
 
       mainModule.uploadToS3.mockReset();
 
-      const functionName = core.getInput('function-name');
       const s3Bucket = core.getInput('s3-bucket');
       if (s3Bucket) {
         await mainModule.uploadToS3('file.zip', s3Bucket, 'key.zip', 'region');

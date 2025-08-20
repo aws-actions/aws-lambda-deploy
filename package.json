@@ -6,8 +6,8 @@
   "scripts": {
     "build": "ncc build index.js -o dist",
     "test": "jest",
-    "lint": "eslint .",
-    "lint:fix": "eslint . --fix"
+    "lint": "eslint . --ignore-pattern 'dist/*'",
+    "lint:fix": "eslint . --fix --ignore-pattern 'dist/*'"
   },
   "keywords": [
     "aws",

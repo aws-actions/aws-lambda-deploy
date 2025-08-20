@@ -1,7 +1,6 @@
 const fs = require('fs/promises');
-const path = require('path');
 const core = require('@actions/core');
-const { LambdaClient, GetFunctionConfigurationCommand, CreateFunctionCommand, UpdateFunctionCodeCommand, GetFunctionCommand} = require('@aws-sdk/client-lambda');
+const { LambdaClient, GetFunctionConfigurationCommand, CreateFunctionCommand } = require('@aws-sdk/client-lambda');
 const index = require('../index');
 const { checkFunctionExists } = index;
 

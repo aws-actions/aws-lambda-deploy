@@ -107,7 +107,7 @@ describe('Deep Equal Tests', () => {
   });
 
   test('Handle lambda function configuration objects', () => {
-      const lambdaConfig1 = {
+    const lambdaConfig1 = {
       FunctionName: 'test-function',
       Runtime: 'nodejs18.x',
       MemorySize: 512,

@@ -1,7 +1,7 @@
-on:
-  [pull_request]
-
 name: Check
+
+on:
+  pull_request:
 
 jobs:
   check:

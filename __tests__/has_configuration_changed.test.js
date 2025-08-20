@@ -1,5 +1,5 @@
 const core = require('@actions/core');
-const { isEmptyValue, cleanNullKeys, hasConfigurationChanged, deepEqual } = require('../index');
+const { isEmptyValue, cleanNullKeys, hasConfigurationChanged } = require('../index');
 
 jest.mock('@actions/core');
 
