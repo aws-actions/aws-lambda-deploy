@@ -63324,7 +63324,7 @@ const setConnectionTimeout = (request, reject, timeoutInMs = 0) => {
     const registerTimeout = (offset) => {
         const timeoutId = timing.setTimeout(() => {
             request.destroy();
-            reject(Object.assign(new Error(`Socket timed out without establishing a connection within ${timeoutInMs} ms`), {
+            reject(Object.assign(new Error(`@smithy/node-http-handler - the request socket did not establish a connection with the server within the configured timeout of ${timeoutInMs} ms.`), {
                 name: "TimeoutError",
             }));
         }, timeoutInMs - offset);
@@ -63352,6 +63352,27 @@ const setConnectionTimeout = (request, reject, timeoutInMs = 0) => {
     return timing.setTimeout(registerTimeout.bind(null, DEFER_EVENT_LISTENER_TIME$2), DEFER_EVENT_LISTENER_TIME$2);
 };
 
+const setRequestTimeout = (req, reject, timeoutInMs = 0, throwOnRequestTimeout, logger) => {
+    if (timeoutInMs) {
+        return timing.setTimeout(() => {
+            let msg = `@smithy/node-http-handler - [${throwOnRequestTimeout ? "ERROR" : "WARN"}] a request has exceeded the configured ${timeoutInMs} ms requestTimeout.`;
+            if (throwOnRequestTimeout) {
+                const error = Object.assign(new Error(msg), {
+                    name: "TimeoutError",
+                    code: "ETIMEDOUT",
+                });
+                req.destroy(error);
+                reject(error);
+            }
+            else {
+                msg += ` Init client requestHandler with throwOnRequestTimeout=true to turn this into an error.`;
+                logger?.warn?.(msg);
+            }
+        }, timeoutInMs);
+    }
+    return -1;
+};
+
 const DEFER_EVENT_LISTENER_TIME$1 = 3000;
 const setSocketKeepAlive = (request, { keepAlive, keepAliveMsecs }, deferTimeMs = DEFER_EVENT_LISTENER_TIME$1) => {
     if (keepAlive !== true) {
@@ -63375,12 +63396,12 @@ const setSocketKeepAlive = (request, { keepAlive, keepAliveMsecs }, deferTimeMs 
 };
 
 const DEFER_EVENT_LISTENER_TIME = 3000;
-const setSocketTimeout = (request, reject, timeoutInMs = DEFAULT_REQUEST_TIMEOUT) => {
+const setSocketTimeout = (request, reject, timeoutInMs = 0) => {
     const registerTimeout = (offset) => {
         const timeout = timeoutInMs - offset;
         const onTimeout = () => {
             request.destroy();
-            reject(Object.assign(new Error(`Connection timed out after ${timeoutInMs} ms`), { name: "TimeoutError" }));
+            reject(Object.assign(new Error(`@smithy/node-http-handler - the request socket timed out after ${timeoutInMs} ms of inactivity (configured by client requestHandler).`), { name: "TimeoutError" }));
         };
         if (request.socket) {
             request.socket.setTimeout(timeout, onTimeout);
@@ -63502,13 +63523,15 @@ or increase socketAcquisitionWarningTimeout=(millis) in the NodeHttpHandler conf
         });
     }
     resolveDefaultConfig(options) {
-        const { requestTimeout, connectionTimeout, socketTimeout, socketAcquisitionWarningTimeout, httpAgent, httpsAgent } = options || {};
+        const { requestTimeout, connectionTimeout, socketTimeout, socketAcquisitionWarningTimeout, httpAgent, httpsAgent, throwOnRequestTimeout, } = options || {};
         const keepAlive = true;
         const maxSockets = 50;
         return {
             connectionTimeout,
-            requestTimeout: requestTimeout ?? socketTimeout,
+            requestTimeout,
+            socketTimeout,
             socketAcquisitionWarningTimeout,
+            throwOnRequestTimeout,
             httpAgent: (() => {
                 if (httpAgent instanceof http.Agent || typeof httpAgent?.destroy === "function") {
                     return httpAgent;
@@ -63626,7 +63649,8 @@ or increase socketAcquisitionWarningTimeout=(millis) in the NodeHttpHandler conf
             }
             const effectiveRequestTimeout = requestTimeout ?? this.config.requestTimeout;
             timeouts.push(setConnectionTimeout(req, reject, this.config.connectionTimeout));
-            timeouts.push(setSocketTimeout(req, reject, effectiveRequestTimeout));
+            timeouts.push(setRequestTimeout(req, reject, effectiveRequestTimeout, this.config.throwOnRequestTimeout, this.config.logger ?? console));
+            timeouts.push(setSocketTimeout(req, reject, this.config.socketTimeout));
             const httpAgent = nodeHttpsOptions.agent;
             if (typeof httpAgent === "object" && "keepAlive" in httpAgent) {
                 timeouts.push(setSocketKeepAlive(req, {
@@ -100267,7 +100291,7 @@ module.exports = JSON.parse('{"name":"@aws-sdk/nested-clients","version":"3.826.
 /***/ ((module) => {
 
 "use strict";
-module.exports = JSON.parse('{"name":"@amzn/github-action-lambda-deploy","version":"1.0.0","description":"GitHub Action for AWS Lambda Function Deployment","main":"index.js","scripts":{"build":"ncc build index.js -o dist","test":"jest","lint":"eslint . --ignore-pattern \'dist/*\'","lint:fix":"eslint . --fix --ignore-pattern \'dist/*\'"},"keywords":["aws","lambda","deployment"],"author":"","license":"MIT","dependencies":{"@actions/core":"^1.10.0","@actions/github":"^6.0.1","@aws-sdk/client-lambda":"^3.826.0","@aws-sdk/client-s3":"^3.864.0","@aws-sdk/util-retry":"^3.370.0","@smithy/node-http-handler":"^4.3.0","@aws-sdk/client-sts":"3.876.0","adm-zip":"^0.5.16","glob":"^11.0.2"},"devDependencies":{"@vercel/ncc":"^0.36.1","eslint":"^8.45.0","eslint-plugin-jest":"^27.2.2","jest":"^29.5.0"}}');
+module.exports = JSON.parse('{"name":"@amzn/github-action-lambda-deploy","version":"1.0.0","description":"GitHub Action for AWS Lambda Function Deployment","main":"index.js","scripts":{"build":"ncc build index.js -o dist","test":"jest","lint":"eslint . --ignore-pattern \'dist/*\'","lint:fix":"eslint . --fix --ignore-pattern \'dist/*\'"},"keywords":["aws","lambda","deployment"],"author":"","license":"MIT","dependencies":{"@actions/core":"^1.10.0","@actions/github":"^6.0.1","@aws-sdk/client-lambda":"^3.826.0","@aws-sdk/client-s3":"^3.864.0","@aws-sdk/util-retry":"^3.370.0","@smithy/node-http-handler":"^4.4.2","@aws-sdk/client-sts":"3.876.0","adm-zip":"^0.5.16","glob":"^11.0.2"},"devDependencies":{"@vercel/ncc":"^0.36.1","eslint":"^8.45.0","eslint-plugin-jest":"^27.2.2","jest":"^29.5.0"}}');
 
 /***/ })
 
