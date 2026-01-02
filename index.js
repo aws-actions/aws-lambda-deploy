@@ -682,19 +682,46 @@ async function hasConfigurationChanged(currentConfig, updatedConfig) {
         continue;
       }
 
-      if (typeof value === 'object' && value !== null) {
-        if (!deepEqual(currentConfig[key] || {}, value)) {
+      // Normalize the current config value for comparison
+      const normalizedCurrentValue = normalizeConfigValue(key, currentConfig[key]);
+      const normalizedUpdatedValue = normalizeConfigValue(key, value);
+
+      if (typeof normalizedUpdatedValue === 'object' && normalizedUpdatedValue !== null) {
+        if (!deepEqual(normalizedCurrentValue || {}, normalizedUpdatedValue)) {
           core.info(`Configuration difference detected in ${key}`);
           hasChanged = true;
         }
-      } else if (currentConfig[key] !== value) {
-        core.info(`Configuration difference detected in ${key}: ${currentConfig[key]} -> ${value}`);
+      } else if (normalizedCurrentValue !== normalizedUpdatedValue) {
+        core.info(`Configuration difference detected in ${key}: ${normalizedCurrentValue} -> ${normalizedUpdatedValue}`);
         hasChanged = true;
       }
     }
   }
 
   return hasChanged;
+}
+
+function normalizeConfigValue(key, value) {
+  // Normalize Layers: AWS returns array of Layer objects, but UpdateFunctionConfiguration accepts array of ARN strings
+  if (key === 'Layers' && Array.isArray(value) && value.length > 0) {
+    // If the array contains objects (from GetFunctionConfiguration), extract just the ARNs
+    if (typeof value[0] === 'object' && value[0] !== null && 'Arn' in value[0]) {
+      return value.map(layer => layer.Arn);
+    }
+    // Otherwise it's already an array of strings (from user input)
+    return value;
+  }
+
+  // Normalize LoggingConfig: Remove read-only fields that AWS adds
+  if (key === 'LoggingConfig' && typeof value === 'object' && value !== null) {
+    const normalized = { ...value };
+    // LogGroup is a read-only field that AWS populates automatically
+    // Users cannot set it via UpdateFunctionConfiguration, so exclude it from comparison
+    delete normalized.LogGroup;
+    return normalized;
+  }
+
+  return value;
 }
 
 function isEmptyValue(value) {
@@ -1115,6 +1142,7 @@ module.exports = {
   packageCodeArtifacts,
   checkFunctionExists,
   hasConfigurationChanged,
+  normalizeConfigValue,
   waitForFunctionUpdated,
   waitForFunctionActive,
   isEmptyValue,
