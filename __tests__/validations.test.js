@@ -1582,12 +1582,68 @@ describe('Validations Tests', () => {
         };
         return inputs[name] || '';
       });
-      
+
       const result = originalValidations.validateAllInputs();
       expect(result.valid).toBe(true);
       // Check that warning was not called for S3 parameters
       expect(core.warning).not.toHaveBeenCalledWith(expect.stringContaining('s3-bucket'));
       expect(core.warning).not.toHaveBeenCalledWith(expect.stringContaining('s3-key'));
+    });
+
+    test('should warn when handler/runtime/layers are provided with Image package type', () => {
+      core.getInput.mockImplementation((name) => {
+        const inputs = {
+          'function-name': 'test-function',
+          'package-type': 'Image',
+          'image-uri': '123456789012.dkr.ecr.us-east-1.amazonaws.com/my-repo:latest',
+          'handler': 'index.handler',
+          'runtime': 'nodejs20.x',
+          'layers': '["arn:aws:lambda:us-east-1:123456789012:layer:my-layer:1"]',
+          'region': 'us-east-1'
+        };
+        return inputs[name] || '';
+      });
+
+      const result = originalValidations.validateAllInputs();
+      expect(result.valid).toBe(true);
+      expect(core.warning).toHaveBeenCalledWith(expect.stringContaining('handler parameter is ignored when package-type is "Image"'));
+      expect(core.warning).toHaveBeenCalledWith(expect.stringContaining('runtime parameter is ignored when package-type is "Image"'));
+      expect(core.warning).toHaveBeenCalledWith(expect.stringContaining('layers parameter is ignored when package-type is "Image"'));
+    });
+
+    test('should not warn about handler/runtime/layers when not provided with Image package type', () => {
+      core.getInput.mockImplementation((name) => {
+        const inputs = {
+          'function-name': 'test-function',
+          'package-type': 'Image',
+          'image-uri': '123456789012.dkr.ecr.us-east-1.amazonaws.com/my-repo:latest',
+          'region': 'us-east-1'
+        };
+        return inputs[name] || '';
+      });
+
+      const result = originalValidations.validateAllInputs();
+      expect(result.valid).toBe(true);
+      expect(core.warning).not.toHaveBeenCalledWith(expect.stringContaining('handler parameter is ignored'));
+      expect(core.warning).not.toHaveBeenCalledWith(expect.stringContaining('runtime parameter is ignored'));
+      expect(core.warning).not.toHaveBeenCalledWith(expect.stringContaining('layers parameter is ignored'));
+    });
+
+    test('should warn when image-config is provided with Zip package type', () => {
+      core.getInput.mockImplementation((name) => {
+        const inputs = {
+          'function-name': 'test-function',
+          'package-type': 'Zip',
+          'code-artifacts-dir': './artifacts',
+          'image-config': '{"Command":["app.handler"]}',
+          'region': 'us-east-1'
+        };
+        return inputs[name] || '';
+      });
+
+      const result = originalValidations.validateAllInputs();
+      expect(result.valid).toBe(true);
+      expect(core.warning).toHaveBeenCalledWith('image-config parameter is ignored when package-type is "Zip"');
     });
   });
 

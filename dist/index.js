@@ -98270,7 +98270,7 @@ function validateAndResolvePath(userPath, basePath) {
 function checkInputConflicts(packageType, additionalInputs) {
   const { s3Bucket, s3Key } = additionalInputs;
   const sourceKmsKeyArn = core.getInput('source-kms-key-arn', { required: false });
-  
+
   if (packageType === 'Image') {
     // Warn about S3-related parameters being ignored for Image package type
     if (s3Bucket) {
@@ -98281,6 +98281,25 @@ function checkInputConflicts(packageType, additionalInputs) {
     }
     if (sourceKmsKeyArn) {
       core.warning('source-kms-key-arn parameter is ignored when package-type is "Image"');
+    }
+    // Warn about Zip-only parameters being ignored for Image package type.
+    // For container image functions, the runtime, handler, and layers are
+    // baked into the image itself, so any value supplied here would be
+    // silently dropped without these warnings.
+    if (core.getInput('handler', { required: false })) {
+      core.warning('handler parameter is ignored when package-type is "Image"; the handler is determined by the container image');
+    }
+    if (core.getInput('runtime', { required: false })) {
+      core.warning('runtime parameter is ignored when package-type is "Image"; the runtime is determined by the container image');
+    }
+    if (core.getInput('layers', { required: false })) {
+      core.warning('layers parameter is ignored when package-type is "Image"; layers are not supported for container image functions');
+    }
+  } else if (packageType === 'Zip') {
+    // Warn about Image-only parameters being ignored for Zip package type.
+    // image-uri is already warned about in validateRequiredInputs.
+    if (core.getInput('image-config', { required: false })) {
+      core.warning('image-config parameter is ignored when package-type is "Zip"');
     }
   }
 }
