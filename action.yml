@@ -31,6 +31,7 @@ inputs:
   publish:
     description: 'Set to true to publish a new version of the function after updating the code.'
     required: false
+    default: 'true'
   dry-run:
     description: 'Set true to validate the request parameters and access permissions without modifying the function code. Applicable for updating function code only. Creating and updating function configuration will be skipped since they do not support dry run.'
     required: false
