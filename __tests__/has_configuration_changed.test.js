@@ -1,5 +1,5 @@
 const core = require('@actions/core');
-const { isEmptyValue, cleanNullKeys, hasConfigurationChanged } = require('../index');
+const { isEmptyValue, cleanNullKeys, hasConfigurationChanged, normalizeConfigValue } = require('../index');
 
 jest.mock('@actions/core');
 
@@ -443,6 +443,265 @@ describe('Has Configuration Changed Tests', () => {
     expect(result).toEqual({
       zeroValue: 0,
       falseValue: false
+    });
+  });
+
+  // Tests for normalizeConfigValue function
+  describe('normalizeConfigValue', () => {
+    test('should extract ARNs from Layer objects', () => {
+      const layerObjects = [
+        {
+          Arn: 'arn:aws:lambda:us-east-1:123456789012:layer:layer1:1',
+          CodeSize: 12345,
+          SigningProfileVersionArn: 'arn:aws:signer:...',
+          SigningJobArn: 'arn:aws:signer:...'
+        },
+        {
+          Arn: 'arn:aws:lambda:us-east-1:123456789012:layer:layer2:2',
+          CodeSize: 67890
+        }
+      ];
+
+      const result = normalizeConfigValue('Layers', layerObjects);
+      expect(result).toEqual([
+        'arn:aws:lambda:us-east-1:123456789012:layer:layer1:1',
+        'arn:aws:lambda:us-east-1:123456789012:layer:layer2:2'
+      ]);
+    });
+
+    test('should return Layer ARN strings unchanged', () => {
+      const layerStrings = [
+        'arn:aws:lambda:us-east-1:123456789012:layer:layer1:1',
+        'arn:aws:lambda:us-east-1:123456789012:layer:layer2:2'
+      ];
+
+      const result = normalizeConfigValue('Layers', layerStrings);
+      expect(result).toEqual(layerStrings);
+    });
+
+    test('should handle empty Layers array', () => {
+      const result = normalizeConfigValue('Layers', []);
+      expect(result).toEqual([]);
+    });
+
+    test('should remove LogGroup from LoggingConfig', () => {
+      const loggingConfig = {
+        LogFormat: 'JSON',
+        LogGroup: '/aws/lambda/my-function',
+        ApplicationLogLevel: 'INFO',
+        SystemLogLevel: 'INFO'
+      };
+
+      const result = normalizeConfigValue('LoggingConfig', loggingConfig);
+      expect(result).toEqual({
+        LogFormat: 'JSON',
+        ApplicationLogLevel: 'INFO',
+        SystemLogLevel: 'INFO'
+      });
+      expect(result.LogGroup).toBeUndefined();
+    });
+
+    test('should return LoggingConfig without LogGroup unchanged', () => {
+      const loggingConfig = {
+        LogFormat: 'JSON',
+        ApplicationLogLevel: 'INFO',
+        SystemLogLevel: 'INFO'
+      };
+
+      const result = normalizeConfigValue('LoggingConfig', loggingConfig);
+      expect(result).toEqual(loggingConfig);
+    });
+
+    test('should return non-special config values unchanged', () => {
+      expect(normalizeConfigValue('Runtime', 'nodejs20.x')).toBe('nodejs20.x');
+      expect(normalizeConfigValue('MemorySize', 256)).toBe(256);
+      expect(normalizeConfigValue('Timeout', 30)).toBe(30);
+
+      const envConfig = { Variables: { ENV: 'production' } };
+      expect(normalizeConfigValue('Environment', envConfig)).toEqual(envConfig);
+    });
+  });
+
+  // Integration tests for Layers comparison
+  describe('Layers comparison with normalization', () => {
+    test('should return false when Layers are identical (objects vs strings)', async () => {
+      const current = {
+        Runtime: 'nodejs18.x',
+        Layers: [
+          {
+            Arn: 'arn:aws:lambda:us-east-1:123456789012:layer:layer1:1',
+            CodeSize: 12345,
+            SigningProfileVersionArn: 'arn:aws:signer:...',
+            SigningJobArn: 'arn:aws:signer:...'
+          }
+        ]
+      };
+      const updated = {
+        Runtime: 'nodejs18.x',
+        Layers: ['arn:aws:lambda:us-east-1:123456789012:layer:layer1:1']
+      };
+
+      const result = await hasConfigurationChanged(current, updated);
+      expect(result).toBe(false);
+      expect(core.info).not.toHaveBeenCalledWith(expect.stringContaining('Configuration difference detected in Layers'));
+    });
+
+    test('should return true when Layers actually differ', async () => {
+      const current = {
+        Runtime: 'nodejs18.x',
+        Layers: [
+          {
+            Arn: 'arn:aws:lambda:us-east-1:123456789012:layer:layer1:1',
+            CodeSize: 12345
+          }
+        ]
+      };
+      const updated = {
+        Runtime: 'nodejs18.x',
+        Layers: [
+          'arn:aws:lambda:us-east-1:123456789012:layer:layer1:1',
+          'arn:aws:lambda:us-east-1:123456789012:layer:layer2:1'
+        ]
+      };
+
+      const result = await hasConfigurationChanged(current, updated);
+      expect(result).toBe(true);
+      expect(core.info).toHaveBeenCalledWith(expect.stringContaining('Configuration difference detected in Layers'));
+    });
+
+    test('should handle multiple identical Layers', async () => {
+      const current = {
+        Layers: [
+          {
+            Arn: 'arn:aws:lambda:us-east-1:123456789012:layer:layer1:1',
+            CodeSize: 12345
+          },
+          {
+            Arn: 'arn:aws:lambda:us-east-1:123456789012:layer:layer2:2',
+            CodeSize: 67890
+          }
+        ]
+      };
+      const updated = {
+        Layers: [
+          'arn:aws:lambda:us-east-1:123456789012:layer:layer1:1',
+          'arn:aws:lambda:us-east-1:123456789012:layer:layer2:2'
+        ]
+      };
+
+      const result = await hasConfigurationChanged(current, updated);
+      expect(result).toBe(false);
+    });
+  });
+
+  // Integration tests for LoggingConfig comparison
+  describe('LoggingConfig comparison with normalization', () => {
+    test('should return false when LoggingConfig is identical except for LogGroup', async () => {
+      const current = {
+        Runtime: 'nodejs18.x',
+        LoggingConfig: {
+          LogFormat: 'JSON',
+          LogGroup: '/aws/lambda/my-function',
+          ApplicationLogLevel: 'INFO',
+          SystemLogLevel: 'INFO'
+        }
+      };
+      const updated = {
+        Runtime: 'nodejs18.x',
+        LoggingConfig: {
+          LogFormat: 'JSON',
+          ApplicationLogLevel: 'INFO',
+          SystemLogLevel: 'INFO'
+        }
+      };
+
+      const result = await hasConfigurationChanged(current, updated);
+      expect(result).toBe(false);
+      expect(core.info).not.toHaveBeenCalledWith(expect.stringContaining('Configuration difference detected in LoggingConfig'));
+    });
+
+    test('should return true when LoggingConfig actually differs', async () => {
+      const current = {
+        Runtime: 'nodejs18.x',
+        LoggingConfig: {
+          LogFormat: 'JSON',
+          LogGroup: '/aws/lambda/my-function',
+          ApplicationLogLevel: 'INFO',
+          SystemLogLevel: 'INFO'
+        }
+      };
+      const updated = {
+        Runtime: 'nodejs18.x',
+        LoggingConfig: {
+          LogFormat: 'Text',
+          ApplicationLogLevel: 'INFO',
+          SystemLogLevel: 'INFO'
+        }
+      };
+
+      const result = await hasConfigurationChanged(current, updated);
+      expect(result).toBe(true);
+      expect(core.info).toHaveBeenCalledWith(expect.stringContaining('Configuration difference detected in LoggingConfig'));
+    });
+
+    test('should handle LoggingConfig with only LogFormat', async () => {
+      const current = {
+        LoggingConfig: {
+          LogFormat: 'JSON',
+          LogGroup: '/aws/lambda/my-function'
+        }
+      };
+      const updated = {
+        LoggingConfig: {
+          LogFormat: 'JSON'
+        }
+      };
+
+      const result = await hasConfigurationChanged(current, updated);
+      expect(result).toBe(false);
+    });
+  });
+
+  // Combined test for real-world scenario
+  describe('Real-world scenario: Issue #50', () => {
+    test('should not report false positives for Layers and LoggingConfig', async () => {
+      // This simulates the exact scenario from GitHub issue #50
+      const currentFromAWS = {
+        Runtime: 'nodejs20.x',
+        MemorySize: 256,
+        Timeout: 30,
+        Layers: [
+          {
+            Arn: 'arn:aws:lambda:us-east-1:123456789012:layer:my-layer:1',
+            CodeSize: 12345,
+            SigningProfileVersionArn: 'arn:aws:signer:us-east-1:123456789012:/signing-profiles/...',
+            SigningJobArn: 'arn:aws:signer:us-east-1:123456789012:...'
+          }
+        ],
+        LoggingConfig: {
+          LogFormat: 'JSON',
+          LogGroup: '/aws/lambda/my-function',
+          ApplicationLogLevel: 'INFO',
+          SystemLogLevel: 'WARN'
+        }
+      };
+
+      const userProvidedConfig = {
+        Runtime: 'nodejs20.x',
+        MemorySize: 256,
+        Timeout: 30,
+        Layers: ['arn:aws:lambda:us-east-1:123456789012:layer:my-layer:1'],
+        LoggingConfig: {
+          LogFormat: 'JSON',
+          ApplicationLogLevel: 'INFO',
+          SystemLogLevel: 'WARN'
+        }
+      };
+
+      const result = await hasConfigurationChanged(currentFromAWS, userProvidedConfig);
+      expect(result).toBe(false);
+      expect(core.info).not.toHaveBeenCalledWith(expect.stringContaining('Configuration difference detected in Layers'));
+      expect(core.info).not.toHaveBeenCalledWith(expect.stringContaining('Configuration difference detected in LoggingConfig'));
     });
   });
 });
