@@ -98,7 +98,7 @@ async function run() {
       return;
     }
 
-    const configChanged = hasConfigurationChanged(currentConfig, {
+    const configChanged = await hasConfigurationChanged(currentConfig, {
       ...(role && { Role: role }),
       // Only include handler, runtime, and layers for Zip package type
       ...(packageType === 'Zip' && handler && { Handler: handler }),
